@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2017. Plesk International GmbH. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="server_input.xsd"/>
+	<xs:include schemaLocation="client_input.xsd"/>
+	<xs:include schemaLocation="dns_input.xsd"/>
+	<xs:include schemaLocation="webspace.xsd"/>
+	<xs:include schemaLocation="certificate_input.xsd"/>
+	<xs:include schemaLocation="mail_input.xsd"/>
+	<xs:include schemaLocation="database_input.xsd"/>
+	<xs:include schemaLocation="domainalias_input.xsd"/>
+	<xs:include schemaLocation="ip_input.xsd"/>
+	<xs:include schemaLocation="event_log_input.xsd"/>
+	<xs:include schemaLocation="secret_key_input.xsd"/>
+	<xs:include schemaLocation="ui_input.xsd"/>
+	<xs:include schemaLocation="domain_template.xsd"/>
+	<xs:include schemaLocation="virtdir.xsd"/>
+	<xs:include schemaLocation="ftpuser.xsd"/>
+	<xs:include schemaLocation="session.xsd"/>
+	<xs:include schemaLocation="locale.xsd"/>
+	<xs:include schemaLocation="logrotation.xsd"/>
+	<xs:include schemaLocation="protected_dir.xsd"/>
+	<xs:include schemaLocation="subdomain.xsd"/>
+	<xs:include schemaLocation="reseller.xsd"/>
+	<xs:include schemaLocation="reseller_template.xsd"/>
+	<xs:include schemaLocation="aps.xsd"/>
+	<xs:include schemaLocation="domain_addon_template.xsd"/>
+	<xs:include schemaLocation="site.xsd"/>
+    <xs:include schemaLocation="php_handler.xsd"/>
+    <xs:include schemaLocation="extension.xsd"/>
+    <xs:element name="packet">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="RequestPacketType">
+					<xs:sequence>
+						<xs:element name="request-settings" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="setting" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="name"/>
+												<xs:element name="value" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="server" type="ServerOperatorType"/>
+							<xs:element name="customer" type="ClientTypeRequest"/>
+							<xs:element name="webspace" type="DomainTypeRequest"/>
+							<xs:element name="subdomain" type="SubdomainInputType"/>
+							<xs:element name="dns" type="DNSInputType"/>
+							<xs:element name="db_server" type="DBServerTypeRequest"/>
+							<xs:element name="mail" type="MailTypeRequest"/>
+							<xs:element name="migration"/>
+							<xs:element name="certificate" type="CertificateActionRequest"/>
+							<xs:element name="site-alias" type="DomainAliasInputType"/>
+							<xs:element name="ip" type="IpInputType"/>
+							<xs:element name="event_log" type="EventLogInputType"/>
+							<xs:element name="spamfilter"/>
+							<xs:element name="secret_key" type="SecretKeyInputType"/>
+							<xs:element name="ui" type="UIInputType"/>
+							<xs:element name="service-plan" type="DomainTemplateInputType"/>
+							<xs:element name="webuser"/>
+							<xs:element name="maillist"/>
+							<xs:element name="virtdir" type="VDirInputType"/>
+							<xs:element name="database" type="DatabaseInputType"/>
+							<xs:element name="ftp-user" type="FtpUserInputType"/>
+							<xs:element name="session" type="SessionInputType"/>
+							<xs:element name="updater"/>
+							<xs:element name="locale" type="LocaleInput"/>
+							<xs:element name="log-rotation" type="LogRotationInput"/>
+							<xs:element name="backup-manager"/>
+							<xs:element name="sso"/>
+							<xs:element name="protected-dir" type="ProtectedDirInput"/>
+							<xs:element name="reseller" type="ResellerInput"/>
+							<xs:element name="reseller-plan" type="ResellerTemplateInputType"/>
+							<xs:element name="aps" type="APSInputType"/>
+							<xs:element name="service-plan-addon" type="DomainAddonTemplateInputType"/>
+							<xs:element name="site" type="SiteTypeRequest"/>
+							<xs:element name="user"/>
+							<xs:element name="role"/>
+							<xs:element name="business-logic-upgrade"/>
+							<xs:element name="webmail"/>
+							<xs:element name="plan-item"/>
+							<xs:element name="sitebuilder"/>
+							<xs:element name="service-node"/>
+							<xs:element name="ip-ban"/>
+                            <xs:element name="php-handler" type="PhpHandlerInput"/>
+                            <xs:element name="extension" type="ExtensionInputType"/>
+                        </xs:choice>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="RequestPacketType">
+		<xs:attribute name="version" type="string"/>
+	</xs:complexType>
+</xs:schema>

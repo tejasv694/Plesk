@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP71" yum_repo_name="PHP 7.1 for Plesk 17" headers_file="build-7.1.33-cos7-x86_64.hdr.gz">
+    <product id="php71">
+        <keypackages>
+            <keypackage>plesk-php71</keypackage>
+        </keypackages>
+        <release id="PHP_7_1" name="PHP v 7.1" version="7.1.33" upgrade_allowed_from="" />
+    </product>
+    <component name="php7.1" description="PHP 7.1 (outdated)" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php71" />
+        </keypackages>
+        <package name="plesk-php71" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="431451" buildtime="1571977861" md5="abc5f7ac8a3666385cb183df8fc455e0" arch="x86_64" />
+        <package name="plesk-php71-bcmath" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-bcmath-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="15494" buildtime="1571977857" md5="148fcb1a14d76019f1ffab4b358e0bb5" arch="x86_64" />
+        <package name="plesk-php71-cli" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-cli-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="2183703" buildtime="1571977860" md5="2aa8530457dd6d5d35db5eb576c21a12" arch="x86_64" />
+        <package name="plesk-php71-dba" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-dba-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="21436" buildtime="1571977880" md5="0e8229a6928113e594f268b5aa2bebe5" arch="x86_64" />
+        <package name="plesk-php71-enchant" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-enchant-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="9652" buildtime="1571977865" md5="9d0032e5fd2b715ad1bfbbc5e3c34a13" arch="x86_64" />
+        <package name="plesk-php71-fpm" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-fpm-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="1444143" buildtime="1571977881" md5="4f188e02d34eeca744cd249eaac0fccc" arch="x86_64" />
+        <package name="plesk-php71-gd" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-gd-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="100494" buildtime="1571977882" md5="c908a01a5bd8866077cb463ed12e68ae" arch="x86_64" />
+        <package name="plesk-php71-imagick" version="3.4.3" release="1centos.7.200422.0938" file="packages/plesk-php71-imagick-3.4.3-1centos.7.200422.0938.x86_64.rpm" size="85556" buildtime="1587523132" md5="315c464659e8c0625100bd5f1cf2be52" arch="x86_64" />
+        <package name="plesk-php71-imap" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-imap-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="29758" buildtime="1571977877" md5="bb7c0c779e23757b19a22e2b1d05078d" arch="x86_64" />
+        <package name="plesk-php71-intl" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-intl-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="121442" buildtime="1571977875" md5="b0284a2217a9b2f73513d86afa698216" arch="x86_64" />
+        <package name="plesk-php71-ioncube-loader" version="10.2.1" release="1centos.7.190626.1727" file="packages/plesk-php71-ioncube-loader-10.2.1-1centos.7.190626.1727.x86_64.rpm" size="411765" buildtime="1561547575" md5="857d78fc467892c2382ec842d2ec8a82" arch="x86_64" />
+        <package name="plesk-php71-ldap" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-ldap-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="22050" buildtime="1571977858" md5="a81fa51839bdfe5194d55bf40709e5eb" arch="x86_64" />
+        <package name="plesk-php71-mbstring" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-mbstring-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="453662" buildtime="1571977856" md5="80b3b91cacd7574e474b417bbda9c319" arch="x86_64" />
+        <package name="plesk-php71-mcrypt" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-mcrypt-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="14850" buildtime="1571977866" md5="2a8123452fa77116b84f2dff59bb62ca" arch="x86_64" />
+        <package name="plesk-php71-mysql" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-mysql-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="117551" buildtime="1571977868" md5="141209be0fec1d651a6587296eea2daa" arch="x86_64" />
+        <package name="plesk-php71-odbc" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-odbc-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="30739" buildtime="1571977858" md5="f4a1191e3f789636fbe47c1166dd64b4" arch="x86_64" />
+        <package name="plesk-php71-opcache" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-opcache-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="142311" buildtime="1571977857" md5="c5a6e1b27017a8f3c79a9944e5aa327d" arch="x86_64" />
+        <package name="plesk-php71-pdo" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-pdo-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="514264" buildtime="1571977875" md5="8f538f02cf640f3226630b37da8ff922" arch="x86_64" />
+        <package name="plesk-php71-pear" version="1.10.1" release="1centos.7.191025.1053" file="packages/plesk-php71-pear-1.10.1-1centos.7.191025.1053.noarch.rpm" size="282926" buildtime="1571977866" md5="1156ad2e7938031e8538ab56426ddbb3" arch="noarch" />
+        <package name="plesk-php71-pgsql" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-pgsql-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="56075" buildtime="1571977874" md5="4896ddb4c07b072ead072674cff76d49" arch="x86_64" />
+        <package name="plesk-php71-process" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-process-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="19377" buildtime="1571977876" md5="e7a02eaf322c788972098185417f3367" arch="x86_64" />
+        <package name="plesk-php71-pspell" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-pspell-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="8998" buildtime="1571977865" md5="494b04e4ec313d5f99e9f1534a870e5c" arch="x86_64" />
+        <package name="plesk-php71-redis" version="3.0.0" release="1centos.7.190626.1727" file="packages/plesk-php71-redis-3.0.0-1centos.7.190626.1727.x86_64.rpm" size="109136" buildtime="1561547583" md5="1ebe9e721fa17cbd7e29971fba57682c" arch="x86_64" />
+        <package name="plesk-php71-snmp" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-snmp-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="19154" buildtime="1571977865" md5="8ed2e30f5c488a08e80d0a651039b841" arch="x86_64" />
+        <package name="plesk-php71-soap" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-soap-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="113590" buildtime="1571977857" md5="ba9ca700dfb18153f1e66ea5fe66c2d7" arch="x86_64" />
+        <package name="plesk-php71-sodium" version="2.0.13" release="1centos.7.190626.1727" file="packages/plesk-php71-sodium-2.0.13-1centos.7.190626.1727.x86_64.rpm" size="141222" buildtime="1561547584" md5="184f6c024c805a85c078d9f114ed3ce4" arch="x86_64" />
+        <package name="plesk-php71-tidy" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-tidy-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="17186" buildtime="1571977875" md5="7edbf949331c60412e9816e1d8d0b155" arch="x86_64" />
+        <package name="plesk-php71-xdebug" version="2.5.0" release="1centos.7.191025.1053" file="packages/plesk-php71-xdebug-2.5.0-1centos.7.191025.1053.x86_64.rpm" size="89097" buildtime="1571977809" md5="78d8b871137460412be50296b7309024" arch="x86_64" />
+        <package name="plesk-php71-xml" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-xml-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="70741" buildtime="1571977866" md5="44684bbe6de57d725b804d63c8382317" arch="x86_64" />
+        <package name="plesk-php71-xmlrpc" version="7.1.33" release="1centos.7.191025.1053" file="packages/plesk-php71-xmlrpc-7.1.33-1centos.7.191025.1053.x86_64.rpm" size="32550" buildtime="1571977857" md5="ab56600a1a69808641ec18ffd5e79b53" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-7.1.33-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-7.1.33-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

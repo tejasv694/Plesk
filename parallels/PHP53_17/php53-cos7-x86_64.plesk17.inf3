@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP53" yum_repo_name="PHP 5.3 for Plesk 17" headers_file="build-5.3.29-cos7-x86_64.hdr.gz">
+    <product id="php53">
+        <keypackages>
+            <keypackage>plesk-php53</keypackage>
+        </keypackages>
+        <release id="PHP_5_3" name="PHP v 5.3" version="5.3.29" upgrade_allowed_from="" />
+    </product>
+    <component name="php5.3" description="PHP 5.3 (outdated)" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php53" />
+        </keypackages>
+        <package name="plesk-php53" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-5.3.29-centos7.17090118.x86_64.rpm" size="335676" buildtime="1504264041" md5="d8a0e8b534d3a0b3b62ec71307c1b820" arch="x86_64" />
+        <package name="plesk-php53-apc" version="3.1.9" release="centos7.15100614" file="packages/plesk-php53-apc-3.1.9-centos7.15100614.x86_64.rpm" size="58992" buildtime="1444120501" md5="55e21401ff28912e79fa637f2545a476" arch="x86_64" />
+        <package name="plesk-php53-bcmath" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-bcmath-5.3.29-centos7.17090118.x86_64.rpm" size="14764" buildtime="1504264041" md5="cc6767bed37cb7a75b2b60021904505f" arch="x86_64" />
+        <package name="plesk-php53-cli" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-cli-5.3.29-centos7.17090118.x86_64.rpm" size="3885716" buildtime="1504264041" md5="76235ed31a006038633dc83b8e56b4ea" arch="x86_64" />
+        <package name="plesk-php53-dba" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-dba-5.3.29-centos7.17090118.x86_64.rpm" size="21228" buildtime="1504264041" md5="fb7a8aad6e4ab34be21c7c6312812eeb" arch="x86_64" />
+        <package name="plesk-php53-enchant" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-enchant-5.3.29-centos7.17090118.x86_64.rpm" size="9220" buildtime="1504264041" md5="5c7a6116e6e798b91c0926cdf22d4830" arch="x86_64" />
+        <package name="plesk-php53-gd" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-gd-5.3.29-centos7.17090118.x86_64.rpm" size="85168" buildtime="1504264041" md5="de2abf249a0d716900a12b024ce81e78" arch="x86_64" />
+        <package name="plesk-php53-imagick" version="3.1.2" release="centos7.20042209" file="packages/plesk-php53-imagick-3.1.2-centos7.20042209.x86_64.rpm" size="89032" buildtime="1587522767" md5="96398849917f25d8d43df66c7113da8d" arch="x86_64" />
+        <package name="plesk-php53-imap" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-imap-5.3.29-centos7.17090118.x86_64.rpm" size="31020" buildtime="1504264041" md5="04118848f6a2a95e3c854e64f3598fad" arch="x86_64" />
+        <package name="plesk-php53-intl" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-intl-5.3.29-centos7.17090118.x86_64.rpm" size="52668" buildtime="1504264041" md5="9ead0a2ea8bb695cc36ad6b63c4789cf" arch="x86_64" />
+        <package name="plesk-php53-ioncube-loader" version="5.0.18" release="centos7.15101218" file="packages/plesk-php53-ioncube-loader-5.0.18-centos7.15101218.x86_64.rpm" size="381628" buildtime="1444653557" md5="5ded3ff40505c8cf694a58b7457e021d" arch="x86_64" />
+        <package name="plesk-php53-ldap" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-ldap-5.3.29-centos7.17090118.x86_64.rpm" size="18404" buildtime="1504264041" md5="ea824e2fe35f56edf61b131702f46bc8" arch="x86_64" />
+        <package name="plesk-php53-mbstring" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-mbstring-5.3.29-centos7.17090118.x86_64.rpm" size="417792" buildtime="1504264041" md5="59d40e954560b02c5317f44cc7b18a94" arch="x86_64" />
+        <package name="plesk-php53-mcrypt" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-mcrypt-5.3.29-centos7.17090118.x86_64.rpm" size="14188" buildtime="1504264041" md5="e64fd57c9ab5825d6a241dd24633b0cc" arch="x86_64" />
+        <package name="plesk-php53-mysql" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-mysql-5.3.29-centos7.17090118.x86_64.rpm" size="55552" buildtime="1504264041" md5="14bc631860d88eff4bae392cd252e747" arch="x86_64" />
+        <package name="plesk-php53-odbc" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-odbc-5.3.29-centos7.17090118.x86_64.rpm" size="30872" buildtime="1504264041" md5="8d940ced5cdd33d7cd84ff272e5aa646" arch="x86_64" />
+        <package name="plesk-php53-pdo" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-pdo-5.3.29-centos7.17090118.x86_64.rpm" size="61640" buildtime="1504264041" md5="a9faf4d366cf434ece60e5932dd9dc6d" arch="x86_64" />
+        <package name="plesk-php53-pear" version="1.9.4" release="centos7.17090118" file="packages/plesk-php53-pear-1.9.4-centos7.17090118.noarch.rpm" size="343940" buildtime="1504264066" md5="249b0fe4d1c0f8808a0afc9720b6c4a2" arch="noarch" />
+        <package name="plesk-php53-pgsql" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-pgsql-5.3.29-centos7.17090118.x86_64.rpm" size="51340" buildtime="1504264041" md5="b7a35c765a64d680d1ff2eef83204300" arch="x86_64" />
+        <package name="plesk-php53-process" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-process-5.3.29-centos7.17090118.x86_64.rpm" size="19392" buildtime="1504264041" md5="2203216f66b251f661755b3e42270360" arch="x86_64" />
+        <package name="plesk-php53-pspell" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-pspell-5.3.29-centos7.17090118.x86_64.rpm" size="8608" buildtime="1504264041" md5="05481fa4aaafd7d08169dd8521309fca" arch="x86_64" />
+        <package name="plesk-php53-redis" version="2.2.5" release="centos7.15100614" file="packages/plesk-php53-redis-2.2.5-centos7.15100614.x86_64.rpm" size="83832" buildtime="1444120465" md5="a0c5bd8ecfeee0f23f69c2be2cd1cb65" arch="x86_64" />
+        <package name="plesk-php53-snmp" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-snmp-5.3.29-centos7.17090118.x86_64.rpm" size="10888" buildtime="1504264041" md5="8b1b0b524839c51b10b365ac7e3a10f6" arch="x86_64" />
+        <package name="plesk-php53-soap" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-soap-5.3.29-centos7.17090118.x86_64.rpm" size="124572" buildtime="1504264041" md5="7f91e4cab63c39cfba9967d5ed09467c" arch="x86_64" />
+        <package name="plesk-php53-tidy" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-tidy-5.3.29-centos7.17090118.x86_64.rpm" size="16568" buildtime="1504264041" md5="fe5ba27fcfeff31c29b04f7f326d0b16" arch="x86_64" />
+        <package name="plesk-php53-xcache" version="3.2.0" release="centos7.15100614" file="packages/plesk-php53-xcache-3.2.0-centos7.15100614.x86_64.rpm" size="54792" buildtime="1444120477" md5="17356ece8307b29468da70eb64b1eb13" arch="x86_64" />
+        <package name="plesk-php53-xdebug" version="2.2.3" release="centos7.15100614" file="packages/plesk-php53-xdebug-2.2.3-centos7.15100614.x86_64.rpm" size="76928" buildtime="1444120489" md5="ad57ce1dcbd7bb2658c317496d88f659" arch="x86_64" />
+        <package name="plesk-php53-xml" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-xml-5.3.29-centos7.17090118.x86_64.rpm" size="72108" buildtime="1504264041" md5="af52af08dd80b96e7c8ab82a39d9c8b0" arch="x86_64" />
+        <package name="plesk-php53-xmlrpc" version="5.3.29" release="centos7.17090118" file="packages/plesk-php53-xmlrpc-5.3.29-centos7.17090118.x86_64.rpm" size="32972" buildtime="1504264041" md5="fb066491a1abd7e3c4cc05c7d46fb6c9" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-5.3.29-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-5.3.29-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

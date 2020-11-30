@@ -1,0 +1,72 @@
+<html>
+<head>
+<link rel="stylesheet" href="../../includes/styles/stylesheet.css" type="text/css">
+</head>
+<body class="popupBody">
+
+<div class="popupContainer">
+
+<span class="Heading1">Sending Emails Based on Contact Segmenting</span>
+<br><br>
+In this brief tutorial you'll learn how to setup a contact list with custom fields to collect the age and sex of your contacts when they signup. After that you'll learn how to segment your contact list and only send your email campaign to males over the age of 21.
+<br><br>
+<b>Creating your contact list with custom fields</b>
+<br><br>
+To get started, <a href="getting_started.html" target="_blank">create a contact list</a>. Click on the "View Custom Fields" menu option under the "Contact Lists" tab and create two custom fields:
+<ol>
+	<li>Age: Make this a required number field.</li>
+	<li>Sex: Make this a required radio button field with two options: male and female.</li>
+</ol>
+<center>
+	<div style="width:320px" class="imageTag">
+		<img src="images/segmentation_1.gif" title="Creating custom fields" border="1">
+		<br>Create two custom fields: <i>age and sex</i> before moving on.
+	</div>
+</center>
+<br>
+<b>Import/add contacts</b>
+<br><br>
+Choose how you want to add some contacts to your contact list. For this example we will use the "Add a Contact" option under the "Contacts" tab to manually add a few contacts:
+<br><br>
+<center>
+	<div style="width:400px" class="imageTag">
+		<img src="images/segmentation_2.gif" title="Adding contacts manually" border="1">
+		<br>For this example we will manually add a few contacts to our contact list, being sure to add a variety of age ranges (for example, 15, 21, 22, 25 and 40) and sexes.
+	</div>
+</center>
+<br>
+<b>Creating the email campaign</b>
+<br><br>
+Create a basic email campaign. You can add any content you want. I started with the built in business template and added some content using the custom field placeholders. If you want to add a custom field into your email, click the "Insert Custom Field" link under the editor.
+<br><br>
+<center>
+	<div style="width:350px" class="imageTag">
+		<img src="images/segmentation_3.gif" title="Creating our email campaign" border="1">
+		<br>Create an email campaign - it doesn't matter what you type for the content of the email as this is for testing purposes only.
+	</div>
+</center>
+<br>
+<b>Sending and segmenting the campaign</b>
+<br><br>
+Click the "Send an Email Campaign" option under the "Email Campaigns" tab at the top of the system. Choose the contact list you want to send to, and make sure you tick the "Yes, show filtering options on the next page" option as this is where we will segment the list.
+<br><br>
+<center>
+	<div style="width:520px" class="imageTag">
+		<img src="images/segmentation_4.gif" title="Sending our email campaign" border="1">
+		<br>The first step of segmenting and then sending our email campaign.
+	</div>
+</center>
+<br>
+On the next step we can segment and filter our contact list, telling the system to only send to contacts who match certain details. In our example we only want to send to males over 21, so we fill out the custom field filtering options. You can use powerful filtering options on number fields as you can see below.
+<br><br>
+<center>
+	<div style="width:490px" class="imageTag">
+		<img src="images/segmentation_5.gif" title="Segmenting our list using filtering" border="1">
+		<br>Segmenting our contact list using filter options.
+	</div>
+</center>
+<br>
+We have chosen to only send to males over 21. The "&gt; 21" text in the age field takes care of the age segmenting for us automatically. Click the "Next >>" button to continue and complete the rest of the sending steps as normal. The email will only be sent to male contacts over the age of 21.
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim: set sw=2 ts=2 sts=2 et: -->
+<addon id="php70" name="PHP v 7.0">
+  <release id="PHP70_17" name="PHP v 7.0 for Plesk 17" version="7.0.33">
+    <compatibility_info>
+      <compatible product_id="plesk" from_version="17.0.15" to_version="18.0.99" />
+    </compatibility_info>
+    <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="PHP70_17/php70-cos6-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="PHP70_17/php70-cos7-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="PHP70_17/php70-cos6-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="PHP70_17/php70-cos7-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="PHP70_17/php70-cos6-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="PHP70_17/php70-cos7-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="PHP70_17/php70-deb7.0-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="PHP70_17/php70-deb8.0-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="9.0" os_arch="x86_64" config="PHP70_17/php70-deb9.0-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="PHP70_17/php70-ubt12.04-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="PHP70_17/php70-ubt14.04-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="PHP70_17/php70-ubt16.04-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="18.04" os_arch="x86_64" config="PHP70_17/php70-ubt18.04-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="PHP70_17/php70-cos7-x86_64.plesk17.inf3"/>
+  </release>
+
+  <release id="PHP_7.0.29" name="PHP v 7.0.29" version="7.0.29">
+    <compatibility_info>
+      <compatible product_id="plesk" from_version="12.5.30" to_version="17.0.10" />
+    </compatibility_info>
+
+    <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-cos6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-cos6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-cos6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-deb7.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-deb7.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-deb8.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-deb8.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-ubt12.04-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-ubt12.04-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="i386" config="PHP_7.0.29/php70-7.0.29-ubt14.04-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="PHP_7.0.29/php70-7.0.29-ubt14.04-x86_64.inf3"/>
+  </release>
+
+</addon>

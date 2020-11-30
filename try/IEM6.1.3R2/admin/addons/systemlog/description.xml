@@ -1,0 +1,7 @@
+<addon_description>
+	<name>Error Log Viewer</name>
+	<description>View a list of PHP errors, warnings and notices from the tools menu.</description>
+	<author>Interspire</author>
+	<version>1.0</version>
+	<hasconfiguration>1</hasconfiguration>
+</addon_description>

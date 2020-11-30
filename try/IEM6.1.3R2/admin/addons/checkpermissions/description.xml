@@ -1,0 +1,9 @@
+<addon_description>
+	<name>Permission Check</name>
+	<description>Check if the required files and folders have the permissions they need from the tools menu.</description>
+	<author>Flipmode!</author>
+	<version>1.0</version>
+	<hasconfiguration>0</hasconfiguration>
+	<license>Commercial</license>
+	<licenseurl>#</licenseurl>
+</addon_description>

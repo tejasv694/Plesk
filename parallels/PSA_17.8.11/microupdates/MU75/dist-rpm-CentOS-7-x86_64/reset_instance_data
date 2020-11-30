@@ -1,0 +1,3114 @@
+#!/bin/bash
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+#
+
+#
+# Plesk script
+#
+
+
+
+#default values
+
+product_default_conf()
+{
+
+PRODUCT_ROOT_D=/usr/local/psa
+PRODUCT_RC_D=/etc/rc.d/init.d
+PRODUCT_ETC_D=/usr/local/psa/etc
+PLESK_LIBEXEC_DIR=/usr/lib64/plesk-9.0
+HTTPD_VHOSTS_D=/var/www/vhosts
+HTTPD_CONF_D=/etc/httpd/conf
+HTTPD_INCLUDE_D=/etc/httpd/conf.d
+HTTPD_BIN=/usr/sbin/httpd
+HTTPD_LOG_D=/var/log/httpd
+HTTPD_SERVICE=httpd
+QMAIL_ROOT_D=/var/qmail
+PLESK_MAILNAMES_D=/var/qmail/mailnames
+RBLSMTPD=/usr/sbin/rblsmtpd
+NAMED_RUN_ROOT_D=/var/named/chroot
+NAMED_OPTIONS_CONF=
+NAMED_ZONES_CONF=
+WEB_STAT=/usr/bin/webalizer
+MYSQL_VAR_D=/var/lib/mysql
+MYSQL_BIN_D=/usr/bin
+MYSQL_SOCKET=/var/lib/mysql/mysql.sock
+PGSQL_DATA_D=/var/lib/pgsql/data
+PGSQL_CONF_D=/var/lib/pgsql/data
+PGSQL_BIN_D=/usr/bin
+DUMP_D=/var/lib/psa/dumps
+DUMP_TMP_D=/tmp
+MAILMAN_ROOT_D=/usr/lib/mailman
+MAILMAN_VAR_D=/var/lib/mailman
+PYTHON_BIN=/usr/bin/python
+DRWEB_ROOT_D=/opt/drweb
+DRWEB_ETC_D=/etc/drweb
+GPG_BIN=/usr/bin/gpg
+TAR_BIN=/bin/tar
+AWSTATS_ETC_D=/etc/awstats
+AWSTATS_BIN_D=/var/www/cgi-bin/awstats
+AWSTATS_TOOLS_D=/usr/share/awstats
+AWSTATS_DOC_D=/var/www/html/awstats
+OPENSSL_BIN=/usr/bin/openssl
+LIB_SSL_PATH=/lib/libssl.so
+LIB_CRYPTO_PATH=/lib/libcrypto.so
+CLIENT_PHP_BIN=/usr/local/psa/bin/php-cli
+SNI_SUPPORT=true
+APS_DB_DRIVER_LIBRARY=/usr/lib64/libmysqlserver.so.2
+IPv6_DISABLED=false
+SA_MAX_MAIL_SIZE=256000
+
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+#admin
+
+set_admin_params()
+{
+
+	ADMIN_ROOT=$PRODUCT_ROOT_D/admin
+
+	UTILS_DIR=$ADMIN_ROOT/sbin
+
+	admin_user="${product}adm"
+	admin_UID=8444
+	admin_group="${product}adm"
+	admin_GID=8444
+
+	ADMIN_CERT="$ADMIN_ROOT/conf/httpsd.pem"
+
+	define_start_script
+}
+
+get_certificate()
+{
+	local dst="$1"
+	local src="${certificate_file}"
+# Check or generate new default certificate
+	[ -s "$src" ] || generate_default_certificate
+ 	set_ac 0 0 0400 "${src}"
+	cp -fp $src $dst
+}
+
+generate_default_certificate()
+{
+	# Currently I have no will to accurately rewrite the stuff below
+	# so I just add support for (optional) file parameter. Actually
+	# one need to accurately handle temporary files, directory creation
+	# etc. Probably next time...
+	local cert_file
+
+	cert_file="${certificate_file}"
+	if [ -s "$cert_file" ]; then
+		p_echo "default certificate already exists"
+		return
+	fi
+
+	# This var also can safely be made local. It's not used outside
+	local OPENSSL_CNF is_temp_cnf rc
+
+	OPENSSL_CNF=${PRODUCT_ROOT_D}/admin/conf/openssl.cnf
+	is_temp_cnf=0
+
+	if [ ! -f "${OPENSSL_CNF}" ]; then
+		# Well, base psa package isn't yet installed. 
+		# let's form a temporary config file
+		OPENSSL_CNF=$(mktemp /tmp/openssl.cnf.XXXXXX)
+		[ $? != 0 ] && die "Unable to create temporary file"
+		cat >>${OPENSSL_CNF} <<EOF
+[ req ]
+attributes=req_attributes
+distinguished_name=req_distinguished_name
+default_md = sha256
+
+[ req_attributes ]
+challengePassword               = A challenge password
+unstructuredName                = An optional company name
+
+[ req_distinguished_name ]
+countryName             = Country Name
+stateOrProvinceName     = State or Province Name
+localityName            = Locality Name
+organizationName        = Organisation Name
+organizationalUnitName  = Organization Unit Name
+commonName              = Common Name
+emailAddress            = Email Address
+EOF
+		is_temp_cnf=1
+	fi
+
+	local cert_file_d=`dirname "${cert_file}"`
+	[ -d "${cert_file_d}" ] || mkdir -p "${cert_file_d}"
+
+	echo "CH
+.
+Schaffhausen
+Plesk
+.
+Plesk
+info@plesk.com
+
+
+" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+	-config ${OPENSSL_CNF} -set_serial `date +%s` -keyout "${cert_file}_" \
+	-out "${cert_file}_" >> $product_log 2>&1
+
+	# preserve exit code
+	rc=$?
+
+	if [ $rc -eq 0 ]; then
+		cat "${cert_file}_" | sed -e 's/^\(-----END.*\)/\1\
+/' > $cert_file
+		set_ac 0 0 0400 "${cert_file}"
+	fi
+	# cleanup temporary files
+	rm -f "${cert_file}_" ||:
+	if [ "x$is_temp_cnf" = "x1" ]; then
+		rm -f ${OPENSSL_CNF} ||:
+	fi
+	return $rc
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+clean_panel_sessions()
+{
+# use subshell to catch die's inside db_do:
+	(
+	db_do "DELETE FROM sessions"
+	db_do "DELETE FROM SessionContexts"
+	)
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+set_apache_params()
+{
+	apache_user="apache"
+	apache_UID=80
+	apache_group="apache"
+	apache_GID=80
+
+	user_apxs="/usr/sbin/apxs"
+
+	apache_pid_file="$APACHE_ROOT/logs/httpd.pid"
+	apache_lock_file="$APACHE_ROOT/logs/httpd.lock"
+	product_lock_file="$HTTPD_CONF_D/cnf.lock"
+	apache_service_name="httpd"
+
+	apache_modules_d="/usr/lib64/httpd/modules"
+
+	apache_service="$apache_service_name"
+
+	apache_httpd_conf="$HTTPD_CONF_D/httpd.conf"
+	apache_httpd_conf2="$HTTPD_CONF_D/httpd2.conf"
+	apache_httpd_conf_in="$HTTPD_CONF_D/httpd.conf.in"
+
+	apache_httpd_include="$HTTPD_INCLUDE_D/zz010_psa_httpd.conf"
+
+	APACHE_CERT="$HTTPD_CONF_D/httpd.pem"
+	APACHE_ROOT="/usr"
+
+	min_suexec_UID=10000
+	max_suexec_UID=16000
+	min_suexec_GID=$min_suexec_UID
+	max_suexec_GID=$max_suexec_UID
+
+	suexec_storage=/usr/lib64/plesk-9.0/suexec
+	suexec=/usr/sbin/suexec
+	suexec_dir="`dirname "$suexec"`"
+	suexec_file="`basename "$suexec"`"
+
+	rpm_httpd_bin=/usr/sbin/httpd
+}
+
+defer_apache_reconfiguration()
+{
+	apache_need_reconfiguration="yes"
+}
+
+reconfigure_apache_if_needed()
+{
+	[ -n "$apache_need_reconfiguration" ] || return 0
+	echo_try "reconfigure webserver(s) (reconfigure-all)"
+	if httpdmng_reconfigure all ; then
+		unset apache_need_reconfiguration
+		suc
+	else
+		warn "webserver reconfiguration, maybe will attempt later"
+	fi
+}
+
+httpdmng_reconfigure()
+{
+	local httpdmng_tool="${PRODUCT_ROOT_D}/admin/sbin/httpdmng"
+	local what="$1"
+	shift
+
+	case "$what" in
+		all|server) : ;;
+		*) simply_die "Unexpected argument '$what' to httpdmng_reconfigure()" ;;
+	esac
+
+	if [ ! -x "$httpdmng_tool" ]; then
+		p_echo "Unable to do 'httpdmng --reconfigure-$what': the utility is not yet on its place. Maybe will attempt later."
+		return 1
+	fi
+
+	! "$httpdmng_tool" "--reconfigure-$what" -service-node local "$@" >> $product_log 2>&1 || return 0
+
+	# There are 2 well known possible reasons of webserver templates reconfiguration failure:
+	# 1. domain/server/webmail templates are well, but arbitrary domain unable to be configured due to  the some reasons,
+	#	for example broken vhost structure
+	# 2. broken domain/server/webmail templates
+
+
+	# STEP 1. try to rollback to the default templates
+	! httpdmng_reconfigure_rollback_to_default_templates "${what}" "$@" || return 0
+
+	if [ "all" = "${what}" ]; then
+	# STEP 2. ignore broken domains
+		pp_echo "Warning: web server configuration is broken. We will try to repair it. This operation can take a lot of time, please do not interrupt the process."
+		p_echo "Unable to rebuild web server configuration, possible there are broken domains"
+		local inten="reconfigure web-server configurations skipping broken domains"
+		echo_try "${inten}"
+		if "$httpdmng_tool" "--reconfigure-$what" "-skip-broken" -service-node local "$@" >> $product_log 2>&1; then
+			suc
+			return 0
+		else
+	# STEP 3. try to rollback to the default templates, broken domains are ignored (possibly problem are in the server/webmail configs)
+			warn "${inten}"
+			! httpdmng_reconfigure_rollback_to_default_templates "${what}" "-skip-broken" -service-node local "$@" || return 0
+		fi
+	fi
+
+	return 1
+}
+
+# NOTE: do not use function directly, it just helper for httpdmng_reconfigure !!!
+# here we try to reconfigure webserver configs using default temnplates
+httpdmng_reconfigure_rollback_to_default_templates()
+{
+	local template_d="${PRODUCT_ROOT_D}/admin/conf/templates"
+	local inten="rebuild web server configs with default templates after reconfiguration failure"
+	local tmp_d=
+	local what="$1"
+	shift
+
+	[ -d "${template_d}/custom" ] || return 1
+	p_echo "Unable to rebuild web server configuration with currently active default templates"
+	echo_try "${inten}"
+
+	if ! tmp_d=`mktemp -d "${template_d}/broken_templates_XXXXXXXX" 2>>$product_log`; then
+		warn "${inten} - unable to create temporary directory for custom templates"
+		return 1
+	fi
+	if ! mv -f "${template_d}/custom/"* "${tmp_d}"; then
+		warn "${inten} - unable to move custom templates into ${tmp_d}"
+		return 1
+	fi
+	rm -rf "${template_d}/custom"
+
+	if ! "$httpdmng_tool" "--reconfigure-$what" -service-node local "$@" >> $product_log 2>&1; then
+		warn "${inten} - using default templates does not solve the problem, restore custom ones"
+		mv -f "${tmp_d}" "${template_d}/custom"
+		return 1
+	fi
+
+	suc
+	pp_echo "Custom templates which are breaking web server reconfiguration were moved to ${tmp_d}"
+	cat <<EOF >"${tmp_d}/README"
+This directory contains broken custom webserver templates which are breaking web server reconfiguration.
+Custom templates were moved here on `date` during product update or upgrade.
+EOF
+}
+
+read_apsc_connection_param_db()
+{
+	local param="$1"
+	db_select "SELECT val FROM misc WHERE param like 'aps_$param'"
+	echo "$db_select_output"
+}
+
+read_apsc_connection_params_db()
+{
+	# Warning: password can be encrypted. Don't use it.
+	apsc_db_name=`read_apsc_connection_param_db "database"`
+	apsc_db_user=`read_apsc_connection_param_db "login"`
+	apsc_db_passwd=`read_apsc_connection_param_db "password"`
+	apsc_db_host=`read_apsc_connection_param_db "host"`
+}
+
+save_apsc_connection_params_db()
+{
+	local register_script="$PRODUCT_ROOT_D/admin/plib/scripts/register_apsc_database.php"
+	[ -f "$register_script" ] || die 'can not find "register_apsc_database.php"'
+
+	sw_engine_pleskrun "$register_script" --register \
+		-host 'localhost' \
+		-port 3306 \
+		-database "$apsc_db_name" \
+		-login "$apsc_db_user" \
+		-password "$apsc_db_passwd" >> "$product_log" 2>&1
+}
+
+check_apsc_installed()
+{
+	local db_name=`read_apsc_connection_param_db "database"`
+
+	[ -n "$db_name" ] || return 1
+	db_test_database "$db_name"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# Backup manager tables will be managed by plesk
+
+pbm_create_certificate()
+{
+	local inten="generate certificate for backup signing"
+
+	[ -x "$PRODUCT_ROOT_D/admin/sbin/backup_sign" ] || return 0
+
+	if db_select "select val from misc where param='bu_cert_id'" && [ -n "$db_select_output"  ]; then
+#	Nothing to be done
+		return
+	fi
+
+	echo_try $inten
+
+	if ! $PRODUCT_ROOT_D/admin/sbin/backup_sign generate >> $product_log 2>&1; then
+		warn "backup certificate generation"
+		return 1
+	fi
+
+	suc
+}
+
+install_cron_backup()
+{
+	local backup_file_before_10_5_24="/etc/cron.d/plesk-backup-manager"
+	local backup_file="/etc/cron.d/plesk-backup-manager-task"
+
+	if [ -s "${backup_file_before_10_5_24}" ]; then
+		mv -f "${backup_file_before_10_5_24}" "${backup_file}"
+	else
+		rm -f "${backup_file_before_10_5_24}"
+	fi
+
+	[ ! -s "${backup_file}" ] || return 0
+	minutes=`get_random_number 15`
+
+	cat >"${backup_file}" <<-EOF
+$minutes,`expr $minutes + 15`,`expr $minutes + 30`,`expr $minutes + 45`	*	*	*	*	root [ -x $PRODUCT_ROOT_D/admin/sbin/backupmng ] && $PRODUCT_ROOT_D/admin/sbin/backupmng >/dev/null 2>&1
+EOF
+}
+
+remove_cron_backup()
+{
+	rm -f "/etc/cron.d/plesk-backup-manager" "/etc/cron.d/plesk-backup-manager-task"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+# import certificate into database when installing
+import_default_certificate()
+{
+	db_select "SELECT val FROM misc WHERE param = 'default_certificate_id'"
+
+	local default_certificate_id="$db_select_output"
+
+	if [ -z "$default_certificate_id" ]; then
+# Update misc table if needed
+		echo_try "import default certificate"
+		import_certificate "$certificate_file"  "default certificate"
+
+		db_do "REPLACE INTO misc set param='default_certificate_id', val='$last_certificate_id'"
+		default_certificate_id="$last_certificate_id"
+		suc
+	fi
+
+	db_select "SELECT val FROM misc WHERE param = 'cert_rep_id'"
+	local admin_repository_id="$db_select_output"
+
+	if [ -z "$admin_repository_id" ]; then
+		echo_try "push default certificate into repository"
+		db_select "REPLACE INTO Repository SET component_id='${default_certificate_id}';SELECT LAST_INSERT_ID();"
+		admin_repository_id="$db_select_output"
+		db_do "REPLACE INTO misc set param='cert_rep_id', val='${admin_repository_id}'"
+	else
+#	simple certificate insertion to repository
+		db_do "REPLACE INTO Repository SET rep_id='${admin_repository_id}', component_id='${default_certificate_id}'"
+	fi
+}
+
+# import certificate from a file to certificates table
+# $1 - certoificate file path
+# $2 - short description of certificate
+# last_certificate_id variable will contain its identifier
+import_certificate()
+{
+	local certificate_file certificate_comment inten
+
+	certificate_file=$1
+	certificate_comment=$2
+
+	cert_pub_val=`cat ${certificate_file} |
+		awk 'BEGIN { state=0 }
+		{
+			if (state == 0) {
+				if (index($0, "-BEGIN CERTIFICATE-") != 0) state = 1;
+			};
+			if (state == 1) {
+				print $0;
+				if (index($0, "-END CERTIFICATE-") != 0) state = 2;
+			}
+		}' |
+		perl -n -e 's/([^ A-Za-z0-9])/"%" . sprintf("%02X", unpack("C", $1))/ge; s/ /\+/g; print $_;'`
+
+	cert_priv_val=`cat ${certificate_file} |
+		awk 'BEGIN { state=0 }
+		{
+			if (state == 0) {
+				if ((index($0, "-BEGIN ") != 0) &&
+					(index($0, " PRIVATE KEY-") != 0)) state = 1;
+			};
+
+			if (state == 1) {
+				print $0;
+				if ((index($0, "-END ") != 0) &&
+					(index($0, " PRIVATE KEY-") != 0)) state = 2;
+			}
+		}' |
+		perl -n -e 's/([^ A-Za-z0-9])/"%" . sprintf("%02X", unpack("C", $1))/ge; s/ /\+/g; print $_;'`
+
+	if [ ! -d "${PRODUCT_ROOT_D}"/var/certificates ]; then
+		inten="creating directory for certificates"
+		mkdir -p "${PRODUCT_ROOT_D}"/var/certificates || die ${inten}
+		chown root:0 "${PRODUCT_ROOT_D}"/var/certificates || die ${inten}
+		chmod 500 "${PRODUCT_ROOT_D}"/var/certificates || die ${inten}
+	fi
+
+	# copy certificate file to file repository
+	newcertfile=`mktemp "${PRODUCT_ROOT_D}"/var/certificates/certXXXXXXX`
+
+	cp "${certificate_file}" "${newcertfile}"  || die "place certificate to its directory"
+	chown root:0 "${newcertfile}"
+	chmod 400 "${newcertfile}"
+
+	newcertfile=`basename ${newcertfile}`
+	db_select "INSERT INTO certificates (pvt_key, cert, name, ca_cert, csr, cert_file, ca_file)
+		VALUES ('${cert_priv_val}', '${cert_pub_val}', '${certificate_comment}', '', '',
+			'${newcertfile}', '');
+		SELECT LAST_INSERT_ID()"
+
+	last_certificate_id="$db_select_output"
+}
+# vim:ft=sh
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh:
+
+#courier-imap
+
+set_courier_imap_params()
+{
+	COURIERIMAP_CONFDIR="/etc/courier-imap"
+	IMAPD_CERT="/usr/share/imapd.pem"
+	POP3D_CERT="/usr/share/pop3d.pem"
+	COURIER_DHPARAMS="/usr/share/dhparams.pem"
+
+	# Certificate paths for Courier-IMAP <= 3.0.8
+	OLD_IMAPD_CERT="/usr/share/courier-imap/imapd.pem"
+	OLD_POP3D_CERT="/usr/share/courier-imap/pop3d.pem"
+
+	COURIER_DELIVER_QUOTA="/usr/bin/deliverquota"
+
+	courier_imapd_service="courier-imapd"
+	courier_imaps_service="courier-imaps"
+	courier_pop3d_service="courier-pop3d"
+	courier_pop3s_service="courier-pop3s"
+	courier_authdaemon_service="courier-authdaemon"
+
+	# Service name for Courier-IMAP <= 3.0.8
+	old_courier_service="courier-imap"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:syntax=sh
+
+install_cron_somely()
+{
+	install_cron_somely_noop
+}
+
+remove_cron_somely()
+{
+	remove_cron_somely_noop
+}
+
+install_cron_somely_noop()
+{
+	:
+}
+
+remove_cron_somely_noop()
+{
+	:
+}
+
+# db_test test_query awk_script
+# Runs test_query and processes it with awk_script. If the output is
+# not empty, return 0, otherwise return 1. Hint: supply '1' for
+# awk_script to test just for the presence of any output.
+db_test()
+{
+	local any_db=
+	eval `sh_get_args '--any-db) any_db=yes;;'`
+
+	local test_query="$1"
+	local awk_script="$2"
+
+	if [ -n "$any_db" ]; then
+		local output="`mysql_raw_anydb -e \"$test_query\" 2>>\"$product_log\"`"
+	else
+		local output="`mysql_raw -e \"$test_query\" 2>>\"$product_log\"`"
+	fi
+	local status=$?
+	if [ "$status" -ne 0 ]; then
+		p_echo "$output"
+		die "run the following SQL query: $1"
+	fi
+
+	echo -n "$output" | awk -F '\t' -- "$awk_script" | test `wc -l` -ne 0
+}
+
+# db_do [--inten <inten>] query
+# Runs query. If it fails, die
+# the inten string describes the query reason (to make finding the bug simpler)
+db_do()
+{
+	local desc="execute SQL query"
+	eval `sh_get_args '--inten) desc=" (to $2)"; shift;;'`
+	if [ "$db_fix_check_stage" = "yes" ]; then
+		return
+	fi
+
+	local query="$1"
+
+	mysql -e "$query" >>"$product_log" 2>&1 || die "$desc, the query was: $query"
+}
+
+# db_select <query>
+# runs <query> via mysql_raw
+# writes output to db_select_output
+# if query fails, output errors and return 1
+db_select()
+{
+	local desc="execute SQL query"
+	local query="$1"
+	local output="`mysql_raw -e \"$query\" 2>>\"$product_log\"`"
+	local status="$?"
+	if [ "$status" -ne "0" ]; then
+		p_echo "$output"
+		die "run the following SQL query: $query"
+	fi
+
+	db_select_output="$output"
+	return 0
+}
+
+# db_test_database database
+# Returns 0 if the database exists
+db_test_database()
+{
+	local database="$1"
+
+	local mysql_db_name="mysql"
+	db_test "SHOW DATABASES" "\$1 == \"$database\""
+}
+
+# db_test_table table
+# Returns 0 if the table exists
+db_test_table()
+{
+	local table="$1"
+
+	db_test "SHOW TABLES LIKE '$table'" 1
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh:
+
+set_dovecot_params()
+{
+	DOVECOT_CONFDIR="/etc/dovecot"
+	DOVECOT_INCLUDE_DIR="/etc/dovecot/conf.d"
+	DOVECOT_DIST_CONFDIR="/usr/share/doc/plesk-dovecot/dist-config"
+	DOVECOT_CERT_DIR="/etc/dovecot/private"
+	DOVECOT_CERT="$DOVECOT_CERT_DIR/ssl-cert-and-key.pem"
+
+	DOVECOT_INTERNAL_USERGROUP="dovecot"
+	DOVECOT_LOGIN_USERGROUP="dovenull"
+
+	DOVECOT_LDA="/usr/libexec/dovecot/dovecot-lda"
+
+	dovecot_service="dovecot"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh
+# Usage:  pleskrc <service> <action>
+pleskrc()
+{
+	[ 2 -le $# ] || die "Not enough arguments"
+
+	local service_name=$1
+	local action=$2
+	local ret=0
+	local inten
+	shift
+	shift
+
+	# Now check redefined functions
+	if test "$machine" = "linux" && is_function "${service_name}_${action}_${machine}_${linux_distr}"; then
+		"${service_name}_${action}_${machine}_${linux_distr}" "$@"
+		return $?
+	elif is_function "${service_name}_${action}_${machine}"; then
+		"${service_name}_${action}_${machine}" "$@"
+		return $?
+	elif is_function "${service_name}_${action}"; then
+		"${service_name}_${action}" "$@"
+		return $?
+	fi
+
+	# Not redefined - call default action
+	eval "service=\$${service_name}_service"
+	[ -n "$service" ] || die "$action $service_name service (Empty service name for '$service_name')"
+
+	inten="$action service $service"
+	[ "$action" = "status" -o "$action" = "exists" ] || echo_try "$inten"
+
+	service_ctl "$action" "$service" "$service_name"
+
+	ret="$?"
+	if [ "$action" != "status" -a "${action}" != "exists" ]; then
+		if [ "$ret" -eq 0 ]; then
+			suc
+		else
+			if [ -x "/bin/systemctl" ]; then
+				p_echo "`/bin/systemctl -l status \"${service}.service\" | awk 'BEGIN {s=0} s==1 {s=2} /^$/ {s=1} s==2 {print}'`"
+			fi
+			warn "$inten"
+		fi
+	fi
+
+	return $ret
+}
+
+# NOTE:
+#	Function service_ctl is just helper for pleskrc().
+#	Do not call it directly, use pleskrc()!!!
+service_ctl()
+{
+	local action=$1
+	local service=$2
+	local service_name=$3
+
+	if [ "$action" != "exists" ]; then
+		_service_exec $service exists;
+		if [ "$?" != "0" ]; then
+			warn "attempt to ${inten} - control script doesn't exist or isn't executable"
+			return 1
+		fi
+	fi
+
+	case "$action" in
+		start)
+			pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		stop)
+			! pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		restart)
+			if pleskrc "$service_name" status; then
+				_service_exec "$service" "$action"
+			else
+				_service_exec "$service" start
+			fi
+			;;
+		reload)
+			! pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		status)
+			_service_exec "$service" status
+			;;
+		try-restart)
+			if [ -x "/bin/systemctl" ]; then
+				_service_exec "$service" "$action"
+			else
+				! pleskrc "$service_name" status || _service_exec "$service" "restart"
+			fi
+			;;
+		try-reload)
+			! pleskrc "$service_name" status || _service_exec "$service" "reload"
+			;;
+		reload-or-restart)
+			if [ -x "/bin/systemctl" ]; then
+				_service_exec "$service" "$action"
+			elif pleskrc "$service_name" status; then
+				_service_exec "$service" "reload"
+			else
+				_service_exec "$service" "start"
+			fi
+			;;
+		*)
+			_service_exec "$service" "$action"
+			;;
+	esac >> "$product_log"
+}
+
+_service_exec()
+{
+	local service=$1
+	local action=$2
+
+	local action_cmd
+	local sysvinit_service="/etc/rc.d/init.d/$service"
+
+	if [ -x "/bin/systemctl" ]; then
+		case "${action}" in
+			exists)
+				if /bin/systemctl list-unit-files | awk 'BEGIN { rc = 1 } $1 == "'$service'.service" { rc = 0;} END { exit rc }'; then
+					return 0 # systemd unit
+				elif [ -x "$sysvinit_service" ]; then
+					return 0 # sysvinit compat
+				fi
+				return 1 # not found
+				;;
+			status)
+				action="is-active"
+				;;
+			reload|graceful)
+				action='reload-or-try-restart'
+				;;
+		esac
+		/bin/systemctl "$action" "${service}.service"
+	elif  [ -x "/sbin/initctl" -a -e "/etc/init/$service.conf" ]; then  # upstart (ubuntu)
+		if [ "$action" = "status" ]; then
+			/sbin/initctl status "$service" | grep -qE ' ([0-9]+)$' && return 0 || return 1
+		elif [ "$action" = "exists" ]; then
+			return 0
+		else
+			/sbin/initctl "$action" "$service"
+		fi
+	else
+		if [ -x "/usr/sbin/invoke-rc.d" ]; then
+			action_cmd="/usr/sbin/invoke-rc.d $service"
+		elif [ -x "/sbin/service" ]; then
+			action_cmd="/sbin/service $service"
+		elif [ -x "/usr/sbin/service" ]; then
+			action_cmd="/usr/sbin/service $service"
+		else
+			action_cmd="$sysvinit_service"
+		fi
+
+		if [ "$action" = "exists" ]; then
+			[ -x "$sysvinit_service" ] && return 0 || return 1
+		else
+			$action_cmd $action 2>/dev/null
+		fi
+	fi
+}
+
+is_function()
+{
+	local type_output=$(type -t "$1")
+	test "X${type_output}" = "Xfunction"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+# echo message to product log and console (always visible)
+pp_echo()
+{
+    if [ -n "$product_log" ] ; then
+        echo "$@" >> "$product_log" 2>&1
+    fi
+    echo "$@" >&2
+}
+
+# echo message to product log, unless debug
+p_echo()
+{
+    if [ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" -o -z "$product_log" ] ; then
+        echo "$@" >&2
+    else
+        echo "$@" >> "$product_log" 2>&1
+    fi
+}
+
+# echo message to product log without new line, unless debug
+pnnl_echo()
+{
+    if [ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" -o -z "$product_log" ] ; then
+        echo -n "$*" >&2
+    else
+        echo -n "$*" >> "$product_log" 2>&1
+    fi
+}
+
+die()
+{
+	PACKAGE_SCRIPT_FAILED="$*"
+
+	report_problem \
+		"ERROR while trying to $*" \
+		"Check the error reason(see log file: ${product_log}), fix and try again"
+
+	selinux_close
+
+	exit 1
+}
+
+simply_die()
+{
+	report_problem "$@"
+	exit 1
+}
+
+warn()
+{
+	local inten
+	inten="$1"
+	p_echo
+	p_echo "WARNING!"
+	pnnl_echo "Some problems are found during $inten"
+	p_echo "(see log file: ${product_log})"
+	p_echo
+	p_echo "Continue..."
+	p_echo
+
+	product_log_tail | send_error_report_with_input "Warning: $inten"
+
+	[ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" ] || \
+	product_log_tail
+}
+
+# Use this function to report failed actions.
+# Typical report should contain
+# - reason or problem description (example: file copying failed)
+# - how to resolve or investigate problem (example: check file permissions, free disk space)
+# - how to re-run action (example: perform specific command, restart bootstrapper script, run installation again)
+report_problem()
+{
+	[ -n "$product_problems_log" ] || product_problems_log="/dev/stderr"
+
+	p_echo
+	if [ "0$problems_occured" -eq 0 ]; then
+		echo "***** $process problem report *****" >> "$product_problems_log" 2>&1
+	fi
+	for problem_message in "$@"; do
+		p_echo "$problem_message"
+		echo "$problem_message" >> "$product_problems_log" 2>&1
+	done
+	p_echo
+
+	product_log_tail | send_error_report_with_input "Problem: $@"
+
+	[ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" ] || \
+		product_log_tail
+
+	problems_occured=1
+}
+
+echo_try()
+{
+	msg="$*"
+	pnnl_echo " Trying to $msg... "
+}
+
+suc()
+{
+	p_echo "done"
+}
+
+# do not call it w/o input! Use send_error_report in these cases.
+send_error_report_with_input()
+{
+	get_product_versions
+	{
+		echo "$@"
+		echo ""
+		if [ -n "$error_report_context" ]; then
+			echo "Context: $error_report_context"
+			echo ""
+		fi
+		if [ -n "$RP_LOADED_PATCHES" ]; then
+			echo "Loaded runtime patches: $RP_LOADED_PATCHES"
+			echo ""
+		fi
+		cat -
+	} | $PRODUCT_ROOT_D/admin/bin/send-error-report --version "$product_this_version" install >/dev/null 2>&1
+}
+
+set_error_report_context()
+{
+	error_report_context="$*"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+reexec_with_clean_env()
+{
+	# Usage: call this function as 'reexec_with_clean_env "$@"' at the start of a script.
+	#        Don't use with scripts that require sensitive environment variables.
+	#        Don't put the call under any input/output redirection.
+	# Purpose: make sure the script is executed with a sane environment.
+
+	export LANG=C LC_MESSAGES=C LC_ALL=C
+	export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+	umask 022
+
+	[ -z "$PLESK_INSTALLER_ENV_CLEANED" ] || { unset PLESK_INSTALLER_ENV_CLEANED; return 0; }
+	[ -n "$BASH" ] || exec /bin/bash "$0" "$@"
+
+	# N.B.: the following code requires Bash. On Dash it would cause syntax error upon parse w/o eval.
+	eval '
+	local extra_vars=()                     # list of variables to preserve
+	for var in "${!PLESK_@}"; do            # enumerate all PLESK_* variables
+		extra_vars+=("$var=${!var}")
+	done
+	extra_vars+=("PLESK_INSTALLER_ENV_CLEANED=1")
+
+	# Exec self with clean env except for extra_vars, shell opts, and arguments.
+	exec /usr/bin/env -i "${extra_vars[@]}" /bin/bash ${-:+-$-} "$0" "$@" || {
+		echo "Failed to reexec self ($0) with clean environment" >&2
+		exit 91		# Just some relatively unique error code
+	}
+	'
+}
+
+# accumulates chown and chmod
+set_ac()
+{
+	local u_owner g_owner perms node
+	u_owner="$1"
+	g_owner="$2"
+	perms="$3"
+	node="$4"
+
+	# A very small optimization - replacing of two execs by one,
+	#    it works only if the following conditions are observed:
+	#       - u_owner is username (not UID);
+	#       - g_owner is group (not GID);
+	#       - perms is in octal mode.
+	# If some conditions aren't observed,
+	#    optimization doesn't work,
+	#    but it doesn't break function
+	[ "$(stat -c '%U:%G 0%a' $node)" != "$u_owner:$g_owner $perms" ] || return 0
+	chown $u_owner:$g_owner $node || die "chown $u_owner:$g_owner $node"
+	chmod $perms $node || die "chmod $perms $node"
+}
+
+mkdir_ex()
+{
+	local owner group mode dir
+	owner="$1"
+	group="$2"
+	mode="$3"
+	dir="$4"
+
+	if ! test -d "$dir"; then
+		mkdir "$dir" || die "create directory $dir"
+	fi
+	set_ac "$owner" "$group" "$mode" "$dir"
+}
+
+call_optional_function()
+{
+	export LANG=C LC_MESSAGES=C LC_ALL=C
+	local type_output="`type \"$1\" 2>/dev/null | head -n 1`"
+	case "$type_output" in
+		*function)
+			"$@"
+			;;
+		*)
+			return 0
+			;;
+	esac
+}
+
+sh_get_args()
+{
+	echo 'while true; do case "$1" in '"$1"'*) break;; esac; shift; done'
+}
+
+get_random_number()
+{
+	perl -e '
+	 my $res = int(rand($ARGV[0]));
+	 if (exists $ARGV[1]) {
+	  $res = $res + $ARGV[1];
+	 }
+	 print $res;
+	' "$@"
+}
+
+get_random_string()
+{
+	local str_length="$1"
+	local str_symbols="$2"
+	if [ -x "$PRODUCT_ROOT_D/admin/sbin/random_str" -a -z "$str_symbols" ]; then
+		"$PRODUCT_ROOT_D/admin/sbin/random_str" "$str_length"
+	else
+		# random_str utility may be unavailable in pre phase
+		if [ -z "$str_length" ]; then
+			str_length="14"
+		fi
+		if [ -z "$str_symbols" ]; then
+			str_symbols="A-Za-z0-9_"
+		fi
+
+		< /dev/urandom tr -dc "$str_symbols" 2>/dev/null | head -c "$str_length" 2>/dev/null
+	fi
+}
+
+sequence()
+{
+	if type seq >/dev/null 2>&1; then
+		seq $*
+	elif type jot >/dev/null 2>&1; then
+		jot $*
+	else
+		die "Unable to find seq or jot command"
+	fi
+}
+
+get_ini_conf_var()
+{
+	local conf="$1"
+	local section="$2"
+	local param="$3"
+
+	[ -n "$conf" -a -n "$param" ] || die "get_ini_conf_var(): required parameters missing"
+
+	local section_empty=0
+	[ -n "$section" ] || section_empty=1
+
+	perl -n -e 'BEGIN { $insect='$section_empty' }
+				next if (/^\s*;/);
+				$insect=0 if (/^\s*\[.*\]/);
+				$insect=1 if (/^\s*\['$section'\]/);
+				$val = $2, $val =~ s/\s+$//, print $val . "\n" 
+					if ($insect && /^\s*('$param')\s*=\s*([^;\n]*)(;.*)?$/);' $conf | head -n 1
+}
+
+set_ini_conf_var()
+{
+	local conf="$1"
+	local section="$2"
+	local param="$3"
+	local value="$4"
+
+	[ -n "$conf" -a -n "$param" ] || die "set_ini_conf_var(): required parameters missing"
+
+	local section_empty=0
+	[ -n "$section" ] || section_empty=1
+
+	perl -n -e 'BEGIN { $insect='$section_empty' }
+				if (not /^\s*;/) {
+					$insect=0 if (/^\s*\[.*\]/);
+					$insect=1 if (/^\s*\['$section'\]/);
+					if ($insect && /^(\s*('$param')\s*=\s*)([^;\n]*)((;.*)?)$/) {
+						$tail = $4; chomp($tail); $tail = "    " . $tail if ($tail);
+						print $1 . "'$value'" . $tail . "\n";
+						next;
+					}
+				}
+				print $_;' $conf > $conf.tmp && \
+	cat $conf.tmp > $conf && rm -f $conf.tmp
+}
+
+sw_engine_pleskrun()
+{
+	if [ -x $PRODUCT_ROOT_D/bin/sw-engine-pleskrun ]; then
+		$PRODUCT_ROOT_D/bin/sw-engine-pleskrun "$@"
+	elif [ -x "/usr/bin/sw-engine" ]; then
+		local args
+		if [ -e "$PRODUCT_ROOT_D/admin/conf/php.ini" ]; then
+			args="-c $PRODUCT_ROOT_D/admin/conf/php.ini"
+		else
+			args="-d psasem.semfile=\"$PRODUCT_ROOT_D/var/psasem.sem\""
+		fi
+		/usr/bin/sw-engine $args "$@"
+	else
+		echo "No Plesk PHP interpreter found"
+		return 1
+	fi
+}
+
+install_default_license_key()
+{
+	pnnl_echo "install default license key ..."
+
+# key from 8.x?
+	if 	db_test_table "key_history" && \
+		db_test "SELECT COUNT(*) FROM key_history WHERE filename = '/etc/psa/psa.key' LIMIT 1" '$1!="0"'; then
+			p_echo "not needed, license from 8.x found"
+			return;
+	fi
+
+# check OF-key
+	if sw_engine_pleskrun -r 'exit(of_get_key_by_product("plesk-unix") === false ? 1 :0);'; then
+			p_echo "not needed, OF license found"
+			return
+	fi
+
+# check Unified key
+	if sw_engine_pleskrun -r 'exit(of_get_key_by_product("plesk-unified") === false ? 1 :0);'; then
+			p_echo "not needed, unified license found"
+			return
+	fi
+
+	local dest_dir="/etc/sw/keys/keys"
+	local key=plesk-default-key.xml
+
+    [ ! -s "$dest_dir/$key" ] || return 0
+
+    cp -f "${PRODUCT_ROOT_D}/var/$key" "$dest_dir/"
+    chown root:swkey-data "$dest_dir/$key"
+    chmod 0660 "$dest_dir/$key"
+    suc
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+#-*- vim:syntax=sh
+
+product_log_name_ex()
+{
+	local aux_descr="$1"
+	local action="${CUSTOM_LOG_ACTION_NAME-installation}"
+
+	if [ -n "$aux_descr" ]; then
+		aux_descr="_${aux_descr}"
+	fi
+
+	if [ -n "$CUSTOM_LOG_NAME" ]; then
+		echo "${CUSTOM_LOG_NAME}${action:+_$action}${aux_descr}.log"
+	else
+		echo "plesk_17.8.11${action:+_$action}${aux_descr}.log"
+	fi
+}
+
+product_log_name()
+{
+	product_log_name_ex
+}
+
+product_problems_log_name()
+{
+	product_log_name_ex "problems"
+}
+
+problems_log_tail()
+{
+	[ -f "$product_problems_log" ] || return 0
+	tac "$product_problems_log" | awk '/^START/ { exit } { print }' | tac
+}
+
+product_log_tail()
+{
+	[ -f "$product_log" ] || return 0
+	{
+		tac "$product_log" | awk '/^START/ { exit } { print }' | tac
+	} 2>/dev/null
+}
+
+cleanup_problems_log()
+{
+	[ -f "$product_problems_log" ] || return 0
+	touch "$product_problems_log.tmp"
+	chmod 0600 "$product_problems_log.tmp"
+	awk 'BEGIN 						{ st = "" } 
+		 /^START/ 					{ st=$0; next } 
+		 /^STOP/ && (st ~ /^START/) { st=""; next } 
+		 (st != "") 				{ print st; st="" } 
+		 							{ print }
+		' "$product_problems_log" > "$product_problems_log.tmp" && \
+	mv -f "$product_problems_log.tmp" "$product_problems_log" || \
+	rm -f "$product_problems_log.tmp"
+	
+	if [ ! -s "$product_problems_log" ]; then 
+		rm -f "$product_problems_log"
+	fi
+}
+
+set_log_action_name()
+{
+	CUSTOM_LOG_ACTION_NAME="$1"
+}
+
+mktemp_log()
+{
+	local logname="$1"
+	local dir="$2"
+
+	if [ "${logname:0:1}" != "/" ]; then
+		logname="$dir/$logname"
+	fi
+	dir="`dirname $logname`"
+	if [ ! -d "$dir" ]; then
+		mkdir -p "$dir" || { echo "Unable to create log directory : $dir"; exit 1; }
+		if [ "$EUID" -eq "0" ]; then
+			set_ac root root 0700 "$dir"
+		fi
+	fi
+
+	if [ "${logname%XXX}" != "$logname" ]; then
+		mktemp "$logname"
+	else
+		echo "$logname"
+	fi
+}
+
+log_is_in_dev()
+{
+	test "${1:0:5}" = "/dev/"
+}
+
+start_writing_logfile()
+{
+	local logfile="$1"
+	local title="$2"
+	! log_is_in_dev "$logfile" || return 0
+	echo "START $title" >> "$logfile" || { echo "Cannot write installation log $logfile" >&2; exit 1; }
+	[ "$EUID" -ne "0" ] || set_ac root root 0600 "$logfile"
+}
+
+create_product_log_symlink()
+{
+	local logfile="$1"
+	local prevdir="$2"
+
+	local prevlog="$prevdir/`basename $logfile`"
+	[ -e "$prevlog" ] || ln -sf "$logfile" "$prevlog"
+}
+
+log_start()
+{
+	true product_log_name product_problems_log_name mktemp_log
+
+	local title="$1"
+	local custom_log="$2"
+	local custom_problems_log="$3"
+
+	local product_log_dir="/var/log/plesk/install"
+
+	product_log="$product_log_dir/`product_log_name`"
+	product_problems_log="$product_log_dir/`product_problems_log_name`"
+	problems_occured=0
+
+	# init product log
+	[ ! -n "$custom_log" ] || product_log="$custom_log"
+	product_log=`mktemp_log "$product_log" "$product_log_dir"`
+
+	# init problems log
+	if [ -n "$custom_problems_log" ]; then
+		product_problems_log=`mktemp_log "$custom_problems_log" "$product_log_dir"`
+	elif [ -n "$custom_log" ]; then
+		product_problems_log="$product_log"
+	else
+		product_problems_log=`mktemp_log "$product_problems_log" "$product_log_dir"`
+	fi
+
+	# write starting message into logs
+	start_writing_logfile "$product_log" "$title"
+	if [ "$product_log" != "$product_problems_log" ]; then
+		start_writing_logfile "$product_problems_log" "$title"
+	fi
+
+	# create compat symlinks if logs are written to default localtions
+	if [ -z "$custom_log" -a -z "$CUSTOM_LOG_NAME" ]; then
+		create_product_log_symlink "$product_log" "/tmp"
+		[ ! -z "$custom_problems_log" ] || create_product_log_symlink "$product_problems_log" "/tmp"
+	fi
+
+	is_function profiler_setup && profiler_setup "$title" || :
+}
+
+log_stop()
+{
+	local title="$1"
+	local subject="$2"
+
+	if [ "$product_log" = "$product_problems_log" ] || \
+			log_is_in_dev "$product_problems_log"; then
+		[ -e "$product_log" ] && echo "STOP $title" >>"$product_log"
+		is_function profiler_stop && profiler_stop || :
+		return
+	fi
+
+	if [ -z "$subject" ]; then
+		subject="[${title}]"
+	fi
+
+	# check if problems are non-empty, check for problems_occured
+	local status
+	local problem_lines="`problems_log_tail | wc -l`"
+	if [ "$problem_lines" -eq 0 ]; then
+		status="completed successfully"
+	else
+		if [ $problems_occured -ne 0 ]; then
+			status="failed"
+		else
+			status="completed with warnings"
+		fi
+	fi
+
+	if [ -e "$product_log" ]; then
+		p_echo
+		p_echo "**** $subject $status."
+		p_echo
+	fi
+
+	if [ "$problem_lines" -ne 0 ]; then
+		[ ! -e "$product_log" ] || problems_log_tail >>"$product_log" 2>&1
+		problems_log_tail
+	fi
+
+	[ ! -e "$product_log" ] || echo "STOP $title" >>"$product_log"
+	if [ $problems_occured -ne 0 ]; then
+		echo "STOP $title: PROBLEMS FOUND" >>"$product_problems_log"
+	else
+		[ ! -s "$product_problems_log" ] || echo "STOP $title: OK" >>"$product_problems_log"
+	fi
+
+	if [ "X${PLESK_INSTALLER_KEEP_PROBLEMS_LOG}" = "X" ]; then
+		cleanup_problems_log
+	fi
+
+	# remove symlink to problems log if the log was removed
+	local linkpath="/tmp/`basename $product_problems_log`"
+	if [ -L "$linkpath" -a ! -e "$linkpath" ]; then
+		rm -f "$linkpath"
+	fi
+
+	is_function profiler_stop && profiler_stop || :
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+generate_password_file()
+{
+	local passwd_file="$1"
+	local title="$2"
+	local user="$3"
+	local group="$4"
+	local mode="$5"
+
+	if [ "$#" -ne 5 ]; then 
+		die "Some arguments was not defined for this function"
+	fi
+
+	local passwd
+	local inten="generate random password for $title"
+
+	echo_try $inten
+
+	if [ ! -s "$passwd_file" ]; then 
+		passwd=`get_random_string` || die $inten
+		echo "$passwd" > "$passwd_file" || die $inten
+		set_ac $user $group $mode $passwd_file || die $inten
+	else
+		set_ac $user $group $mode $passwd_file || die $inten
+	fi
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+get_pid()
+{
+	local i
+
+	local ex_f="$1"
+	local opt="$2"
+	local owner="$3"
+
+	local min_num="1"
+
+	# Use pidof by default, bug 121868, except for FreeBSD - 140182
+	if type pidof >/dev/null 2>&1 && [ "$os" != "BSD" ]; then
+		for pid in `pidof -o $$ -o $PPID -o %PPID -x $ex_f`; do
+			# Check for owner
+			[ "$opt" = "true" -a "$owner" != "`ps -p $pid -o ruser=`" ] && continue
+			min_num=$pid
+			break
+		done
+		common_var=$min_num
+		return $min_num
+	fi
+
+	case "$opt" in
+		false)
+			for i in `$ps_long | grep $ex_f | grep -v grep | grep -v httpsdctl | grep -v apachectl | awk '{print $2}' -`; do
+				min_num=$i
+				break
+			done
+			;;
+		true)
+			for i in `$ps_long | grep $ex_f | grep -v grep | grep -v httpsdctl | grep -v apachectl | grep "$owner" | awk '{print $2}' -`; do
+				min_num=$i
+				break
+			done
+			;;
+		*)
+			p_echo "get_pid: wrong parameter"
+			die "get_pid $ex_f $opt $owner"
+			;;
+	esac
+
+	common_var=$min_num
+	return $min_num
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+#
+# Support for runtime patching of shell scripts (including utilities and package scripts).
+#
+
+# --- Service functions ---
+
+# Load and apply a patch in a relatively safe way
+rp_safe_load_patch()
+{
+	local patch_file="$1"
+	echo_try "load shell patch '$patch_file'"
+	/bin/sh -n "$RP_BASEDIR/$patch_file" && 
+	{
+		. "$RP_BASEDIR/$patch_file"
+		RP_LOADED_PATCHES="$RP_LOADED_PATCHES $patch_file"
+	} &&
+	suc
+}
+
+# Apply patches specific to the current context (e.g., depending on utility basename or package name)
+# This is currently not implemented. This may be overriden by "spark".
+rp_patch_runtime_context_specific()
+{
+	:
+}
+
+# --- Main entry points ---
+
+rp_patch_runtime()
+{
+	# List of loaded patch files
+	RP_LOADED_PATCHES=
+
+	local RP_BASEDIR="$PRODUCT_BOOTSTRAPPER_DIR/rp"
+	[ -d "$RP_BASEDIR" ] || return 0
+
+	if [ -r "$RP_BASEDIR/spark" ]; then
+		rp_safe_load_patch "spark"
+	fi
+
+	call_optional_function rp_patch_runtime_context_specific "$@"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh
+
+initial_conf()
+{
+	PRODNAME="psa"
+	PRODUCT_NAME="psa"
+	product_full="Plesk Onyx"
+	product=${PRODNAME}
+	PRODUCT_FULL_NAME="Plesk Onyx"
+
+	product_etc="/etc/${PRODNAME}"
+	prod_conf_t="/etc/psa/psa.conf"
+	prodkey="$product_etc/$PRODNAME.key"
+
+	support_contact="http://www.parallels.com/support"
+	sales_email="sales@parallels.com"
+
+	product_version="17.8.11"
+	product_db_version="017008011"
+	conceived_os_vendor=CentOS
+	conceived_os_version="7"
+
+	clients_group="${product}cln"
+	clients_GID=10001
+
+	services_group="psaserv"
+	services_GID=10003
+
+	product_suff="saved_by_${product}".`date "+%m.%d;%H:%M"`
+	product_suffo="saved_by_${product}"
+
+	# plesk default password
+	PRODUCT_DEFAULT_PASSWORD="setup"
+}
+
+read_conf()
+{
+	[ -n "$prod_conf_t" ] || prod_conf_t=/etc/psa/psa.conf
+
+	if [ -s $prod_conf_t ]; then
+		tmp_var=`perl -e 'undef $/; $_=<>; s/#.*$//gm;
+		         s/^\s*(\S+)\s*/$1=/mg;
+		         print' $prod_conf_t`
+		eval $tmp_var
+	else
+		if [ "X$do_upgrade" = "X1" ]; then
+			p_echo "Unable to find product configuration file: $prod_conf_t. Default values will be used."
+			return 1
+		fi
+	fi
+	return 0
+}
+
+get_my_cnf_param()
+{
+	local r=
+
+	local my_cnf
+	find_my_cnf "non-fatal" && \
+		r=`perl -e '$p="'"$1"'";
+		undef $/; $_=<>; s/#.*$//gm;
+		/\[mysqld\](.*?)\[/sg;
+		$_=substr($1, rindex $1,"$p") and
+		/$p\s*=(.*)/m and print $1
+		' ${my_cnf}`
+	echo $r
+}
+
+get_mysql_socket()
+{
+	# Marked as local as it's not used anywhere else now.
+	local mysql_socket="/var/lib/mysql/mysql.sock"
+
+	local mysqlsock=`get_my_cnf_param  socket`
+	local MYSQL_SOCKETS="/var/lib/mysql/mysql.sock /tmp/mysql.sock /var/run/mysqld/mysqld.sock"
+
+	for i in $mysql_socket $mysqlsock $MYSQL_SOCKETS; do
+		if [ -S "$i" ]; then
+			# This is used internally by mysqld_safe. Maybe this whole function isn't required nowadays.
+			# See also: http://dev.mysql.com/doc/refman/5.0/en/problems-with-mysql-sock.html
+			MYSQL_UNIX_PORT=$i
+			export MYSQL_UNIX_PORT
+			mysql_socket="$i"
+			break
+		fi
+	done
+}
+
+selinux_close()
+{
+	if [ -z "$SELINUX_ENFORCE" -o "$SELINUX_ENFORCE" = "Disabled" ]; then
+		return
+	fi
+
+	setenforce "$SELINUX_ENFORCE"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh:
+
+#set_params
+
+set_common_params()
+{
+	common_var=0
+
+	PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+	LANG=C
+	export PATH LANG
+	unset GREP_OPTIONS
+	umask 022
+	ulimit -n 65535 2>/dev/null
+
+	K_HUP="/bin/kill -HUP"
+	K_KILL="/bin/kill -KILL"
+	K_TERM="/bin/kill -TERM"
+	K_USR2="/bin/kill -USR2"
+	K_TEST="/bin/kill -0"
+
+	users_created=""
+	groups_created=""
+
+	certificate_file="$PRODUCT_ETC_D/httpsd.pem"
+	services="/etc/services"
+	mtab="/etc/mtab"
+	get_hostname="hostname"
+	get_domainname="domainname"
+
+	#default parameters
+	tar="tar"
+	crontab="/usr/bin/crontab"
+
+	cp_preserve="cp -p"
+	SYSTEM_RC_D=/etc/rc.d/init.d
+	PLESK_LIBEXEC_DIR="/usr/lib64/plesk-9.0"
+	PLESK_DB_DIR="/var/lib/plesk"
+	POSTFIX_LIBEXEC_DIR="/usr/libexec/postfix"
+	PRODUCT_BOOTSTRAPPER_DIR="/usr/local/psa/bootstrapper/pp17.8.11-bootstrapper"
+	AUTOGENERATED_CONFIGS="#ATTENTION!\n#\n#DO NOT MODIFY THIS FILE BECAUSE IT WAS GENERATED AUTOMATICALLY,\n#SO ALL YOUR CHANGES WILL BE LOST THE NEXT TIME THE FILE IS GENERATED.\n"
+	AUTOGENERATED_CONFIGS_UPGRADE="#ATTENTION!\n#\n#DO NOT MODIFY THIS FILE BECAUSE IT WAS GENERATED AUTOMATICALLY,\n#SO ALL YOUR CHANGES WILL BE LOST AFTER YOU UPGRADE PLESK.\n"
+	PRODUCT_LOGS_D="/var/log/plesk"
+
+	set_common_params_linux
+
+	rp_patch_runtime
+}
+
+set_common_params_linux()
+{
+	get_hostname="hostname -f"
+	fstab="/etc/fstab"
+	cp_preserve="cp --preserve=all --remove-destination"
+	machine="linux"
+	sendmail="/usr/sbin/sendmail"
+	ps="ps axw"
+	ps_long="ps axuw"
+	false_shell="/bin/false"
+	dummy_home="/"
+	compress="gzip -9 -c"
+	uncompress="gunzip -c"
+	uudecode="uudecode -o /dev/stdout"
+	ifconfig="/sbin/ifconfig -a"
+	inet_str="inet addr"
+
+	useradd_options="-r"
+	if [ -f /etc/SuSE-release ]; then
+		linux_distr="suse"
+	elif [ -f /etc/debian_version ]; then
+		linux_distr="debian"
+		get_domainname="dnsdomainname"
+	else
+		linux_distr="redhat"
+	fi
+
+	sndml_ini="/etc/init.d/sendmail"
+	mail_local="/usr/libexec/mail.local"
+	if [ -x /sbin/nologin ]; then
+		dummy_shell="/sbin/nologin"
+	else
+		dummy_shell="/bin/false"
+	fi
+	bash_shell="/bin/bash"
+	rbash_shell="/bin/rbash"
+	uudecode_full="/usr/bin/uudecode"
+	# FIXME: remove or keep? can't find use of this variable
+	# named_osrelease=`perl -F"/[.-]/" -n -a  -e 'printf "%02u%02u%02u\n", $F[0],$F[1],$F[2]' /proc/sys/kernel/osrelease`
+
+	return 0
+}
+
+define_start_script()
+{
+	if [ -f "$PRODUCT_RC_D/${product}.sh" ]; then
+		START_SH="$PRODUCT_RC_D/${product}.sh"
+	else
+		START_SH="$PRODUCT_RC_D/${product}"
+	fi
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+set_swcpserver_params()
+{
+	swcpserver_service=sw-cp-server
+	swcpserver_binary=/usr/sbin/sw-cp-serverd
+	swcpserver_pidfile=/var/run/sw-cp-server.pid
+
+	true swcpserver_status
+}
+
+swcpserver_status()
+{
+	get_pid "$swcpserver_binary" false
+	local pid=$common_var
+	if [ "$pid" -ne 1 ]; then
+		return 0
+	fi
+	return 1
+}
+
+get_product_versions()
+{
+	local prod_root_d="/usr/local/psa"
+	
+	product_name="psa"
+	product_this_version="17.8.11"
+	product_this_version_tag="testing"
+	if [ -z "$product_prev_version" ]; then
+		if [ -r "$prod_root_d/version.upg" ]; then
+			product_prev_version=`awk '{ print $1 }' "$prod_root_d/version.upg"`
+		elif [ -r "$prod_root_d/version" ]; then
+			product_prev_version=`awk '{ print $1 }' "$prod_root_d/version"`
+		else
+			product_prev_version="$product_this_version"
+		fi
+	fi
+}
+
+set_postfix_auth()
+{
+	local run="$PRODUCT_ROOT_D/admin/sbin/mailmng-server --set-mail-params"
+
+	if db_test "SELECT value FROM ServiceNodeConfiguration WHERE name='relay' AND value='open' AND serviceNodeId=1 AND section='mailServer'" 1 ; then
+		run="$run --relayclient"
+	fi
+
+	if db_test "SELECT * FROM ServiceNodeConfiguration WHERE name='disable_smtp_auth' and value=0 AND serviceNodeId=1 AND section='mailServer'" 1 ; then
+		run="$run --smtpauth"
+	fi
+
+	if db_test "SELECT * FROM ServiceNodeConfiguration WHERE name='disable_pop_auth' and value=0 AND serviceNodeId=1 AND section='mailServer'" 1 ; then
+		run="$run --popauth"
+	fi
+
+	db_select "SELECT value FROM ServiceNodeConfiguration WHERE name='poplock_time' AND serviceNodeId=1 AND section='mailServer'"
+	if [ -n "$db_select_output" ]; then
+		# this will also set correct crontab for poplock.db cleanup
+		run="$run --poplock-time=$db_select_output"
+	fi
+
+	$run >> $product_log 2>&1
+}
+
+update_postfix_poplockdb_cleanup_crontab()
+{
+	[ -x "${PRODUCT_RC_D}/postfix" -a ! -f "${PRODUCT_RC_D}/qmail" ] || return 0
+	set_postfix_auth
+}
+
+set_mysql_auth()
+{
+	# This function requires set_mysql_server_params and set_mysql_client_params (or set_mysqld_params)
+	# to be called before
+
+	local inten="set up mysql authentication"
+	get_admin_passwd
+
+	pleskrc mysql start
+
+	mysql_host=
+	mysql_user="--user=admin"
+	mysql_passwd="$admin_passwd"
+	unset mysql_defaults
+
+	if [ -z "$MYSQL_AUTH_SKIP_CONNECTION_CHECK" ]; then
+		mysql_test_connection 60 || die "$inten"
+	fi
+	suc
+}
+
+get_admin_passwd()
+{
+    [ -z "$admin_passwd" ] || return 0
+
+    if [ -f "$mysql_passwd_file" ]; then
+		admin_passwd=`cat "$mysql_passwd_file"`
+		return 0
+    fi
+
+	admin_passwd=`get_random_string 12 'A-Za-z0-9_'`
+
+	[ -n "$admin_passwd" ] || admin_passwd="$PRODUCT_DEFAULT_PASSWORD"
+}
+
+mysql_quote_string()
+{
+	echo "$1" | perl -pe 's|\\|\\\\|g'
+}
+
+mysql_test_connection()
+{
+	inten="establish test connection"
+	echo_try $inten
+	attempts=${1:-1}
+	for i in `sequence $attempts`; do
+		echo "" | mysql_direct mysql >> "$product_log" 2>&1
+		if [ "$?" -eq "0" ]; then
+			p_echo "connected"
+			return 0
+		fi
+		[ "$attempts" -eq "1" ] || sleep 2
+	done
+
+	p_echo "failed"
+	return 1
+}
+
+find_my_cnf()
+{
+	local non_fatal="$1"
+	local cnf_files="/etc/my.cnf /etc/mysql/my.cnf /var/db/mysql/my.cnf"
+
+	for my_cnf in $cnf_files; do
+		if [ -f ${my_cnf} ]; then
+			break
+		fi
+	done
+
+	[ -f "$my_cnf" -o -n "$non_fatal" ] || die "find MySQL server configuration file. " \
+		"If you use thirdparty MySQL server build, make sure you don't use implicit default configuration " \
+		"and have MySQL configuration file in one of the following locations: $cnf_files"
+	[ -f "$my_cnf" ]
+}
+
+set_mysql_server_params()
+{
+	get_mysql_socket
+
+	if [ -x "${PRODUCT_RC_D}/mysqld" ]; then
+	    mysql_service="mysqld"
+	elif [ -x "${PRODUCT_RC_D}/mysqld.sh" ]; then
+	    mysql_service="mysqld.sh"
+	elif [ -x "${PRODUCT_RC_D}/mysqld" ]; then
+	    mysql_service="mysqld"
+	elif [ -x "${PRODUCT_RC_D}/mysql" ]; then
+	    mysql_service="mysql"
+	elif [ -n "/usr/lib/systemd/system" -a -f "/usr/lib/systemd/system/mariadb.service" ]; then
+	    mysql_service="mariadb"
+	elif [ -n "/usr/lib/systemd/system" -a -f "/usr/lib/systemd/system/mysqld.service" ]; then
+	    # Percona server
+	    mysql_service="mysqld"
+	else
+	    die "detect MySQL service name"
+	fi
+}
+
+set_mysql_client_params()
+{
+	mysql_client="$MYSQL_BIN_D/mysql"
+
+	# Override this variable as needed
+	mysql_db_name="$PRODNAME"
+	mysql_passwd_file="$product_etc/.${PRODNAME}.shadow"
+
+	mysql_args="-N"
+	mysql_args_raw="-Br"
+}
+
+#Invoke mysql
+mysql()
+{
+	mysql_anydb -D$mysql_db_name "$@"
+}
+
+mysql_anydb()
+{
+	(
+		export MYSQL_PWD="$mysql_passwd"
+		$mysql_client $mysql_host $mysql_user $mysql_args "$@" 2>>"$product_log"
+		local status=$?
+
+		if [ $status -gt 0 ]; then
+			$mysql_client $mysql_host $mysql_user $mysql_args -D$mysql_db_name $mysql_args_raw -e "SHOW ENGINE innodb status" >>"$product_log" 2>&1
+		fi
+		unset MYSQL_PWD
+		return $status
+	)
+}
+
+# Invoke mysql without any wrapper or something else
+mysql_direct()
+{
+	# a bit dirty but it works properly for passwords with spaces, quotes and double quotes:
+	if [ -n "$mysql_passwd" ]; then
+		(
+			export MYSQL_PWD="$mysql_passwd"
+			$mysql_client $mysql_host $mysql_defaults $mysql_user $mysql_args "$@" 2>>"$product_log"
+			rc=$?
+			unset MYSQL_PWD
+			return $rc
+		)
+	else
+		$mysql_client $mysql_host $mysql_defaults $mysql_user $mysql_args "$@" 2>>"$product_log"
+	fi
+}
+
+# Invoke mysql in raw mode
+mysql_raw()
+{
+	mysql $mysql_args_raw "$@"
+}
+
+mysql_raw_anydb()
+{
+	mysql_anydb $mysql_args_raw "$@"
+}
+
+uses_mysql_client()
+{
+	# Initialize local MySQL authentication parameters and test connection.
+	# After that db_*() and mysql*() functions may be used.
+	# Any MySQL-specific overrides (e.g., local mysql_db_name="whatever") should appear
+	# *after* calling this function.
+	# This function is for use in component installers that require access to MySQL DB.
+
+	set_mysql_server_params
+	set_mysql_client_params
+	set_mysql_auth
+}
+
+reset_user_password()
+{
+	true mysql_quote_string
+
+	local user="$1"
+	local passwd="$2"
+	local hosts="${3:-localhost}"
+
+	local inten="reset database user password for '${user}@${host}'"
+	echo_try "${inten}"
+
+	if [ "$hosts" = "127.0.0.1" -o "$hosts" = "::1" ] ; then
+		hosts="${hosts} localhost"
+	fi
+	hosts="${hosts} %"
+
+	for host in $hosts; do
+		if echo "SET PASSWORD FOR '$user'@'$host' = PASSWORD('`mysql_quote_string $passwd`')" | mysql_direct mysql; then
+			suc
+			return 0
+		fi
+	done
+
+	warn "$inten - database user does not exist."
+	return 1
+}
+
+is_local_mysql_instance()
+{
+	local host="$1"
+	[ -z "$host" -o "$host" = "localhost" -o "$host" = "127.0.0.1" -o "$host" = "::1" ]
+}
+
+check_db_accessible()
+{
+	local mysql_db_name="$1"
+	local mysql_user="--user=$2"
+	local mysql_passwd="$3"
+
+	#INFO: we should not die here
+	echo "" | mysql_direct 
+}
+
+reset_sitebuilder_passwd()
+{
+	local no_force="$1"
+	local sb_conf="/usr/local/sb/config"
+	[ -f "$sb_conf" ] || return 0
+
+	local sb_host=`    get_ini_conf_var "$sb_conf" "database" "host"`
+	local sb_username=`get_ini_conf_var "$sb_conf" "database" "username"`
+	local sb_password=`get_ini_conf_var "$sb_conf" "database" "password"`
+	local sb_dbname=`  get_ini_conf_var "$sb_conf" "database" "dbname"`
+
+	is_local_mysql_instance "$sb_host" || return 0
+
+	if [ -n "$no_force" ]; then
+		check_db_accessible "$sb_dbname" "$sb_username" "$sb_password" && return 0 || :
+	fi
+
+	if reset_user_password "$sb_username" "$sb_password" "$sb_host"; then
+		check_db_accessible "$sb_dbname" "$sb_username" "$sb_password"
+	else
+		# https://jira.plesk.ru/browse/PPP-4676
+		return 0
+	fi
+}
+
+get_webmail_config_param()
+{
+	local webmail_config="$1"
+	local config_var="$2"
+	local param="$3"
+	local default_val="$4"
+	local result=`sw_engine_pleskrun -n -r 'include "'$webmail_config'"; echo $'${config_var}${param}';' 2>/dev/null`
+	[ -n "$result" ] || result="$default_val"
+	echo "$result"
+}
+
+get_horde_config_param()
+{
+	get_webmail_config_param "/usr/share/psa-horde/config/conf.php" "conf" "$1" "$2"
+}
+
+get_roundcube_config_param()
+{
+	#INFO:  this function now is able to extract settings from config.inc.php, now it just db_dsnw;
+	#	if need another parameters need to reimplement this function - parse defaults.inc.php, parse config.inc.php and merge data
+	get_webmail_config_param "/usr/share/psa-roundcube/config/config.inc.php" "config" "$1"
+}
+
+reset_horde_passwd()
+{
+	local no_force="$1"
+
+	set_horde_params
+
+	local horde_shadow="$horde_passwd_file"
+	[ -f "$horde_shadow" ] || horde_shadow="/etc/psa/.webmail.shadow"
+	local hor_host=`  get_horde_config_param "['sql']['hostspec']" "localhost"`
+	local hor_user=`  get_horde_config_param "['sql']['username']" "horde"`
+	local hor_dbname=`get_horde_config_param "['sql']['database']" "horde"`
+	local hor_passwd=`get_horde_config_param "['sql']['password']"`
+	[ -n "$hor_passwd" ] || hor_passwd=`cat "$horde_shadow" 2>/dev/null`
+	[ -n "$hor_passwd" -a -n "$hor_user" -a -n "$hor_dbname" ] || return 0
+
+	is_local_mysql_instance "$hor_host" || return 0
+
+	if [ -n "$no_force" ]; then
+		! check_db_accessible "$hor_dbname" "$hor_user" "$hor_passwd" || return 0
+	fi
+
+	reset_user_password "$hor_user" "$hor_passwd" "$hor_host" && \
+	check_db_accessible "$hor_dbname" "$hor_user" "$hor_passwd"
+}
+
+parse_mysql_dsn_get_user()
+{
+	echo $1 | sed -e 's|^mysql://\([^:]\+\):\([^@]\+\)@\([^/]\+\)/\(.*\)$|\1|'
+}
+
+parse_mysql_dsn_get_passwd()
+{
+	echo $1 | sed -e 's|^mysql://\([^:]\+\):\([^@]\+\)@\([^/]\+\)/\(.*\)$|\2|'
+}
+
+parse_mysql_dsn_get_host()
+{
+	echo $1 | sed -e 's|^mysql://\([^:]\+\):\([^@]\+\)@\([^/]\+\)/\(.*\)$|\3|'
+}
+
+parse_mysql_dsn_get_db()
+{
+	echo $1 | sed -e 's|^mysql://\([^:]\+\):\([^@]\+\)@\([^/]\+\)/\(.*\)$|\4|'
+}
+
+reset_roundcube_passwd()
+{
+	local no_force="$1"
+
+	local roundcube_dsn=`get_roundcube_config_param "['db_dsnw']"`
+	local roundcube_user=`parse_mysql_dsn_get_user "$roundcube_dsn"`
+	local roundcube_passwd=`parse_mysql_dsn_get_passwd "$roundcube_dsn"`
+	local roundcube_host=`parse_mysql_dsn_get_host "$roundcube_dsn"`
+	local roundcube_db=`parse_mysql_dsn_get_db "$roundcube_dsn"`
+
+	[ -n "$roundcube_passwd" -a -n "$roundcube_user" -a -n "$roundcube_db" ] || return 0
+
+	is_local_mysql_instance "$roundcube_host" || return 0
+
+	if [ -n "$no_force" ]; then
+		! check_db_accessible "$roundcube_db" "$roundcube_user" "$roundcube_passwd" || return 0
+	fi
+
+	reset_user_password "$roundcube_user" "$roundcube_passwd" "$roundcube_host" && \
+	check_db_accessible "$roundcube_db" "$roundcube_user" "$roundcube_passwd"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+phpmyadmin_config_backup()
+{
+	set_phpmyadmin_params
+	if [ -f "$PHPMYADMIN_CONFIG" ]; then
+		cp -f "$PHPMYADMIN_CONFIG" "$PHPMYADMIN_CONFIG.save"
+		set_ac root root 0640 "$PHPMYADMIN_CONFIG.save"
+	fi
+}
+
+phpmyadmin_rm_config_backup()
+{
+	rm -f "$PHPMYADMIN_CONFIG.save"
+}
+
+set_phpmyadmin_params()
+{
+	PHPMYADMIN_D="$PRODUCT_ROOT_D/admin/htdocs/domains/databases/phpMyAdmin"
+	PHPMYADMIN_CONFIG="$PHPMYADMIN_D/libraries/config.default.php"
+}
+
+pma__read_values_from_config()
+{
+	local pma_config
+
+	if [ -f "$PHPMYADMIN_CONFIG.save" ]; then
+		pma_config="$PHPMYADMIN_CONFIG.save"
+	else
+		pma_config="$PHPMYADMIN_CONFIG"
+	fi
+
+	# looking for values of following variables in config.default.php.save
+	pma__set_values_from_config "$pma_config" \
+		'controluser' 'controlpass' 'pmadb' 'bookmarktable' 'column_info' \
+		'history' 'pdf_pages' 'recent' 'favorite' 'relation' 'table_coords' \
+		'table_info' 'table_uiprefs' 'tracking' 'userconfig' 'users' 'usergroups' \
+		'navigationhiding' 'savedsearches' 'central_columns' 'designer_settings' 'export_templates'
+}
+
+pma__write_values_to_config()
+{
+	# write new config.default.php
+	(
+		umask 0027
+		sed -e "`pma__sed_script`" < "$PHPMYADMIN_CONFIG.tpl" > "$PHPMYADMIN_CONFIG" || return 1
+		set_admin_params
+		set_ac root "$admin_group" 0640 "$PHPMYADMIN_CONFIG"
+	)
+}
+
+pma__set_values_from_config()
+{
+	eval `pma__read_values "$@"`
+}
+
+pma__read_values()
+{
+	local PHPMYADMIN_CONFIG="$1"
+	shift
+
+	[ -f $PHPMYADMIN_CONFIG ] && sw_engine_pleskrun -r '
+			try {
+				error_reporting(0);
+				$GLOBALS["db_host"] = "localhost";
+				class vz {
+					public static function in_vzcp_proxy() { return false; }
+				}
+				function in_vzcp_proxy() { return false; }
+				require_once("'$PHPMYADMIN_CONFIG'");
+				for ($i = 1; $i < $argc; $i++)
+					if (isset($cfg["Servers"][1][$argv[$i]]))
+						echo $argv[$i] . "=\"" . $cfg["Servers"][1][$argv[$i]] . "\"\n";
+			} catch (Exception $e) {}' -- "$@" 2>/dev/null || true
+}
+
+pma__sed_script()
+{
+	echo "\
+	s|@@""PMA_TEMP_DIR""@@|$PRODUCT_ROOT_D/var/phpMyAdmin|g
+	s|@@""CONTROLUSER""@@|$controluser|g
+	s|@@""CONTROLPASS""@@|$controlpass|g
+	s|@@""PMADB""@@|$pmadb|g
+	s|@@""PMA_BOOKMARK""@@|$bookmarktable|g
+	s|@@""PMA_COLUMN_INFO""@@|$column_info|g
+	s|@@""PMA_HISTORY""@@|$history|g
+	s|@@""PMA_PDF_PAGES""@@|$pdf_pages|g
+	s|@@""PMA_RECENT""@@|$recent|g
+	s|@@""PMA_FAVORITE""@@|$favorite|g
+	s|@@""PMA_RELATION""@@|$relation|g
+	s|@@""PMA_TABLE_COORDS""@@|$table_coords|g
+	s|@@""PMA_TABLE_INFO""@@|$table_info|g
+	s|@@""PMA_TABLE_UIPREFS""@@|$table_uiprefs|g
+	s|@@""PMA_TRACKING""@@|$tracking|g
+	s|@@""PMA_USERCONFIG""@@|$userconfig|g
+	s|@@""PMA_USERS""@@|$users|g
+	s|@@""PMA_USERGROUPS""@@|$usergroups|g
+	s|@@""PMA_NAVIGATIONHIDING""@@|$navigationhiding|g
+	s|@@""PMA_SAVEDSEARCHES""@@|$savedsearches|g
+	s|@@""PMA_CENTRAL_COLUMNS""@@|$central_columns|g
+	s|@@""PMA_DESIGNER_SETTINGS""@@|$designer_settings|g
+	s|@@""PMA_EXPORT_TEMPLATES""@@|$export_templates|g \
+	"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+install_postfix_certificate()
+{
+	local force=
+	if [ $# -ne 0 ]; then
+		force="yes"
+	fi
+
+	local CERT_DIR=`/usr/sbin/postconf -h config_directory`
+	local TLS_CERT=${CERT_DIR}/postfix_default.pem
+
+	if ! mkdir_ex 0 0 755 ${CERT_DIR}; then
+		report_problem "Unable to create directory for ${CERT_DIR} with proper permissions."
+		return 1
+	fi
+
+	[ -z "${force}" -a -f ${TLS_CERT} ]	&& return ||:
+
+	get_certificate "${TLS_CERT}"
+	set_ac 0 0 600 "${TLS_CERT}"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+# $1 - openssl binary
+# $2 - openssl args
+# $3 - cert file name
+# $4 - bits number
+qmail_tls_cert()
+{
+	local QMAIL_CONTROL_D TLS_CERT
+
+	QMAIL_CONTROL_D=${QMAIL_ROOT_D}/control
+	TLS_CERT=${QMAIL_CONTROL_D}/$3
+
+	if [ ! -f ${TLS_CERT} ]; then
+		$1 $2 -out ${TLS_CERT} $4 >> $product_log 2>&1
+		if [ $? -ne 0 ]; then
+			report_problem "Certificate for qmail TLS sessions ${TLS_CERT} was not generated. Qmail will generate it at each TLS session. It is too slow and will make high CPU load."
+		fi
+		p_echo
+	fi
+
+	if [ -f ${TLS_CERT} ]; then
+		chmod 600 ${TLS_CERT} && chown qmaild:0 ${TLS_CERT}
+		if [ $? -ne 0 ]; then
+			# Fallback for case when qmail is not installed
+			chmod 600 ${TLS_CERT} && chown root:0 ${TLS_CERT}
+			report_problem "Unable to set proper permission to ${TLS_CERT} Normally, owner user and group should be qmaild:0 and access should be 0600."
+		fi
+	fi
+}
+
+generate_tls_certificates()
+{
+	local SSL_BIN inten umask_sav
+
+	inten="generate SSL certificates for TLS sessions"
+
+	echo_try $inten
+
+	SSL_BIN=/usr/bin/openssl
+
+	# store old umask and set very secure one
+	umask_sav=`umask`
+	umask 0077
+
+	qmail_tls_cert ${SSL_BIN} "genrsa" rsa512.pem 512
+	#qmail_tls_cert ${SSL_BIN} "dhparam -2" dh512.pem 512
+	#qmail_tls_cert ${SSL_BIN} "dhparam -2" dh1024.pem 1024
+
+	umask ${umask_sav}
+
+	suc
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+#qmail
+
+set_qmail_params()
+{
+    QMAIL_DIR="/var/qmail"
+    QMAIL_USERS="alias:2021:nofiles:false:alias qmaild:2020:nofiles:false: qmaill:2022:nofiles:false: qmailp:2023:nofiles:false: qmailq:2520:qmail: qmailr:2521:qmail: qmails:2522:qmail:"
+    QMAIL_GROUPS="qmail:2520 nofiles:2020"
+
+    #variable from psa.conf but used in mail-qc-driver
+    #so we need define this before install psa base package
+    if [ -z "$QMAIL_ROOT_D" ]; then 
+	    QMAIL_ROOT_D="/var/qmail"
+    fi
+
+    qmail_service="qmail"
+    qmail_extra_cmd=""
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+transaction_begin()
+{
+	[ -n "$TRANSACTION_STARTED" ] && die "Another transaction in progress!"
+	TRANSACTION_STARTED="true"
+	TRANSACTION_ROLLBACK_FUNCS=
+	TRANSACTION_COMMIT_FUNCS=
+	local transaction_autocommit="$1"
+	if [ -n "$transaction_autocommit" ]; then
+		trap "transaction_commit" PIPE EXIT
+		trap "transaction_rollback" HUP INT QUIT TERM
+	else
+		trap "transaction_rollback" HUP PIPE INT QUIT TERM EXIT
+	fi
+}
+
+transaction_rollback()
+{
+	[ -z "$TRANSACTION_STARTED" ] && die "Transaction is not started!"
+	# perform rollback actions
+	local f
+	for f in ${TRANSACTION_ROLLBACK_FUNCS}; do
+		"$f"
+	done
+	TRANSACTION_STARTED=
+	TRANSACTION_ROLLBACK_FUNCS=
+	TRANSACTION_COMMIT_FUNCS=
+	trap - HUP PIPE INT QUIT TERM EXIT
+	exit 1
+}
+
+transaction_commit()
+{
+	[ -z "$TRANSACTION_STARTED" ] && die "Transaction is not started!"
+	# perform commit actions
+	local f
+	for f in ${TRANSACTION_COMMIT_FUNCS}; do
+		"$f"
+	done
+	TRANSACTION_STARTED=
+	TRANSACTION_ROLLBACK_FUNCS=
+	TRANSACTION_COMMIT_FUNCS=
+	trap - HUP PIPE INT QUIT TERM EXIT
+}
+
+transaction_add_rollback_action()
+{
+	[ -z "$TRANSACTION_STARTED" ] && die "Transaction is not started!"
+	# LIFO rollback order
+	[ -z "$TRANSACTION_ROLLBACK_FUNCS" ] \
+		&& TRANSACTION_ROLLBACK_FUNCS="$1" \
+		|| TRANSACTION_ROLLBACK_FUNCS="$1 $TRANSACTION_ROLLBACK_FUNCS"
+}
+
+transaction_add_commit_action()
+{
+	[ -z "$TRANSACTION_STARTED" ] && die "Transaction is not started!"
+	# FIFO commit order
+	[ -z "$TRANSACTION_COMMIT_FUNCS" ] \
+		&& TRANSACTION_COMMIT_FUNCS="$1" \
+		|| TRANSACTION_COMMIT_FUNCS="$TRANSACTION_COMMIT_FUNCS $1"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+set_horde_params()
+{
+	horde_datadir="/usr/share/psa-horde"
+	horde_confdir="/etc/psa-webmail/horde"
+	horde_sysconfd="$horde_confdir/horde"
+	horde_logdir="/var/log/psa-horde"
+	horde_passwd_file="/etc/psa-webmail/horde/.horde.shadow"
+	horde_title="Horde Web Based mail client"
+
+	imp_datadir="$horde_datadir/imp"
+	imp_sysconfd="$horde_confdir/imp"
+	
+	turba_datadir="$horde_datadir/turba"
+	turba_sysconfd="$horde_confdir/turba"
+
+	kronolith_datadir="$horde_datadir/kronolith"
+	kronolith_sysconfd="$horde_confdir/kronolith"
+
+	ingo_datadir="$horde_datadir/ingo"
+	ingo_sysconfd="$horde_confdir/ingo"
+
+	mnemo_datadir="$horde_datadir/mnemo"
+	mnemo_sysconfd="$horde_confdir/mnemo"
+	
+	passwd_datadir="$horde_datadir/passwd"
+	passwd_sysconfd="$horde_confdir/passwd"
+
+	horde_user="horde_sysuser"
+	horde_group="horde_sysgroup"
+
+	horde_php_ini="/etc/psa-webmail/horde/horde/php.ini"
+}
+
+generate_horde_password()
+{
+	generate_password_file "$horde_passwd_file" "$horde_title" root "$horde_group" 640
+	horde_password=`cat $horde_passwd_file` || die $inten
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+generate_roundcube_password()
+{
+	local inten='generate roundcube password'
+	generate_password_file "$roundcube_passwd_file" "$roundcube_title" root root 640
+	roundcube_password=`cat $roundcube_passwd_file` || die $inten
+}
+
+update_roundcube_db_settings()
+{
+	local cfg_db_dsnw="\$config\['db_dsnw'\]"
+	sed -e "s#${cfg_db_dsnw}.*#${cfg_db_dsnw} = 'mysql://roundcube:${roundcube_password}@localhost/roundcubemail';#" \
+		-i ${roundcube_conf}
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:set ft=sh:
+
+set_roundcube_params()
+{
+	roundcube_passwd_file="/usr/share/psa-roundcube/config/.roundcube.shadow"
+	roundcube_title="Roundcube Web Based mail client"
+	roundcube_conf="/usr/share/psa-roundcube/config/config.inc.php"
+	roundcube_conf_defaults="/usr/share/psa-roundcube/config/defaults.inc.php"
+	roundcube_sql_d="/usr/share/psa-roundcube/SQL"
+	roundcube_user="roundcube_sysuser"
+	roundcube_group="roundcube_sysgroup"
+	roundcube_home="/usr/share/psa-roundcube"
+	roundcube_logs_d="/var/log/plesk-roundcube"
+	roundcube_temp_d="/var/tmp"
+
+	roundcube_php_ini="/etc/psa-webmail/roundcube/php.ini"
+	roundcube_php_ini_tpl="/usr/share/psa-roundcube/config/php.ini.tpl"
+
+	roundcube_preupgrade_version_file="/etc/psa-webmail/roundcube/version.upg"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+reexec_with_clean_env "$@"
+
+prog="`basename $0`"
+cmds_num="$#"
+
+usage() {
+cat << EOT
+Usage: $prog --do-what-I-say [ --force ]
+
+    --force         Reset instance-specific data regardless of currently
+                    active cloning mode options.
+
+WARNING:
+
+You probably don't want to invoke this utility directly. It will reset ALL
+global instance-specific data on this machine, including but not limited to
+passwords, certificates, and optionally license keys.
+
+If you are preparing a public master image for a cloud platform or
+virtualization solution take a look at 'cloning' utility.
+
+If you are sure you need to invoke this utility directly, pass --do-what-I-say
+option. Note that this utility is not designed to reset any customer data, but
+only global and admin data.
+EOT
+	exit 1
+}
+
+# --- args check ---
+
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		--do-what-I-say)
+			opt_do_what_i_say="yes"
+			shift
+			;;
+		--force)
+			opt_force_instance_reset="yes"
+			shift
+			;;
+		--psa-init)
+			opt_psa_init_context="yes"
+			shift
+			;;
+		-h|--help)
+			usage
+			;;
+		*)
+			echo "Unknown argument '$1'"
+			echo
+			usage
+			;;
+	esac
+done
+
+[ "$opt_do_what_i_say" = "yes" ] || usage
+
+# --- logging ---
+
+rstinst_log_title()
+{
+	local title="Doing $prog"
+	if [ "$opt_force_instance_reset" = "yes" ]; then
+		title="$title --force"
+	fi
+	if [ "$opt_psa_init_context" = "yes" ]; then
+		title="$title --psa-init"
+	fi
+	title="$title AT `date`"
+	echo "$title"
+}
+
+rstinst_transaction_begin()
+{
+	set_log_action_name "$prog"
+	log_start "`rstinst_log_title`"
+	set_error_report_context "`rstinst_log_title`"
+
+	product_default_conf
+	initial_conf
+	set_common_params
+	read_conf
+	uses_mysql_client
+	set_apache_params
+	set_maintenance_mode_params
+
+	transaction_begin
+
+	# LIFO rollback order
+	transaction_add_rollback_action "rstinst_log_stop"
+}
+
+rstinst_transaction_end()
+{
+	rstinst_update_cloning_mode_status_to_completed
+	rstinst_disable_maintenance_mode
+	rstinst_cloning_action complete-event
+	# FIFO commit order
+	transaction_add_commit_action "rstinst_log_stop"
+	transaction_commit
+}
+
+rstinst_log_stop()
+{
+	log_stop "`rstinst_log_title`" "Product instance-specific data reset"
+}
+
+# --- utility functions ---
+
+rstinst_check_bool_misc_param()
+{
+	local param="$1"
+	local default_value="$2"
+	[ -n "$param" ] || die "rstinst_check_bool_misc_param(): parameter name required"
+	[ -n "$default_value" ] || default_value="false"
+
+	db_select "SELECT val FROM misc WHERE param = '$param'"
+	[ -n "$db_select_output" ] || db_select_output="$default_value"
+	[ "$db_select_output" = "true" ]
+}
+
+rstinst_is_license_keys_reset_enabled()
+{
+	rstinst_check_bool_misc_param "vps_cloning_license_reset"
+}
+
+rstinst_is_public_image_cloning_mode_enabled()
+{
+	rstinst_check_bool_misc_param "vps_cloning_mode"
+}
+
+rstinst_is_update_master_key_enabled()
+{
+	rstinst_check_bool_misc_param "vps_cloning_update_master_key"
+}
+
+rstinst_disable_public_image_cloning_mode()
+{
+	db_do "DELETE FROM misc WHERE param = 'vps_cloning_mode'"
+}
+
+rstinst_update_cloning_mode_status_to_completed()
+{
+	db_do "DELETE FROM misc WHERE param = 'vps_cloning_not_finished'"
+}
+
+rstinst_reconfigure_webservers()
+{
+	pp_echo " Reconfiguring Webservers..."
+	# This is at least needed to accommodate to default certificate change.
+	# However, normaly there are no domains when this utility is called,
+	# so it shouldn't take long.
+	reconfigure_apache_if_needed
+}
+
+rstinst_is_qmail()
+{
+	[ -x ${PRODUCT_ROOT_D}/admin/sbin/mailmng-server ] || return 1
+	${PRODUCT_ROOT_D}/admin/sbin/mailmng-server --features | grep -q "SMTP_Server_package.*qmail"
+}
+
+rstinst_is_postfix()
+{
+	[ -x ${PRODUCT_ROOT_D}/admin/sbin/mailmng-server ] || return 1
+	${PRODUCT_ROOT_D}/admin/sbin/mailmng-server --features | grep -q "SMTP_Server_package.*postfix"
+}
+
+rstinst_reconfigure_mailserver()
+{
+	pp_echo " Reconfiguring mailserver..."
+	if rstinst_is_postfix; then
+		/usr/lib64/plesk-9.0/mail_restore >> $product_log 2>&1 || warn "reset Postfix configuration"
+	fi
+}
+
+rstinst_reread_admin_passwd()
+{
+	admin_passwd=
+	set_mysql_auth
+}
+
+rstinst_clean_panel_sessions()
+{
+	# This is done by psa init script, therefore not needed here unless this script is called manually
+	[ "$opt_psa_init_context" != "yes" ] || return 0
+
+	p_echo "  Cleaning Panel sessions..."
+	clean_panel_sessions
+}
+
+rstinst_cloning_action()
+{
+	local action="$1"
+	sw_engine_pleskrun "$PRODUCT_ROOT_D/admin/plib/scripts/cloning_actions.php" --do "$action" >> $product_log 2>&1
+}
+
+# --- password generation ---
+
+rstinst_gen_passwd()
+{
+	get_random_string 16 'A-Za-z0-9_'
+}
+
+rstinst_recipher_passwords()
+{
+	rstinst_cloning_action reset-secret-key || warn 'generating new encryption key and switching to it'
+	rstinst_reread_admin_passwd
+}
+
+rstinst_reset_admin_passwd()
+{
+	pp_echo "  Generating new admin password..."
+	rstinst_cloning_action reset-admin-password || warn 'resetting admin password'
+	rstinst_reread_admin_passwd
+}
+
+rstinst_reset_sitebuilder_passwd()
+{
+	local sb_conf="/usr/local/sb/config"
+	[ -f "$sb_conf" ] || return 0
+
+	local sb_host=`get_ini_conf_var "$sb_conf" "database" "host"`
+	is_local_mysql_instance "$sb_host" || return 0
+
+	pp_echo "  Generating new WPB (sitebuilder) password..."
+
+	set_ini_conf_var "$sb_conf" "database" "password" `rstinst_gen_passwd`
+	reset_sitebuilder_passwd
+}
+
+rstinst_reset_apsc_passwd()
+{
+	check_apsc_installed || return 0
+
+	read_apsc_connection_params_db
+	is_local_mysql_instance "$apsc_db_host" || return 0
+
+	pp_echo "  Generating new APS controller password..."
+
+	apsc_db_passwd=`rstinst_gen_passwd`
+	reset_user_password "$apsc_db_user" "$apsc_db_passwd" "$apsc_db_host" && \
+	save_apsc_connection_params_db && \
+	sw_engine_pleskrun "$PRODUCT_ROOT_D/admin/plib/scripts/check_apsc_connection.php" >>"$product_log" 2>&1
+	[ $? -eq 0 ] || warn "connect to APS controller database with new password"
+}
+
+rstinst_reset_horde_passwd()
+{
+	set_horde_params
+	[ -s "$horde_passwd_file" ] || return 0
+
+	local hor_host=`get_horde_config_param "['sql']['hostspec']" "localhost"`
+	is_local_mysql_instance "$hor_host" || return 0
+
+	pp_echo "  Generating new $horde_title password..."
+
+	rm -f "$horde_passwd_file" && \
+	generate_horde_password && \
+	reset_horde_passwd
+}
+
+rstinst_reset_roundcube_passwd()
+{
+	set_roundcube_params
+	[ -s "$roundcube_passwd_file" ] || return 0
+
+	pp_echo "  Generating new $roundcube_title password..."
+	rm -f "$roundcube_passwd_file" && \
+	generate_roundcube_password && \
+	update_roundcube_db_settings && \
+	reset_roundcube_passwd
+}
+
+rstinst_reset_phpmyadmin_passwd()
+{
+	set_phpmyadmin_params
+	phpmyadmin_config_backup || return 0
+
+	pp_echo "  Generating new phpMyAdmin password..."
+
+	local pmahost="localhost"
+	local controluser controlpass pmadb bookmarktable relation table_info table_coords pdf_pages column_info history tracking userconfig
+	pma__read_values_from_config
+	controlpass=`rstinst_gen_passwd`
+
+	[ -n "$controlpass" -a -n "$controluser" -a -n "$pmadb" ] && \
+	pma__write_values_to_config && \
+	reset_user_password "$controluser" "$controlpass" "$pmahost" && \
+	check_db_accessible "$pmadb" "$controluser" "$controlpass" && \
+	phpmyadmin_rm_config_backup
+	[ $? -eq 0 ] || warn "connect to phpMyAdmin database with new password"
+}
+
+rstinst_reset_mysql_debian_sys_maint_passwd()
+{
+	local mysql_debian_cnf="/etc/mysql/debian.cnf"
+
+	[ -f "$mysql_debian_cnf" ] || return 0
+
+	# debian-sys-maint is not used on Debian 9 anymore
+	egrep -q "user\s*=\s*debian-sys-maint" /etc/mysql/debian.cnf || return 0
+
+	pp_echo "  Generating new debian-sys-maint mysql password..."
+	local mysql_debian_pass=`rstinst_gen_passwd`
+	perl -i -ple '$_ = "$1 = '$mysql_debian_pass'" if /^(\s*password\s*)=/' "$mysql_debian_cnf"
+	db_do "SET PASSWORD FOR 'debian-sys-maint'@localhost = PASSWORD('$mysql_debian_pass')"
+}
+
+# --- certificate generation ---
+
+rstinst_delete_certificate_from_store()
+{
+	local cert_name_pattern="$1"
+	[ -n "$cert_name_pattern" ] || die "rstinst_delete_certificate_from_store(): certificate pattern required"
+
+	db_select "SELECT ca_file, cert_file FROM certificates WHERE name like '$cert_name_pattern'"
+	for c_file in $db_select_output; do
+		rm -f "${PRODUCT_ROOT_D}/var/certificates/${c_file}"
+	done
+
+	db_do "DELETE r, c FROM Repository r INNER JOIN certificates c ON (c.id = r.component_id)
+			WHERE c.name LIKE '$cert_name_pattern'"
+}
+
+rstinst_update_default_cert_copy()
+{
+	local src="$certificate_file"
+	local dst="$1"
+	[ -n "$dst" ] || die "rstinst_update_default_cert_copy(): certificate file required"
+
+	if diff -q "$certificate_file_old" "$dst" >/dev/null 2>&1 ; then
+		cp -fp "$src" "$dst"
+		set_ac 0 0 0400 "$dst"
+	else
+		p_echo "Not touching custom or absent certificate $dst"
+	fi
+}
+
+rstinst_reset_default_cert()
+{
+	pp_echo "  Creating default certificate backup..."
+
+	certificate_file_old="$certificate_file.old"
+	cp -fp "$certificate_file" "$certificate_file_old"
+
+	db_select "SELECT val FROM misc WHERE param = 'default_certificate_id'"
+	local old_default_certificate_id="$db_select_output"
+
+	pp_echo "  Generating new default certificate..."
+
+	rstinst_delete_certificate_from_store "default certificate"
+	rm -f "$certificate_file"
+	last_certificate_id=
+
+	generate_default_certificate && \
+	db_do "DELETE FROM misc WHERE param = 'default_certificate_id'" && \
+	# psa.misc.param='cert_rep_id' is left untouched intentionally (to be preserved on import)
+	import_default_certificate && \
+	db_do "UPDATE IP_Addresses SET ssl_certificate_id = '$last_certificate_id'
+			WHERE ssl_certificate_id = '$old_default_certificate_id'" && \
+	# normally psa.hosting would not reference default cert directly, it would use '0' for that
+	db_do "UPDATE hosting SET certificate_id = '$last_certificate_id'
+			WHERE certificate_id = '$old_default_certificate_id'" && \
+	defer_apache_reconfiguration
+}
+
+rstinst_wipe_old_default_cert()
+{
+	pp_echo "  Removing default certificate backup..."
+	rm -f "$certificate_file_old"
+}
+
+rstinst_reset_admin_cert()
+{
+	set_admin_params
+	pp_echo "  Updating Panel webserver certificate..."
+
+	rstinst_update_default_cert_copy "$ADMIN_CERT"
+}
+
+rstinst_reset_apache_cert()
+{
+	set_apache_params
+	pp_echo "  Updating Apache certificate..."
+
+	rstinst_update_default_cert_copy "$APACHE_CERT" && \
+	defer_apache_reconfiguration
+}
+
+rstinst_reset_courier_imap_certs()
+{
+	set_courier_imap_params
+	pp_echo "  Updating Courier-IMAP certificates..."
+
+	rstinst_update_default_cert_copy "$IMAPD_CERT"
+	rstinst_update_default_cert_copy "$POP3D_CERT"
+}
+
+rstinst_reset_dovecot_cert()
+{
+	set_dovecot_params
+	pp_echo "  Updating Dovecot certificate..."
+
+	rstinst_update_default_cert_copy "$DOVECOT_CERT"
+}
+
+rstinst_reset_mail_certs()
+{
+	if rstinst_is_qmail; then
+		rstinst_reset_qmail_certs
+	elif rstinst_is_postfix; then
+		pp_echo "  Generating new Postfix certificates..."
+		install_postfix_certificate force
+	fi
+}
+
+rstinst_reset_qmail_certs()
+{
+	set_qmail_params
+	local qmail_control_d="$QMAIL_ROOT_D/control"
+	local qmail_tls_cert="$qmail_control_d/rsa512.pem"
+	local qmail_client_cert="$qmail_control_d/clientcert.pem"
+	local qmail_server_cert="$qmail_control_d/servercert.pem"
+	[ -d "$qmail_control_d" ] || return 0
+
+	pp_echo "  Generating new QMail certificates..."
+
+	local qmail_user=qmaild
+	local qmail_group=qmail
+	if ! id "$qmail_user" 1>/dev/null 2>&1 || ! groupmod "$qmail_group" 1>/dev/null 2>&1 ; then
+		# Qmail may not be actually installed, but we need to update certs nonetheless
+		qmail_user=root
+		qmail_group=0
+	fi
+
+	rm -f "$qmail_tls_cert" && \
+	[ "$qmail_user" != "root" ] && generate_tls_certificates
+
+	rstinst_update_default_cert_copy "$qmail_server_cert" && \
+	set_ac "$qmail_user" "$qmail_group" 0640 "$qmail_server_cert"
+
+	if [ ! -L "$qmail_client_cert" ] || [ "`readlink $qmail_client_cert`" != "$qmail_server_cert" ]; then
+		rstinst_update_default_cert_copy "$qmail_client_cert" && \
+		set_ac "$qmail_user" "$qmail_group" 0640 "$qmail_client_cert"
+	fi
+}
+
+rstinst_reset_backup_cert()
+{
+	db_select "SELECT val FROM misc WHERE param = 'bu_cert_id'"
+	local bu_cert_id="$db_select_output"
+	if [ -n "$bu_cert_id" ]; then
+		pp_echo "  Generating new certificate for backup signing..."
+
+		db_do "DELETE FROM misc WHERE param = 'bu_cert_id'; DELETE FROM certificates WHERE id = $bu_cert_id" && \
+		pbm_create_certificate
+	fi
+}
+
+# --- reset actions ---
+
+rstinst_remap_ips()
+{
+	pp_echo " Reconfiguring IP addresses..."
+	$PRODUCT_ROOT_D/bin/reconfigurator --autoconfigure >> $product_log 2>&1
+}
+
+rstinst_generate_passwords()
+{
+	pp_echo " Generating new passwords..."
+	rstinst_recipher_passwords
+	rstinst_reset_admin_passwd
+	rstinst_reset_sitebuilder_passwd
+	rstinst_reset_apsc_passwd
+	rstinst_reset_horde_passwd
+	rstinst_reset_roundcube_passwd
+	rstinst_reset_phpmyadmin_passwd
+	rstinst_reset_mysql_debian_sys_maint_passwd
+	# Postgres is not configured by default.
+}
+
+rstinst_reset_libswkey_store()
+{
+	rstinst_is_license_keys_reset_enabled || return 0
+	pp_echo " Resetting license keys store..."
+
+	local swkey_store="/etc/sw/keys"
+	rm -rf $swkey_store/backup/*
+	rm -rf $swkey_store/keys/*
+	rm -rf $swkey_store/instances
+	rm -f  $swkey_store/registry.xml
+	install_default_license_key
+}
+
+rstinst_generate_certificates()
+{
+	pp_echo " Generating new certificates..."
+	rstinst_reset_default_cert
+	rstinst_reset_admin_cert
+	rstinst_reset_apache_cert
+	rstinst_reset_courier_imap_certs
+	rstinst_reset_dovecot_cert
+	rstinst_reset_mail_certs
+	rstinst_reset_backup_cert
+	# We don't reset Google Apps and other customizable certs
+
+	rstinst_wipe_old_default_cert
+}
+
+rstinst_generate_guids()
+{
+	pp_echo " Generating new GUIDs for BL entities..."
+	rstinst_cloning_action reset-guids
+}
+
+rstinst_reshuffle_cron_tasks()
+{
+	pp_echo " Randomizing cron tasks execution time shifts..."
+
+	remove_cron_somely; install_cron_somely
+	update_postfix_poplockdb_cleanup_crontab
+	remove_cron_backup; install_cron_backup
+}
+
+rstinst_reset_thirdparties()
+{
+	:
+}
+
+rstinst_shedule_init_conf_screens()
+{
+	pp_echo " Enabling initial configuration screens on next admin login..."
+
+	# show license, admin info, ip and passwd initial configuration screens
+	rstinst_cloning_action shedule-init-conf-screens
+	rstinst_clean_panel_sessions
+}
+
+rstinst_update_master_key()
+{
+	rstinst_is_update_master_key_enabled || return 0
+	pp_echo " Updating Plesk license key..."
+	rstinst_cloning_action update-master-key
+}
+
+rstinst_shedule_updates_check()
+{
+	pp_echo " Ensuring updates will be installed as soon as possible..."
+	rstinst_cloning_action reset-updates-check-time
+}
+
+rstinst_reset_all()
+{
+	pp_echo "Resetting instance-specific settings..."
+	rstinst_remap_ips
+	rstinst_generate_guids
+	rstinst_update_master_key
+	rstinst_generate_passwords
+	rstinst_generate_certificates
+	rstinst_reshuffle_cron_tasks
+	rstinst_reset_thirdparties
+	rstinst_reset_libswkey_store
+	rstinst_shedule_init_conf_screens
+	rstinst_reset_owner_id
+}
+
+rstinst_update_all_services()
+{
+	pp_echo "Reloading services configuration..."
+	rstinst_reconfigure_webservers
+	rstinst_reconfigure_mailserver
+	# We would also need to restart various services, if the script was run manually.
+	# But that is not a top priority right now.
+}
+
+rstinst_deferred_install_updates()
+{
+	pp_echo "Sheduling automatic product update..."
+	rstinst_shedule_updates_check
+
+	{
+		# 30 seconds should be enough for the machine to complete startup
+		sleep 30
+		echo "Starting asynchronous product update task..."
+		sw_engine_pleskrun "$PRODUCT_ROOT_D/admin/plib/DailyMaintainance/script.php" -f "CheckForUpdates,InstallUpdates"
+		echo "Asynchronous update task completed with return code $?"
+		echo
+	} >> $product_log 2>&1 &
+}
+
+set_maintenance_mode_params()
+{
+	set_swcpserver_params
+	maintenance_enabled=""
+	if rstinst_is_maintenance_mode_enabled; then
+		maintenance_enabled="true"
+	fi
+
+	maintenance_sw_cp_server_config="/etc/sw-cp-server/conf.d/maintenance"
+	maintenance_status="$PRODUCT_ROOT_D/var/maintenance/status.json"
+}
+
+report_maintenance_status()
+{
+	local stage="$1"
+	local percentage="$2"
+
+	[ -n "$maintenance_enabled" ] || return
+	echo '{"status":"'$stage'","progress":"'$percentage'"}' > "$maintenance_status"
+}
+
+rstinst_is_maintenance_mode_enabled()
+{
+	rstinst_check_bool_misc_param "vps_cloning_maintenance_mode"
+}
+
+rstinst_enable_maintenance_mode()
+{
+	if [ -z "$maintenance_enabled" ]; then
+		echo "Maintenance mode does not enabled in database"
+		return
+	fi
+
+	echo 'set $maintenance on;' > "$maintenance_sw_cp_server_config"
+	report_maintenance_status "clone" 0
+	pleskrc swcpserver restart
+}
+
+rstinst_disable_maintenance_mode()
+{
+	if [ -z "$maintenance_enabled" ]; then
+		return
+	fi
+
+	echo 'set $maintenance off;' > /etc/sw-cp-server/conf.d/maintenance
+	pleskrc swcpserver restart
+	rm -f "$PRODUCT_ROOT_D/var/maintenance/status.json"
+	maintenance_enabled=""
+}
+
+rstinst_reset_owner_id()
+{
+	pp_echo " Reset owner id..."
+	db_do "DELETE FROM PleskStats WHERE param = 'cloudAccountId'"
+}
+# --- the script ---
+
+# Note: general prolicy for this script is to avoid interrupting its
+# execution unless something _extremely_ bad happened.
+# Ideally we should execute each action that might fail in a separate
+# subshell. But that would dramatically influence global variables
+# and therefore probably introduce a couple of new critical bugs.
+
+rstinst_transaction_begin
+
+if [ "$opt_force_instance_reset" != "yes" ] && ! rstinst_is_public_image_cloning_mode_enabled ; then
+	pp_echo "Refusing to reset instance-specific data."
+	if [ "$opt_psa_init_context" != "yes" ]; then
+		echo
+		usage
+	fi
+	exit 1
+fi
+
+rstinst_enable_maintenance_mode
+rstinst_disable_public_image_cloning_mode
+report_maintenance_status "clone" "30"
+rstinst_reset_all
+report_maintenance_status "clone" "60"
+rstinst_update_all_services
+report_maintenance_status "clone" "90"
+rstinst_deferred_install_updates
+pp_echo "Completed"
+
+rstinst_transaction_end
+
+# vim:ft=sh

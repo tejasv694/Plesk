@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="RedHat" os_version="all" os_arch="all" environment="" build_dir="dist-rpm-RedHat-all-all" send_feedback="true" uninstall_support="yes" gpgcheck="yes" headers_file="build-17.8.12-rhall-all.hdr.gz">
+    <product id="sitebuilder">
+        <keypackages>
+            <keypackage>pp-sitebuilder</keypackage>
+        </keypackages>
+        <release id="SITEBUILDER_17_8_12" name="SITEBUILDER 17.8.12" version="17.8.12" upgrade_allowed_from="5.0.0" />
+    </product>
+    <component name="sitebuilder" description="Web Presence Builder">
+        <package name="pp-sitebuilder" version="17.8.12" release="18032617" file="base/pp-sitebuilder-17.8.12-18032617.noarch.rpm" size="2308" buildtime="1522058782" md5="2588537ca1102d8dc1c44e4086fe13ee" arch="noarch" />
+        <package name="wpb-core" version="17.8.12" release="43703.18032617" file="base/wpb-core-17.8.12-43703.18032617.noarch.rpm" size="30049156" buildtime="1522058638" md5="01a7d5b93e0de2f8862af26ecf84063f" arch="noarch" />
+        <package name="wpb-designs-00" version="17.8.12" release="43703.18032616" file="base/wpb-designs-00-17.8.12-43703.18032616.noarch.rpm" size="2503788" buildtime="1522058356" md5="6d8b56b74c2387520d473c2fa68d6efe" arch="noarch" />
+        <package name="wpb-designs-01" version="17.8.12" release="43703.18032616" file="base/wpb-designs-01-17.8.12-43703.18032616.noarch.rpm" size="2963468" buildtime="1522058372" md5="69209b6bfbb0b40e78e7c0327106cd2f" arch="noarch" />
+        <package name="wpb-designs-03" version="17.8.12" release="43703.18032616" file="base/wpb-designs-03-17.8.12-43703.18032616.noarch.rpm" size="3117108" buildtime="1522058389" md5="f614f57d989facf5c76971d833f00360" arch="noarch" />
+        <package name="wpb-designs-04" version="17.8.12" release="43703.18032616" file="base/wpb-designs-04-17.8.12-43703.18032616.noarch.rpm" size="3350224" buildtime="1522058404" md5="a953b8c8f86ecc7d315bd2b2960fcf8d" arch="noarch" />
+        <package name="wpb-designs-05" version="17.8.12" release="43703.18032617" file="base/wpb-designs-05-17.8.12-43703.18032617.noarch.rpm" size="2697868" buildtime="1522058419" md5="3d10342fa3b961d980a9231e355bfdcb" arch="noarch" />
+        <package name="wpb-designs-07" version="17.8.12" release="43703.18032617" file="base/wpb-designs-07-17.8.12-43703.18032617.noarch.rpm" size="3143812" buildtime="1522058436" md5="54be74f81468926d51bcdd0d09ecc521" arch="noarch" />
+        <package name="wpb-designs-09" version="17.8.12" release="43703.18032617" file="base/wpb-designs-09-17.8.12-43703.18032617.noarch.rpm" size="3623416" buildtime="1522058459" md5="19e1c6ac55390be5dd76d19f4f9c0e38" arch="noarch" />
+        <package name="wpb-designs-12" version="17.8.12" release="43703.18032617" file="base/wpb-designs-12-17.8.12-43703.18032617.noarch.rpm" size="3038928" buildtime="1522058478" md5="de34123c6fedf04903ea589dde384e35" arch="noarch" />
+        <package name="wpb-designs-14" version="17.8.12" release="43703.18032617" file="base/wpb-designs-14-17.8.12-43703.18032617.noarch.rpm" size="3111536" buildtime="1522058508" md5="64d33b836342abfaff268fd37cb4cc99" arch="noarch" />
+        <package name="wpb-designs-20" version="17.8.12" release="43703.18032617" file="base/wpb-designs-20-17.8.12-43703.18032617.noarch.rpm" size="3022936" buildtime="1522058522" md5="5b560b95d8c0e312c925842c50553543" arch="noarch" />
+        <package name="wpb-headers" version="17.8.12" release="43703.18032617" file="base/wpb-headers-17.8.12-43703.18032617.noarch.rpm" size="137341040" buildtime="1522058717" md5="efdab26819b89cced990274070b1e752" arch="noarch" />
+    </component>
+    <updates updates_dir="update-rpm-RedHat-all-all" headers_file="update-17.8.12-rhall-all.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-RedHat-all-all" headers_file="thirdparty-17.8.12-rhall-all.hdr.gz">
+        <package name="pp-sitebuilder-default-templates" version="12.0.1" release="18032616" file="../dist-rpm-RedHat-all-all/contrib/pp-sitebuilder-default-templates-12.0.1-18032616.noarch.rpm" size="1568" buildtime="1522058342" md5="479b8491f2d77d2c98c14d436ffbf3e5" arch="noarch" />
+        <package name="pp-sitebuilder-skins" version="12.0.1" release="18032616" file="../dist-rpm-RedHat-all-all/contrib/pp-sitebuilder-skins-12.0.1-18032616.noarch.rpm" size="1532" buildtime="1522058344" md5="6aff393756bd598cbb3140d2ce04c601" arch="noarch" />
+    </thirdparty>
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

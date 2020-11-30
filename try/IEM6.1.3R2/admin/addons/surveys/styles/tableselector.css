@@ -1,0 +1,85 @@
+.table-selector-container {
+	border:1px solid #ACACAC;
+	max-height:300px;
+	min-width:200px;
+	overflow:auto;
+	padding:0;
+}
+table.table-selector {
+	border:0 none;
+	border-collapse:collapse;
+	width:100%;
+}
+
+table.table-selector tr {
+	background:#FFFFFF none repeat scroll 0 0;
+	cursor:pointer;
+}
+table.table-selector tr:hover {
+	background:#EEEEEE none repeat scroll 0 0;
+}
+table.table-selector tr.selected {
+	background:#316AC5 none repeat scroll 0 0;
+}
+table.table-selector tr.selected td {
+	color:#FFFFFF;
+}
+table.table-selector td {
+	padding:4px;
+}
+table.table-selector td:first-child {
+	width:0;
+}
+table.table-selector td input {
+	position:relative;
+	top:-1px;
+}
+fieldset {
+	border:0 none;
+	margin:0;
+	padding:0;
+	width:100%;
+}
+fieldset > ul, fieldset > ul > li {
+	clear:both;
+	display:block;
+	float:none;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+
+fieldset.inline ul {
+	list-style-type:none;
+}
+
+fieldset > ul > li > label {
+	color:#4E4F4F;
+	display:block;
+}
+fieldset > ul > li > label > span {
+	padding:0 0 0 2px;
+}
+fieldset > ul > li > div > span {
+	color:#999999;
+	display:block;
+	font-size:11px;
+}
+fieldset.inline > ul > li > label {
+	float:left;
+	padding:6px 10px 6px 23px;
+	position:relative;
+	width:164px;
+}
+fieldset.inline > ul > li > label > span {
+	left:7px;
+	position:absolute;
+	top:6px;
+}
+fieldset.inline > ul > li > div {
+	float:left;
+	padding:6px 10px;
+}
+.required {
+	color:red;
+}

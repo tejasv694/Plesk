@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP72" yum_repo_name="PHP 7.2 for Plesk 17" headers_file="build-7.2.34-cos7-x86_64.hdr.gz">
+    <product id="php72">
+        <keypackages>
+            <keypackage>plesk-php72</keypackage>
+        </keypackages>
+        <release id="PHP_7_2" name="PHP v 7.2" version="7.2.34" upgrade_allowed_from="" />
+    </product>
+    <component name="php7.2" description="PHP 7.2" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php72" />
+        </keypackages>
+        <package name="plesk-php72" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="470934" buildtime="1601622686" md5="ca7e11eb381a89bfe8bc2a7b8f438343" arch="x86_64" />
+        <package name="plesk-php72-bcmath" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-bcmath-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="15638" buildtime="1601622686" md5="4a04ab03afaa41dac1dc2eb5a99e2bc9" arch="x86_64" />
+        <package name="plesk-php72-cli" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-cli-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="2309963" buildtime="1601622695" md5="525c3a90af534388914f04f09f92fd4e" arch="x86_64" />
+        <package name="plesk-php72-dba" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-dba-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="21220" buildtime="1601622690" md5="2b6f13c4ac604a4a43180731b5b0ca82" arch="x86_64" />
+        <package name="plesk-php72-enchant" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-enchant-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="9500" buildtime="1601622688" md5="d9e011be718db846e8af201d6cb23556" arch="x86_64" />
+        <package name="plesk-php72-fpm" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-fpm-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="1536695" buildtime="1601622690" md5="d025b6028b94f31b892d8827060023fe" arch="x86_64" />
+        <package name="plesk-php72-gd" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-gd-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="276390" buildtime="1601622679" md5="33b3411420ab90928119e1ddbcdbce27" arch="x86_64" />
+        <package name="plesk-php72-imagick" version="3.4.4" release="1centos.7.201002.1145" file="packages/plesk-php72-imagick-3.4.4-1centos.7.201002.1145.x86_64.rpm" size="85988" buildtime="1601622618" md5="7c555750e3a9a4f330b7432b31e33348" arch="x86_64" />
+        <package name="plesk-php72-imap" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-imap-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="29630" buildtime="1601622688" md5="c5190c2f3c52717dd6c7f8799a263329" arch="x86_64" />
+        <package name="plesk-php72-intl" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-intl-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="121590" buildtime="1601622679" md5="c933c210627b5d281b55c698c6c9141c" arch="x86_64" />
+        <package name="plesk-php72-ioncube-loader" version="10.4.2" release="1centos.7.201002.1145" file="packages/plesk-php72-ioncube-loader-10.4.2-1centos.7.201002.1145.x86_64.rpm" size="435929" buildtime="1601622259" md5="84675478c928171e5b5d0a2185f81909" arch="x86_64" />
+        <package name="plesk-php72-ldap" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-ldap-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="23858" buildtime="1601622680" md5="4511a2f32a87283bd503c03e186cebab" arch="x86_64" />
+        <package name="plesk-php72-mbstring" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-mbstring-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="479966" buildtime="1601622680" md5="29eab331148e80829640abe1563daa69" arch="x86_64" />
+        <package name="plesk-php72-mysql" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-mysql-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="118243" buildtime="1601622695" md5="fdd35b12d279668592522ef41374f109" arch="x86_64" />
+        <package name="plesk-php72-odbc" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-odbc-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="30627" buildtime="1601622686" md5="0e7059a2484943be8534ac09771c106a" arch="x86_64" />
+        <package name="plesk-php72-opcache" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-opcache-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="164459" buildtime="1601622679" md5="212da401a06c06a260421db9ef6b6a31" arch="x86_64" />
+        <package name="plesk-php72-pdo" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-pdo-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="515620" buildtime="1601622688" md5="803101a4f879a8b34a2dba9e9fad600c" arch="x86_64" />
+        <package name="plesk-php72-pear" version="1.10.12" release="1centos.7.201002.1145" file="packages/plesk-php72-pear-1.10.12-1centos.7.201002.1145.noarch.rpm" size="287680" buildtime="1601622677" md5="6d56b32437093ad40c024b35fdc863f3" arch="noarch" />
+        <package name="plesk-php72-pgsql" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-pgsql-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="56267" buildtime="1601622689" md5="107eb1c1a216e023fe58554db71388ab" arch="x86_64" />
+        <package name="plesk-php72-process" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-process-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="20013" buildtime="1601622682" md5="a3111e65702b5843530a15a6618e11c6" arch="x86_64" />
+        <package name="plesk-php72-pspell" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-pspell-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="8866" buildtime="1601622695" md5="f3a24ba01065db98d69f36f1fb445c4b" arch="x86_64" />
+        <package name="plesk-php72-redis" version="5.3.1" release="1centos.7.201002.1145" file="packages/plesk-php72-redis-5.3.1-1centos.7.201002.1145.x86_64.rpm" size="138416" buildtime="1601622617" md5="c835e7c778724c521e21d9caf8a4b87d" arch="x86_64" />
+        <package name="plesk-php72-snmp" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-snmp-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="18810" buildtime="1601622687" md5="a6c1091ad4e21594f7a663ad3b3d51fb" arch="x86_64" />
+        <package name="plesk-php72-soap" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-soap-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="114006" buildtime="1601622680" md5="f78f2565f4795277773f2acc03154194" arch="x86_64" />
+        <package name="plesk-php72-sodium" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-sodium-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="139718" buildtime="1601622619" md5="de63cccfda7c81274950ea699f68768c" arch="x86_64" />
+        <package name="plesk-php72-tidy" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-tidy-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="17034" buildtime="1601622680" md5="02843b0fe10b47f39e812d5ce5dfbadb" arch="x86_64" />
+        <package name="plesk-php72-xdebug" version="2.9.8" release="1centos.7.201002.1145" file="packages/plesk-php72-xdebug-2.9.8-1centos.7.201002.1145.x86_64.rpm" size="104793" buildtime="1601622621" md5="1447b95b6dca52557d4114a7f90b2f18" arch="x86_64" />
+        <package name="plesk-php72-xml" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-xml-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="71321" buildtime="1601622681" md5="530db4e49f6952e3bb2e056dd3f91793" arch="x86_64" />
+        <package name="plesk-php72-xmlrpc" version="1:7.2.34" release="1centos.7.201002.1145" file="packages/plesk-php72-xmlrpc-7.2.34-1centos.7.201002.1145.x86_64.rpm" size="31974" buildtime="1601622685" md5="4e2750271a5b9feee15b9b0af53a28e4" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-7.2.34-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-7.2.34-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

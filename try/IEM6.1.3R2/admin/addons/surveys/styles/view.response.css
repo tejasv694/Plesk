@@ -1,0 +1,74 @@
+.Heading2, .Heading2 td {
+	background-color:#EDECEC;
+	color:#000000;
+	font-family:Tahoma;
+	font-size:11px;
+	font-weight:bold;
+	padding:4px 4px 0px 10px;
+}
+
+h2.PageTitle {
+	color:#000000;
+	font-family:Verdana;
+	font-size:18px;
+	letter-spacing:-1px;
+	margin:0;
+	padding:1px 0 11px 3px;
+}
+
+.FloatRight {
+	float:right;
+}
+
+.FloatLeft {
+	float:left;
+}
+
+.Clear {
+	clear: both;	
+}
+
+div.PageDescription {
+	color:#4E4F4F;
+	font-family:Tahoma;
+	margin:0;
+	padding:0 0 10px 4px;
+}
+
+dl.widgets dt {
+	font-weight      : bold;
+	font-size        : 11px;
+	color            : #000;
+	background-color : #edecec;
+	padding          : 7px 0 7px 10px;
+	margin           : 0;
+	background-image : url(../../../../admin/images/table_bg.gif);
+}
+dl.widgets dd {
+	margin           : 0;
+	padding          : 10px;
+	background-color : #f2f2f2;
+	border-bottom    : 1px solid #ddd;
+}
+dl.widgets dd.last {
+	margin-bottom : 15px;
+}
+dl.widgets input[type="text"],
+dl.widgets textarea {
+	width       : 300px;
+	font-family : Tahoma;
+	font-size   : 11px;
+}
+dl.widgets textarea {
+	height : 100px;
+}
+
+fieldset.inline > ul > li > label > span.required {
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+fieldset.inline > ul > li > label { 
+	padding: 0 2px 0 8px;
+}

@@ -1,0 +1,1 @@
+<textarea class="Textarea{if $widget.is_required} required{/if}" id="widget-{$widget.id}" name="widget[{$widget.id}][field][0][value]"></textarea>

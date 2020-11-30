@@ -1,0 +1,146 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<script type="text/javascript">
+//<![CDATA[
+Smb.UserEditForm = Class.create({
+
+    initialize: function(config) {
+        if ($('general-vcard-email-emailType-internal')) {
+            $('general-vcard-email-emailType-internal').observe('click', this._generateLogin.bind(this));
+        }
+        if ($('general-vcard-email-internalEmail')) {
+            $('general-vcard-email-internalEmail').observe('keyup', this._generateLogin.bind(this));
+            $('general-vcard-email-internalEmail').observe('change', this._generateLogin.bind(this));
+        }
+        if ($('general-vcard-email-domain')) {
+            $('general-vcard-email-domain').observe('change', this._generateLogin.bind(this));
+        }
+
+        if ($('general-vcard-email-emailType-external')) {
+            $('general-vcard-email-emailType-external').observe('click', this._generateLogin.bind(this));
+        }
+        if ($('general-vcard-email-externalEmail')) {
+            $('general-vcard-email-externalEmail').observe('keyup', this._generateLogin.bind(this));
+            $('general-vcard-email-externalEmail').observe('change', this._generateLogin.bind(this));
+        }
+
+        if ($('general-account-login') && $('general-account-login').hasClassName('input-text')) {
+            if ($('general-account-login').value != this._getLogin()) {
+                this._freezeLogin();
+            }
+            $('general-account-login').observe('change', this._freezeLogin.bind(this));
+        }
+    },
+
+    _getLogin: function() {
+        var loginString;
+
+        if ($('general-vcard-email-emailType-internal') && $('general-vcard-email-emailType-internal').checked) {
+            loginString = $('general-vcard-email-internalEmail').value;
+            if ('' == loginString) {
+                //empty username
+            } else if ($('general-vcard-email-domain')) {
+                loginString += '@' + $('general-vcard-email-domain').options[$('general-vcard-email-domain').selectedIndex].text;
+            } else {
+                loginString += '@' + $('general-vcard-email-internalEmail-domain').innerHTML;
+            }
+        } else if ($('general-vcard-email-emailType-external') && $('general-vcard-email-emailType-external').checked) {
+            loginString = $('general-vcard-email-externalEmail').value;
+        } else if ($('general-vcard-email-externalEmail')) {
+            loginString = $('general-vcard-email-externalEmail').value;
+        }
+        return loginString;
+    },
+
+    _generateLogin: function() {
+        var loginString = this._getLogin();
+
+        if (loginString) {
+            this._updateLogin(loginString);
+        }
+    },
+
+    _updateLogin: function (loginString) {
+        if (this._freeze) {
+            return;
+        }
+
+        if ($('general-account-login') && $('general-account-login').hasClassName('input-text')) {
+            $('general-account-login').value = loginString;
+        }
+    },
+
+    _freezeLogin: function() {
+        this._freeze = true;
+    }
+});
+
+var applyEmailActivation = function applyEmailActivation(activationData) {
+    var roleSelect = $('general-vcard-roleId');
+    var isActiveCheckbox = $('general-account-isActive');
+    var activationRequiredCheckbox = $('general-account-isActivationRequired');
+    var internalEmailRadio = $('general-vcard-email-emailType-internal');
+    var externalEmailRadio = $('general-vcard-email-emailType-external');
+
+    if (!activationRequiredCheckbox) {
+        return;
+    }
+
+    var toggleIsActive = function toggleIsActive() {
+        if (activationRequiredCheckbox.checked) {
+            isActiveCheckbox.checked = false;
+        }
+    };
+
+    var toggleEmailActivation = function toggleEmailActivation() {
+        if (isActiveCheckbox.checked) {
+            activationRequiredCheckbox.checked = false;
+        }
+    };
+
+    var toggleActivationByRoleChange = function toggleActivationByRoleChange() {
+        if (activationData[roleSelect.value]) {
+            isActiveCheckbox.checked = false;
+            activationRequiredCheckbox.checked = true;
+        } else {
+            activationRequiredCheckbox.checked = false;
+        }
+    };
+
+    var toggleEmailActivationState = function toggleEmailActivationState(disabled) {
+        if (disabled) {
+            activationRequiredCheckbox.checked = !disabled;
+        }
+        activationRequiredCheckbox.disabled = disabled;
+    };
+
+    if (internalEmailRadio && externalEmailRadio) {
+        internalEmailRadio.observe('change', function () {
+            toggleEmailActivationState(true);
+        });
+        externalEmailRadio.observe('change', function () {
+            toggleEmailActivationState(false);
+        });
+        toggleEmailActivationState(internalEmailRadio.checked);
+    }
+
+    if (roleSelect) {
+        roleSelect.observe('change', toggleActivationByRoleChange);
+        toggleActivationByRoleChange();
+    }
+
+    if (isActiveCheckbox) {
+        activationRequiredCheckbox.observe('change', toggleIsActive);
+        isActiveCheckbox.observe('change', toggleEmailActivation);
+        toggleIsActive();
+        toggleEmailActivation();
+    }
+};
+
+Jsw.onReady(function() {
+    new Smb.UserEditForm();
+    applyEmailActivation(<?php echo json_encode($this->activationData, JSON_UNESCAPED_UNICODE); ?>);
+});
+//]]>
+</script>

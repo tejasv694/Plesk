@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon id="pmm" name="Plesk Migrator">
+
+	<release id="PMM_0.1.10" name="Plesk migrator v 0.1.10" version="0.1.10">
+		<compatibility_info>
+			<compatible product_id="plesk" from_version="12.5.30" to_version="17.8.1" />
+		</compatibility_info>
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-ubt16.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-ubt14.04-i386.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-ubt14.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-ubt12.04-i386.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-ubt12.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-deb8.0-i386.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-deb8.0-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-deb6.0-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-deb6.0-i386.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos6-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos6-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos6-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos6-i386.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos6-i386.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos6-i386.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-deb7.0-i386.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-deb7.0-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos5-i386.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos5-i386.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="PMM_0.1.10/pmm-0.1.10-cos5-i386.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos5-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos5-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos5-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="PMM_0.1.10/pmm-0.1.10-cos7-x86_64.inf3" />
+	</release>
+</addon>

@@ -1,0 +1,1395 @@
+#!/usr/bin/perl
+# Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+use strict;
+use warnings;
+
+# Searching for Backup libs
+
+my $agentsShareDir;
+my $productRootD;
+my $agentSessionPath;
+
+BEGIN {
+  sub getProductRootD {
+    my $configFile = "/etc/psa/psa.conf";
+    if (-f $configFile) {
+      my $productRoot;
+      open CONFIG_FILE, "$configFile";
+      while (<CONFIG_FILE>) {
+        next if /^#/;
+        if (/^(\S+)\s+(.*?)\s*$/) {
+          my ($key, $value) = ($1, $2);
+          if ($key eq "PRODUCT_ROOT_D") {
+            $productRoot = $value;
+            last;
+          }
+        }
+      }
+      close CONFIG_FILE;
+      return $productRoot;
+    }
+  }
+
+  @INC = grep { $_ ne '.' } @INC;
+  $productRootD = getProductRootD();
+  if ($productRootD) {
+    $agentsShareDir = "$productRootD/PMM/agents/shared";
+    unshift @INC, $agentsShareDir;
+    unshift @INC, "$productRootD/PMM/agents/PleskX";
+  }
+}
+
+use Getopt::Long;
+use Carp qw( confess );
+
+use PleskX;
+use Logging;
+use Error qw|:try|;
+use ErrorReportSender;
+use SpecificConfig;
+use XmlNode;
+use File::Temp;
+use File::Copy;
+use File::Path;
+use File::Basename qw(dirname basename);
+use Encoding;
+require POSIX;
+use IPC::Run;
+use PmmCli;
+use DumpStatus;
+use AgentConfig;
+use HelpFuncs;
+use Storage::Storage;
+use XmlLogger;
+
+$Error::Debug = 1;
+
+sub usage {
+  my $exitcode = shift;
+
+  my $usage = <<'EOF';
+Usage: plesk_agent_manager <command> [<options>] <arguments>
+
+Commands:
+
+  server         Backs up whole Plesk.
+
+  resellers-name Backs up selected resellers. Reseller's logins are read from command line,
+                 space-separated. If no resellers provided, backs up all resellers
+                 on the host.
+
+  resellers-id   Backs up selected resellers. Reseller's identificators are read from command line,
+                 space-separated. If no resellers provided, backs up all resellers
+                 on the host.
+
+  clients-name   Backs up selected clients. Client's logins are read from command line,
+                 space-separated. If no clients provided, backs up all clients
+                 on the host.
+
+  clients-id     Backs up selected clients. Client's identificators are read from command line,
+                 space-separated. If no clients provided, backs up all clients
+                 on the host.
+
+  domains-name   Backs up selected domains. Domain's names are read from command line,
+                 space-separated. If no domains provided, backs up all domains
+                 on the host.
+
+  domains-id     Backs up selected domains. Domain's identificators are read from command line,
+                 space-separated. If no domains provided, backs up all domains
+                 on the host.
+
+                 Use Exclude options to exclude some resellers/clients/domains.
+
+  export-dump-as-file
+                 Export dump from Local repository to single file
+                 Option --dump-file-name provide dump file name to export
+
+  help           Shows this help page
+
+General options:
+
+  -f|--from-file=<file>
+                 Read list of domains/clients/resellers from file, not from command line.
+                 File should contain list of domains/clients/resellers one per line.
+
+  -v|--verbose
+                 Show more information about backup process. Multiple -v
+                 options increase verbosity.
+
+  -s|--split[=<size>]
+                 Split the generated backups to the parts. Parts are numbered
+                 by appending NNN suffixes.
+
+                 Size may be specified in kilobytes (<nn>K), megabytes (<nn>M)
+                 and gigabytes (<nn>G). By default in bytes.
+
+                 '-s' option without argument selects default split size:
+                 2 gigabytes.
+
+  -z|--no-gzip   Do not compress content files
+
+  -c|--configuration
+                 Backup only configuration of objects, not the content.
+
+  --only-mail
+                 Backup only mail configuration and content of selected objects.
+
+  --only-hosting
+                 Backup only hosting configuration and content of selected objects.
+
+  --suspend
+                 Suspend domains during backup operation.
+
+  --dump-file-name <dump-file-name>
+                 Dump file name to export (with path or relative to dump repository)
+
+  -d|--description=<description>
+                 Add description to the dump
+
+  --incremental  Make incremental backup. If there is no full backup, it will be created instead of incremental
+
+  --include-increments
+                 Used with export-dump-as-file command to perform whole dump export including all incremental dumps.
+
+  --keep-local-backup
+                 Keep a created backup in the server storage.
+
+  --keep-local-backup-if-export-failed
+                 Keep a created backup in the server storage if export fails.
+
+FTP options:
+
+ --ftp-login=<ftp_login>
+                 Specify the FTP login
+ --ftp-password=<ftp_password>
+                 Specify the FTP password (used with '--ftp-login')
+ --ftp-passive-mode
+                 Use FTP passive mode
+
+Internal options:
+
+  --backup-profile-id=<backup-profile-id>
+                 Backup profile identificator
+
+  --backup-profile-name=<backup-profile-name>
+                 Backup profile name ( default profile name is 'backup' )
+
+  --session-path=<session_path>
+                 Session path to store logs and status.
+
+  --owner-uid=<guid_of_user_who_start_backup>
+                 Backup owner unique identificator.
+
+  --owner-type=<type_of_user_who_start_backup>
+                 Backup owner type.
+
+  --dump-rotation=<count>
+                 Number of backups stored in repository
+
+  --extension-id=<id>
+                DB ID of extension which will control data to backup
+
+  --extension-context-file=<file name>
+                File name with context of extension which will control data to backup
+
+Exclude options:
+
+  --exclude-reseller=<obj1>,<obj2>,...
+                 Exclude resellers from backup list.
+                 Reseller's logins are read from command line, comma-separated.
+                 If no resellers provided, resellers are not backuped
+
+  --exclude-reseller-file=<file>
+                 Exclude resellers listed in file from backup list.
+                 File should contain list of reseller's logins one per line.
+
+  --exclude-client=<obj1>,<obj2>,...
+                 Exclude clients from backup list.
+                 Client's logins are read from command line, comma-separated.
+                 If no clients provided, clients are not backuped
+
+  --exclude-client-file=<file>
+                 Excludes clients listed in file from backup list.
+                 File should contain list of client's logins one per line.
+
+  --exclude-domain=<obj1>,<obj2>,...
+                 Exclude domains from backup list.
+                 Domain's names are read from command line, comma-separated.
+                 If no domains provided, domains are not backuped
+
+  --exclude-pattern-file=<file>
+                 Excludes files listed in file from backup list.
+                 File should contain list of patterns one per line.
+
+
+Output file option:
+  --output-file=<output_file>
+                 /fullpath/filename - regular file,
+
+  ftp://[<login>[:<password>]@]<server>/<filepath> - storing the backup to ftp server.
+  FTP_PASSWORD environment variable can be used for setting password.
+  FTP option '--ftp-login' can be used for setting login.
+  FTP option '--ftp-password' (with '--ftp-login') can be used for setting password.
+
+                 Used to import dump from repository into the single file.
+
+Backup Node option:
+  --backup-node=ftp://[<login>[:<password>]@]<server>/<pathtorepo>
+
+EOF
+
+  if ($exitcode) {
+    print STDERR $usage;
+  } else {
+    print $usage;
+  }
+
+  exit $exitcode;
+}
+
+sub isOldOption {
+  my $s = shift;
+  return ($s eq '--all' or $s eq '--clients' or $s eq '--domains');
+}
+
+#
+# Options parsing compatible with 8.0 pleskbackup style
+#
+
+sub parseOutpuFile{
+  my( $outputFile, $settings, $ftplogin, $ftppwd, $ftppasv ) = @_;
+
+  if ($outputFile =~ /^ftps?:\/\//) {
+    if ($outputFile =~ /^(ftp|ftps):\/\/(?:([^:]*)(?::([^:]*))?@)?([^\/:@]+)(?::([0-9]+))?(?:\/?(.*?)([^\/]*?))$/) {
+      my %ftp;
+
+      $ftp{'protocol'} = $1;
+      $ftp{'login'} = defined $2 ? $2 : '';
+      $ftp{'password'} = defined $3 ? $3 : '';
+
+      $ftp{'password'} = $ftppwd if defined $ftppwd;
+      $ftp{'login'} = $ftplogin if defined $ftplogin;
+
+      if ($ftp{'password'} eq '' && defined $ENV{'FTP_PASSWORD'}) {
+        $ftp{'password'} = $ENV{'FTP_PASSWORD'};
+      }
+
+      if ($ftp{'login'} eq '') {
+        $ftp{'login'} = 'anonymous';
+        $ftp{'password'} = 'plesk@plesk.com' if ($ftp{'password'} eq '');
+      }
+
+      $ftp{'server'} = $4;
+      $ftp{'port'} = $5;
+      $ftp{'path'} = $6;
+      $ftp{'file'} = $7;
+      $ftp{'passive'} = 1 if $ftppasv;
+      $settings->{'ftp'} = \%ftp;
+    }
+    else {
+      die 'Bad FTP file format';
+    }
+  }
+  return;
+}
+
+
+sub parseOptions {
+  usage(0) unless @ARGV;
+  usage(0) if $ARGV[0] eq "--help";
+
+  my $command = '';
+  my $optParser = Getopt::Long::Parser->new(config => ['bundling']);
+
+  my %res;
+  $res{'verbose'} = 0;
+  $res{'gzip'} = 1;
+  $res{'include-increments'} = 0;
+  $res{'keep-local-backup'} = 0;
+  $res{'keep-local-backup-if-export-failed'} = 0;
+
+  my ( $split, $outputfile, $ftplogin, $ftppwd, $ftppasv, $backupnode );
+  my ( $objectsFromFileName, $profileId, $profileName, $incrementalCreationDate, $sessionPath, $owneruid, $ownertype, $dumpfilename, $dumpRotation, $description );
+  my ( $excludeResellers, $excludeResellerFile, $excludeClients, $excludeClientFile, $excludeDomains, $excludeDomainFile, $excludePatternFile );
+  my ( $noWholeVhost, $noWholeMail );
+  my ( $pathToSchema );
+  my ( $extensionId, $extensionFileName );
+
+  $command = shift @ARGV;
+
+  if (!$command) {
+    die "No command in command line" unless (@ARGV);
+  }
+
+  usage(0) if $command eq "help";
+
+  $optParser->getoptions("verbose|v" => sub { $res{'verbose'} += 1 },
+                         "configuration|c" => sub { $res{'configuration'} = 1 },
+                         "split|s:s" => \$split,
+                         "no-gzip|z" => sub { $res{'gzip'} = 0 },
+                         "output-file=s" => \$outputfile,
+                         'include-increments' => sub { $res{'include-increments'} = 1 },
+                         "incremental" => sub { $res{'incremental'} = 1 },
+                         "keep-local-backup" => sub { $res{'keep-local-backup'} = 1 },
+                         "keep-local-backup-if-export-failed" => sub { $res{'keep-local-backup-if-export-failed'} = 1 },
+
+                         "ftp-login:s" => \$ftplogin,
+                         "ftp-password:s" => \$ftppwd,
+                         "ftp-passive-mode" => sub { $ftppasv = 1 },
+                         "from-file|f=s" => \$objectsFromFileName,
+                         "only-mail" => sub { $res{'only-mail'} = 1 },
+                         "only-hosting" => sub { $res{'only-hosting'} = 1 },
+                         #"only-database" => sub { $res{'only-database'} = 1 },
+                         "ftp" => sub { $res{'backupToFtp'} = 1 },
+                         "suspend" => sub { $res{'suspend'} = 1 },
+                         "dump-rotation=s" => \$dumpRotation,
+                         "description|d=s" => \$description,
+
+                         "extension-id=s" => \$extensionId,
+                         "extension-context-file=s" => \$extensionFileName,
+                         "backup-profile-id=s" => \$profileId,
+                         "backup-profile-name=s" => \$profileName,
+                         'incremental-creation-date=s' => \$incrementalCreationDate,
+                         "session-path=s" => \$sessionPath,
+                         "owner-uid=s" => \$owneruid,
+                         "owner-type=s" => \$ownertype,
+                         "dump-file-name:s" => \$dumpfilename,
+
+                         "exclude-reseller=s" => \$excludeResellers,
+                         "exclude-reseller-file=s" => \$excludeResellerFile,
+                         "exclude-client=s" => \$excludeClients,
+                         "exclude-client-file=s" => \$excludeClientFile,
+                         "exclude-domain=s" => \$excludeDomains,
+                         "exclude-domain-file=s" => \$excludeDomainFile,
+                         "exclude-pattern-file=s" => \$excludePatternFile,
+
+                         "no-whole-vhost" => sub { $noWholeVhost = 1; },
+                         "no-whole-mail" =>  sub { $noWholeMail = 1; },
+                         "get-size" =>  sub { $res{'get-size'} = 1; },
+                         "validate-by-schema=s" => \$pathToSchema,
+                         "no-sign" => sub { $res{'no-sign'} = 1; },
+                         "backup-node=s" => \$backupnode,
+                         );
+
+  $agentSessionPath = $sessionPath;
+  my $size;
+  if (defined $split) {
+    $size = parseSize($split);
+    if($size) {
+      my $minSplitSize = 1024*1024; # Minimum split size is 1M
+      $size = HelpFuncs::Max($size, $minSplitSize);
+    }
+  }
+  my $rlimit = AgentConfig::getRLimitFsize();
+  if($rlimit) {
+    $size = HelpFuncs::Min($size, 512*$rlimit);
+  }
+  $res{'extension-id'} = $extensionId if defined $extensionId;
+  $res{'extension-context-file'} = $extensionFileName if defined $extensionFileName;
+
+  $res{'split-size'} = $size;
+
+  $res{'dump-rotation'} = $dumpRotation + 0 if $dumpRotation && ($dumpRotation + 0) > 0;
+
+  $res{'description'} = $description if $description;
+
+  $res{'validate-by-schema'} = $pathToSchema if $pathToSchema;
+
+  die " '--ftp-password' option should be used with '--ftp-login' option!" if defined $ftppwd and not $ftplogin;
+  die "Use only one of the options: 'only-mail', 'only-hosting'" if exists $res{'only-mail'} && exists $res{'only-hosting'};
+
+  if( defined $outputfile ){
+     $res{'output-file'} = $outputfile;
+     parseOutpuFile( $outputfile, \%res, $ftplogin, $ftppwd, $ftppasv );
+  }
+
+  if( defined $backupnode ) {
+     $res{'backup-node'} = $backupnode;
+     $res{'passive'} = $ftppasv;
+     $res{'ftp-password'} = ($ftppwd eq '' && defined $ENV{'FTP_PASSWORD'}) ? $ENV{'FTP_PASSWORD'} : $ftppwd;
+  }
+
+  die "'owner-type' option should be used with '--owner-uid' option!" if (defined $ownertype) && ( !defined $owneruid);
+
+  $res{'profile-id'} = $profileId if defined $profileId;
+  $res{'profile-name'} = $profileName if defined $profileName;
+  $res{'incremental-creation-date'} = $incrementalCreationDate if defined $incrementalCreationDate;
+  $res{'session-path'} = $sessionPath if defined $sessionPath;
+  $res{'owner-uid'} = $owneruid if defined $owneruid;
+  $res{'owner-type'} = $ownertype if defined $ownertype;
+
+  $res{'no-whole-vhost'} = 1 if $noWholeVhost;
+  $res{'no-whole-mail'} = 1 if $noWholeMail;
+
+  $res{'exclude-reseller'} = [split(/,/, $excludeResellers)]  if defined $excludeResellers;
+  if ($excludeResellerFile) {
+      my @objects = readObjects($excludeResellerFile);
+      push @{$res{'exclude-reseller'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-client'} = [split(/,/, $excludeClients)]  if defined $excludeClients;
+  if ($excludeClientFile) {
+      my @objects = readObjects($excludeClientFile);
+      push @{$res{'exclude-client'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-domain'} = [split(/,/, $excludeDomains)]  if defined $excludeDomains;
+  if ($excludeDomainFile) {
+      my @objects = readObjects($excludeDomainFile);
+      push @{$res{'exclude-domain'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-pattern-file'} = $excludePatternFile if defined $excludePatternFile;
+
+  if ($command eq "server" ){
+    $res{'all'} = $res{'server'} = 1;
+
+    die "'from-file' option should not be specified with 'server' command" if $objectsFromFileName;
+  }
+  elsif( $command eq "resellers-name" || $command eq "resellers-id" ||
+         $command eq "clients-name" || $command eq "clients-id" ||
+         $command eq "domains-name" || $command eq "domains-id" )
+  {
+     if( $objectsFromFileName ){
+         my @objects = readObjects($objectsFromFileName);
+         $res{$command} = \@objects;
+     }
+     elsif( scalar(@ARGV)>0 ){ $res{$command} = \@ARGV; }
+     else{ $res{ "$command-all" } = 1; }
+  }
+  elsif( $command eq 'export-dump-as-file' ){
+    if( not $dumpfilename ){
+      usage(1);
+    }
+    $res{'export-dump-file'} = $dumpfilename;
+    die "option '--output-file' required" if not $outputfile;
+  }
+  else{
+    die "Unknown command '$command'";
+  }
+  return %res;
+}
+
+my %multipliers = ( '' => 1,
+                    'k' => 1024,
+                    'm' => 1024*1024,
+                    'g' => 1024*1024*1024,
+                    't' => 1024*1024*1024*1024 );
+
+sub parseSize {
+  my ($size) = @_;
+  if ($size =~ /^=?(\d+)([kmgt]?)$/i) {
+    return $1 * $multipliers{lc($2)};
+  }
+  return;
+}
+
+sub readObjects {
+  my ($filename) = @_;
+  open OBJECTS, "$filename" or die "Unable to open $filename";
+  my @objects = <OBJECTS>;
+  chomp @objects;
+  close OBJECTS;
+  return @objects;
+}
+
+
+
+sub perform {
+  my (%settings) = @_;
+
+  if( exists $settings{'output-file'} ) {
+    die "Unable to backup directed to stdout" if $settings{'output-file'} eq '-';
+  }
+
+  my $status = ( defined $settings{'session-path'} )
+      ? DumpStatus::createMigration( "$settings{'session-path'}/dump-status.xml" )
+      : DumpStatus::createBackup();
+
+  my $dumpLogPath;
+  if (defined $settings{'session-path'}) {
+    $dumpLogPath = "$settings{'session-path'}/psadump.log";
+    my $xmlLogger = XmlLogger->new($status);
+    Logging::setXmlLogging($xmlLogger);
+  }
+
+  Logging::open($dumpLogPath, $ENV{'CUSTOM_LOG'});
+
+  if ($settings{'verbose'} > 1) {
+    Logging::setVerbosity($settings{'verbose'} > 2 ? 5 : $settings{'verbose'});
+  } else {
+    Logging::setVerbosity(1);
+  }
+
+  if (AgentConfig::isFeedbackAllowed()) {
+    Logging::setReportSender(ErrorReportSender->new());
+  }
+
+  $SIG{'__WARN__'} = sub { Logging::debug(HelpFuncs::trim($_[0])); };
+
+  my $stdin = "";
+  if (tell(\*STDIN) != -1) {
+    $stdin = do { local $/; <STDIN> };
+  }
+
+  my $backupParameters = undef;
+  if (eval("require JSON::XS")) {
+    $backupParameters = eval {
+      return JSON::XS->new->utf8->pretty->decode($stdin) if (length($stdin) > 0);
+      return undef;
+    };
+  }
+  if ($@) {
+    use Data::Dumper;
+    Logging::debug(Dumper $@);
+    $backupParameters = undef;
+  };
+
+
+  my $psaConf = SpecificConfig->new();
+  my $psadumpdir = $psaConf->get( 'DUMP_D' );
+  my $suspend;
+  die "Cannnot determine dump directory from psa.conf or directory does not exists [$psadumpdir]!" unless -d $psadumpdir;
+
+  my $dumpdir;
+
+  if ( exists $settings{'backup-node'}) {
+    $dumpdir = $settings{'backup-node'};
+  } else {
+    $dumpdir = $psadumpdir;
+  }
+
+  if( exists $settings{'suspend'} ){
+     $suspend = 1;
+     die "Suspend option requires session-path is set!" if not defined $settings{'session-path'};
+  }
+
+  if (exists $settings{'export-dump-file'} ) {
+    my $files = executeExportDumpFile( $dumpdir, \%settings );
+    if( defined $settings{'session-path'} ){
+      open DUMP_RES, "> $settings{'session-path'}/dump-name";
+      foreach my $fileInfo(@{$files}) { print DUMP_RES "$fileInfo\n"; }
+      close DUMP_RES;
+    }
+    else{
+      print STDERR "Output files\n";
+      foreach my $fileInfo(@{$files}) { print STDERR "$fileInfo\n"; }
+    }
+    return 0;
+  }
+
+  my $structuredBackup = (defined($settings{'ftp'}) or defined($settings{'output-file'})) ? 0 : 1;
+
+  my ($exportDir, $exportFileName);
+  if (defined($settings{'output-file'})) {
+    if ($settings{'output-file'} =~ /\/$/) {
+      $exportDir = $settings{'output-file'};
+      $exportDir =~ s/\/+$//;
+    } else {
+      $exportDir = dirname($settings{'output-file'});
+      $exportFileName = basename($settings{'output-file'});
+    }
+  }
+
+  my $space_reserved = 30*1024*1024;
+  my $storage = Storage::Storage::createFileStorage(
+    ($settings{'gzip'} and not exists $settings{'get-size'})
+    , $dumpdir
+    , $settings{'split-size'}
+    , ((exists $settings{'no-sign'}) ? undef : 1)
+    , $space_reserved
+    , $settings{'passive'}
+    , $exportDir
+    , (defined($settings{'ftp'}) ? $settings{'ftp'} : undef)
+    , $settings{'session-path'}
+    , $settings{'verbose'}
+    , $settings{'keep-local-backup'}
+    , $settings{'keep-local-backup-if-export-failed'}
+  );
+
+  my $agent = PleskX->new($storage, $status, $agentsShareDir, $backupParameters, $settings{'session-path'});
+
+  if( exists $settings{'profile-name'} ){
+    if( exists $settings{'profile-id'} ) {
+      $agent->setBackupProfileFileName( $settings{'profile-name'}, $settings{'profile-id'} );
+    }
+    else{
+      $agent->setBackupProfileFileName( $settings{'profile-name'} );
+    }
+  }
+
+  if( exists $settings{'owner-uid'} ) {
+     $agent->setBackupOwnerGuid( $settings{'owner-uid'}, ( exists $settings{'owner-type'} ? $settings{'owner-type'} : '' ) );
+  }
+  else{
+     $agent->setBackupOwnerGuid();
+  }
+
+  $agent->setDumpWholeVHost() if not exists $settings{'no-whole-vhost'};
+  $agent->setDumpWholeMail() if not exists $settings{'no-whole-mail'};
+
+  $agent->setSuspend( $suspend, $settings{'session-path'} ) if ($suspend and not exists $settings{'get-size'} );
+
+  $agent->setDescription( $settings{'description'} ) if exists $settings{'description'};
+
+  if ($settings{'only-mail'}) {
+    $agent->setDumpType($PleskX::ONLY_MAIL);
+  }
+  if ($settings{'only-hosting'}) {
+    $agent->setDumpType($PleskX::ONLY_HOSTING);
+  }
+#  if ($settings{'only-database'}) {
+#    $agent->setDumpType($PleskX::ONLY_DATABASE);
+#  }
+  if ($settings{'configuration'}) {
+    $agent->setDumpType($PleskX::CONFIGURATION);
+  }
+
+  if (exists $settings{'all'}) {
+    $agent->selectAll();
+    $agent->selectAdminInfo();
+    $agent->selectServerSettings();
+  }
+  if (exists $settings{'resellers-name-all'} or exists $settings{'resellers-id-all'}) {
+    $agent->selectAllResellers();
+  }
+  if (exists $settings{'clients-name-all'} or exists $settings{'clients-id-all'} ) {
+    $agent->selectAllClients();
+  }
+  if (exists $settings{'domains-name-all'} or exists $settings{'domains-id-all'} ) {
+    $agent->selectAllDomains();
+  }
+  if (exists $settings{'resellers-name'}) {
+    $agent->selectResellers(@{$settings{'resellers-name'}});
+  }
+  if (exists $settings{'clients-name'}) {
+    $agent->selectClients(@{$settings{'clients-name'}});
+  }
+  if (exists $settings{'domains-name'}) {
+    $agent->selectDomains(@{$settings{'domains-name'}});
+  }
+  if (exists $settings{'resellers-id'}) {
+    $agent->selectResellersById( @{$settings{'resellers-id'}} );
+  }
+  if (exists $settings{'clients-id'}) {
+    $agent->selectClientsById( @{$settings{'clients-id'}} );
+  }
+  if (exists $settings{'domains-id'}) {
+    $agent->selectDomainsById( @{$settings{'domains-id'}} );
+  }
+  if( exists $settings{'server'} ){
+    $agent->selectServerSettings();
+  }
+
+  if( exists $settings{'exclude-reseller'} ) {
+      $agent->excludeResellers( @{$settings{'exclude-reseller'}} );
+  }
+  if( exists $settings{'exclude-client'} ) {
+      $agent->excludeClients( @{$settings{'exclude-client'}} );
+  }
+  if( exists $settings{'exclude-domain'} ) {
+      $agent->excludeDomains( @{$settings{'exclude-domain'}} );
+  }
+
+  if( exists $settings{'exclude-pattern-file'} ) {
+      $agent->setExcludePatternsFile($settings{'exclude-pattern-file'});
+  }
+
+  if( exists $settings{'extension-id'} ) {
+    $agent->setExtension($settings{'extension-id'}, $settings{'extension-context-file'});
+  }
+
+  initIncrementalBackupSupport(\%settings, $agent, $dumpdir);
+
+  if( exists $settings{'get-size'} ){
+    my $returnCode = 0;
+    try {
+      Logging::setVerbosity(4);
+	  my $isIncrementalBackup = $agent->getIncrementalCreationDate() && $agent->getIncrementalCreationDate() ne '';
+      my $res = $agent->getSize(
+        $isIncrementalBackup,
+        $settings{'backupToFtp'});
+      print $res;
+    }
+    catch Error with {
+      my $error = shift;
+      $agent->Cleanup();
+      $storage->CleanupFiles();
+      my $errmsg = "Unable to get backup size";
+      print STDERR "$errmsg: $error\n";
+      Logging::debug("$errmsg: $error");
+      Logging::error($errmsg,'fatal');
+      $returnCode = 3;
+    };
+    if ($returnCode != 0) {
+      return $returnCode;
+    }
+
+    $status->finish();
+    Logging::close();
+
+    return 0;
+  }
+
+  if (!$structuredBackup) {
+    my ($type, $name, $normalizedName) = @{$agent->getMainDumpInfo()};
+    my $incrementalCreationDate = $agent->getIncrementalCreationDate();
+    if (!$exportFileName) {
+      if ($incrementalCreationDate) {
+        $exportFileName = $normalizedName
+          ? sprintf('%s_%s_%s_%s.tar', $agent->getBackupPrefix(), $normalizedName, $incrementalCreationDate, $agent->getCreationDate())
+          : sprintf('%s_%s_%s.tar', $agent->getBackupPrefix(), $incrementalCreationDate, $agent->getCreationDate())
+        ;
+      } else {
+        $exportFileName = $normalizedName
+          ? sprintf('%s_%s_%s.tar', $agent->getBackupPrefix(), $normalizedName, $agent->getCreationDate())
+          : sprintf('%s_%s.tar', $agent->getBackupPrefix(), $agent->getCreationDate())
+        ;
+      }
+    }
+    $storage->setExportFileName($exportFileName);
+    $storage->setMainDumpRootPath(getMainDumpRootPath($agent, $type, $name));
+    if (defined($settings{'session-path'})) {
+      my $sessionPath = $settings{'session-path'};
+      open DUMP_RES, "> $sessionPath/export-dump-name";
+      print DUMP_RES $exportFileName;
+      close DUMP_RES;
+    }
+  }
+
+  my $pid = $$;
+  $SIG{INT} = sub{ $storage->CleanupFiles() if $$==$pid; die "The dump terminated unexpected by signal"; };
+  my $returnCode = 0;
+  try {
+    my $res = $agent->dump();
+    if ($res!=0) {
+      Logging::error("Dump failed");
+      $returnCode = 1;
+    }
+  } catch Error with {
+    my $error = shift;
+    $agent->Cleanup();
+    $storage->CleanupFiles();
+    my $errmsg = "Unable to create dump";
+    print STDERR "$errmsg: $error\n";
+    Logging::debug("$errmsg: $error");
+    Logging::error($errmsg,'fatal');
+    $returnCode = 1;
+  };
+  if ($returnCode != 0) {
+    return $returnCode;
+  }
+  if ($structuredBackup || $settings{'keep-local-backup'} || $settings{'keep-local-backup-if-export-failed'}) {
+    $status->setLocalDumpCreated();
+  }
+
+  local $SIG{INT} = 'DEFAULT';
+
+  checkDump($storage, $dumpdir, \%settings, $structuredBackup) if ((!exists $settings{'backup-node'} || exists $settings{'validate-by-schema'}));
+
+  my $mainFileName = $storage->getMainDumpXmlFile();
+  my $mainFileFolder = $storage->getFilePathFromId($storage->getMainDumpXmlRelativePath());
+  $mainFileFolder = "/$mainFileFolder" if $mainFileFolder;
+  $mainFileFolder .= '/' if $mainFileFolder && substr($mainFileFolder, -1, 1 ) ne '/';
+
+  # store miration.result to discovered
+  my $migrationResultPath = writeMigrationResult();
+  if ($migrationResultPath and -e $migrationResultPath) {
+    my $posExtBegin = rindex( $mainFileName, '.xml' );
+    my $mainFileNameWithoutExt = substr($mainFileName, 0, $posExtBegin);
+    my $severity = uc(Logging::getSeverity());
+    $storage->moveFileToDiscovered($migrationResultPath, "dumpresult_$severity", $mainFileFolder, $mainFileNameWithoutExt);
+  }
+
+  my @printFileInfo;
+  # upload to ftp
+  if( defined $settings{'ftp'} ) {
+      my %ftp = %{$settings{'ftp'}};
+      my $ftpOutputFileName = ($ftp{'file'}) ? $ftp{'file'} : getExportDumpFileName($storage->getMainDumpXmlRelativePath());
+      die "Unable to export dump. Invalid dump file name" if (not $ftpOutputFileName);
+
+      $storage->finishExport();
+      $status->setExportDumpCreated();
+      @printFileInfo = @{$storage->getCreatedVolumes()};
+
+      if( exists $settings{'dump-rotation'}  ) { #rotate dump at FTP
+          try {
+              Logging::debug( "Rotate dump '$ftpOutputFileName' at FTP" );
+              my $ftpUrl = HelpFuncs::getStorageUrlFromFtpSettings(\%ftp);
+              rotateDump( $ftpUrl, $ftpOutputFileName , $settings{'dump-rotation'}, $agent->getBackupOwnerGuid(), 0,
+                (exists $settings{'session-path'} ? $settings{'session-path'} : undef ), (exists $ftp{'passive'} ? 1 : undef), $settings{'verbose'} );
+              Logging::debug( "The dump have been rotated" );
+          } catch Error with {
+               my $error = shift;
+               Logging::error( "Unable to rotate dump: $error", 'UtilityError' );
+               print STDERR "Unable to rotate dump: $error\n";
+          };
+      }
+   }
+  elsif( defined $settings{'output-file'} ){
+       Logging::debug( "Export dump to file '$settings{'output-file'}'" );
+       unless( "$mainFileFolder$mainFileName" =~ /(.*\/)?(.*)_info_(\d{10}(_\d{10})?).*.xml/ ){
+         die "Invalid dump file name '$mainFileFolder$mainFileName'. Please give path to <info>.xml!";
+       }
+       $storage->finishExport();
+       $status->setExportDumpCreated();
+       @printFileInfo = @{$storage->getCreatedVolumes()};
+   }
+  elsif ( defined $settings{'backup-node'}) {
+    $storage->CleanupFiles();
+    $ENV{'DUMP_STORAGE_PASSWD'} = $settings{'ftp-password'};
+    checkDump($storage, $dumpdir, \%settings, 1) if ((!exists $settings{'validate-by-schema'}));
+
+    my $sessionPath = exists($settings{'session-path'}) ? $settings{'session-path'} : undef;
+    my $passiveMode = exists($settings{'passive'}) ? 1 : undef;
+    if (exists $settings{'dump-rotation'}) {
+      try {
+        Logging::debug("Rotate dumps at backup node");
+        rotateDump(
+          $settings{'backup-node'},
+          "$mainFileFolder$mainFileName",
+          $settings{'dump-rotation'},
+          $agent->getBackupOwnerGuid(),
+          1,
+          $sessionPath,
+          $passiveMode,
+          $settings{'verbose'}
+        );
+        Logging::debug("The dump have been rotated");
+      } catch Error with {
+        my $error = shift;
+        Logging::error("Unable to rotate dump: $error", 'UtilityError');
+        print STDERR "Unable to rotate dump: $error\n";
+      };
+    }
+
+    foreach my $domainName (@{$agent->{domains}}) {
+      my $domain = DAL::getDomainPtr($domainName);
+      if ($domain) {
+        syncCache($settings{'backup-node'}, 'domain', $domain->{'name'}, $sessionPath, $passiveMode);
+      }
+    }
+  }
+  else{
+    push @printFileInfo, "$mainFileFolder$mainFileName";
+      if( exists $settings{'dump-rotation'}){
+        try {
+          Logging::debug( "Rotate dump" );
+          rotateDump( "$dumpdir$mainFileFolder", $storage->getMainDumpXmlFile(), $settings{'dump-rotation'}, $agent->getBackupOwnerGuid(), 1,
+                      (exists $settings{'session-path'} ? $settings{'session-path'} : undef ), undef, $settings{'verbose'} );
+          Logging::debug( "The dump have been rotated" );
+        } catch Error with {
+          my $error = shift;
+          Logging::error( "Unable to rotate dump: $error" );
+          print STDERR "Unable to rotate dump: $error\n";
+        };
+    }
+  }
+
+  $status->finish();
+  Logging::close();
+  if( defined $settings{'session-path'} ){
+    open DUMP_RES, "> $settings{'session-path'}/dump-name";
+    foreach my $fileInfo(@printFileInfo) { print DUMP_RES "$fileInfo\n"; }
+    close DUMP_RES;
+  }
+  else{
+    print STDERR "Output files\n";
+    foreach my $fileInfo(@printFileInfo) { print STDERR "$fileInfo\n"; }
+  }
+
+  return 0;
+}
+
+sub getExportDumpFileName {
+  my ($mainDumpFilePath) = @_;
+
+  my $exportDumpFileName;
+  if ($mainDumpFilePath =~ /([\/\\]+([^\/\\]+)[\/\\]+)?([^\/\\]*_)info_((\d{10}(_\d{10})?)).xml$/){
+    if ($2) {
+      $exportDumpFileName = $3.$2."_".$4.".tar";
+    } else {
+      $exportDumpFileName = $3.$4.".tar";
+    }
+  }
+
+  return $exportDumpFileName;
+}
+
+sub initIncrementalBackupSupport {
+  my ($settings, $agent, $dumpdir) = @_;
+
+  my ($baseTimestamp, $lastIncrementFile, $type, $name, $normalizedName, $guid);
+  if (exists($settings->{'incremental'})) {
+    ($type, $name, $normalizedName, $guid) = @{$agent->getMainDumpInfo()};
+  } elsif (exists($settings->{'incremental-creation-date'})) {
+    $baseTimestamp = $settings->{'incremental-creation-date'};
+  } else {
+    return;
+  }
+
+  Logging::debug("Initialize incremental backup support");
+
+  $guid = $agent->getBackupOwnerGuid() if ($type eq 'server');
+
+  # Prepare common parameters for pmm-ras
+  my $dumpStorage;
+  my $cmdExtraParams = "";
+
+  if (defined $settings->{'ftp'}) {
+    my $ftp = $settings->{'ftp'};
+
+    $dumpStorage = HelpFuncs::getStorageUrlFromFtpSettings($ftp) . '/';
+  } elsif (defined $settings->{'output-file'}) {
+    my $storageType = HelpFuncs::getStorageType($settings->{'output-file'});
+    if ($storageType eq 'file' and not -d $settings->{'output-file'}) {
+      die "The option --output-file must specify existing directory path to store incremental backup";
+    }
+
+    $dumpStorage = $settings->{'output-file'};
+  } else {
+    $dumpStorage = $dumpdir;
+  }
+
+  if (defined($settings->{'backup-node'})) {
+    $ENV{'DUMP_STORAGE_PASSWD'} = $settings->{'ftp-password'};
+    $cmdExtraParams .= " --use-ftp-passive-mode" if $settings->{'passive'};
+  } elsif (defined($settings->{'ftp'})) {
+    my $ftp = $settings->{'ftp'};
+    $ENV{'DUMP_STORAGE_PASSWD'} = $ftp->{'password'} if exists $ftp->{'password'};
+    $cmdExtraParams .= " --use-ftp-passive-mode" if exists $ftp->{'passive'};
+  }
+
+  $cmdExtraParams .= " --debug --verbose" if $settings->{'verbose'};
+  if (defined $settings->{'session-path'} && length($settings->{'session-path'}) > 0) {
+    $cmdExtraParams .= " --session-path=\"" . $settings->{'session-path'} . "\"";
+  }
+
+  # Get base timestamp if not already passed via parameters
+  if (not $baseTimestamp) {
+    my $cmd = AgentConfig::pmmRasBin()." --get-incremental-base --dump-storage=\"$dumpStorage\" --dump-prefix=\"".$agent->getBackupPrefix()."\" --type=$type --guid=$guid";
+    $cmd .= " --name=$name" if ($name);
+    $cmd .= " --storage-structured" if (!$settings->{'ftp'} && !$settings->{'output-file'});
+    my $markers = $agent->getMarkers();
+    $cmd .= (" --marker=" . $markers->[0]) if (scalar(@{$markers}) > 0);
+    $cmd .= $cmdExtraParams;
+
+    Logging::debug("Execute: $cmd");
+    my $stdout = `$cmd`;
+    my $retCode = $? >> 8;
+    if ($retCode != 0) {
+        Logging::debug("Unable to find suitable full dump to create increment, so full dump will be created. Error: ".$stdout);
+        return;
+    }
+    Logging::debug("Output:\n$stdout");
+
+    my %baseInfo = split /[=\n]/, $stdout;
+    $baseTimestamp = $baseInfo{'base-timestamp'} if ($baseInfo{'base-timestamp'});
+    $lastIncrementFile = $baseInfo{'last-increment-path'} if ($baseInfo{'last-increment-path'});
+  }
+
+  return if (not $baseTimestamp);
+
+  # For the case of exported dump extract previous increment index
+  if (defined $settings->{'ftp'} || defined $settings->{'output-file'}) {
+    if (not $lastIncrementFile) {
+      Logging::warning("Unable to get last dump required for incremental backup, full dump will be created instead");
+      return;
+    }
+
+    my $outDir = File::Temp::tempdir( AgentConfig::getBackupTmpDir() . "/iXXXXXX", CLEANUP => 1 );
+    my $cmd = AgentConfig::pmmRasBin()." --extract-index --dump-storage=\"$dumpStorage\" --dump-file-specification=\"$lastIncrementFile\" --out-dir=$outDir".$cmdExtraParams;
+
+    Logging::debug("Execute: $cmd");
+    my $cmdResult = `$cmd`;
+    my $retCode = $? >> 8;
+    if ($retCode != 0) {
+        Logging::warning("Unable to load previous backup index required for making incremental backup, full dump will be created instead");
+        return;
+    }
+
+    $agent->setLastIndexPath($outDir);
+  }
+
+  $agent->setIncrementalCreationDate($baseTimestamp);
+  $agent->setLastIncrementFile($lastIncrementFile);
+}
+
+sub getMainDumpRootPath {
+  my ($agent, $type, $name) = @_;
+
+  my $path;
+  if ('server' eq $type) {
+    $path = $agent->getAdminRootPath();
+  } elsif ('reseller' eq $type or 'client' eq $type) {
+    $path = $agent->getClientRootPath($name);
+  } elsif ('domain' eq $type) {
+    $path = $agent->getDomainRootPathByAscName($name);
+  }
+  return $path;
+}
+
+sub exportDumpToFtp{
+    my ($ftp, $verbose, $relativeMainXmlFileName, $outputFileName, $sessionPath, $splitSize, $includeIncrements) = @_;
+
+    print "\nUploading backup to ftp\n" if $verbose;
+
+    my @ftpFiles;
+
+    my $ftpAdr = HelpFuncs::getStorageUrlFromFtpSettings($ftp);
+
+    Logging::debug( "Uploading dump '$relativeMainXmlFileName' to ftp file '$outputFileName'\n" );
+
+    $ENV{'DUMP_STORAGE_PASSWD'} = $ftp->{'password'};
+    my $cmd = AgentConfig::pmmRasBin()." --export-dump-as-file --dump-specification=\"$relativeMainXmlFileName\" --dump-file-specification=\"$ftpAdr/$outputFileName\"";
+    $cmd .= " --use-ftp-passive-mode" if exists $ftp->{'passive'};
+    $cmd .= " --debug --verbose" if $verbose;
+    if (defined $sessionPath && length($sessionPath) > 0) {
+        $cmd .= " --session-path=\"$sessionPath\"";
+    }
+    if (defined $splitSize && length($splitSize) > 0) {
+        $cmd .= " --split-size=\"$splitSize\"";
+    }
+    if ($includeIncrements) {
+        $cmd .= " --include-increments";
+    }
+    Logging::debug("Execute: $cmd");
+    my $cmdResult = `$cmd`;
+    my $retCode = $? >> 8;
+    if ($retCode != 0) {
+        Logging::error("Unable to upload dump to FTP, it remains in server repository and you can manually download and upload it to FTP. Upload diagnostic message: $cmdResult");
+        return;
+    } else {
+        push @ftpFiles, "$ftpAdr/$outputFileName";
+    }
+
+    return \@ftpFiles;
+}
+
+sub exportDumpToLocal{
+    my ($outputFileName, $verbose, $relativeMainXmlFileName, $sessionPath, $splitSize, $includeIncrements) = @_;
+
+    my @ftpFiles;
+    my $err;
+    my $outputDir = '';
+    my $outputFile = '';
+
+    if (substr($outputFileName, -1) eq '/') {
+        $outputDir = $outputFileName;
+        $outputFile = getExportDumpFileName($relativeMainXmlFileName);
+    } else {
+        $outputFile = $outputFileName;
+        if ($outputFile =~ /(.*\/)(.*)/ ){
+          $outputDir = $1;
+        } else {
+            if (not $outputFile =~ /\/.*/) {
+                $outputDir = '';
+            } else {
+                $outputDir = '/';
+            }
+        }
+        $outputFile = substr( $outputFile, length($outputDir) );
+    }
+
+    my $cmd = AgentConfig::pmmRasBin()." --export-dump-as-file --dump-specification=\"$relativeMainXmlFileName\" --dump-file-specification=\"$outputDir$outputFile\"";
+    $cmd .= " --debug --verbose" if $verbose;
+    if (defined $sessionPath && length($sessionPath) > 0) {
+        $cmd .= " --session-path=\"$sessionPath\"";
+    }
+    if (defined $splitSize  && length($splitSize) > 0) {
+        $cmd .= " --split-size=\"$splitSize\"";
+    }
+    if ($includeIncrements) {
+        $cmd .= " --include-increments";
+    }
+    Logging::debug("Execute: $cmd");
+    my $cmdResult = `$cmd`;
+    my $retCode = $? >> 8;
+    if ($retCode != 0) {
+        Logging::error("Can't export file '$relativeMainXmlFileName' to $outputDir$outputFile. Error code: $retCode. $cmdResult");
+        Logging::debug("Export output: $cmdResult");
+        return;
+    } else {
+        push @ftpFiles, "$outputDir$outputFile";
+    }
+
+    return \@ftpFiles;
+}
+
+sub executeExportDumpFile {
+    my($dumpdir, $settings) = @_;
+
+    my $dumpfile = $settings->{'export-dump-file'};
+
+    if ($dumpfile =~ /\/.*/){
+        if (index( $dumpfile, "$dumpdir" ) == 0) {
+            $dumpfile = substr( $dumpfile, length($dumpdir) + 1 )
+        }
+    }
+
+    my ($targetDir, $targetFile, $useExt);
+    $useExt = 0;
+    my $fileExport = 0;
+
+    if (defined $settings->{'ftp'}) {
+        if (not $settings->{'ftp'}{'file'}) {
+            $useExt = 1;
+        }
+    }
+    else {
+        if( substr($settings->{'output-file'},-1) eq '/'){
+            $useExt = 1;
+        }
+    }
+
+    my $fh;
+    ($fh, $targetFile ) = File::Temp::tempfile( "$productRootD/PMM/tmp/backupXXXXXX" );
+    close( $fh );
+
+    if ($targetFile =~ /(.*\/)(.*)/) {
+        $targetDir = $1;
+    } else{
+        if (not $targetFile =~ /\/.*/) {
+            $targetDir = '';
+        } else {
+            $targetDir = '/';
+        }
+    }
+
+    $targetFile = substr( $targetFile, length($targetDir) );
+
+    my $relativeDumpPath = '';
+    unless ($dumpfile =~ /(.*\/)?(.*)_info_(\d{10}).*.xml/) {
+        die "Invalid dump file name '$dumpfile'. Please give path to <info>.xml!";
+    }
+
+    my $resultFiles;
+    if (defined $settings->{'ftp'}) {
+        my $ftpOutputFileName = ($settings->{'ftp'}->{'file'}) ? $settings->{'ftp'}->{'file'} : getExportDumpFileName($dumpfile);
+        my %ftp = %{$settings->{'ftp'}};
+        $resultFiles = exportDumpToFtp(
+            \%ftp
+            , $settings->{'verbose'}
+            , $dumpfile
+            , $ftpOutputFileName
+            , $settings->{'session-path'}
+            , $settings->{'split-size'}
+            , $settings->{'include-increments'}
+        );
+    } else{
+        $resultFiles = exportDumpToLocal(
+          $settings->{'output-file'}
+          , $settings->{'verbose'}
+          , $dumpfile
+          , $settings->{'session-path'}
+          , $settings->{'split-size'}
+          , $settings->{'include-increments'}
+        );
+    }
+    if (not $resultFiles) {
+        Logging::error( "The export have been made successfully but can not be exported because of errors above." );
+        die "Export dump failed";
+    }
+    return $resultFiles;
+}
+
+sub checkDump {
+  my ($storage, $dumpdir, $settings, $structuredBackup) = @_;
+  my $checkDumpError = undef;
+
+  try {
+    Logging::debug( "Check dump" );
+    my $mainFileRelativePath = $storage->getMainDumpXmlRelativePath();
+    if (exists $settings->{'validate-by-schema'}) {
+      my $cmd = AgentConfig::xmllintBin() . " --noout --schema $settings->{'validate-by-schema'} $dumpdir/$mainFileRelativePath";
+      Logging::debug( "Execute: $cmd" );
+      my $checkDumpRes = $? >> 8;
+	  $checkDumpError = "The dump have been invalidated by check-dump operation. It can contain invalid data" if ($checkDumpRes != 0);
+    } else {
+      my $dumpDir = $storage->getFullOutputPath();
+      my $sessionPath = (exists $settings->{'session-path'} ? $settings->{'session-path'} : undef );
+      Logging::debug( "Check dump started ( File: '$mainFileRelativePath' in the repository '$dumpDir' )" );
+
+      my $cmd = [AgentConfig::pmmRasBin(), '--get-dump-info', "--dump-file-specification=$mainFileRelativePath", '--with-feedback'];
+      push(@{$cmd}, "--session-path=$sessionPath", '--verbose') if $sessionPath;
+      push(@{$cmd}, '--dump-storage='.$settings->{'backup-node'}) if defined $settings->{'backup-node'};
+      push(@{$cmd}, '--use-ftp-passive-mode') if defined $settings->{'passive'};
+      push(@{$cmd}, '--skip-content-validation') unless $structuredBackup;
+      Logging::debug('Execute: ' . join(' ', @{$cmd}));
+      my ($stdout, $stderr);
+      IPC::Run::run($cmd, '1>', \$stdout, '2>', \$stderr);
+      my $retCode = $? >> 8;
+      Logging::debug("The check dump is executed with errorcode '$retCode'");
+      Logging::debug("The check dump stdout: $stdout");
+      Logging::debug("The check dump stderr: $stderr");
+    
+      if ($stdout) {
+        my $status = '';
+        my $message = '';
+        eval {
+          require XML::Simple; 1;
+          my $xs = XML::Simple->new(ForceArray => 1, SuppressEmpty => '');
+          my $dumpInfo = $xs->XMLin($stdout, KeyAttr => []);
+          if ($dumpInfo && $dumpInfo->{'dump-status'}) {
+            my ($dumpStatuses) = $dumpInfo->{'dump-status'};
+            foreach my $dumpStatus (@{$dumpStatuses}) {
+              $status = ($dumpStatus->{'dump-status'}) ? $dumpStatus->{'dump-status'} : '';
+              $message = ($dumpStatus->{'details'} && $dumpStatus->{'details'}[0] && $dumpStatus->{'details'}[0]->{'message'}) ? $dumpStatus->{'details'}[0]->{'message'}[0] : '';
+              last if ($status && $status ne 'OK');
+            }
+          }
+        };
+        if ($status eq 'WRONG-FORMAT') {
+          $checkDumpError = "The dump has wrong format! $message";
+        } elsif ($status eq 'SIGN-ERROR') {
+          $checkDumpError = "The dump has signature error!";
+        } elsif ($status eq 'CONTENT-ERROR') {
+          $checkDumpError = "The dump has content errors!";
+        }
+      } else {
+        $checkDumpError = "Dump validation utility returned empty result";
+      }
+    }
+  }
+  catch Error with {
+    my $error = shift;
+    $checkDumpError = "Unable to check dump: $error";
+  };
+
+  if ($checkDumpError) {
+    Logging::error($checkDumpError, 'CheckDump');
+  } else {
+    Logging::debug( "The dump have been validated successfully");
+  }
+}
+
+sub rotateDump{
+  my( $dumpDir, $dumpFileName, $dumpRotation, $ownerguid, $structured, $sessionPath, $passiveMode, $verbose ) = @_;
+  Logging::debug( "Dump rotation started File: '$dumpFileName' in the repository '$dumpDir'. Set backup's count to '$dumpRotation'" );
+  my $cmd = [AgentConfig::pmmRasBin(), "--rotate-dump", "--dump-rotation=$dumpRotation", "--guid=$ownerguid", "--dump-specification=$dumpFileName", "--dump-storage=$dumpDir"];
+  push(@{$cmd}, '--storage-structured') if $structured;
+  push(@{$cmd}, "--session-path=$sessionPath", '--verbose') if $sessionPath;
+  push(@{$cmd}, '--debug') if $verbose;
+  push(@{$cmd}, '--use-ftp-passive-mode') if defined $passiveMode;
+  Logging::debug('Execute: ' . join(' ', @{$cmd}));
+  my $stdout;
+  IPC::Run::run($cmd, '1>', \$stdout);
+  my $retCode = $? >> 8;
+  Logging::debug( "The dump rotation is executed with errorcode '$retCode'" );
+  Logging::debug("The dump rotation output: $stdout") if $stdout;
+  die "The dump rotation is failed with code '$retCode'" if $retCode!=0;
+  return;
+}
+
+sub deleteLocalDump{
+    my ($dumpFileName, $verbose, $sessionPath) = @_;
+    Logging::debug( "Local dump removing started File: '$dumpFileName'" );
+    my $cmd = AgentConfig::pmmRasBin()." --delete-dump --dump-specification=$dumpFileName";
+    $cmd .= " --session-path=$sessionPath" if $sessionPath;
+    $cmd .= " --verbose --debug" if $verbose;
+    Logging::debug( "Execute: $cmd" );
+    my $cmdResult = `$cmd`;
+    my $retCode = $? >> 8;
+    Logging::debug( "The local dump removing is executed with errorcode '$retCode'" );
+    Logging::debug( "The local dump removing output: $cmdResult" ) if $cmdResult;
+    die "The local dump removing is failed with code '$retCode'" if $retCode!=0;
+    return;
+}
+
+sub syncCache{
+  my ($dumpStorage, $objectType, $objectName, $sessionPath, $passiveMode) = @_;
+  my $cmd = AgentConfig::pmmRasBin() . " --sync-cache --dump-storage=$dumpStorage --type=$objectType --name=$objectName --update-modification-time";
+  $cmd .= " --session-path=$sessionPath --verbose" if $sessionPath;
+  $cmd .= " --use-ftp-passive-mode" if $passiveMode;
+  Logging::debug("Execute: $cmd");
+  my $cmdResult = `$cmd`;
+  my $retCode = $? >> 8;
+  Logging::debug("Result ($retCode): $cmdResult");
+  return;
+}
+
+sub processError{
+  my ( $data, $isError, $prevName, $prevType, $prevObject, $execRes ) = @_;
+  my ( $name, $type, $object );
+  return  if !$data;
+  return  if ref($data) ne 'ARRAY';
+  return  if scalar(@{$data})==0;
+  $name = "backup";
+  $type = "backupowner";
+  if( scalar(@{$data})>1 ){
+   $name = $data->[1];
+   $type = $data->[2] if scalar(@{$data})>2;
+  }
+
+  if( ! $$prevObject || !$$prevName || $$prevName ne $name || !$$prevType || $$prevType ne $type ){
+    $object = XmlNode->new( 'object' );
+    $object->setAttribute( 'name', $name );
+    $object->setAttribute( 'type', $type );
+    $$prevObject = $object;
+    $execRes->addChild( $object );
+  }
+  else{
+    $object = $$prevObject;
+  }
+  my $msg = XmlNode->new( 'message' );
+  $msg->setAttribute( 'code', 'msgtext' );
+  $msg->setAttribute( 'severity', ( $isError ? 'error' : 'warning' ) );
+  $msg->setText( $data->[0] );
+  $object->addChild( $msg );
+  return;
+}
+
+sub writeMigrationResult{
+  my $sessionPath = $agentSessionPath;
+  if( $sessionPath && -d $sessionPath ){
+    my $pathToResultFile = "$sessionPath/migration.result";
+    Logging::serializeXmlLog($pathToResultFile);
+    return $pathToResultFile;
+  }
+  return;
+}
+
+my $writeResult = 1;
+sub main {
+  my %settings;
+  my $returnCode = 0;
+  try {
+    %settings = parseOptions();
+    $writeResult = not exists $settings{'get-size'};
+  } catch Error with {
+    my $error = shift;
+    my $errmsg = "Unable to parse options";
+    print STDERR "$errmsg: $error\n";
+    Logging::debug("$errmsg: $error");
+    Logging::error($errmsg,'fatal');
+    $returnCode = 2;
+  };
+  if ($returnCode != 0) {
+    return $returnCode;
+  }
+
+  $returnCode = 0;
+  try {
+    $returnCode = perform(%settings);
+  } catch Error with {
+    my $error = shift;
+    my $errmsg = "Runtime error";
+    print STDERR "$errmsg: $error\n";
+    Logging::debug("$errmsg: $error\n" . $error->stacktrace() . "\n");
+    Logging::error("$errmsg: $error", 'fatal');
+    $returnCode = 1;
+  };
+  return $returnCode;
+}
+
+my $exitcode = main();
+writeMigrationResult() if $writeResult;
+exit($exitcode);
+
+# Local Variables:
+# mode: cperl
+# cperl-indent-level: 2
+# indent-tabs-mode: nil
+# tab-width: 4
+# End:

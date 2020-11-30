@@ -1,0 +1,2837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2017. Plesk International GmbH. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="pmm-common.xsd"/>
+	<xs:element name="migration-dump">
+		<xs:annotation>
+			<xs:documentation>The root node. Dump object description must contain only one root node.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dump-info" minOccurs="0"/>
+				<xs:element ref="admin" minOccurs="0"/>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="reseller"/>
+					<xs:element ref="client"/>
+					<xs:element ref="domain"/>
+					<xs:element ref="mailuser"/>
+					<xs:element ref="role"/>
+					<xs:element ref="user"/>
+					<xs:element ref="database"/>
+					<xs:element ref="phosting"/>
+					<xs:element ref="subdomain"/>
+				</xs:choice>
+				<xs:element ref="server" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="agent-name" use="required">
+				<xs:annotation>
+					<xs:documentation>Migration agent name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dump-version"/>
+			<xs:attribute name="dump-original-version"/>
+			<xs:attribute name="base">
+				<xs:annotation>
+					<xs:documentation>If present, defines absolute path to dump object description file (.xml)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="content-included">
+				<xs:annotation>
+					<xs:documentation>If not present or set to "true" - dump contain content and configuration.  If set to "false" - dump contain configuration only</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dump-format">
+				<xs:annotation>
+					<xs:documentation>Determine where dump was made. Values: panel, smb</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="verification-string">
+				<xs:annotation>
+					<xs:documentation>String encrypted by custom key</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="encryption-type" type="EncryptionType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="admin">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="resellers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="reseller-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="clients" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="client-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="domains" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="domain-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="users" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="user" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="roles" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="preferences" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="admin-password" minOccurs="0"/>
+							<xs:element ref="pinfo" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="shared-ssl-base" minOccurs="0"/>
+							<xs:element ref="cron" minOccurs="0"/>
+							<xs:element ref="scheduled-tasks" minOccurs="0"/>
+							<xs:element ref="gapps-account" minOccurs="0"/>
+							<xs:element ref="descriptions" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="cl-param" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="permission" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="service-nodes" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id">
+				<xs:annotation>
+					<xs:documentation>Do not change this value</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="guid" use="required"/>
+			<xs:attribute name="name">
+				<xs:annotation>
+					<xs:documentation>Hostname</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="skin"/>
+			<xs:attribute name="max-button-length"/>
+			<xs:attribute name="send-announce" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reseller">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: skeleton</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="pinfo" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="domain-template" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="client-template" type="depredatedElementType" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="shared-ssl-base" minOccurs="0"/>
+							<xs:element ref="iis-application-pool" minOccurs="0"/>
+							<xs:element ref="subscription" minOccurs="0"/>
+							<xs:element ref="aps-bundle" minOccurs="0"/>
+							<xs:element ref="descriptions" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="password"/>
+							<xs:element ref="status"/>
+							<xs:element name="sb-reseller" type="depredatedElementType" minOccurs="0"/>
+							<xs:element ref="gapps-account" minOccurs="0"/>
+							<xs:element ref="cl-param" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="limit" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="permission" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ip_pool" minOccurs="0"/>
+				<xs:element ref="sapp-pool" minOccurs="0"/>
+				<xs:element ref="traffic" minOccurs="0"/>
+				<xs:element name="domains" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="domain-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="clients" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="client-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="users" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="user" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="roles" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="service-nodes" minOccurs="0"/>
+				<xs:element ref="pmm-extension-package" minOccurs="0"/>
+				<xs:element ref="extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id"/>
+			<xs:attribute name="guid" use="required"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Login name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="contact"/>
+			<xs:attribute name="cr-date">
+				<xs:annotation>
+					<xs:documentation>Creation date. Format: YYYY-MM-DD</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max-button-length"/>
+			<xs:attribute name="skin"/>
+			<xs:attribute name="lock-screen" type="booleanType"/>
+			<xs:attribute name="vendor-guid"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="client">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: skeleton</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="pinfo" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="domain-template" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="shared-ssl-base" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>List of domains that share the same certificate</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="iis-application-pool" minOccurs="0"/>
+							<xs:element ref="subscription" minOccurs="0"/>
+							<xs:element ref="aps-bundle" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="password"/>
+							<xs:element ref="status"/>
+							<xs:element ref="gapps-account" minOccurs="0"/>
+							<xs:element ref="cl-param" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="limit" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="permission" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="ip_pool" minOccurs="0"/>
+				<xs:element ref="sapp-pool" minOccurs="0"/>
+				<xs:element ref="traffic" minOccurs="0"/>
+				<xs:element name="domains" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="domain-info" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="users" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="user" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="roles" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="role" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="service-nodes" minOccurs="0"/>
+				<xs:element ref="pmm-extension-package" minOccurs="0"/>
+				<xs:element ref="extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id"/>
+			<xs:attribute name="guid" use="required"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Login name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="contact"/>
+			<xs:attribute name="cr-date">
+				<xs:annotation>
+					<xs:documentation>Creation date</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max-button-length"/>
+			<xs:attribute name="skin"/>
+			<xs:attribute name="lock-screen" type="booleanType"/>
+			<xs:attribute name="vendor-guid"/>
+			<xs:attribute name="vendor-login"/>
+			<xs:attribute name="owner-name"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="server">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: skeleton, aps-cache, smb-sqldump</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="properties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="system-ip" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="default-ip" minOccurs="0"/>
+							<xs:element ref="hostname" minOccurs="0"/>
+							<xs:element ref="ppb-connection" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="db-servers" minOccurs="0"/>
+				<xs:element ref="odbc-dsn" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="keys" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="key" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="mail-settings" minOccurs="0"/>
+				<xs:element ref="dns-settings" minOccurs="0"/>
+				<xs:element ref="ftp-settings" minOccurs="0"/>
+				<xs:element ref="iis-app-pool-global-settings" minOccurs="0"/>
+				<xs:element ref="web-settings" minOccurs="0"/>
+				<xs:element name="certificates" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>SSL certificates</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="certificate" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="panel-certificate" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cp-certificate" type="xs:string"/>
+										<xs:element name="cp-rootchain" type="xs:string" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="interface-preferences" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="locale" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="skin" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="controls-visibility" minOccurs="0"/>
+							<xs:element name="ui-mode" minOccurs="0">
+								<xs:simpleType>
+									<xs:restriction base="xs:token">
+										<xs:enumeration value="classic"/>
+										<xs:enumeration value="normal"/>
+										<xs:enumeration value="simple"/>
+										<xs:enumeration value="simple-lock"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="account-templates" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="domain-template" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="client-template" type="depredatedElementType" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="reseller-template" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="plan-item" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="content" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>Available content types: icon</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="applicable">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="applicable-to-subscription" minOccurs="0"/>
+													<xs:element name="applicable-to-site" minOccurs="0"/>
+													<xs:element name="applicable-to-email" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="properties">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="plan-item-property" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType mixed="true">
+															<xs:attribute name="name" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" use="required"/>
+									<xs:attribute name="type" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:enumeration value="Plan_Item_Custom"/>
+												<xs:enumeration value="Plan_Item_Sdk"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="guid" use="required"/>
+									<xs:attribute name="visible" type="booleanType"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="sso-settings" minOccurs="0"/>
+				<xs:element ref="application-vault" minOccurs="0"/>
+				<xs:element ref="sb-config" minOccurs="0"/>
+				<xs:element ref="backup-settings" minOccurs="0"/>
+				<xs:element ref="server-preferences" minOccurs="0"/>
+				<xs:element ref="spamassassin" minOccurs="0"/>
+				<xs:element ref="grey-listing" minOccurs="0"/>
+				<xs:element ref="virusfilter" minOccurs="0"/>
+				<xs:element ref="kav-settings" minOccurs="0"/>
+				<xs:element ref="coldfusion" minOccurs="0"/>
+				<xs:element ref="gapps-services" minOccurs="0"/>
+				<xs:element ref="events" minOccurs="0"/>
+				<xs:element name="site-isolation" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="config" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="notifications" minOccurs="0"/>
+				<xs:element ref="mailman" minOccurs="0"/>
+				<xs:element ref="file-sharing-settings" minOccurs="0"/>
+				<xs:element ref="file-sharing-unlisted-files" minOccurs="0"/>
+				<xs:element ref="misc" minOccurs="0"/>
+				<xs:element ref="pmm-extension-package" minOccurs="0"/>
+				<xs:element name="customization" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="config" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="restricted-domains" minOccurs="0"/>
+				<xs:element ref="fail2ban" minOccurs="0"/>
+				<xs:element ref="extensions" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mail-settings">
+		<xs:annotation>
+			<xs:documentation>Mail settings</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="spf" minOccurs="0"/>
+				<xs:element ref="rbl" minOccurs="0"/>
+				<xs:element ref="black-list"/>
+				<xs:element ref="white-list"/>
+				<xs:element name="external-webmail" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="url" type="xs:string"/>
+							<xs:element ref="enabled" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="outgoing-messages" minOccurs="0"/>
+				<xs:element ref="outgoing-email-mode" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="use-vocabulary" type="booleanType" use="required">
+				<xs:annotation>
+					<xs:documentation>Check user passwords against dictionary to prevent dictionary attacks</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="relay" use="required">
+				<xs:annotation>
+					<xs:documentation>Accept only e-mail addressed to the users who have mailboxes on the server</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="open"/>
+						<xs:enumeration value="auth"/>
+						<xs:enumeration value="closed"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="poplock-time"/>
+			<xs:attribute name="short-pop3-names" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Allow users to log in to their mail accounts by specifying only the left part of e-mail address</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max-letter-size">
+				<xs:annotation>
+					<xs:documentation>Limit the size of outgoing email message</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="courier-max-connections">
+				<xs:annotation>
+					<xs:documentation>Max IMAP/POP3/IMAP SSL/POP3 SSL connections</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="courier-max-connections-per-ip">
+				<xs:annotation>
+					<xs:documentation>Max IMAP/POP3/IMAP SSL/POP3 SSL connections per IP (Courier-IMAP)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dovecot-max-connections">
+				<xs:annotation>
+					<xs:documentation>Max IMAP/POP3/IMAP SSL/POP3 SSL connections</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="dovecot-max-connections-per-ip">
+				<xs:annotation>
+					<xs:documentation>Max IMAP/POP3/IMAP SSL/POP3 SSL connections per IP for a specific mail user (Dovecot)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="smtp-auth" type="booleanType"/>
+			<xs:attribute name="pop-auth" type="booleanType"/>
+			<xs:attribute name="message-submission" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Allow to send e-mail messages through the port 587</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sign-outgoing-mail" type="booleanType"/>
+			<xs:attribute name="verify-incoming-mail" type="booleanType"/>
+			<xs:attribute name="certificate" type="certificateRef"/>
+			<xs:attribute name="dmarc-enabled" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="spf">
+		<xs:annotation>
+			<xs:documentation>SPF spam protection</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="spf-rules"/>
+				<xs:element ref="spf-guess"/>
+				<xs:element ref="spf-exp"/>
+			</xs:sequence>
+			<xs:attribute name="spf-behavior" use="required">
+				<xs:annotation>
+					<xs:documentation>Allowed values: 1-6</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="spf-ignore-dns-error" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Allowed values: false, true</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="status" type="booleanType" use="required">
+				<xs:annotation>
+					<xs:documentation>Allowed values: false, true</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="spf-rules" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Rules that are applied before the SPF mail server check</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="spf-guess" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Rules that are applied to domains that do not publish SPF records</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="spf-exp" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Error notice that is returned to the SMTP sender when a message is rejected</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="rbl">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="rbl-server">
+					<xs:attribute name="status" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:token">
+								<xs:enumeration value="true"/>
+								<xs:enumeration value="false"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="rbl-server">
+		<xs:sequence>
+			<xs:element ref="rbl-server"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="rbl-server" type="xs:string"/>
+	<xs:element name="dns-settings">
+		<xs:annotation>
+			<xs:documentation>DNS settings</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="dns-zone"/>
+				<xs:element ref="common-acl" minOccurs="0"/>
+				<xs:element ref="subdomain-own-zones" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="recursion">
+				<xs:annotation>
+					<xs:documentation>Recursion type</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="any"/>
+						<xs:enumeration value="localnets"/>
+						<xs:enumeration value="localhost"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="common-acl">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="list-item" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subdomain-own-zones">
+		<xs:annotation>
+			<xs:documentation>If true - subdomains has own dns zones. If false or absent - no own dns zones. Only record in parent domain dns zone</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:token">
+				<xs:enumeration value="true"/>
+				<xs:enumeration value="false"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ftp-settings">
+		<xs:annotation>
+			<xs:documentation>FTP settings</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="passive-mode-port-range" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Port or port range for passive FTP mode connection</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sso-settings">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sso-server"/>
+				<xs:element ref="sso-relay" minOccurs="0"/>
+				<xs:element ref="sso-application-id" minOccurs="0"/>
+				<xs:element ref="sso-idp-api-version" minOccurs="0"/>
+				<xs:element ref="sso-idp-id" minOccurs="0"/>
+				<xs:element ref="sso-certificate" minOccurs="0"/>
+				<xs:element ref="sso-idp-cert" minOccurs="0"/>
+				<xs:element ref="sso-branding" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="enabled" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sso-server" type="xs:string"/>
+	<xs:element name="sso-relay" type="xs:string"/>
+	<xs:element name="sso-application-id" type="xs:string"/>
+	<xs:element name="sso-certificate" type="xs:string"/>
+	<xs:element name="sso-idp-api-version" type="xs:string"/>
+	<xs:element name="sso-idp-cert" type="xs:string"/>
+	<xs:element name="sso-idp-id" type="xs:string"/>
+	<xs:element name="sso-branding">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="record" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="record">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="idp-url"/>
+				<xs:element ref="http-request-domain"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="idp-url" type="xs:string"/>
+	<xs:element name="http-request-domain" type="xs:string"/>
+	<xs:element name="sb-config" type="depredatedElementType"/>
+	<xs:element name="application-vault">
+		<xs:annotation>
+			<xs:documentation>Application vault (Plesk 8.3 and later)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-packages-pool" minOccurs="0"/>
+				<xs:element ref="sapp-items-pool" minOccurs="0"/>
+				<xs:element ref="sapp-licenses-pool" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-packages-pool">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-package" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Site applications packages</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-items-pool">
+		<xs:annotation>
+			<xs:documentation>Properties of site applications</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-item" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-licenses-pool">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-license" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="server-preferences">
+		<xs:annotation>
+			<xs:documentation>Server preferences ( Plesk 8.4 and later)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="forbid-create-dns-subzone" minOccurs="0"/>
+				<xs:element ref="force-db-user-prefix" minOccurs="0"/>
+				<xs:element ref="allow-siteapp-local-db" minOccurs="0"/>
+				<xs:element ref="db-user-length" minOccurs="0"/>
+				<xs:element ref="hide-top-advertisement" minOccurs="0"/>
+				<xs:element ref="traffic-direction" minOccurs="0"/>
+				<xs:element ref="restart-apache" minOccurs="0"/>
+				<xs:element ref="stat-keep" minOccurs="0"/>
+				<xs:element ref="disk-space-count-type" minOccurs="0"/>
+				<xs:element ref="disk-usage" minOccurs="0"/>
+				<xs:element ref="force-db-prefix" minOccurs="0"/>
+				<xs:element ref="shared-ssl-base" minOccurs="0"/>
+				<xs:element name="multiple-session" type="xs:string" minOccurs="0"/>
+				<xs:element name="lock-screen" type="xs:string" minOccurs="0"/>
+				<xs:element name="aps-catalog-url" type="xs:string" minOccurs="0"/>
+				<xs:element name="mode" minOccurs="0">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="poweruser"/>
+							<xs:enumeration value="standard"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="admin-access-restrictions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="restriction-item" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="type" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:enumeration value="allow"/>
+												<xs:enumeration value="deny"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="ip-address" type="xs:string" use="required"/>
+									<xs:attribute name="ip-subnet-mask" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="disable-mail-ui" type="booleanType" minOccurs="0"/>
+				<xs:element name="crontab-secure-shell" type="xs:string" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Unix only</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="crontab-secure-shell-compatibility-mode" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Unix only</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="technical-domain" type="xs:string" minOccurs="0"/>
+				<xs:element name="show-commercial-apps" type="booleanType" minOccurs="0"/>
+				<xs:element name="update-settings" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="autoupdates" type="booleanType"/>
+							<xs:element name="autoupgrade-stable" type="booleanType"/>
+							<xs:element name="release-tier"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="disable-sni" type="booleanType" minOccurs="0"/>
+				<xs:element name="ftp-over-ssl" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="forbid-create-dns-subzone" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>If prefent, forbids creating DNS subzones</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="force-db-user-prefix" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Allowed values: true, false</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="allow-siteapp-local-db" type="booleanType">
+		<xs:annotation>
+			<xs:documentation>Allowed values: true, false</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="db-user-length" type="xs:string"/>
+	<xs:element name="hide-top-advertisement">
+		<xs:complexType>
+			<xs:attribute name="hide" type="booleanType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="traffic-direction">
+		<xs:complexType>
+			<xs:attribute name="traffic">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="in"/>
+						<xs:enumeration value="out"/>
+						<xs:enumeration value="both"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="restart-apache" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Amount of time Plesk will wait before restarting when physical hosting configuration is changed (in seconds)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="stat-keep" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Number of months before turning from daily to monthly statistics</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="disk-space-count-type">
+		<xs:complexType>
+			<xs:attribute name="count-type">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="byte"/>
+						<xs:enumeration value="block"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="disk-usage">
+		<xs:annotation>
+			<xs:documentation>Add child elements defining disk usage tracking policy</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="include-logs" minOccurs="0"/>
+				<xs:element name="include-databases" minOccurs="0"/>
+				<xs:element name="include-mailboxes" minOccurs="0"/>
+				<xs:element name="include-webapps" minOccurs="0"/>
+				<xs:element name="include-maillists" minOccurs="0"/>
+				<xs:element name="include-domaindumps" minOccurs="0"/>
+				<xs:element name="include-mysql-databases" minOccurs="0"/>
+				<xs:element name="include-mssql-databases" minOccurs="0"/>
+				<xs:element name="include-admindumps" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="shared-ssl-base">
+		<xs:complexType>
+			<xs:attribute name="status" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="on"/>
+						<xs:enumeration value="off"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="domain"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="force-db-prefix" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Allowed values: true, false</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="backup-settings">
+		<xs:annotation>
+			<xs:documentation>Backup settings</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="low-priority" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Execute scheduled backup processes with low priority</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="do-not-compress" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Do not compress backup files</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max-processes" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Maximum number of simultaneously running scheduled backup processes</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="gapps-services">
+		<xs:annotation>
+			<xs:documentation>Information about Settings of Google Services for Websites</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="gapps-domain" type="xs:string"/>
+				<xs:element name="gapps-admin-login" type="xs:string"/>
+				<xs:element name="gapps-admin-password" type="xs:string"/>
+				<xs:element name="gapps-gan-id" type="xs:string"/>
+				<xs:element name="gapps-private-key" type="xs:string"/>
+				<xs:element name="adsense-dev-email" type="xs:string"/>
+				<xs:element name="adsense-dev-password" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="gapps-account">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="gapps-login" type="xs:string"/>
+				<xs:element name="gapps-password" type="xs:string"/>
+				<xs:element name="gapps-accepted" type="booleanType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="events">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rotation">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="disabled"/>
+							<xs:element name="by-time">
+								<xs:complexType>
+									<xs:attribute name="period" type="xs:int" use="required"/>
+									<xs:attribute name="period-type" use="required">
+										<xs:simpleType>
+											<xs:restriction base="xs:token">
+												<xs:enumeration value="day"/>
+												<xs:enumeration value="week"/>
+												<xs:enumeration value="month"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="by-entires">
+								<xs:complexType>
+									<xs:attribute name="count" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="event" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="handler" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="priority" type="xs:int" use="required"/>
+									<xs:attribute name="user" type="xs:string" use="required"/>
+									<xs:attribute name="command" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="description" type="xs:string" use="optional"/>
+						<xs:attribute name="enabled" type="booleanType" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="notifications">
+		<xs:annotation>
+			<xs:documentation>Information about Sending of E-mail Notices on System Events</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="notification" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="notice-text"/>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:int" use="required"/>
+						<xs:attribute name="send2admin" type="booleanType" use="required"/>
+						<xs:attribute name="send2reseller" type="booleanType" use="required"/>
+						<xs:attribute name="send2client" type="booleanType" use="required"/>
+						<xs:attribute name="send2email" type="booleanType" use="required"/>
+						<xs:attribute name="email" type="xs:string" use="required"/>
+						<xs:attribute name="subj" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="expiration-warning-days" type="xs:int" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mailman">
+		<xs:complexType>
+			<xs:attribute name="owner" type="xs:string" use="required"/>
+			<xs:attribute name="password" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="kav-settings">
+		<xs:annotation>
+			<xs:documentation>Kaspersky AntiVirus server settings. Deprecated.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType mixed="true">
+						<xs:attribute name="name" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="coldfusion">
+		<xs:annotation>
+			<xs:documentation>ColdFusion installation type and install path. Unix only</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="instance-type" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="server"/>
+						<xs:enumeration value="j2ee"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="instance-path" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="admin-password">
+		<xs:annotation>
+			<xs:documentation>Modifies Plesk server configuration only if Plesk is installed but not yet configured</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attribute name="type">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="plain"/>
+						<xs:enumeration value="sym"/>
+						<xs:enumeration value="encrypted"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reseller-template">
+		<xs:annotation>
+			<xs:documentation>Reseller template</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="template-item" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="ip_pool" minOccurs="0"/>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element ref="aps-bundle" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Template name displayed in control panel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="guid" use="optional"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="owner-guid" use="optional"/>
+			<xs:attribute name="is-addon" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="domain-template">
+		<xs:annotation>
+			<xs:documentation>Domain template. Includes template parameters and logrotation settings.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="template-item" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="template-plan-item" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="logrotation" minOccurs="0"/>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element ref="aps-bundle" minOccurs="0"/>
+				<xs:element ref="php-settings" minOccurs="0"/>
+				<xs:element ref="default-db-servers" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Template name displayed in control panel</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="shared" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates if template is available for other Plesk users</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="guid" use="optional"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="owner-guid" use="optional"/>
+			<xs:attribute name="is-addon" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="controls-visibility">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="hide-domain-registration-buttons" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hide buttons for domain registration</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="hide-certificate-purchasing-buttons" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hide buttons for certificate purchasing</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="hide-extra-services-buttons" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hide buttons for extra services</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="hide-mail-bouncing-controls" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hide controls for bounce messages for non-existent mail addresses</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="hide-newsfeeds" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Do not show newsfeeds in Webmail and on default domain pages</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="hide-virtuozzo-promotion" type="booleanType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hide Parallels Virtuozzo Containers promotion page</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="domain-registration-url" type="xs:string" minOccurs="0"/>
+				<xs:element name="domain-management-url" type="xs:string" minOccurs="0"/>
+				<xs:element name="cert-purchasing-url" type="xs:string" minOccurs="0"/>
+				<xs:element name="mpc-portal-url" type="xs:string" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="key">
+		<xs:annotation>
+			<xs:documentation>License key. Is
+restored when full dump is restored.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: key</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="additional" type="booleanType" use="required"/>
+			<xs:attribute name="instance-id" type="xs:string" use="optional"/>
+			<xs:attribute ref="aps-registry-id"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="locale">
+		<xs:annotation>
+			<xs:documentation>Plesk locales</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: locale</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Locale name. Example: en-US</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="skin">
+		<xs:annotation>
+			<xs:documentation>Plesk skins</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: skin</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="id" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>Skin ID</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Skin name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="place" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Skin directory name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ppb-connection">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ppb-url" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="default-ip" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>IP on which the server resides.
+Modifies Plesk server configuration only if Plesk is installed but not yet configured</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="system-ip">
+		<xs:annotation>
+			<xs:documentation>System IP address characteristics.
+These settings can be applied only if Plesk is installed but not yet configured</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ip"/>
+				<xs:element ref="ip-netmask"/>
+				<xs:element ref="ip-interface"/>
+			</xs:sequence>
+			<xs:attribute name="certificate" type="certificateRef"/>
+			<xs:attribute name="ftps" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Option "Allow FTP over SSL" for this IP</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ip-netmask" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>0-32</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ip-interface" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>network interface name, e.g. "eth0"</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="user" type="userType"/>
+	<xs:element name="role" type="roleType"/>
+	<xs:element name="certificate" type="certificateType">
+		<xs:annotation>
+			<xs:documentation>SSL certificate characteristics</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="domain">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0"/>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="default-domain" minOccurs="0"/>
+							<xs:element ref="domain-alias" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="subscription" minOccurs="0"/>
+							<xs:element ref="unity-mobile-integration" minOccurs="0"/>
+							<xs:element ref="template-plan-item" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="aps-bundle" minOccurs="0"/>
+							<xs:element ref="default-db-servers" minOccurs="0"/>
+							<xs:element ref="descriptions" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ip" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="webspace-status" type="statusType" minOccurs="0"/>
+							<xs:element ref="status"/>
+							<xs:element ref="dns-zone" minOccurs="0"/>
+							<xs:element ref="dom-param" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Settings from dom_param table. Processed by deployer: seoRedirect</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="limit" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="permission" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="mailsystem" minOccurs="0"/>
+				<xs:element name="databases" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="database" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element name="dbusers" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Here should be dumped users which belongs to any databases on specified db server</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="dbuser" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="odbc-dsn" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="coldfusion-dsn" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="maillists" minOccurs="0"/>
+				<xs:element ref="traffic" minOccurs="0"/>
+				<xs:element name="certificates" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="certificate" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="tomcat" minOccurs="0"/>
+				<xs:element ref="domainuser" minOccurs="0"/>
+				<xs:element ref="php-settings" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="shosting"/>
+					<xs:element ref="fhosting"/>
+					<xs:element ref="phosting"/>
+				</xs:choice>
+				<xs:element ref="pmm-extension-package" minOccurs="0"/>
+				<xs:element ref="composer-instances" minOccurs="0"/>
+				<xs:element ref="icp" minOccurs="0"/>
+				<xs:element ref="extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id"/>
+			<xs:attribute name="guid" use="required"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>IDN</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="www" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates whether to resolve domain without www prefix</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="cr-date">
+				<xs:annotation>
+					<xs:documentation>Creation date. Format: YYYY-MM-DD</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="vendor-guid"/>
+			<xs:attribute name="owner-name"/>
+			<xs:attribute name="vendor-login"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="site">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0"/>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="default-domain" minOccurs="0"/>
+							<xs:element ref="domain-alias" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="subscription" minOccurs="0"/>
+							<xs:element ref="unity-mobile-integration" minOccurs="0"/>
+							<xs:element ref="descriptions" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ip" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="status"/>
+							<xs:element ref="dns-zone" minOccurs="0"/>
+							<xs:element ref="dom-param" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Settings from dom_param table. Processed by deployer: seoRedirect</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="limit" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="mailsystem" minOccurs="0"/>
+				<xs:element name="databases" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="database" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="odbc-dsn" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="coldfusion-dsn" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="maillists" minOccurs="0"/>
+				<xs:element ref="traffic" minOccurs="0"/>
+				<xs:element name="certificates" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="certificate" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="tomcat" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="shosting"/>
+					<xs:element ref="fhosting"/>
+					<xs:element ref="phosting"/>
+				</xs:choice>
+				<xs:element ref="extensions" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="id"/>
+			<xs:attribute name="guid" use="required"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>IDN</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="www" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates whether to resolve domain without www prefix</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="cr-date">
+				<xs:annotation>
+					<xs:documentation>Creation date. Format: YYYY-MM-DD</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="parent-domain-name"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="default-domain">
+		<xs:annotation>
+			<xs:documentation>Indicates that domain is the default domain on his IP address</xs:documentation>
+		</xs:annotation>
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="domain-alias">
+		<xs:annotation>
+			<xs:documentation>Domain alias (since 7.5.5). Allowed statuses: enabled, disabled-by-domadm.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="status"/>
+				<xs:element ref="dns-zone" minOccurs="0"/>
+				<xs:element ref="icp" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>International Domain Name.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="mail" type="booleanType" use="required">
+				<xs:annotation>
+					<xs:documentation>Show whether this alias affect the mailsystem in Plesk</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="web" type="booleanType" use="required">
+				<xs:annotation>
+					<xs:documentation>Show whether this alias affect the Plesk webserver</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="tomcat" type="booleanType"/>
+			<xs:attribute name="dns" type="booleanType"/>
+			<xs:attribute name="seo-redirect" type="booleanType"/>
+			<xs:attribute name="external-id" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="tomcat">
+		<xs:annotation>
+			<xs:documentation>Tomcat service for domain. May have web applications and status</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="status"/>
+							<xs:element ref="ip" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="webapp" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="webapp">
+		<xs:annotation>
+			<xs:documentation>Tomcat web application name</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: web-app</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="status"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="coldfusion-dsn">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="driver" type="xs:string"/>
+				<xs:element name="connection-string" type="xs:string"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="database">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: sqldump, dbdump</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="db-server" minOccurs="0"/>
+				<xs:element ref="dbuser" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="related-sites" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Sites the database related to</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Database name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" use="required">
+				<xs:annotation>
+					<xs:documentation>mysql or postgresql</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="mysql"/>
+						<xs:enumeration value="postgresql"/>
+						<xs:enumeration value="mssql"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="guid"/>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute name="custom-host" use="optional"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="version"/>
+			<xs:attribute name="charset">
+				<xs:annotation>
+					<xs:documentation>character set of postgresql database</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="sapp-param">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="id">
+				<xs:annotation>
+					<xs:documentation>Database id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute ref="aps-registry-id"/>
+			<xs:attribute name="db-existent">
+				<xs:annotation>
+					<xs:documentation>Shows if existing database was used for site application</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="prefix">
+				<xs:annotation>
+					<xs:documentation>Tables prefix to support many applications in one database</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="collation">
+				<xs:annotation>
+					<xs:documentation>Specific collation for database</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dbuser">
+		<xs:annotation>
+			<xs:documentation>Database user</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="password"/>
+				<xs:element ref="accesshost" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Defines host from which the user accesses database</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="db-server" minOccurs="0"/>
+				<xs:element ref="remote-access-rules" minOccurs="0"/>
+				<xs:element ref="acl" minOccurs="0"/>
+				<xs:element ref="privileges" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Database user login</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="id">
+				<xs:annotation>
+					<xs:documentation>Database id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="external-id" use="optional"/>
+			<xs:attribute ref="aps-registry-id"/>
+			<xs:attribute name="default" type="booleanType"/>
+			<xs:attribute name="db-user-existent">
+				<xs:annotation>
+					<xs:documentation>Shows if existing database user was used for site application</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="role"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="accesshost" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Access record from mysql.user for database user</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="maillists">
+		<xs:annotation>
+			<xs:documentation>Domain maillists subsystem</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: domainmaillist</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="status"/>
+							<xs:element ref="ip" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="maillist" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Mailing list on the domain.	Includes owners (administrators), their passwords, and the list of recipients</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="maillist">
+		<xs:annotation>
+			<xs:documentation>Mailing list on the domain	Have owners (administrators), their password, and the list of recipients</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: mailbox</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="status">
+					<xs:annotation>
+						<xs:documentation>Explicit indication that list is disabled or enabled</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="owner" maxOccurs="unbounded"/>
+				<xs:element ref="password" minOccurs="0"/>
+				<xs:element ref="recipient" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>mailing list name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="owner" type="xs:string"/>
+	<xs:element name="recipient">
+		<xs:complexType mixed="true">
+			<xs:attribute name="fullname"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="fhosting" type="forwardingType">
+		<xs:annotation>
+			<xs:documentation>Frame forwarding hosting. Element contains URL to forward	incoming HTTP requests to</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="phosting">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: docroot, docroot_ssl, cgi, error_docs, private, conf, admin_private, logs, anon_ftpstat, webstat, webstat_ssl, ftp_stat, statistics, vdirs</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="sysuser" minOccurs="0"/>
+							<xs:element ref="fpuser" minOccurs="0"/>
+							<xs:element ref="logrotation" minOccurs="0"/>
+							<xs:element ref="anonftp" minOccurs="0"/>
+							<xs:element ref="pdir" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Web-protected directories. May contain several user accounts for accessing them through HTTP auth</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="webalizer" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Web statistics settings</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="sb-domain" type="depredatedElementType" minOccurs="0"/>
+							<xs:element ref="perfomance" minOccurs="0"/>
+							<xs:element ref="hotlink-protection" minOccurs="0"/>
+							<xs:element ref="shared-ssl" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="web-stat" minOccurs="0"/>
+							<xs:element ref="iis-application-pool" minOccurs="0"/>
+							<xs:element ref="dynamic-ip-security" minOccurs="0"/>
+							<xs:element ref="virtual-directories" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="properties" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ip" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="limits-and-permissions" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="scripting"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="php-settings" minOccurs="0"/>
+				<xs:element ref="web-settings" minOccurs="0"/>
+				<xs:element name="applications" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="sapp-installed" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="mime-types" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="mime-type" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="webusers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="webuser" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ftpusers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ftpuser" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="frontpageusers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="frontpageuser" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="subdomains" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="subdomain" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="sites" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="site" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="guid"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="https" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled SSL support</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fp" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage support</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fpssl" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage over SSL</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fpauth" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage authentication</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="webstat">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled Web Statistics	true and false are compatiblity values</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="webalizer"/>
+						<xs:enumeration value="awstats"/>
+						<xs:enumeration value="urchin"/>
+						<xs:enumeration value="smarterstats"/>
+						<xs:enumeration value="none"/>
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="errdocs" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled custom error documents support</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="shared-content" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates whether http and https content is shared</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="at-domains" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>enables/disables webuser@domaine aliases</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="wu_script" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled  web user scripting</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="iis-app-pool" type="booleanType"/>
+			<xs:attribute name="cgi_bin_mode">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="webspace"/>
+						<xs:enumeration value="www-root"/>
+						<xs:enumeration value="old-style"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="www-root"/>
+			<xs:attribute name="sitebuilder-site-id"/>
+			<xs:attribute name="sitebuilder-site-published" type="booleanType"/>
+			<xs:attribute name="maintenance-mode" type="booleanType"/>
+			<xs:attribute name="certificate" type="certificateRef"/>
+			<xs:attribute name="original-conf-directory" type="originalConfDirectoryType"/>
+			<xs:attribute name="sslRedirect" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="shared-ssl">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="virtual-directory-name"/>
+			</xs:sequence>
+			<xs:attribute name="target" use="required">
+				<xs:annotation>
+					<xs:documentation>Master domain name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="require-ssl" type="booleanType" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="web-stat">
+		<xs:complexType>
+			<xs:attribute name="stat-ttl"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="perfomance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="max-connections"/>
+				<xs:element ref="traffic-bandwidth"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="max-connections" type="xs:string"/>
+	<xs:element name="traffic-bandwidth" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>(in Kbits)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fpuser">
+		<xs:annotation>
+			<xs:documentation>FrontPage user credentials</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="password" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Login name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pdir">
+		<xs:annotation>
+			<xs:documentation>Domain web-protected directories, may contain several user accounts for accessing them through HTTP auth</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pduser" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Location (directory) path</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="title">
+				<xs:annotation>
+					<xs:documentation>Description of protected location</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ssl" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>true if protected location is accessible through https</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nonssl" type="booleanType">
+				<xs:annotation>
+					<xs:documentation> true if protected location is accessible through http</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="cgi" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>true if protected directory exists in cgi-bin directory</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pduser">
+		<xs:annotation>
+			<xs:documentation>User account for accessing web-protected location</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="password" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Login name for HTTP authentication</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="webuser">
+		<xs:annotation>
+			<xs:documentation>Web user on a domain. Access credentials for web user are stored as a sysuser element. Web user also has his own web-scripting options</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: webuser_private, webuser_home</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="sysuser"/>
+				<xs:element ref="scripting" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name">
+				<xs:annotation>
+					<xs:documentation>Name of the web user</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ftpuser">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sysuser"/>
+				<xs:element name="permission" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="upload"/>
+							<xs:enumeration value="download"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Name of the ftp user (maximum length is the 16 characters)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="external-id" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="frontpageuser">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sysuser"/>
+			</xs:sequence>
+			<xs:attribute name="name">
+				<xs:annotation>
+					<xs:documentation>Name of the fpse user</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mime-type">
+		<xs:complexType>
+			<xs:attribute name="ext" use="required"/>
+			<xs:attribute name="value" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="subdomain">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0"/>
+				<xs:element name="sysuser" type="depredatedElementType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>System user characteristics and credentials. System user may access crontab.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="scripting" minOccurs="0"/>
+				<xs:element ref="web-settings" minOccurs="0"/>
+				<xs:element name="applications" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="sapp-installed" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="preferences" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="hotlink-protection" minOccurs="0"/>
+							<xs:element ref="pdir" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="shared-ssl" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="perfomance" minOccurs="0"/>
+							<xs:element ref="iis-application-pool" minOccurs="0"/>
+							<xs:element ref="virtual-directories" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="mime-types" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="mime-type" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="guid"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Subdomain name (domain prefix)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="https" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates if subdomain is accessible through https</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fp" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage support</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fpssl" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage over SSL</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fpauth" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of enabled/disabled FrontPage authentication</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="shared-content" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indicates if subdomain has a common content for http/https requests</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="webstat">
+				<xs:annotation>
+					<xs:documentation>Type of web statistics service</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="webalizer"/>
+						<xs:enumeration value="awstats"/>
+						<xs:enumeration value="urchin"/>
+						<xs:enumeration value="smarterstats"/>
+						<xs:enumeration value="none"/>
+						<xs:enumeration value="true"/>
+						<xs:enumeration value="false"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="hosting-type">
+				<xs:annotation>
+					<xs:documentation>Physical hosting or subfolder</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="vrt_hst"/>
+						<xs:enumeration value="sub_hst"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="www-root"/>
+			<xs:attribute name="id">
+				<xs:annotation>
+					<xs:documentation>Database id</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="maintenance-mode" type="booleanType"/>
+			<xs:attribute name="certificate" type="certificateRef"/>
+			<xs:attribute name="original-conf-directory" type="originalConfDirectoryType"/>
+		</xs:complexType>
+	</xs:element>
+	<!--
+		FIXME: remove @pub and @incoming (later should be renamed to the limit 'incoming-upload')
+	-->
+	<xs:element name="anonftp">
+		<xs:annotation>
+			<xs:documentation>Domain anonymous FTP settings. Settings include limitations on disk space, bandwidth and number	of simultaneous connections, permissions for "incoming" directory operations,	and message which is displayed upon anonymous login</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: ftp_pub, ftp_incoming</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="anonftp-limit" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Limitations for anonymous FTP access (in bytes or Kbits)</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="anonftp-permission" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="login-message" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="pub" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>'true' means anonymous FTP enabled</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="incoming" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>'true' means uploading into incoming directory is allowed</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="display-login" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>whether "welcome" message should be displayed upon	anonymous FTP logins or not.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="anonftp-limit">
+		<xs:annotation>
+			<xs:documentation>Limitations for anonymous FTP access</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="incoming-disk-quota">
+							<xs:annotation>
+								<xs:documentation>Specifi</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="max-connections"/>
+						<xs:enumeration value="bandwidth"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="anonftp-permission">
+		<xs:complexType>
+			<xs:attribute name="name" use="required">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="incoming-mkdir"/>
+						<xs:enumeration value="incoming-download"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="login-message" type="xs:string"/>
+	<xs:element name="webalizer">
+		<xs:annotation>
+			<xs:documentation>Domain web statistics settings</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="webalizer-hidden-referrer" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="webalizer-group-referrer" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="hide-direct-referrer" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="webalizer-group-referrer">
+		<xs:annotation>
+			<xs:documentation>Defines a name that webalizer will use to report request for media content on domain</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attribute name="group-name" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="webalizer-hidden-referrer" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Tells webalizer not to track requests for media content on the given domain (use the '*' wildcard character to specify a part of domain name).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="hotlink-protection">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="extension" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>File extensions. Example: jpg</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="friend" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Friendly domains</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="enabled" type="booleanType"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mailsystem">
+		<xs:annotation>
+			<xs:documentation>Domain mail subsystem consists of mailuser accounts and "catch-all" handler. Since Plesk 8.4 mailsystem also supports domain keys</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: skeleton</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="status"/>
+							<xs:element ref="ip" minOccurs="0" maxOccurs="2">
+								<xs:annotation>
+									<xs:documentation>IP address on which domain resides. If no IP specified, it will be set automatically on adding a domain</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="mailusers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="mailuser" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="preferences" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="catch-all" minOccurs="0"/>
+							<xs:element ref="domain-keys" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Domain private and public keys</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="web-mail" minOccurs="0">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="certificate" type="certificateRef"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="grey-listing" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Indicates state of grey listing filter on domain. Unix only</xs:documentation>
+								</xs:annotation>
+								<xs:simpleType>
+									<xs:restriction base="xs:token">
+										<xs:enumeration value="on"/>
+										<xs:enumeration value="off"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element ref="outgoing-messages" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="domain-keys">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: key</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="state" type="booleanType" use="required"/>
+			<xs:attribute name="private-key"/>
+			<xs:attribute name="public-key"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="catch-all" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>Email address to which mail is forwarded if receiver does not exist
+</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="mailuser">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="properties">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="password" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="preferences">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="mailbox" minOccurs="0"/>
+							<xs:element ref="alias" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="forwarding" minOccurs="0" maxOccurs="unbounded"/>
+							<xs:element ref="autoresponders" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Mailuser autoresponders representation which includes autoresponders, attachments, repository, and list of mailuser autoresponders</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element ref="addressbook" minOccurs="0"/>
+							<xs:element ref="spamassassin" minOccurs="0"/>
+							<xs:element ref="virusfilter" minOccurs="0"/>
+							<xs:element ref="descriptions" minOccurs="0"/>
+							<xs:element ref="outgoing-messages" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="aps-services" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="aps-service" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="application-registry-id"/>
+										<xs:element name="resource-registry-id"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="id"/>
+			<xs:attribute name="guid"/>
+			<xs:attribute name="owner-guid"/>
+			<xs:attribute name="name" use="required">
+				<xs:annotation>
+					<xs:documentation>Mail account name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="forwarding-enabled" type="booleanType" use="required"/>
+			<xs:attribute name="mailbox-quota">
+				<xs:annotation>
+					<xs:documentation>Maximum HDD space allowed for mailbox (in bytes)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="user-guid" type="xs:string"/>
+			<xs:attribute name="cp-access-default" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Mailbox has CP access enabled and panel user did not manually changed. Introduced to restore panel user while restoring mail user, for the case when information about panel user is missing in the dump, e.g. on selective restoration of subscription from server dump. In this particular case the attribute will instruct dump deployer to grant CP access rights for mail user</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="mailbox">
+		<xs:complexType>
+			<xs:all>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: mailbox, mailbox_inbox</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:all>
+			<xs:attribute name="enabled" type="booleanType">
+				<xs:annotation>
+					<xs:documentation>Indication of mailbox status</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type">
+				<xs:annotation>
+					<xs:documentation>One of the mailbox types supported: Mdir or Mbox</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="mdir"/>
+						<xs:enumeration value="mbox">
+							<xs:annotation>
+								<xs:documentation>Not supported now!</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="alias" type="xs:string">
+		<xs:annotation>
+			<xs:documentation>email address</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="forwarding" type="xs:string"/>
+	<!--
+		enabled: indicates that autoresponder subsystem is active
+	-->
+	<xs:element name="autoresponders">
+		<xs:annotation>
+			<xs:documentation>Mailuser autoresponders subsystem include: autoresponders attachments repository, and list of mailuser autoresponders</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: attaches</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="attach" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="autoresponder" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Mailname autoresponder. Includes text of the reply message, limitations on number of replies, files which should be attached to reply message</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--
+		Mailname autoresponder.
+		Includes text of the reply message, limitations on number of replies,
+		files which should be attached to reply message
+	-->
+	<!--
+		name: autoresponder name
+		status: whether autoresponder is enabled or not
+		require: pattern to trigger respond (<subj|body>:<pattern>)
+		subject: base64-encoded subject of the reply message
+		replyto: email address for Reply-To: header of the reply message
+		redirect: email address for redirect of incoming messages
+		content-type: text/html or text/plain. text/plain by default
+	-->
+	<xs:element name="autoresponder">
+		<xs:annotation>
+			<xs:documentation>Mailname autoresponder. Includes text of the reply message, limitations on number of replies, files which should be attached to reply message</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="text"/>
+				<xs:element ref="autoresponder-limit" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="attach" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>File included into reply message</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="status">
+				<xs:annotation>
+					<xs:documentation>whether autoresponder is enabled or not</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="on"/>
+						<xs:enumeration value="off"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="subject">
+				<xs:annotation>
+					<xs:documentation>base64-encoded subject of the reply message</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="redirect">
+				<xs:annotation>
+					<xs:documentation>email address for redirect of incoming messages</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="content-type">
+				<xs:annotation>
+					<xs:documentation>text/html or text/plain. text/plain by default</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="attach">
+		<xs:complexType>
+			<xs:attribute name="file" use="required">
+				<xs:annotation>
+					<xs:documentation>Path to file</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="text">
+		<xs:annotation>
+			<xs:documentation>base64 encoded text of the autoreply message</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="true">
+			<xs:attribute name="charset"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="addressbook">
+		<xs:annotation>
+			<xs:documentation>Mailname addressbook (Horde Turba)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="addressbook-group"/>
+				<xs:element ref="addressbook-contact"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="addressbook-group">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="addressbook-member" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="id" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="addressbook-member">
+		<xs:complexType>
+			<xs:attribute name="id" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="addressbook-contact">
+		<xs:annotation>
+			<xs:documentation>ll the attributes except id are base64-encoded</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="id" use="required"/>
+			<xs:attribute name="name"/>
+			<xs:attribute name="alias"/>
+			<xs:attribute name="email"/>
+			<xs:attribute name="title"/>
+			<xs:attribute name="company"/>
+			<xs:attribute name="home-phone"/>
+			<xs:attribute name="work-phone"/>
+			<xs:attribute name="mobile-phone"/>
+			<xs:attribute name="fax"/>
+			<xs:attribute name="home-address"/>
+			<xs:attribute name="work-address"/>
+			<xs:attribute name="notes"/>
+			<xs:attribute name="first-name">
+				<xs:annotation>
+					<xs:documentation>Since turba 2.2</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="middle-names">
+				<xs:annotation>
+					<xs:documentation>Since turba 2.2</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-distrib" type="xs:string"/>
+	<xs:element name="sapp-pool">
+		<xs:annotation>
+			<xs:documentation>This element is dropped, so here is xs:any to avoid validation fails</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:any processContents="skip" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-installed">
+		<xs:annotation>
+			<xs:documentation>Site application installed on the domain</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="content" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Available content types: sapp-htdocs, sapp-cgi-bin, sapp-https-scripts, sapp-scripts</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element ref="sapp-spec"/>
+				<xs:element ref="sapp-param" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="database" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="custom-button" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="sapp-installdir"/>
+				<xs:element ref="sapp-entry-point" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="context" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="type" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="site"/>
+									<xs:enumeration value="subscription"/>
+									<xs:enumeration value="global"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="aps-registry-id" minOccurs="0"/>
+				<xs:element name="sapp-apsc" type="xs:string" minOccurs="0"/>
+				<xs:element ref="sapp-license" minOccurs="0"/>
+				<xs:element ref="sapp-settings" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Settings from apsInstancesParameters table</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-entry-point">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="label" type="xs:string"/>
+				<xs:element name="description" type="xs:string"/>
+				<xs:element name="hidden" type="booleanType"/>
+				<xs:element name="http" type="booleanType"/>
+				<xs:element name="icon" type="xs:string" minOccurs="0"/>
+				<xs:element name="limits-and-permissions">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="permission">
+								<xs:complexType>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="class" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-param">
+		<xs:annotation>
+			<xs:documentation>Settings of installed site applications</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-param-name"/>
+				<xs:element ref="sapp-param-value"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-param-name">
+		<xs:complexType mixed="true">
+			<xs:attribute name="encoding">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="plain"/>
+						<xs:enumeration value="base64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-param-value">
+		<xs:complexType mixed="true">
+			<xs:attribute name="encoding">
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="plain"/>
+						<xs:enumeration value="base64"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-installdir">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sapp-prefix"/>
+				<xs:element ref="sapp-ssl" minOccurs="0"/>
+				<xs:element ref="aps-registry-id" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sapp-prefix" type="xs:string"/>
+	<xs:element name="sapp-ssl">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="unity-mobile-integration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="mobile-site" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="dns-target" type="xs:string"/>
+							<xs:element name="key" type="xs:string"/>
+							<xs:element name="prefix" type="xs:string"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dns-zone" type="dnsZoneType"/>
+	<xs:element name="icp">
+		<xs:complexType>
+			<xs:attribute name="status" type="booleanType" use="required"/>
+			<xs:attribute name="permit" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

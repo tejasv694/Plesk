@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="mysql" name="MySQL">
+
+ <release id="MYSQL_5_5_52" name="MySQL v 5.5.52" version="5.5.52">
+   <compatibility_info>
+      <compatible product_id="plesk" from_version="11.0.9" to_version="17.0.99" />
+   </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-x86_64.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-x86_64.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="MYSQL_5.5.52/mysql-5.5.52-rhel5-x86_64.inf3"/>
+ </release>
+
+ <release id="MYSQL_5_5" name="MySQL v 5.5" version="5.5">
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.3.0" to_version="11.0.8" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="MYSQL_5.5/mysql-5.5-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="MYSQL_5.5/mysql-5.5-rhel5-x86_64.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="MYSQL_5.5/mysql-5.5-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="MYSQL_5.5/mysql-5.5-rhel5-x86_64.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="MYSQL_5.5/mysql-5.5-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="MYSQL_5.5/mysql-5.5-rhel5-x86_64.inf3"/>
+ </release>
+
+
+ <release id="MYSQL_5_1" name="MySQL v 5.1" version="5.1">
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.0.0" to_version="10.3.0" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="MYSQL_5.1/mysql-5.1-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="MYSQL_5.1/mysql-5.1-rhel5-x86_64.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="MYSQL_5.1/mysql-5.1-rhel5-i386.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="MYSQL_5.1/mysql-5.1-rhel5-x86_64.inf3"/>
+ </release>
+
+</addon>

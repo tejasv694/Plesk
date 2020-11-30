@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product id="sitebuilder" name="Sitebuilder">
+
+ <keypackages>
+  <keypackage>sitebuilder</keypackage>
+ </keypackages>
+
+ <release id="SB_4_5_0" name="Sitebuilder 4.5.0" version="4.5.0"
+        upgrade_allowed_from="2.1" nokeyupdate_from="4.0">
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel4-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel4-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el3"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel3-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el3"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel3-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel5-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-rhel5-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="4"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc4-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="4"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc4-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="5"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc5-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="5"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc5-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="6"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc6-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="6"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc6-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="7"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc7-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="7"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc7-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc8-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fc8-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+    <build os_name="Linux" os_vendor="CentOS" os_version="3.6"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-cos3.6-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-cos4.3-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-cos4.3-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-cos5-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-cos5-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="3.1"
+       os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-deb3.1-i386.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+       os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-deb4.0-i386.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+       os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-deb4.0-x86_64.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06"
+       os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt6.06-i386.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06"
+       os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt6.06-x86_64.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10"
+       os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt7.10-i386.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10"
+       os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt7.10-x86_64.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+       os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt8.04-i386.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+       os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-ubt8.04-x86_64.inf3"
+       patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-debian.inf3"/>
+
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+         os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fr6.1-i386.inf3"
+         patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-freebsd.inf3"/>
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="5.5"
+         os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-fr5.5-i386.inf3"
+         patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-freebsd.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="9.3"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse9.3-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="9.3"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse9.3-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.0"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.0-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.0"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.0-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.1"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.1-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.1"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.1-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.2"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.2-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.2"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.2-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.3-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-suse10.3-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="es9"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-susees9-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="es10"
+      os_arch="i386" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-susees10-i386.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="es10"
+      os_arch="x86_64" config="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-4.5.0-susees10-x86_64.inf3"
+      patches="SiteBuilder/SiteBuilder_4.5.0/sitebuilder-patches-4.5.0-common.inf3"/>
+
+ </release>
+
+</product>
+

@@ -1,0 +1,15 @@
+* { font-family: Arial; font-size: 12px; }
+td { padding: 8px 10px 8px 10px; }
+table { width: 100%; }
+tr.Heading3 td { font-size: 16px; font-weight: bold; }
+.odd { background-color:#EDECEC; }
+tr.GridRow td { border: 0; }
+legend { font-size: 16px; font-weight: bold; color:black; }
+
+a {
+  text-decoration: none;
+  color: #000000;
+}
+img { display: none; }
+select { display: none; }
+input { display: none; }

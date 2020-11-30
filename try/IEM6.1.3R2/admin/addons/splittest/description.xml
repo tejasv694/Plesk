@@ -1,0 +1,7 @@
+<addon_description>
+	<name>Split Testing</name>
+	<description>Split test different versions of your email to see which performs better.</description>
+	<author>Michael Knight for Interspire</author>
+	<version>1.0</version>
+	<hasconfiguration>0</hasconfiguration>
+</addon_description>

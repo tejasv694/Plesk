@@ -1,0 +1,603 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.onReady(function() {
+    <?php if ($this->upgradeFailed): ?>
+    new Jsw.UpgradeFailureNotification({
+        renderTo: 'content-body',
+        renderMode: 'top',
+        isBootstrapRunning: <?php echo $this->isBootstrapRunning ? 'true' : 'false' ?>,
+        bootstrapExecutionUrl: '/home/bootstrap-execution',
+        bootstrapStatusUrl: '/home/bootstrap-status',
+        upgradeFailedMessage: '<?php echo Plesk_Base_Utils_String::safeForJs($this->upgradeFailedMessage) ?>',
+        bootstrapInProgressMessage: <?php echo $this->jsLmsg('components.upgrade-failure-notification.bootstrapInProgressMessage') ?>,
+        bootstrapLinkTitle: <?php echo $this->jsLmsg('components.upgrade-failure-notification.bootstrapLinkTitle') ?>
+    });
+    <?php endif; ?>
+
+    <?php if (is_array($this->activeStateComponentsWarning)): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('activeStateComponentsWarning',
+            ['link' => $this->htmlLink('', $this->lmsg('activeStateComponentsWarningLink'),
+                ['href' => $this->activeStateComponentsWarning['kbUrl'], 'target' => '_blank'])
+            ]
+        );?>,
+        {
+            id: 'activeStateComponentsWarning',
+            closable: true,
+            renderTo: 'main',
+            onClose: function () {
+                $('activeStateComponentsWarning').remove();
+                new Ajax.Request(Jsw.prepareUrl(<?= $this->jsEscape($this->activeStateComponentsWarning['hideUrl']) ?>), { method: 'post' });
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->linkToSecurePasswords): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('toSecurePasswordsGoTo',
+            array('link' => $this->htmlLink('', $this->lmsg('securePasswords'),
+                array('href' => $this->linkToSecurePasswords))
+            )
+        );?>,
+        {
+            id: 'securePasswords',
+            closable: true,
+            onClose: function() {
+                $('securePasswords').remove();
+                new Ajax.Request(Jsw.prepareUrl('/home/hide-secure-passwords'), { method: 'post'});
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->linkToSyncDnsZones): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('upgradeDnsSyncSkip', array(
+            'link' => $this->htmlLink('', $this->lmsg('serverDns'),
+                array('href' => $this->linkToSyncDnsZones)),
+            'learnMoreLink' => $this->htmlLink('', $this->lmsg('learnMore'),
+                array('href' => '#', 'onclick' => 'parent.OpenHelpWindow("dns_t");')),
+        ));?>,
+        {
+            id: 'dnsSyncSkip',
+            closable: true,
+            onClose: function() {
+                $('dnsSyncSkip').remove();
+                new Ajax.Request(Jsw.prepareUrl('/home/hide-upgrade-dns-sync-skip'), { method: 'post'});
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->linkToFirewallRules): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('filrewallRulesUpdated', ['link' => $this->htmlLink('', $this->lmsg('applyFirewallRules'), ['href' => $this->linkToFirewallRules])]);?>,
+        {
+            id: 'firewallRulesUpdatedMessage',
+            closable: true,
+            onClose: function() {
+                $('firewallRulesUpdatedMessage').remove();
+                new Ajax.Request(Jsw.prepareUrl('/home/hide-firewall-rules-updated-message'), { method: 'post'});
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->linkToEncryptBackups): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('backEncryptionRequired', [
+            'link' => $this->htmlLink('', $this->lmsg('backupSettingPage'), ['href' => $this->linkToEncryptBackups])
+        ]); ?>,
+        {
+            id: 'backEncryptionRequiredMessage',
+            closable: true,
+            onClose: function() {
+                $('backEncryptionRequiredMessage').remove();
+                new Ajax.Request(Jsw.prepareUrl('/backup/hide-backup-encryption-required-message'), {method: 'post'});
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->updateInProgress): ?>
+    new AdminPanel.home.UpdateProgressNotification({
+        renderTo: 'content-body',
+        renderMode: 'top',
+        message: <?php echo $this->jsLmsg('updateInProgress', array(
+            'bold' => '<b>' . $this->lmsg('boldPartUpdateInProgress') . '</b>',
+        )) ?>
+    });
+    <?php endif; ?>
+
+    <?php if ($this->updateFailed): ?>
+    new AdminPanel.home.UpdateResultNotification({
+        renderTo: 'content-body',
+        renderMode: 'top',
+        status: 'error',
+        message: '<?php echo Plesk_Base_Utils_String::safeForJs($this->updateFailedMessage) ?>'
+    });
+    <?php endif; ?>
+
+    <?php if ($this->updateCompleted): ?>
+    new AdminPanel.home.UpdateResultNotification({
+        applyTo: 'content-body',
+        renderMode: 'top',
+        status: 'info',
+        message: '<?php echo Plesk_Base_Utils_String::safeForJs($this->updateCompletedMessage) ?>'
+    });
+    <?php endif; ?>
+
+    <?php if ($this->webserverConfigurationFailed): ?>
+        <?php echo $this->partial('partials/webserver-configuration-failure.phtml', array(
+            'returnUrl' => '/home/admin',
+            'configurationError' => $this->webserverConfigurationError,
+            'moduleInstalled' => $this->configurationTroubleshooterInstalled,
+        )); ?>
+    <?php endif; ?>
+});
+//]]>
+</script>
+<div id="promoItems"></div>
+<script>
+    require(['app/promo'], function (promo) {
+        promo({
+            className: 'home-promo-block',
+            container: document.getElementById('promoItems'),
+            items: <?php echo Zend_Json::encode(Promo_Abstract::getPromoData()) ?>,
+            title: <?php echo $this->jsLmsg('components.promos.title') ?>,
+            locale: <?php echo Zend_Json::encode(Zend_Registry::get('translate')->getSection('components.promos')) ?>
+        });
+    });
+</script>
+<div class="b-panels-box">
+    <div class="column col-2-1">
+
+        <div class="b-panel bp-system-overview">
+            <div class="box-area">
+                <div class="title">
+
+                    <div class="title-area">
+                        <h3>
+                            <span>
+                                <img src="<?php echo $this->skinUrl('/icons/32/plesk/system-overview.png'); ?>" alt="" />
+                                <?php echo $this->lmsg('panelSystemOverview'); ?>
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-area">
+                        <div class="form-box">
+                            <div class="box-area">
+
+                                <div class="content">
+                                    <div class="content-area">
+
+                                        <table class="form-table form-limits" width="100%" cellspacing="0">
+                                            <tr class="form-row">
+                                                <td class="field-name"><?php echo $this->lmsg('hostname'); ?></td>
+                                                <td class=""><?php echo $this->escape($this->hostname); ?></td>
+                                            </tr>
+                                            <tr class="form-row">
+                                                <td class="field-name"><?php echo $this->lmsg('ipAddress'); ?></td>
+                                                <td class=""><?php echo $this->escape($this->ipAddress); ?><?php if ($this->publicIpAddress) {
+                                                        echo " (" . $this->escape($this->publicIpAddress) .")";
+                                                    }?>
+                                                </td>
+                                            </tr>
+                                            <tr class="form-row">
+                                                <td class="field-name"><?php echo $this->lmsg('os'); ?></td>
+                                                <td class=""><?php echo $this->ltr($this->escape($this->os)); ?></td>
+                                            </tr>
+                                            <tr class="form-row">
+                                                <td class="field-name"><?= $this->lmsg('product'); ?></td>
+                                                <td class=""><?= $this->escape($this->productName); ?>
+                                                    <br>
+                                                    <?= $this->lmsg('panelVersion'); ?>
+                                                    <?php
+                                                    echo $this->escape($this->panelVersion);
+                                                    if ($this->installedPatch):
+                                                        echo ' ' . $this->lmsg('installedPatchVersion', array('installed_patch' => $this->installedPatch));
+                                                    endif;
+                                                    if ($this->lastUpdate):
+                                                        echo $this->lmsg('lastUpdateDate', array('last_update' => $this->lastUpdate));
+                                                    endif;
+                                                ?></td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="system-overview-info">
+                                            <?php if ($this->lastChecked && !($this->isUpdatesAvailable || $this->pumUpdates && count($this->pumUpdates))): ?>
+                                                <p>
+                                                    <?php echo $this->lmsg('systemIsUp2date'); ?>
+                                                    <span class="text-muted"><?php echo $this->lmsg('checkedAt', array('last_checked' => $this->lastChecked)); ?></span>
+                                                </p>
+                                            <?php endif; ?>
+                                            <p>
+                                                <a href="<?php echo $this->changelogUrl; ?>" target="_blank"><?php echo $this->lmsg('seeChangelog'); ?></a>
+                                                <span class="delimiter">|</span>
+                                                <a href="<?php echo $this->baseUrl('/update/add-components/'); ?>" target="_blank"><?php echo $this->lmsg('addComponents'); ?></a>
+                                            </p>
+                                            <p><?php echo $this->lmsg('upgradeNotifications', array('branch' => $this->currentlySelectedBranch)); ?> <a href="<?php echo $this->baseUrl($this->updateSettingsUrl); ?>"><?php echo $this->lmsg('changeBranch'); ?></a></p>
+                                            <?php if ($this->isAutoupdatesDisabled): ?>
+                                                <p class="hint-warning"><?php echo $this->lmsg('autoupdatesIsDisabled'); ?> <a href="<?php echo $this->baseUrl($this->updateSettingsUrl); ?>"><?php echo $this->lmsg('enableAutoupdate'); ?></a></p>
+                                            <?php endif; ?>
+                                            <?php if ($this->isUpgradeAvailable): ?>
+                                                <div class="alert alert-info" role="alert">
+                                                    <div class="b-indent">
+                                                        <span class="b-indent-icon"><i class="icon-update-light"></i></span>
+                                                        <p>
+                                                            <b><?php echo $this->lmsg('upgradeIsAvailable', array('product' => $this->availableUpgrade)); ?></b>
+                                                        </p>
+                                                        <p>
+                                                            <a class="btn btn-primary" href="<?php echo $this->baseUrl('/update/product/'); ?>" target="_blank"><?php echo $this->lmsg('installNow'); ?></a>&nbsp;&nbsp;
+                                                            <a href="<?php echo $this->upgradeWhatsNewUrl; ?>" target="_blank"><?php echo $this->lmsg('seeWhatsNew'); ?></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if ($this->isUpdatesAvailable): ?>
+                                                <div class="alert alert-info" role="alert">
+                                                    <div class="b-indent">
+                                                        <span class="b-indent-icon"><i class="icon-update-light"></i></span>
+                                                        <p>
+                                                            <b>
+                                                                <?php echo $this->lmsg('updatesAvailable', array('version' => $this->availablePatch)); ?>
+                                                                <?php if ($this->totalMissedSecurityUpdates): ?>
+                                                                    <span class="required"><?php echo $this->lmsg('securityUpdatesAvailable', array('total' => $this->totalMissedSecurityUpdates)); ?></span>
+                                                                <?php endif; ?>
+                                                            </b>
+                                                        </p>
+                                                        <p>
+                                                            <a class="btn btn-primary" onclick="Jsw.redirectPost('/update/components');" href="#"><?php echo $this->lmsg('installNow'); ?></a>&nbsp;&nbsp;
+                                                            <a href="<?php echo $this->baseUrl('/update/'); ?>" target="_blank"><?php echo $this->lmsg('installShow'); ?></a>&nbsp;&nbsp;
+                                                            <a href="<?php echo $this->updateWhatsNewUrl; ?>" target="_blank"><?php echo $this->lmsg('seeWhatsNew'); ?></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                            <?php if ($this->pumUpdates && count($this->pumUpdates)): ?>
+                                                <div class="alert alert-info" role="alert">
+                                                    <div class="b-indent">
+                                                        <span class="b-indent-icon"><i class="icon-update-light"></i></span>
+                                                        <p>
+                                                            <?php echo count($this->pumUpdates) > 1
+                                                                ? $this->lmsg('updatesForPackagesAreAvailable', [
+                                                                    'packages' => '<a href="' . $this->baseUrl('/pum/updates-list') . '">' . $this->lmsg('packages', ['count' => count($this->pumUpdates)]) . '</a>'
+                                                                ])
+                                                                : $this->lmsg('updatesForPackageIsAvailable', ['package' => $this->escape($this->pumUpdates[0]['name'] . ' ' . $this->pumUpdates[0]['version_to'])]);
+                                                            ?>
+                                                        </p>
+                                                        <p>
+                                                            <a class="btn btn-primary js-packages-install" href="#"><?php echo $this->lmsg(count($this->pumUpdates) > 1 ? 'updateAll' : 'updateNow'); ?></a>&nbsp;&nbsp;
+                                                            <a href="<?php echo $this->baseUrl('/pum/updates-list'); ?>"><?php echo $this->lmsg('showDetails'); ?></a>
+                                                        </p>
+                                                        <?php if ($this->pumLastChecked): ?>
+                                                        <p class="text-muted">
+                                                            <?php echo $this->lmsg('updatesLastChecked', ['date' => $this->escape(ldatetime($this->pumLastChecked))]) ?>
+                                                        </p>
+                                                        <?php endif ?>
+                                                    </div>
+                                                </div>
+                                                <script>
+                                                //<![CDATA[
+                                                require([
+                                                    "app/pum/popup-packages-update"
+                                                ], function (PopupPackagesUpdate) {
+                                                    Jsw.onReady(function () {
+                                                        var packages = <?php echo json_encode($this->pumUpdates); ?>;
+                                                        $$('.js-packages-install').invoke('observe', 'click', function (event) {
+                                                            event.preventDefault();
+                                                            new PopupPackagesUpdate({
+                                                                "packages": packages,
+                                                                "locale": <?php echo Zend_Json::encode(Zend_Registry::get('translate')->getSection('admin.components.lists.pumpackages')); ?>,
+                                                                "urls": {
+                                                                    "packageUpdateInfo": "<?php echo $this->baseUrl('/admin/pum/update-info'); ?>",
+                                                                    "updatePackages": "<?php echo $this->baseUrl('/admin/pum/update'); ?>"
+                                                                }
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                                //]]>
+                                                </script>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <hr />
+
+                                        <?php if ($this->isOutgoingMessagesLimitEnabled) : ?>
+                                            <table class="form-table form-limits" width="100%" cellspacing="0">
+                                                <tr class="form-row">
+                                                    <td class="field-name nowrap">
+                                                        <?php echo $this->lmsg('outgoingAntispamTitle'); ?>
+                                                    </td>
+                                                    <td class="">
+                                                        <?php if (!$this->isOutgoingMessagesExceedingForConfiguredPeriod) : ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/ok.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('outgoingAntispamStatusOk'); ?>
+                                                            <br>
+                                                            <a href="<?php echo $this->baseUrl('/admin/outgoing-mail/'); ?>">
+                                                                <?php echo $this->lmsg('outgoingAntispamStatusOkLink'); ?>
+                                                            </a>
+                                                        <?php else : ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/att.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('outgoingAntispamStatusAttention'); ?>
+                                                            <br>
+                                                            <a href="<?php echo $this->baseUrl('/admin/outgoing-mail/'); ?>">
+                                                                <?php echo $this->lmsg('outgoingAntispamStatusAttentionLink'); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        <?php endif; ?>
+
+                                        <?php if ($this->isFail2banAvailable): ?>
+                                            <table class="form-table form-limits" width="100%" cellspacing="0">
+                                                <tr class="form-row">
+                                                    <td class="field-name nowrap">
+                                                        <?php echo $this->lmsg('fail2banTitle'); ?>
+                                                    </td>
+                                                    <td class="">
+                                                        <?php if ('on' === $this->fail2banStatus): ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/ok.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('fail2banActive'); ?>
+                                                            <br>
+                                                            <a href="<?php echo $this->baseUrl('/admin/server-protection/ban-list'); ?>">
+                                                                <?php echo $this->lmsg('fail2banBannedIps'); ?>
+                                                            </a>
+                                                        <?php elseif ('failed' === $this->fail2banStatus): ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/warning.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('fail2banError'); ?>
+                                                            <?php echo $this->auxActions(['<a href="' . $this->baseUrl('/admin/server-protection/settings') . '">'
+                                                                    . $this->lmsg('fail2banChangeSettings') . '</a>']); ?>
+                                                        <?php else: ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/off.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('fail2banInactive'); ?>
+                                                            <?php echo $this->auxActions(['<a href="' . $this->baseUrl('/admin/server-protection/settings') . '">'
+                                                                    . $this->lmsg('fail2banChangeSettings') . '</a>']); ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        <?php endif; ?>
+
+                                        <?php if ($this->isModSecurityAvailable) : ?>
+                                            <table class="form-table form-limits" width="100%" cellspacing="0">
+                                                <tr class="form-row">
+                                                    <td class="field-name nowrap">
+                                                        <?php echo $this->lmsg('modSecurityTitle'); ?>
+                                                    </td>
+                                                    <td class="">
+                                                        <?php if ('On' === $this->modSecurityState): ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/ok.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('modSecurityState' . $this->modSecurityState); ?>
+                                                            <br>
+                                                            <a href="<?php echo $this->baseUrl('/admin/web-app-firewall/'); ?>">
+                                                                <?php echo $this->lmsg('modSecurityManagement'); ?>
+                                                            </a>
+                                                        <?php else: ?>
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/off.png'); ?>" alt="" />
+                                                            <?php echo $this->lmsg('modSecurityState' . $this->modSecurityState); ?>
+                                                            <?php echo $this->auxActions(['<a href="' . $this->baseUrl('/admin/web-app-firewall') . '">'
+                                                                    . $this->lmsg('modSecurityChangeSettings') . '</a>']); ?>
+                                                        <?php endif; ?>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        <?php endif; ?>
+
+                                        <?php if ($this->isOutgoingMessagesLimitEnabled || $this->isFail2banAvailable || $this->isModSecurityAvailable) : ?>
+                                            <hr />
+                                        <?php endif; ?>
+
+                                        <table class="form-table form-limits" width="100%" cellspacing="0">
+                                            <?php if ($this->resellersSupport): ?>
+                                                <tr class="form-row">
+                                                    <td class="field-name nowrap">
+                                                        <div class="b-indent">
+                                                            <img class="b-indent-icon" src="<?php echo $this->skinUrl('/icons/16/plesk/reseller.png'); ?>" alt="" />
+                                                            <b><?php echo $this->lmsg('admin.controllers.home._shared.resellers'); ?></b>
+                                                        </div>
+                                                    </td>
+                                                    <td class="number t-r">
+                                                        <a href="<?php echo $this->baseUrl('/reseller/list/reset-search/true/'); ?>">
+                                                            <?php echo $this->lmsg('admin.controllers.home._shared.totalItems', array('value' => $this->resellersTotal)); ?></a>
+                                                    </td>
+                                                    <td class="">
+                                                        <?php echo $this->auxActions(['<a href="' . $this->baseUrl('/reseller/create') . '">'
+                                                            . $this->lmsg('admin.controllers.home._shared.linkAddNew') . '</a>']); ?>
+                                                    </td>
+                                                    <td class="">
+                                                        <a href="<?php echo $this->baseUrl('/reseller/list?force-show-search=true&searchFilter[resourceUsage][searchText]=true'); ?>">
+                                                            <?php echo $this->lmsg('admin.controllers.home._shared.overuseItems', array('value' => $this->resellersOveruse)); ?></a>
+                                                    </td>
+                                                </tr>
+                                            <?php endif; ?>
+                                            <?php echo $this->partial('home/_items-totals.phtml', null, $this); ?>
+                                        </table>
+
+                                        <hr />
+
+                                        <table class="form-table form-limits" width="100%" cellspacing="0">
+                                            <tr class="form-row">
+                                                <td>
+                                                    <a href="/plesk/admin/report" class="s-btn sb-stats">
+                                                        <i><i><i><span>
+                                                            <?php echo $this->lmsg('admin.controllers.home._shared.linkDetailedReport'); ?>
+                                                        </span></i></i></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /b-panel -->
+
+        <?php if ($this->customButtonsList): ?>
+        <div class="b-panel bp-custom-buttons">
+            <div class="box-area">
+                <div class="title">
+                    <div class="title-area">
+                        <h3>
+                            <span>
+                                <img src="<?php echo $this->skinUrl('/icons/32/plesk/custom-buttons.png'); ?>" alt="" />
+                                <?php echo $this->lmsg('panelCustomButtons'); ?>
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="content">
+                   <div class="content-area">
+                       <div class="t-box">
+                           <div class="box-area">
+                               <div class="content">
+                                   <div class="content-area" id="custom-buttons-content-area">
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div> <!-- /b-panel -->
+        <script type="text/javascript">
+        //<![CDATA[
+        Jsw.onReady(function() {
+        	new Jsw.Container({
+                renderTo: 'custom-buttons-content-area',
+                tag: 'ul',
+                cls: 'tools-list',
+        	    items: <?php echo Zend_Json::encode($this->customButtonsList); ?>
+            });
+        });
+        //]]>
+        </script>
+        <?php endif; ?>
+
+    </div> <!-- /col-2-1 -->
+
+    <div class="column col-2-2">
+        <div class="b-panel bp-webspaces">
+            <div class="box-area">
+                <div class="title">
+                    <div class="title-area">
+                        <h3><span><img src="<?php echo $this->skinUrl('/icons/32/plesk/webspaces.png'); ?>" alt=""><?php echo $this->lmsg('panelMyWebspaces'); ?></span></h3>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="content-area">
+                        <div class="t-box">
+                            <div class="box-area">
+                                <div class="content">
+                                    <div class="content-area" id="my-webspaces-container">
+                                        <?php if ($this->mySubscriptions && count($this->mySubscriptions) > 0): ?>
+                                            <table class="form-table form-limits" width="100%" cellspacing="0">
+                                                <tbody>
+                                                    <?php foreach($this->mySubscriptions as $subscription): ?>
+                                                        <tr class="form-row">
+                                                            <td><a href="<?php echo $this->baseUrl('/subscription/overview/id/' . $subscription['id']); ?>"><?php echo $this->escape($subscription['name']); ?></a></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                            <?php if ($this->mySubscriptionsNeedMoreLink): ?>
+                                                <div class="more"><a href="<?php echo $this->baseUrl('/subscription/list?force-show-search=true&searchFilter[subscriberName][searchText]=' . $this->escape($this->ownerPname)); ?>"><span><?php echo $this->lmsg('panelMyWebspacesMore'); ?> <b>&gt;&gt;</b></span></a></div>
+                                            <?php endif; ?>
+                                            <hr>
+                                        <?php else: ?>
+                                            <table class="form-table" width="100%" cellspacing="0">
+                                                <tbody>
+                                                    <tr class="form-row">
+                                                        <td><?php echo $this->lmsg('panelMyWebspacesDescription', array(
+                                                            'link' => '<a onClick="top.OpenHelpWindow(\'home.admin.mywebspaces\')" href="#">' . $this->lmsg('panelMyWebspacesHelpLink') . '</a>',
+                                                        )); ?></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        <?php endif; ?>
+                                        <table class="form-table" width="100%" cellspacing="0">
+                                            <tbody>
+                                                <tr class="form-row">
+                                                    <td class="">
+                                                        <?php if ($this->layout()->isClassicMode) {
+                                                            $linkUrl = $this->baseUrl('/subscription/create');
+                                                            $linkLabel = $this->lmsg('panelMyWebspacesCreate');
+                                                            $linkTarget = '';
+                                                        } else {
+                                                            $linkUrl = $this->baseUrl('/subscription/login?returnUrl=' . $this->baseUrl('/home/admin'));
+                                                            $linkLabel = $this->lmsg('panelMyWebspacesNew');
+                                                            $linkTarget = '_top';
+                                                        }
+                                                        ?>
+                                                        <a href="<?php echo $linkUrl; ?>" target="<?php echo $linkTarget; ?>" class="s-btn sb-open-webspace">
+                                                            <i><i><i><span><?php echo $linkLabel; ?></span></i></i></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php if ($this->healthParametersList): ?>
+        <div class="b-panel bp-server-health">
+            <div class="box-area">
+                <div class="title">
+                    <div class="title-area">
+                        <h3>
+                            <span>
+                                <img src="<?php echo $this->skinUrl('/icons/32/plesk/server-health.png'); ?>" alt="" />
+                                <?php echo $this->lmsg('panelServerHealth'); ?>
+                            </span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="content">
+                   <div class="content-area">
+                       <div class="t-box">
+                           <div class="box-area">
+                               <div class="content">
+                                   <div class="content-area" id="server-health-status-container">
+                                        <div class="ajax-loading"><?php echo $this->lmsg('waitMessage');?></div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript">
+        //<![CDATA[
+        Jsw.onReady(function() {
+            new Ajax.Updater(
+                 'server-health-status-container',
+                 Jsw.baseUrl + '/health/server-status/',
+                 { evalScripts: true, method: 'get' }
+            );
+        });
+        //]]>
+        </script>
+    <?php endif; ?>
+    </div> <!-- /col-2-2 -->
+
+</div> <!--/b-panels-block-->

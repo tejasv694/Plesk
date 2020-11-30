@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2017. Plesk International GmbH. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="plesk_common.xsd"/>
+	<xs:complexType name="FtpUserInputType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="add" type="FtpUserAddInputType"/>
+			<xs:element name="set" type="FtpUserSetInputType"/>
+			<xs:element name="del" type="FtpUserDelInputType"/>
+			<xs:element name="get" type="FtpUserGetInputType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="FtpUserNewType">
+		<xs:sequence>
+			<xs:element name="name" type="string">
+				<xs:annotation>
+					<xs:documentation>FTP subaccount name </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="password" type="string"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="home" type="string">
+					<xs:annotation>
+						<xs:documentation>Home directory</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="create-non-existent" type="boolean" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element name="quota" type="int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hard disk quota</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="permissions" type="FtpUserPermissions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserPermissions">
+		<xs:sequence>
+			<xs:element name="read" type="boolean" minOccurs="0"/>
+			<xs:element name="write" type="boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserExistType">
+		<xs:sequence>
+			<xs:element name="name" type="string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FTP subaccount name </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="password" type="string" minOccurs="0"/>
+			<xs:element name="home" type="string">
+				<xs:annotation>
+					<xs:documentation>Home directory</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="quota" type="int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hard disk quota</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="permissions" type="FtpUserPermissions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserAddInputType">
+		<xs:complexContent>
+			<xs:extension base="FtpUserNewType">
+				<xs:choice>
+					<xs:element name="webspace-id" type="id_type"/>
+					<xs:element name="webspace-name" type="string">
+						<xs:annotation>
+							<xs:documentation>Domain name (in uniceode)</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FtpUserSetInputType">
+		<xs:sequence>
+			<xs:element name="filter" type="FtpUserFilterType"/>
+			<xs:element name="values" type="FtpUserSetType"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="webspace-id" type="id_type"/>
+				<xs:element name="webspace-name" type="string"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserFilterType">
+		<xs:choice minOccurs="0">
+			<xs:element name="id" type="id_type" maxOccurs="unbounded"/>
+			<xs:element name="name" type="string" maxOccurs="unbounded"/>
+			<xs:element name="webspace-id" type="id_type" maxOccurs="unbounded"/>
+			<xs:element name="webspace-name" type="string" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="FtpUserDelInputType">
+		<xs:sequence>
+			<xs:element name="filter" type="FtpUserFilterType"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="webspace-id" type="id_type"/>
+				<xs:element name="webspace-name" type="string"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserOutputType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="add" type="FtpUserAddOutputType"/>
+			<xs:element name="set" type="FtpUserSetOutputType"/>
+			<xs:element name="del" type="FtpUserDelOutputType"/>
+			<xs:element name="get" type="FtpUserGetOutputType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="FtpUserAddOutputType">
+		<xs:sequence>
+			<xs:element name="result" type="FtpUserSimpleResultType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserSimpleResultType">
+		<xs:complexContent>
+			<xs:extension base="resultType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="id" type="id_type"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FtpUserGetInputType">
+		<xs:sequence>
+			<xs:element name="filter" type="FtpUserFilterType"/>
+			<xs:choice minOccurs="0">
+				<xs:element name="webspace-id" type="id_type"/>
+				<xs:element name="webspace-name" type="string"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserSetOutputType">
+		<xs:sequence>
+			<xs:element name="result" type="resultFilterType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserDelOutputType">
+		<xs:sequence>
+			<xs:element name="result" type="resultFilterType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserGetOutputType">
+		<xs:sequence>
+			<xs:element name="result" type="FtpUserGetResultType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FtpUserGetResultType">
+		<xs:complexContent>
+			<xs:extension base="resultFilterType">
+				<xs:sequence minOccurs="0">
+					<xs:element name="name" type="string">
+						<xs:annotation>
+							<xs:documentation>FTP subaccount name </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="home" type="string">
+						<xs:annotation>
+							<xs:documentation>Home directory</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="quota" type="int" minOccurs="0"/>
+					<xs:element name="permissions" type="FtpUserPermissions" minOccurs="0"/>
+					<xs:element name="webspace-id" type="id_type"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="FtpUserSetType">
+		<xs:sequence>
+			<xs:element name="name" type="string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>FTP subaccount name </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="password" type="string" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="home" type="string">
+					<xs:annotation>
+						<xs:documentation>Home directory</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="create-non-existent" type="boolean" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element name="quota" type="int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Hard disk quota</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="permissions" type="FtpUserPermissions" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

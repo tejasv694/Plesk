@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP70" yum_repo_name="PHP 7.0 for Plesk 17" headers_file="build-7.0.33-cos7-x86_64.hdr.gz">
+    <product id="php70">
+        <keypackages>
+            <keypackage>plesk-php70</keypackage>
+        </keypackages>
+        <release id="PHP_7_0" name="PHP v 7.0" version="7.0.33" upgrade_allowed_from="" />
+    </product>
+    <component name="php7.0" description="PHP 7.0 (outdated)" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php70" />
+        </keypackages>
+        <package name="plesk-php70" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-7.0.33-centos7.18120712.x86_64.rpm" size="394764" buildtime="1544162148" md5="a65c3f2d606b3bbbb838bf4d00ee2ede" arch="x86_64" />
+        <package name="plesk-php70-bcmath" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-bcmath-7.0.33-centos7.18120712.x86_64.rpm" size="14980" buildtime="1544162148" md5="5b71c6567a80eb164d796a715e0f44a1" arch="x86_64" />
+        <package name="plesk-php70-cli" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-cli-7.0.33-centos7.18120712.x86_64.rpm" size="5907444" buildtime="1544162148" md5="1a805589a650ec32f157c0f47c2b15fd" arch="x86_64" />
+        <package name="plesk-php70-dba" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-dba-7.0.33-centos7.18120712.x86_64.rpm" size="21256" buildtime="1544162148" md5="e38fb315b6ceb89a72efb35ce4ae2b04" arch="x86_64" />
+        <package name="plesk-php70-enchant" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-enchant-7.0.33-centos7.18120712.x86_64.rpm" size="9124" buildtime="1544162148" md5="ffebccc73e1583d6f4b03be79a8cfea1" arch="x86_64" />
+        <package name="plesk-php70-fpm" version="7.0.33" release="centos7.18120712" file="extra/plesk-php70-fpm-7.0.33-centos7.18120712.x86_64.rpm" size="1483332" buildtime="1544162148" md5="dea4bbe6ab37efdc67e6dbee7e159d02" arch="x86_64" />
+        <package name="plesk-php70-gd" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-gd-7.0.33-centos7.18120712.x86_64.rpm" size="104132" buildtime="1544162148" md5="9601ad98647916d2bdb01f5dc6d46995" arch="x86_64" />
+        <package name="plesk-php70-imagick" version="3.4.3" release="centos7.20042209" file="packages/plesk-php70-imagick-3.4.3-centos7.20042209.x86_64.rpm" size="91200" buildtime="1587523024" md5="17fa7507f74ba46cbfc27022ca3b469e" arch="x86_64" />
+        <package name="plesk-php70-imap" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-imap-7.0.33-centos7.18120712.x86_64.rpm" size="29616" buildtime="1544162148" md5="944e4338ecc2586fb52b3a849d7aa7de" arch="x86_64" />
+        <package name="plesk-php70-intl" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-intl-7.0.33-centos7.18120712.x86_64.rpm" size="125764" buildtime="1544162148" md5="25198aa116e88b6716e8ed9b12614a2a" arch="x86_64" />
+        <package name="plesk-php70-ioncube-loader" version="10.2.1" release="centos7.18072013" file="packages/plesk-php70-ioncube-loader-10.2.1-centos7.18072013.x86_64.rpm" size="420512" buildtime="1532066435" md5="1aff673cf3d0cd84f30bb73df158c51d" arch="x86_64" />
+        <package name="plesk-php70-ldap" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-ldap-7.0.33-centos7.18120712.x86_64.rpm" size="21240" buildtime="1544162148" md5="cb0dabdb00428b43f38218748c59c8ca" arch="x86_64" />
+        <package name="plesk-php70-mbstring" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-mbstring-7.0.33-centos7.18120712.x86_64.rpm" size="477808" buildtime="1544162148" md5="589adf8b2aba3b270470c21a18094963" arch="x86_64" />
+        <package name="plesk-php70-mcrypt" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-mcrypt-7.0.33-centos7.18120712.x86_64.rpm" size="14260" buildtime="1544162148" md5="3bf915c24d1b83f363b3b3079ee35dec" arch="x86_64" />
+        <package name="plesk-php70-mysql" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-mysql-7.0.33-centos7.18120712.x86_64.rpm" size="125376" buildtime="1544162148" md5="bce8e7366fef3927c287f32143754493" arch="x86_64" />
+        <package name="plesk-php70-odbc" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-odbc-7.0.33-centos7.18120712.x86_64.rpm" size="30676" buildtime="1544162148" md5="625e3efb1cd9667747275e83ede7c62a" arch="x86_64" />
+        <package name="plesk-php70-opcache" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-opcache-7.0.33-centos7.18120712.x86_64.rpm" size="81000" buildtime="1544162148" md5="259033fe886fa10feb1ea592a384e681" arch="x86_64" />
+        <package name="plesk-php70-pdo" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-pdo-7.0.33-centos7.18120712.x86_64.rpm" size="493152" buildtime="1544162148" md5="b249388b7376b7185ea523c3af6058e4" arch="x86_64" />
+        <package name="plesk-php70-pear" version="1.10.1" release="centos7.18120712" file="packages/plesk-php70-pear-1.10.1-centos7.18120712.noarch.rpm" size="331172" buildtime="1544162183" md5="9987afb99aa5b58e52b7d2683bf0b07d" arch="noarch" />
+        <package name="plesk-php70-pgsql" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-pgsql-7.0.33-centos7.18120712.x86_64.rpm" size="56812" buildtime="1544162148" md5="a0e0e4146c997edf9e9cf9e4722ffca3" arch="x86_64" />
+        <package name="plesk-php70-process" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-process-7.0.33-centos7.18120712.x86_64.rpm" size="19912" buildtime="1544162148" md5="d3053a412f6daa60b9c8dc82df8f4433" arch="x86_64" />
+        <package name="plesk-php70-pspell" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-pspell-7.0.33-centos7.18120712.x86_64.rpm" size="8480" buildtime="1544162148" md5="4f17ee5e3b4d9f6b845fa31a6aa8fef8" arch="x86_64" />
+        <package name="plesk-php70-redis" version="3.1.1" release="centos7.18010912" file="packages/plesk-php70-redis-3.1.1-centos7.18010912.x86_64.rpm" size="115216" buildtime="1515476864" md5="5e0e19e8d1d7df586c5761b50ad95228" arch="x86_64" />
+        <package name="plesk-php70-snmp" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-snmp-7.0.33-centos7.18120712.x86_64.rpm" size="18716" buildtime="1544162148" md5="050d4b3313c053f5d3312271a5029756" arch="x86_64" />
+        <package name="plesk-php70-soap" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-soap-7.0.33-centos7.18120712.x86_64.rpm" size="118232" buildtime="1544162148" md5="e13eddd7b626cf831ec2dee66f908afd" arch="x86_64" />
+        <package name="plesk-php70-sodium" version="2.0.13" release="0centos.7.181207.1256" file="packages/plesk-php70-sodium-2.0.13-0centos.7.181207.1256.x86_64.rpm" size="172266" buildtime="1544162197" md5="012d65e9ddb9f11f8523e28a1ab62b67" arch="x86_64" />
+        <package name="plesk-php70-tidy" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-tidy-7.0.33-centos7.18120712.x86_64.rpm" size="16800" buildtime="1544162148" md5="4cfc9eac31ad1cbc43109058d1f879e4" arch="x86_64" />
+        <package name="plesk-php70-xdebug" version="2.5.0" release="centos7.18010912" file="packages/plesk-php70-xdebug-2.5.0-centos7.18010912.x86_64.rpm" size="92604" buildtime="1515476877" md5="0ed9a0ae54ef7d8cdeb5d06d506f8e7b" arch="x86_64" />
+        <package name="plesk-php70-xml" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-xml-7.0.33-centos7.18120712.x86_64.rpm" size="71312" buildtime="1544162148" md5="cbf41ffe78345a41f8657c4a2e38f2b9" arch="x86_64" />
+        <package name="plesk-php70-xmlrpc" version="7.0.33" release="centos7.18120712" file="packages/plesk-php70-xmlrpc-7.0.33-centos7.18120712.x86_64.rpm" size="32672" buildtime="1544162148" md5="2117295ffbc39fa3a3dcfc9ac61b7484" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-7.0.33-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-7.0.33-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

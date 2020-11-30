@@ -1,0 +1,945 @@
+#!/usr/bin/perl
+# Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+use strict;
+use warnings;
+
+my $productRootD;
+
+BEGIN {
+  sub getProductRootD {
+    my $configFile = "/etc/psa/psa.conf";
+    if (-f $configFile) {
+      my $productRootD;
+      open CONFIG_FILE, "$configFile";
+      while (<CONFIG_FILE>) {
+        next if /^#/;
+        if (/^(\S+)\s+(.*?)\s*$/) {
+          my ($key, $value) = ($1, $2);
+          if ($key eq "PRODUCT_ROOT_D") {
+            $productRootD = $value;
+            last;
+          }
+        }
+      }
+      close CONFIG_FILE;
+      return $productRootD;
+    }
+  }
+
+  @INC = grep { $_ ne '.' } @INC;
+  $productRootD = getProductRootD();
+  if ($productRootD) {
+    unshift @INC, "$productRootD/PMM/agents/shared";
+    unshift @INC, "$productRootD/PMM/agents/PleskX";
+  }
+}
+
+use Getopt::Long;
+use Logging;
+use Error qw|:try|;
+use XmlNode;
+use File::Temp;
+use HelpFuncs;
+use AgentConfig;
+use SpecificConfig;
+use Encoding;
+use POSIX;
+use IPC::Run;
+use Symbol;
+use PmmCli;
+use Config::Tiny;
+use IO::Select;
+
+sub usage {
+  my $exitcode = shift;
+
+  my $usage = <<EOF;
+Usage: pleskbackup  <command> [<options>] <arguments>
+
+Commands:
+
+  server         Backs up whole Plesk.
+
+  resellers-name Backs up selected resellers. Reseller's logins are read from command line,
+                 space-separated. If no resellers provided, backs up all resellers
+                 on the host.
+
+  resellers-id   Backs up selected resellers. Reseller's identificators are read from command line,
+                 space-separated. If no resellers provided, backs up all resellers
+                 on the host.
+
+  clients-name   Backs up selected clients. Client's logins are read from command line,
+                 space-separated. If no clients provided, backs up all clients
+                 on the host.
+
+  clients-id     Backs up selected clients. Client's identificators are read from command line,
+                 space-separated. If no clients provided, backs up all clients
+                 on the host.
+
+  domains-name   Backs up selected domains. Domain's names are read from command line,
+                 space-separated. If no domains provided, backs up all domains
+                 on the host.
+
+  domains-id     Backs up selected domains. Domain's identificators are read from command line,
+                 space-separated. If no domains provided, backs up all domains
+                 on the host.
+
+                 Use Exclude options to exclude some resellers/clients/domains.
+
+  help           Shows this help page
+
+General options:
+
+  -f|--from-file=<file>
+                 Read list of domains/clients/resellers from file, not from command line.
+                 File should contain list of domains/clients/resellers one per line.
+
+  -v|--verbose
+                 Show more information about backup process. Multiple -v
+                 options increase verbosity.
+
+  -s|--split[=<size>]
+                 Split the generated backups to the parts. Parts are numbered
+                 by appending NNN suffixes.
+
+                 Size may be specified in kilobytes (<nn>K), megabytes (<nn>M)
+                 and gigabytes (<nn>G). By default in bytes.
+
+                 '-s' option without argument selects default split size:
+                 2 gigabytes.
+
+  -z|--no-gzip   Do not compress content files
+
+  -c|--configuration
+                 Backup only configuration of objects, not the content.
+
+  --only-mail
+                 Backup only mail configuration and content of selected objects.
+  --only-hosting
+                 Backup only hosting configuration and content of selected objects.
+  --suspend
+                 Suspend domains during backup operation.
+
+  --prefix=<prefix>
+                 Backup file name prefix. Used to customize backup file name ( default is 'backup' ).
+
+  --incremental
+                 Create incremental backup. If no suitable full dumps available this option will be ignored.
+
+  -d|--description=<description>
+                 Add description to the dump
+
+  --keep-local-backup
+                 Keep a backup in the server storage during backing up to an output file.
+
+FTP options:
+
+ --ftp-login=<ftp_login>
+                 Specify the FTP login
+ --ftp-passive-mode
+                 Use FTP passive mode
+
+Exclude options:
+
+  --exclude-reseller=<obj1>,<obj2>,...
+                 Exclude resellers from backup list.
+                 Reseller's logins are read from command line, comma-separated.
+                 If no resellers provided, resellers are not backed up
+
+  --exclude-reseller-file=<file>
+                 Exclude resellers listed in file from backup list.
+                 File should contain list of reseller's logins one per line.
+
+  --exclude-client=<obj1>,<obj2>,...
+                 Exclude clients from backup list.
+                 Client's logins are read from command line, comma-separated.
+                 If no clients provided, clients are not backed up
+
+  --exclude-client-file=<file>
+                 Excludes clients listed in file from backup list.
+                 File should contain list of client's logins one per line.
+
+  --exclude-domain=<obj1>,<obj2>,...
+                 Exclude domains from backup list.
+                 Domain's names are read from command line, comma-separated.
+                 If no domains provided, domains are not backed up
+
+  --exclude-domain-file=<file>
+                 Exclude domains listed in file from backup list.
+                 File should contain list of domain's names one per line.
+
+  --exclude-pattern=<obj1>,<obj2>,...
+                 You can only exclude files within webspaces.
+                 Specify the path or paths relative to the webspace root,
+                 separating individual files with commas.
+                 Using the mask symbol is allowed (e.g. /somedir/log*).
+
+  --exclude-pattern-file=<file>
+                 You can only exclude files within webspaces.
+                 Specify the path or paths relative to the webspace root.
+                 Using the mask symbol is allowed (e.g. /somedir/log*).
+                 File should contain list of patterns one per line.
+
+  --exclude-logs
+                 Exclude log files from backup.
+
+
+Output file option:
+  --output-file=<output_file>
+        /<fullpath>/            - directory to back up to (filename is generated automatically),
+        /<fullpath>/<filename>  - regular file,
+        -                       - use stdout for output,
+
+        [ftp|ftps]://[<login>@]<server>/<dirpath>/[<filename>] - storing the backup to ftp server.
+                       FTP_PASSWORD environment variable can be used for setting password.
+                       FTP option '--ftp-login' can be used for setting login.
+                       'ftps' protocol can be specified to use FTP over SSL, instead of plain FTP.
+                       With ftps specify 990 port to use implicit FTPS, otherwise explicit mode will be used.
+
+        Used to back up into a single file  in a local or remote storage.  To improve backup security, we
+        recommend that  you protect  backups with  a password. This  makes  impossible for an attacker to
+        obtain sensitive data in case the security of your backup storage is compromised. You can provide
+        a password with the PLESK_BACKUP_PASSWORD environment variable.
+
+EOF
+
+  if ($exitcode) {
+    print STDERR $usage;
+  } else {
+    print $usage;
+  }
+
+  exit $exitcode;
+}
+
+sub isOldOption {
+  my $s = shift;
+  return ($s eq '--all' or $s eq '--clients' or $s eq '--domains');
+}
+
+#
+# Options parsing compatible with 8.0 pleskbackup style
+#
+
+sub parseOldOptions {
+  my %res;
+  my $allBackupFileName;
+  my $clientsBackupFileName;
+  my $domainsBackupFileName;
+  my $help;
+  my $listFile;
+
+  $res{'verbose'} = 0;
+  $res{'gzip'} = 1;
+
+  print STDERR "*** You are using old-style pleskbackup command-line interface.\n";
+  print STDERR "*** Please switch to new style documented in 'pleskbackup help',\n";
+  print STDERR "*** because old style eventually have been dropped.\n";
+
+  die "Old style command line is not supported now!\n";
+}
+
+#
+# Returns hash:
+#
+# 'clients-all' => 1
+# or
+# 'clients' => ['clienta', 'clientb']
+# or
+# 'domains-all' => 1
+# or
+# 'domains' => ['clienta', 'clientb']
+#
+# verbose => [0..5]
+# configuration => bool
+# only-mail => bool (only with 'clients*')
+# backup-file => string
+# split-size => int
+#
+
+# Split by 2G - 1M by default, for broken FTP/HTTP implementations
+my $defaultSplitSize = 2**31 - 2**20;
+
+sub parseOutpuFile{
+  my( $outputFile, $settings, $ftplogin, $ftppwd, $ftppasv ) = @_;
+
+  if ($outputFile =~ /^ftps?:\/\//) {
+    # Capture protocol / user and password / host / port / dirpath / filename
+    if ($outputFile =~ /^(ftp|ftps):\/\/
+                         (?:([^:\/]*)(?::([^\/]*))?@)?
+                         ([^\/:@]+)
+                         (?::([0-9]+))?
+                         (?:\/?(.*?)([^\/]*?))$/x) {
+      my %ftp;
+
+      $ftp{'protocol'} = $1;
+      $ftp{'login'} = defined $2 ? $2 : '';
+      $ftp{'password'} = defined $3 ? $3 : '';
+
+      $ftp{'password'} = $ftppwd if defined $ftppwd;
+      $ftp{'login'} = $ftplogin if defined $ftplogin;
+
+      if ($ftp{'password'} eq '' && defined $ENV{'FTP_PASSWORD'}) {
+        $ftp{'password'} = $ENV{'FTP_PASSWORD'};
+      }
+
+      if ($ftp{'login'} eq '') {
+        $ftp{'login'} = 'anonymous';
+        $ftp{'password'} = 'plesk@plesk.com' if ($ftp{'password'} eq '');
+      }
+
+      $ftp{'server'} = $4;
+      $ftp{'port'} = $5;
+      $ftp{'path'} = $6;
+      $ftp{'file'} = $7;
+      $ftp{'passive'} = 1 if $ftppasv;
+      $settings->{'ftp'} = \%ftp;
+    }
+    else {
+      die 'Bad FTP file format\n';
+    }
+  }
+}
+
+
+sub is8xOptions{
+  my $s = shift;
+  return ($s eq '--verbose' or index( $s, '-v' )==0 or
+           $s eq '-c' or $s eq '--configuration' or
+           index( $s, '-s=' )==0  or index( $s, '--split=')==0 or
+           $s eq '-z' or $s eq '--no-gzip' or
+	   $s eq 'clients' or
+	   $s eq 'domains' or
+	   $s eq 'all'
+         );
+}
+
+
+sub parse8xOptions{
+
+  print STDERR "*******************************************************************\n";
+  print STDERR "*******************************************************************\n";
+  print STDERR "*** You are using old-style pleskbackup command-line interface. ***\n";
+  print STDERR "*** Please switch to new style documented in 'pleskbackup help',***\n";
+  print STDERR "*** because old style eventually have been dropped.             ***\n";
+  print STDERR "********************************************************************\n";
+  print STDERR "********************************************************************\n";
+
+  my $globalOptParser = new Getopt::Long::Parser(config
+                                                 => ['require_order', 'bundling']);
+
+  my %res;
+  $res{'verbose'} = 0;
+  $res{'gzip'} = 1;
+
+  my $split;
+
+  if (!$globalOptParser->getoptions("verbose|v" => sub { $res{'verbose'} += 1 },
+                                    "configuration|c" => sub { $res{'configuration'} = 1 },
+                                    "split|s:s" => \$split,
+                                    "no-gzip|z" => sub { $res{'gzip'} = 0 }))
+  {
+    die "Invalid options\n";
+  }
+
+  my $command = '';
+
+  if (defined $split) {
+    my $size = parseSize($split);
+
+    $res{'split-size'} = $size < 10000 ? $defaultSplitSize : $size;
+  }
+
+  if (!$command) {
+    die "No command in command line\n" unless (@ARGV);
+    $command = shift @ARGV;
+  }
+
+  #usage(0) if $command eq "help";
+
+  die "No backup filename in command line\n" unless (@ARGV);
+
+  $res{'output-file'} = pop @ARGV;
+
+  parseOutpuFile( $res{'output-file'}, \%res );
+
+  if ($command eq "clients" or $command eq "domains" or $command eq "all") {
+    my $localOptParser = new Getopt::Long::Parser(config => ['bundling']);
+
+    my ($objectsFromFileName, $excludeFileName, $excludeList);
+
+    my ( $ftplogin, $ftppwd );
+
+    $res{'ftp'}->{'login'} = $ftplogin if $ftplogin;
+    $res{'ftp'}->{'password'} = $ftppwd if $ftppwd;
+
+    my @options = ("from-file|f=s" => \$objectsFromFileName,
+                   "only-mail" => sub { $res{'only-mail'} = 1 },
+                   "exclude-file=s" => \$excludeFileName,
+                   "exclude=s" => \$res{'exclude'},
+                   "ftp-login:s" => \$ftplogin,
+                   'ftp-password:s' => \$ftppwd
+                 );
+
+    die "invalid options\n" unless $localOptParser->getoptions(@options);
+
+    if ($res{'exclude'}) {
+      $res{'exclude'} = [split(/,/, $res{'exclude'})] if ($res{'exclude'});
+      my @objects = @{$res{'exclude'}};
+      if( scalar(@objects)>0 ){
+         @{$res{'exclude-client'}} = @objects if $command eq 'clients' or $command eq 'all';
+         @{$res{'exclude-domain'}} = @objects if $command eq 'domains';
+       }
+    }
+
+    if ($excludeFileName) {
+      my @objects = readObjects($excludeFileName);
+      if( scalar(@objects)>0 ){
+         push @{$res{'exclude-client'}}, @objects if $command eq 'clients';
+         push @{$res{'exclude-domain'}}, @objects if $command eq 'domains' or $command eq 'all';
+      }
+    }
+
+    if ($command eq "all") {
+       die "'from-file' option should not be specified with 'all' command\n" if $objectsFromFileName;
+       die "'only-mail' option should not be specified with 'all' command\n" if $res{'only-mail'};
+
+       $res{'all'} = $res{'server'} = 1;
+    }
+    else{
+       die "Both file containing $command and $command in command line specified\n"
+       if @ARGV and $objectsFromFileName;
+
+       return %res, "$command-names" => \@ARGV if @ARGV;
+       if ($objectsFromFileName) {
+          my @objects = readObjects($objectsFromFileName);
+          return %res, "$command-names" => \@objects if scalar(@objects)>0;
+       }
+       return %res, "$command-name-all" => 1;
+
+    }
+    return %res;
+  }
+  die "Unknown command '$command'\n";
+
+}
+
+sub parseOptions {
+  usage(0) unless @ARGV;
+  usage(0) if $ARGV[0] eq "--help" || $ARGV[0] eq "-h" || $ARGV[0] eq "help" || $ARGV[0] eq "h";
+  return parseOldOptions() if isOldOption($ARGV[0]);
+  return parse8xOptions() if is8xOptions($ARGV[0]);
+
+  my $command = '';
+  my $optParser = new Getopt::Long::Parser(config => ['bundling']);
+
+  my %res;
+  $res{'verbose'} = 0;
+  $res{'gzip'} = 1;
+
+  my ( $split, $outputfile, $ftplogin, $ftppwd, $ftppasv, $backupPassword, $pollingInterval );
+  my ( $objectsFromFileName, $backupPrefix, $incrementalCreationDate, $description );
+  my ( $excludeResellers, $excludeResellerFile, $excludeClients, $excludeClientFile, $excludeDomains, $excludeDomainFile );
+  my ( $excludePatterns, $excludePatternsFile );
+
+
+  $command = shift @ARGV;
+  $command = substr( $command, 1 ) if substr( $command, 0, 1 ) eq '-';
+  $command = substr( $command, 1 ) if substr( $command, 0, 1 ) eq '-';
+
+  if (!$command) {
+    die "No command in command line\n" unless (@ARGV);
+  }
+
+  usage(0) if $command eq "help";
+
+  $optParser->getoptions("verbose|v" => sub { $res{'verbose'} += 1 },
+                         "configuration|c" => sub { $res{'configuration'} = 1 },
+                         "split|s:s" => \$split,
+                         "no-gzip|z" => sub { $res{'gzip'} = 0 },
+                         "output-file=s" => \$outputfile,
+                         "backup-password=s" => \$backupPassword,
+                         "keep-local-backup" => sub { $res{'keep-local-backup'} = 1 },
+
+                         "ftp-login:s" => \$ftplogin,
+                         "ftp-password:s" => \$ftppwd,
+                         "ftp-passive-mode" => sub { $ftppasv = 1; },
+                         "from-file|f=s" => \$objectsFromFileName,
+                         "only-mail" => sub { $res{'only-mail'} = 1 },
+                         "only-hosting" => sub { $res{'only-hosting'} = 1 },
+                         #"only-database" => sub { $res{'only-database'} = 1 },
+                         "suspend" => sub { $res{'suspend'} = 1 },
+
+                         "prefix=s" => \$backupPrefix,
+                         'incremental-creation-date=s' => \$incrementalCreationDate,
+                         "incremental" => sub { $res{'incremental'} = 1 },
+                         "description|d=s" => \$description,
+                         "polling-interval=s" => \$pollingInterval,
+
+                         "exclude-reseller=s" => \$excludeResellers,
+                         "exclude-reseller-file=s" => \$excludeResellerFile,
+                         "exclude-client=s" => \$excludeClients,
+                         "exclude-client-file=s" => \$excludeClientFile,
+                         "exclude-domain=s" => \$excludeDomains,
+                         "exclude-domain-file=s" => \$excludeDomainFile,
+                         "exclude-pattern=s" => \$excludePatterns,
+                         "exclude-pattern-file=s" => \$excludePatternsFile,
+                         "exclude-logs" => sub { $res{'exclude-logs'} = 1 },
+
+                         );
+
+  if ((!defined($backupPassword) || $backupPassword eq "")
+    && defined($ENV{'PLESK_BACKUP_PASSWORD'}) && $ENV{'PLESK_BACKUP_PASSWORD'}) {
+    $backupPassword = $ENV{'PLESK_BACKUP_PASSWORD'};
+  }
+   if (defined $backupPassword and !($backupPassword eq "")) {
+       unless ($backupPassword =~ /[a-zA-Z0-9]{5,255}/) {
+         die "Wrong syntax for option backup-password. The password should be between 5 and 20 characters in length. Do not use quotes, space and national alphabet characters in the password. ";
+       }
+       $res{'backup-password'} = $backupPassword;
+   }
+
+  if (defined $split) {
+    my $size = parseSize($split);
+
+    $res{'split-size'} = $size < 10000 ? $defaultSplitSize : $size;
+  }
+
+  die "Use only one of the options: 'only-mail', 'only-hosting'" if exists $res{'only-mail'} && exists $res{'only-hosting'};
+
+  if( $backupPrefix ){
+    $res{'backup-prefix'} = $backupPrefix;
+  }
+  $res{'incremental-creation-date'} = $incrementalCreationDate if $incrementalCreationDate;
+  $res{'description'} = $description if $description;
+  $res{'polling-interval'} = $pollingInterval ? $pollingInterval : 60;
+
+  if( defined $outputfile ){
+     $res{'output-file'} = $outputfile;
+     parseOutpuFile( $outputfile, \%res, $ftplogin, $ftppwd, $ftppasv );
+  }
+
+  $res{'exclude-reseller'} = [split(/,/, $excludeResellers)]  if defined $excludeResellers;
+  if ($excludeResellerFile) {
+      my @objects = readObjects($excludeResellerFile);
+      push @{$res{'exclude-reseller'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-client'} = [split(/,/, $excludeClients)]  if defined $excludeClients;
+  if ($excludeClientFile) {
+      my @objects = readObjects($excludeClientFile);
+      push @{$res{'exclude-client'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-domain'} = [split(/,/, $excludeDomains)]  if defined $excludeDomains;
+  if ($excludeDomainFile) {
+      my @objects = readObjects($excludeDomainFile);
+      push @{$res{'exclude-domain'}}, @objects if scalar(@objects)>0;
+   }
+
+  $res{'exclude-pattern'} = [split(/,/, $excludePatterns)]  if defined $excludePatterns;
+  if ($excludePatternsFile) {
+      my @objects = readObjects($excludePatternsFile);
+      push @{$res{'exclude-pattern'}}, @objects if scalar(@objects)>0;
+  }
+
+  if (exists $res{'exclude-logs'}) {
+    push @{$res{'exclude-pattern'}}, "/logs/*";
+  }
+
+  s/^\s+|\s+$//g foreach @{$res{'exclude-reseller'}};
+  s/^\s+|\s+$//g foreach @{$res{'exclude-client'}};
+  s/^\s+|\s+$//g foreach @{$res{'exclude-domain'}};
+  s/^\s+|\s+$//g foreach @{$res{'exclude-pattern'}};
+
+  if ($command eq "server" ){
+    $res{'all'} = $res{'server'} = 1;
+
+    die "'from-file' option should not be specified with 'server' command\n" if $objectsFromFileName;
+  }
+  elsif( $command eq "resellers-name" || $command eq "resellers-id" ||
+         $command eq "clients-name" || $command eq "clients-id" ||
+         $command eq "domains-name" || $command eq "domains-id" )
+  {
+     if( $objectsFromFileName ){
+         my @objects = readObjects($objectsFromFileName);
+         $res{$command} = \@objects;
+     }
+     elsif( scalar(@ARGV)>0 ){ $res{$command} = \@ARGV; }
+     else{ $res{ "$command-all" } = 1; }
+  }
+  else{
+    die "Unknown command '$command'\n";
+  }
+  return %res;
+}
+
+my %multipliers = ( '' => 1,
+                    'k' => 1024,
+                    'm' => 1024*1024,
+                    'g' => 1024*1024*1024,
+                    't' => 1024*1024*1024*1024 );
+
+sub parseSize {
+  my ($size) = @_;
+  if ($size =~ /^=?(\d+)([kmgt]?)$/i) {
+    return $1 * $multipliers{lc($2)};
+  }
+}
+
+sub readObjects {
+  my ($filename) = @_;
+  open OBJECTS, "$filename" or die "Unable to open $filename\n";
+  my @objects = <OBJECTS>;
+  chomp @objects;
+  close OBJECTS;
+  return @objects;
+}
+
+sub addObjectsToBackup {
+  my ( $backupSpecNode, $useid, $type, $data ) = @_;
+  my $backupObj;
+  if( defined $data ) {
+    foreach my $item( @{$data} ){
+      $backupObj = XmlNode->new( 'object-to-backup' );
+      $backupSpecNode->addChild( $backupObj );
+      $backupObj->setAttribute( 'type', $type );
+      if( $useid ){ $backupObj->setAttribute( 'id', $item ); }
+      else { $backupObj->setAttribute( 'name', $item ); }
+    }
+  }
+  else{
+      $backupObj = XmlNode->new( 'object-to-backup' );
+      $backupSpecNode->addChild( $backupObj );
+      $backupObj->setAttribute( 'type', $type );
+      $backupObj->setAttribute( 'all', "true" );
+  }
+}
+
+sub addObjectsToExclude {
+  my ( $backupSpecNode, $useid, $type, $data ) = @_;
+  foreach my $item( @{$data} ){
+    my $excludeObj = XmlNode->new( 'object-to-exclude' );
+    $backupSpecNode->addChild( $excludeObj );
+    $excludeObj->setAttribute( 'type', $type );
+    if( $useid ){ $excludeObj->setAttribute( 'id', $item ); }
+    else { $excludeObj->setAttribute( 'name', $item ); }
+  }
+}
+
+
+sub perform {
+  my (%settings) = @_;
+
+  my( $tempDumpFileName );
+  if( exists $settings{'output-file'} and exists $settings{'split-size'} ) {
+    die "Unable to split backup directed to stdout\n" if $settings{'output-file'} eq '-';
+  }
+
+  Logging::setVerbosity( $settings{'verbose'} );
+
+  my $backupParameters = "";
+
+  my $s = IO::Select->new();
+  $s->add(\*STDIN);
+  if ($s->can_read(0)) {
+    $backupParameters = do { local $/; <STDIN> };
+  }
+  Logging::debug("STDIN=$backupParameters");
+
+  Logging::info( "Create backup task description" );
+
+  XmlNode::resetCompatibilityProcs();
+  my $backupTask = XmlNode->new( 'backup-task-description' );
+  my $misc = $backupTask->getChild( 'misc', 1 );
+  $misc->setAttribute( 'backup-profile-name', $settings{'backup-prefix'}  ) if exists $settings{'backup-prefix'};
+  $misc->setAttribute( 'owner-guid', "00000000-0000-0000-0000-000000000000" );
+  $misc->setAttribute( 'owner-type', "server" );
+  $misc->setAttribute( 'owner-name', 'server' );
+  $misc->setAttribute( 'top-object-type', 'server' );
+  $misc->setAttribute( 'top-object-name', 'server' );
+  $misc->setAttribute( 'verbose-level', $settings{'verbose'} ) if $settings{'verbose'}>0;
+  $misc->setAttribute( 'owner-may-use-server-storage', 'true');
+  $misc->setAttribute( 'keep-local-backup', exists($settings{'keep-local-backup'}) ? 'true' : 'false' );
+
+  my $dumpStorage = $backupTask->getChild( 'dumps-storage-credentials', 1 );
+
+  if( exists $settings{'ftp'} ){
+    my %ftp = %{$settings{'ftp'}};
+    my $serverWithPort = $ftp{'server'};
+    $serverWithPort .= ":".$ftp{'port'} if $ftp{'port'};
+    $dumpStorage->setAttribute( 'storage-type', 'foreign-ftp' );
+    $dumpStorage->setAttribute( 'use-passive-ftp-mode', 'true' ) if exists $ftp{'passive'};
+    $dumpStorage->setAttribute( 'use-ftps', 'true' ) if $ftp{'protocol'} eq 'ftps';
+    $dumpStorage->addChild( XmlNode->new( 'login', 'content' => $ftp{'login'} ) );
+    $dumpStorage->addChild( XmlNode->new( 'password', 'content' => $ftp{'password'} ) );
+    $dumpStorage->addChild( XmlNode->new( 'hostname', 'content' => $serverWithPort ) );
+    $dumpStorage->addChild( XmlNode->new( 'root-dir', 'content' => $ftp{'path'} ) );
+    $dumpStorage->addChild( XmlNode->new( 'file-name', 'content' => $ftp{'file'} ) );
+    $dumpStorage->addChild( XmlNode->new( 'backup-password-plain', 'content' => $settings{'backup-password'} ) ) if exists $settings{'backup-password'};
+  }
+  elsif( exists $settings{'output-file'} ){
+    my $file = $settings{'output-file'};
+    my $storageType = HelpFuncs::getStorageType($file);
+    $dumpStorage->setAttribute('storage-type', $storageType);
+    if( $file eq '-' ) {
+       my $fh;
+       ( $fh, $tempDumpFileName ) = File::Temp::tempfile( "$productRootD/PMM/tmp/backupXXXXXX" );
+        close( $fh );
+        $file = $tempDumpFileName;
+    }
+    my $dir = '';
+    my $idx = rindex( $file, '/' );
+    if( $idx>=0 ){
+      $dir = substr( $file, 0, $idx+1 );
+      $file = substr( $file, $idx+1 );
+    }
+    #check relative path
+    if ($storageType eq 'file' and substr( $dir, 0, 1 ) ne '/') {
+      $dir = AgentConfig::cwd() . '/' . $dir;
+    }
+    $dumpStorage->addChild( XmlNode->new( 'root-dir', 'content' => $dir ) );
+    $dumpStorage->addChild( XmlNode->new( 'file-name', 'content' => $file ) );
+    $dumpStorage->addChild( XmlNode->new( 'backup-password-plain', 'content' => $settings{'backup-password'} ) ) if exists $settings{'backup-password'};
+  }
+  else{
+     $dumpStorage->setAttribute( 'storage-type', 'local' );
+     my $psaConf = SpecificConfig->new();
+     $dumpStorage->addChild( XmlNode->new( 'root-dir', 'content' => $psaConf->get( 'DUMP_D' ) ) );
+  }
+  my $backupSpec = $backupTask->getChild( 'backup-specification', 1 );
+  my $backupOptions = $backupSpec->getChild( 'backup-options', 1 );
+  $backupOptions->setAttribute( 'type', ( exists $settings{'configuration'} ? "configuration-only" : "full" ) );
+  if (exists $settings{'incremental-creation-date'}) {
+    $backupOptions->setAttribute( 'incremental-creation-date', $settings{'incremental-creation-date'} );
+  } elsif (exists $settings{'incremental'}) {
+    $backupOptions->setAttribute( 'incremental', 'true' );
+  }
+  $backupOptions->setAttribute( 'split-size', $settings{'split-size'} ) if exists $settings{'split-size'};
+  $backupOptions->setAttribute( 'compression-level', 'do-not-compress' ) if $settings{'gzip'}==0;
+  $backupOptions->setAttribute( 'filter', 'only-mail' ) if exists $settings{'only-mail'};
+  $backupOptions->setAttribute( 'filter', 'only-phosting' ) if exists $settings{'only-hosting'};
+  $backupOptions->setAttribute( 'filter', 'only-database' ) if exists $settings{'only-database'};
+  $backupOptions->setAttribute( 'suspend', 'true' ) if exists $settings{'suspend'};
+  $backupOptions->setAttribute( 'description', $settings{'description'} ) if exists $settings{'description'};
+
+  if (exists $settings{'all'}) {
+    $backupSpec->getChild( 'object-to-backup', 1 )->setAttribute( 'type', 'server' );
+  }
+  if (exists $settings{'resellers-name-all'} or exists $settings{'resellers-id-all'}) {
+    addObjectsToBackup( $backupSpec, 0, 'reseller', undef );
+  }
+  if (exists $settings{'clients-name-all'} or exists $settings{'clients-id-all'} ) {
+    addObjectsToBackup( $backupSpec, 0, 'client', undef );
+  }
+  if (exists $settings{'domains-name-all'} or exists $settings{'domains-id-all'} ) {
+    addObjectsToBackup( $backupSpec, 0, 'domain', undef );
+  }
+  if (exists $settings{'resellers-name'}) {
+    addObjectsToBackup( $backupSpec, 0, 'reseller', \@{$settings{'resellers-name'}} );
+  }
+  if (exists $settings{'clients-name'}) {
+    addObjectsToBackup( $backupSpec, 0, 'client', \@{$settings{'clients-name'}} );
+  }
+  if (exists $settings{'domains-name'}) {
+    addObjectsToBackup( $backupSpec, 0, 'domain', \@{$settings{'domains-name'}} );
+  }
+  if (exists $settings{'resellers-id'}) {
+    addObjectsToBackup( $backupSpec, 1, 'reseller', \@{$settings{'resellers-id'}} );
+  }
+  if (exists $settings{'clients-id'}) {
+    addObjectsToBackup( $backupSpec, 1, 'client', \@{$settings{'clients-id'}} );
+  }
+  if (exists $settings{'domains-id'}) {
+    addObjectsToBackup( $backupSpec, 1, 'domain', \@{$settings{'domains-id'}} );
+  }
+  if( exists $settings{'exclude-reseller'} ) {
+    addObjectsToExclude( $backupSpec, 0, 'reseller', \@{$settings{'exclude-reseller'}} );
+  }
+  if( exists $settings{'exclude-client'} ) {
+    addObjectsToExclude( $backupSpec, 0, 'client', \@{$settings{'exclude-client'}} );
+  }
+  if( exists $settings{'exclude-domain'} ) {
+    addObjectsToExclude( $backupSpec, 0, 'domain', \@{$settings{'exclude-domain'}} );
+  }
+  if( exists $settings{'exclude-pattern'} ) {
+    my $base64 = HelpFuncs::makeMIMEBase64();
+    foreach my $pattern( @{$settings{'exclude-pattern'}} ){
+        my $excludeObj = XmlNode->new('file-to-exclude', 'content' => $base64->{'ENCODE'}->($pattern));
+        $backupSpec->addChild($excludeObj);
+    }
+  }
+
+  if ( $backupParameters ) {
+    my $backupParams = $backupTask->getChild( 'backup-parameters', 1 );
+    $backupParams->setText($backupParameters);
+  }
+
+  Logging::info( "Create task for backup" );
+  my( $inputFile, $inputFileName )  = File::Temp::tempfile( "$productRootD/PMM/tmp/pmmcliinXXXXXX" );
+  $backupTask->serialize( $inputFile );
+  seek $inputFile, 0, 0;
+  my $cmdInput = '';
+  while( <$inputFile> ) { $cmdInput .= $_; }
+  close $inputFile;
+  unlink $inputFileName;
+
+  my $cmd = "$productRootD/admin/bin/pmmcli";
+  my @cmddata;
+  push @cmddata, $cmd;
+  push @cmddata, "--make-dump";
+  my $cmdResult = "";
+  my $cmdErrResult = "";
+  Logging::debug( "Task data: $cmdInput" );
+  IPC::Run::run( \@cmddata, \$cmdInput, \$cmdResult, \$cmdErrResult );
+  my $retCode = $? >> 8;
+  Logging::debug( "The make dump task is executed with errorcode '$retCode'" );
+  Logging::error("The pmmcli STDERR: $cmdErrResult") if $cmdErrResult;
+  Logging::debug("The pmmcli output: $cmdResult");
+  my $taskId = PmmCli::getTaskIdFormResult( $cmdResult );
+  die "Cannot get task id\n" if not $taskId;
+  local $SIG{INT} = sub{ `$productRootD/admin/bin/pmmcli --stop-task $taskId`; die "The program terminated unexpectedly!\n"; };
+  Logging::debug( "The task with id '$taskId' have been created" );
+
+  Logging::info( "Backup started" );
+  my ( $logLocation, $finishedStatus );
+  while( 1 ){
+     $cmd = "$productRootD/admin/bin/pmmcli --get-task-status $taskId";
+     Logging::debug( "Execute: $cmd" );
+     $cmdResult = `$cmd` or die "Could not get task status with pmmcli[$!]\n";
+     $retCode = $? >> 8;
+     Logging::debug( "The get task status is executed with errorcode '$retCode'" );
+     Logging::debug( "The pmmcli output:$cmdResult" );
+     my ($progress, $finished );
+     $retCode = PmmCli::getTaskProgressFormResult( $cmdResult,\$progress, \$finishedStatus, \$logLocation );
+     if( $settings{'verbose'}>0 ){
+       print STDERR  "." if $settings{'verbose'}>0 && $retCode == 2; #starting
+       print STDERR "$progress\n" if $settings{'verbose'}>0 && $retCode == 0 && $progress; #dumping
+       Logging::debug( "Finished: status '$finishedStatus', logs '$logLocation'" ) if $retCode == 1;
+     }
+     last if $retCode == 1;
+     sleep($settings{'polling-interval'});
+  }
+
+  if( $settings{'verbose'}>0 ){
+    print STDERR "-------------- Start print backup log hire --------------\n";
+    if( $logLocation and -f $logLocation ){
+      open LOGH, "<$logLocation";
+      while( <LOGH> ){ print STDERR $_; }
+      close LOGH;
+      my $idx = rindex( $logLocation, '/' );
+      $logLocation = substr( $logLocation, 0, $idx ) if $idx>0;
+    }
+    else{
+      open LOGH, "-|", "$productRootD/admin/bin/pmmcli", "--get-task-log", "$taskId" or Logging::error( "Cannot get task log" );
+      while( <LOGH> ){ print STDERR $_; }
+      close LOGH;
+    }
+    print STDERR "-------------- End print backup log hire --------------\n";
+    print STDERR "\nYou can view additional information in the log file located in $logLocation directory. This directory will be removed automatically after 30 days\n\n";
+
+  }
+
+  #Logging::debug( "Remove task '$taskId'" );
+  #Logging::debug( "Execute: $cmd" );
+  #$cmd = "$productRootD/admin/bin/pmmcli --remove-task-data $taskId";
+  #$cmdResult = `$cmd` or die "Could not remove task data[$!]\n";
+  #Logging::debug( "The task '$taskId' have been removed" );
+  local $SIG{INT} = 'DEFAULT';
+  if( $finishedStatus eq 'error' ){
+    printTaskErrors($logLocation);
+    die "The backup failed with errors!\n";
+  }
+  elsif( $finishedStatus eq 'success' ){
+    print STDERR "The backup finished successfully\n" if $settings{'verbose'}>0;
+  }
+  else{
+    print STDERR "The backup finished with status '$finishedStatus' and had some problems. Look at log file for detailed information.\n" if $settings{'verbose'}>0;
+  }
+
+  if( $tempDumpFileName ){
+     Logging::debug( "Open temporary dump file '$tempDumpFileName'" );
+     open DUMP, $tempDumpFileName or die "Cannot open temporary dump file $tempDumpFileName!\n";
+     binmode STDOUT;
+     my $block;
+     my $blocklen;
+     while ($blocklen = sysread(DUMP, $block, 65536)) {
+       my $offset = 0;
+       do {
+         my $written = syswrite(STDOUT, $block, $blocklen, $offset);
+         $offset += $written;
+         $blocklen -= $written;
+       } while ($blocklen != 0);
+    }
+    close DUMP;
+    Logging::debug( "Delete temporary dump file '$tempDumpFileName'" );
+    unlink $tempDumpFileName;
+  }
+}
+
+sub printTaskErrors {
+  my $logLocation = shift;
+
+  eval {require XML::Simple; 1;};
+  my $xs = XML::Simple->new(ForceArray => 1, RootName => 'execution-result');
+  my $xml = eval { $xs->XMLin($logLocation, KeyAttr => []) };
+
+  foreach my $msgNode (@{$xml->{'message'}}) {
+    print STDERR $msgNode->{'severity'}.": ".$msgNode->{'description'}->[0]."\n";
+  }
+  foreach my $objectNode (@{$xml->{'object'}}) {
+    foreach my $msgNode (@{$objectNode->{'message'}}) {
+      print STDERR $msgNode->{'severity'}.": ".$msgNode->{'description'}->[0]."\n";
+    }
+  }
+}
+
+sub isHgMode {
+	my $config = Config::Tiny->read("$productRootD/admin/conf/panel.ini");
+	return 0 unless
+		defined $config &&
+		exists $config->{serviceNodes} &&
+		exists $config->{serviceNodes}->{enabled};
+	my $value = $config->{serviceNodes}->{enabled};
+	# Follow PHP string-to-boolean conversion rules and parse_ini_file
+	# value conversions.
+	return !(grep { $_ eq $value } ("", "0", "null", "no", "false"));
+}
+
+sub main {
+  if (isHgMode()) {
+    print STDERR "This utility is not available for multi-server Plesk.\n";
+    exit(1);
+  }
+  my %settings;
+  try {
+     if( @ARGV and $ARGV[0] eq "--test" ){
+       test();
+     }
+    %settings = parseOptions();
+  } catch Error with {
+    my $error = shift;
+    print STDERR "Unable to parse options: $error\n";
+    exit(2);
+  };
+
+  my $returnCode = 0;
+  try {
+    $returnCode = perform(%settings);
+  } catch Error with {
+    my $error = shift;
+    print STDERR "Runtime error: $error\n";
+    exit(1);
+  };
+  return $returnCode;
+}
+
+main();
+
+# Local Variables:
+# mode: cperl
+# cperl-indent-level: 2
+# indent-tabs-mode: nil
+# tab-width: 4
+# End:

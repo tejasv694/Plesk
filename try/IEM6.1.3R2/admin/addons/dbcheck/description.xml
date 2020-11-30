@@ -1,0 +1,9 @@
+<addon_description>
+	<name>Database Integrity Check</name>
+	<description>Checks the database for any corruption, missing tables or missing indexes.</description>
+	<author>Flipmode!</author>
+	<version>1.0</version>
+	<hasconfiguration>0</hasconfiguration>
+	<license>Commercial</license>
+	<licenseurl>#</licenseurl>
+</addon_description>

@@ -1,0 +1,37 @@
+div#userActivityLogList {
+	border-bottom: 1px solid #CACACA;
+	overflow: hidden;
+	margin-top: 0px;
+	padding-bottom: 5px;
+	white-space: nowrap;
+}
+
+div#userActivityLogList span.userActivityLogLabel {
+	padding: 0 10px 0 0;
+	float: left;
+}
+
+div#userActivityLogList span.userActivityLogItem {
+	border-left: 1px solid #cecece;
+	padding: 0 3px 0 9px;
+	margin: 0 0 0 3px;
+	max-width: 115px;
+	overflow: hidden;
+	white-space: nowrap;
+	float: left;
+}
+
+div#userActivityLogList span.userActivityLogFirstItem {
+	border-left: 0;
+}
+
+div#userActivityLogList span.userActivityLogItem a {
+	text-decoration: none;
+}
+
+div#userActivityLogList span.userActivityLogItem a img {
+	border: 0px;
+	vertical-align: middle;
+	padding: 0 5px 0 0;
+	margin: 0;
+}

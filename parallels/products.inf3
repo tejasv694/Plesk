@@ -1,0 +1,46 @@
+<vendors>
+  <vendor id="swsoft">
+    <products>
+
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.31_4506/release.inf3" release-key="plesk-18.0.31" />
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.30_4529/release.inf3" release-key="plesk-18.0.30" />
+      <addon id="php74" name="PHP v 7.4" reference="PHP74_17/release.inf3" />
+      <addon id="php74" name="PHP v 7.4 (EOL OSes)" reference="php74.inf3" />
+      <addon id="php73" name="PHP v 7.3" reference="PHP73_17/release.inf3" />
+      <addon id="php73" name="PHP v 7.3 (EOL OSes)" reference="php73.inf3" />
+      <addon id="php72" name="PHP v 7.2" reference="PHP72_17/release.inf3" />
+      <addon id="php72" name="PHP v 7.2 (EOL OSes)" reference="php72.inf3" />
+      <addon id="php71" name="PHP v 7.1" reference="PHP71_17/release.inf3" />
+
+      <addon id="php71" name="PHP v 7.1 (EOL OSes)" reference="php71.inf3" />
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.29_3884/release.inf3" release-key="plesk-18.0.29" />
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.28_3654/release.inf3" release-key="plesk-18.0.28" />
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.27_3253/release.inf3" release-key="plesk-18.0.27" />
+      <product id="plesk" name="Plesk" reference="pool/PSA_18.0.26_2994/release.inf3" release-key="plesk-18.0.26" />
+      <product id="plesk" name="Plesk" reference="plesk.inf3">
+        <incompatible_with prod_id="ppsmbe" />
+      </product>
+
+      <product id="ppsmbe" name="Parallels Small Business Panel" reference="ppsmbe.inf3" />
+
+      <product id="sitebuilder" name="Sitebuilder 4.5 and earlier versions (for Plesk 9 and earlier)" reference="sitebuilder.inf3" />
+      <product id="sso" name="SSO" reference="sso.inf3" />
+
+      <addon id="setemplates" name="SiteEditor templates" reference="setemplates.inf3" />
+
+      <addon id="pp-sitebuilder" name="Sitebuilder" reference="pp-sitebuilder.inf3" />
+      <addon id="billing" name="Paralllels billing" reference="billing.inf3" />
+      <lazy_addon id="mysql5.1" name="MySQL v 5.1" reference="mysql.inf3" />
+      <lazy_addon id="apache" name="Apache with SNI support" reference="apache.inf3" />
+      <lazy_addon id="nginx" name="NGINX reverse proxy server" reference="nginx.inf3" />
+
+      <addon id="php70" name="PHP v 7.0" reference="php70.inf3" />
+      <addon id="php56" name="PHP v 5.6" reference="php56.inf3" />
+      <addon id="php55" name="PHP v 5.5" reference="php55.inf3" />
+      <addon id="php54" name="PHP v 5.4" reference="php54.inf3" />
+      <addon id="php53" name="PHP v 5.3" reference="php53.inf3" />
+      <addon id="php52" name="PHP v 5.2" reference="php52.inf3" />
+      <addon id="pmm" name="Panel migrator" reference="pmm.inf3" />
+    </products>
+  </vendor>
+</vendors>

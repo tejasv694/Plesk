@@ -1,0 +1,95 @@
+a.others_hide {
+	cursor: pointer;	
+	text-decoration: underline;
+}
+
+table.survey_results {
+	width: 100%;
+	line-height: 140%;
+	border-collapse:collapse;
+}
+
+table.survey_results tr {
+	height: 30px;
+	border-bottom: solid 2px white;		
+}
+
+table.survey_results tr th {
+	height: 25px;
+	border-bottom: solid 2px white;
+	text-align: left;
+	padding-left: 14px;
+}
+
+table.survey_results td {
+	padding:.4em;
+	border-left: 1px solid #fff;
+}
+
+table.survey_results th.survey_stats,
+table.survey_results td.survey_stats {
+	width: 8%;
+	background: #D5F565;	
+	border-left: 1px solid #fff;
+	border-right: 1px solid #fff;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+
+table.survey_results td.browse {
+	padding-left: 16px;
+}
+
+table.survey_results tr.winner {
+	background: limegreen !important;
+	font-weight: bold;
+	color: #fff !important;
+	z-index: 100;
+}
+
+table.survey_results tr.winner td {
+	background: limegreen !important;
+}
+
+table.survey_results tr.winner a {
+	color: #fff;	
+}
+
+table.survey_results tr.winner td.winner {
+	padding-left: 14px;
+}
+
+.bar {
+	width: 100%;
+	height: 16px;
+}
+
+.survey_percentage {
+	background: #D5F565;
+	height: 16px;	
+	border: 1px solid #222;
+}
+.survey_results_load {
+	margin-top: 40px;
+	text-align: center;	
+}
+
+dl.widgets {
+	width: 100%;	
+}
+
+dl.widgets dt {
+	font-weight      : bold;
+	font-size        : 11px;
+	color            : #000;
+	background-color : #edecec;
+	height: 14px;
+	margin-top: 15px;
+	margin-bottom: 0px;
+	background-image : url(../../../../admin/images/table_bg.gif);
+}
+
+dl.widgets dd {
+	padding : 0px;
+}
+

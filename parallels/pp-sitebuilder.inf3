@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="sitebuilder" name="Sitebuilder">
+
+<release id="PPSB_17.8.12" name="Sitebuilder" version="17.8.12">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="17.8.11" to_version="18.0.99" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="8" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el8" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="8" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="18.04" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="20.04" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="9.0" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="10.0" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.8.12/sitebuilder-17.8.12-rhall-all.inf3"/>
+</release>
+
+<release id="PPSB_17.0.16" name="Sitebuilder" version="17.0.16">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="17.0.17" to_version="17.8.5" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_17.0.16/sitebuilder-17.0.16-rhall-all.inf3"/>
+</release>
+
+<release id="PPSB_12.5.31" name="Sitebuilder" version="12.5.31">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="12.5.29" to_version="17.0.14" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="i386" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_12.5.31/sitebuilder-12.5.31-rhel7-all.inf3"/>
+</release>
+
+<release id="PPSB_12_0_8" name="Sitebuilder" version="12.0.8">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="12.0.18" to_version="12.1.14" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhel7-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="13.1" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="13.1" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="SITEBUILDER_12.0.8/sitebuilder-12.0.8-deball-all.inf3"/>
+</release>
+
+<release id="PPSB_11_5_10" name="Sitebuilder" version="11.5.10">
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="11.5.30" to_version="11.5.99" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="SITEBUILDER_11.5.10/sitebuilder-11.5.10-deball-all.inf3"/>
+</release>
+
+<release id="PPSB_11_0_10" name="Sitebuilder" version="11.0.10">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="11.0.9" to_version="11.0.9" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+   
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2"
+      os_arch="i386" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2"
+      os_arch="x86_64" config="SITEBUILDER_11.0.10/sitebuilder-11.0.10-rhall-all.inf3"/>
+
+ </release>
+
+<release id="PPSB_10_4_4" name="Sitebuilder" version="10.4.4">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.4.4" to_version="10.4.4" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="SITEBUILDER_10.4.4/sitebuilder-10.4.4-deball-all.inf3"/>
+
+ </release>
+
+
+       
+<release id="PPSB_10_3_0" name="Sitebuilder" version="10.3.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.3.0" to_version="10.3.1" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="SITEBUILDER_10.3.0/sitebuilder-10.3.0-deball-all.inf3"/>
+
+ </release>
+
+ <release id="PPSB_5_2_0" name="Sitebuilder" version="5.2.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.2.0" to_version="10.2.0" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-deball-all.inf3"/>
+
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="SITEBUILDER_5.2.0/sitebuilder-5.2.0-frall-all.inf3"/>
+-->
+ </release>
+
+ <release id="PPSB_5_1_0" name="Sitebuilder" version="5.1.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.1.0" to_version="10.1.1" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-deball-all.inf3"/>
+
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="SITEBUILDER_5.1.0/sitebuilder-5.1.0-frall-all.inf3"/>
+-->
+ </release>
+
+ <release id="PPSB_5_0_0" name="Sitebuilder" version="5.0.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.0.0" to_version="10.0.1" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-deball-all.inf3"/>
+
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="SITEBUILDER_5.0.0/sitebuilder-5.0.0-frall-all.inf3"/>
+-->
+
+ </release>
+ 
+ 
+
+</addon>

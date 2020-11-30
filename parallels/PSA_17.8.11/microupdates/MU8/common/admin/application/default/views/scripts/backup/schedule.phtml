@@ -1,0 +1,174 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<?php echo $this->form ?>
+<div id="cloud-backup-restriction"></div>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.onReady(function() {
+    var fullBackupOptions = <?php echo $this->fullBackupOptions ?>;
+    var backupPeriod = $('<?php echo $this->form->getSubForm('schedule')->getElement('backupPeriod')->getId() ?>');
+    var fullBackupPeriod = $('<?php echo $this->form->getSubForm('schedule')->getElement('fullBackupPeriod')->getId() ?>');
+    var useIncremental = $('<?php echo $this->form->getSubForm('schedule')->getElement('useIncremental')->getId() ?>');
+    var repositories = $$('input[id^=backup-content-repository]');
+    var vhostContent = $('backup-content-content_type-backup_content_vhost_only');
+    var remoteStorage = $('<?php echo $this->form->getSubForm('backup')->getSubForm('content')->getElement('remote_storage')->getId() ?>');
+
+    var changeControlState = function() {
+         fullBackupPeriod.up('.form-row').toggle(useIncremental.checked);
+
+        var selected = fullBackupPeriod.value;
+        $A(fullBackupPeriod.options).each(Element.remove);
+        for (var option in fullBackupOptions) {
+            if (parseInt(option) > parseInt(backupPeriod.value)) {
+                fullBackupPeriod.insert(new Element('option', {value: option, selected: (selected == option)}).update(fullBackupOptions[option]['period']));
+            }
+        }
+
+        var units = useIncremental.checked ? fullBackupPeriod.value : backupPeriod.value;
+        $('<?php echo $this->form->getSubForm('schedule')->getElement('maxDumpFiles')->getId() ?>-units').update(fullBackupOptions[units]['rotation']);
+    };
+    [backupPeriod, fullBackupPeriod].invoke('observe', 'change', changeControlState);
+    useIncremental.observe('click', changeControlState);
+    changeControlState();
+
+    <?php if (!$this->form->isBackupToCloudAllowed()): ?>
+    var cloudBackupRestrictionHint = null;
+    var showCloudBackupRestrictionHint = function (el) {
+        hideCloudBackupRestrictionHint();
+        if (!el) {
+            return;
+        }
+
+        el.insert({
+            after: (
+                '<span class="hint">' +
+                <?php if ($this->cloudBackupBuyUrl): ?>
+                    '<div class="b-indent">' +
+                        '<span class="b-indent-icon"><i class="icon"><img src="' + Jsw.skinUrl + '/icons/16/plesk/dollar.png" alt="" /></i></span>' +
+                        <?= $this->jsLmsg('cloudBackupRestrictionHintWithBuy'); ?> +
+                        ' <a href="<?= $this->escape($this->cloudBackupBuyUrl) ?>"' +
+                        <?php if ($this->cloudBackupBuyUrlNewWindow): ?>
+                            ' target="_blank"' +
+                        <?php endif; ?>
+                        '>' + <?= $this->jsLmsg('cloudBackupRestrictionBuyButton'); ?> + '</a>' +
+                    '</div>' +
+                <?php else: ?>
+                    '<div class="b-indent">' +
+                        '<span class="b-indent-icon"><i class="icon"><img src="' + Jsw.skinUrl + '/icons/16/plesk/att-tr.png" alt="" /></i></span>' +
+                        <?= $this->jsLmsg('cloudBackupRestrictionHint'); ?> +
+                    '</div>' +
+                <?php endif; ?>
+                '</span>'
+            ),
+        });
+        cloudBackupRestrictionHint = el.nextSibling;
+
+        <?php if (Plesk\UserActivityTracking\Helper::isActive()): ?>
+        Jsw.UAT.dispatchAction('SHOWPROMO', {
+            promo: 'backup_scheduler',
+            destination: remoteStorage.value,
+        });
+        <?php endif; ?>
+    };
+    var hideCloudBackupRestrictionHint = function () {
+        if (cloudBackupRestrictionHint) {
+            cloudBackupRestrictionHint.remove();
+            cloudBackupRestrictionHint = null;
+        }
+    };
+    <?php if ($this->retrieveKeysTaskId): ?>
+    Jsw.Observer.append(function (item) {
+        if (item.id === <?= $this->jsEscape($this->retrieveKeysTaskId) ?> && item.status === 'done') {
+            showCloudBackupRestrictionHint = function () {
+                // skip showing hint after retrieving keys
+            };
+            hideCloudBackupRestrictionHint();
+        }
+    }, 'plesk:taskComplete');
+    <?php endif; ?>
+    <?php endif; ?>
+
+    var repositoriesControlState = function() {
+        var repository;
+        if (1 == repositories.length) {
+            repository = repositories[0].value;
+        } else {
+            repositories.each(function(item){
+                if (item.checked) {
+                    repository = item.value;
+                }
+            });
+        }
+        $$('div[id^=backup-content-split_backup_size]').invoke('toggle', 'local' != repository);
+        if (remoteStorage.up('.form-row')) {
+            remoteStorage.up('.form-row').toggle('local' !== repository);
+        }
+
+        <?php if (!$this->form->isBackupToCloudAllowed()): ?>
+        if (repository === 'local' || remoteStorage.value === 'ftp') {
+            hideCloudBackupRestrictionHint();
+            return;
+        }
+
+        if (remoteStorage.up('.form-row')) {
+            showCloudBackupRestrictionHint(remoteStorage);
+        } else {
+            showCloudBackupRestrictionHint($$('label[for="backup-content-repository-' + repository + '"]')[0]);
+        }
+        <?php endif; ?>
+    };
+    repositories.invoke('observe', 'click', repositoriesControlState);
+    remoteStorage.observe('change', repositoriesControlState);
+    repositoriesControlState();
+
+    var excludeFilesState = function() {
+        var checkbox = $('backup-settings-excludeFilesMasterCheckbox');
+        var rows = [
+            checkbox.up('.form-row'),
+            $('backup-settings-exclude_logs').up('.form-row')
+        ];
+        if (checkbox.checked) {
+            rows.push($('backup-settings-exclude_files-form-row'));
+        }
+
+        rows.invoke(vhostContent.checked ? 'show' : 'hide');
+    };
+
+    vhostContent.observe('change', excludeFilesState);
+    excludeFilesState();
+
+    <?php if (!$this->form->isBackupToCloudAllowed()): ?>
+    Jsw.namespace('Backup.Schedule');
+    Backup.Schedule.checkCloudBackupRestriction = function () {
+        if (cloudBackupRestrictionHint) {
+            require(['app/cloud-backup-restriction'], function (renderDialog) {
+                renderDialog({
+                    container: document.getElementById('cloud-backup-restriction'),
+                    locale: {
+                        closeButton: <?= $this->jsLmsg('cloudBackupRestrictionCloseButton', ['_escape' => false]); ?>,
+                        buyButton: <?= $this->jsLmsg('cloudBackupRestrictionBuyButton', ['_escape' => false]); ?>,
+                        description: <?= $this->jsLmsg('cloudBackupRestrictionDescription', ['_escape' => false]); ?>,
+                        descriptionWithBuy: <?= $this->jsLmsg('cloudBackupRestrictionDescriptionWithBuy', ['_escape' => false]); ?>,
+                    },
+                    <?php if ($this->cloudBackupBuyUrl): ?>
+                    buyUrl: '<?= $this->cloudBackupBuyUrl ?>',
+                    buyUrlNewWindow: <?= $this->cloudBackupBuyUrlNewWindow ? 'true' : 'false' ?>,
+                    <?php endif; ?>
+                });
+                <?php if (Plesk\UserActivityTracking\Helper::isActive()): ?>
+                Jsw.UAT.dispatchAction('SHOWPROMO', {
+                    promo: 'backup_scheduler',
+                    destination: remoteStorage.value,
+                });
+                <?php endif; ?>
+            });
+            return false;
+        }
+
+        return true;
+    };
+    <?php endif; ?>
+});
+//]]>
+</script>

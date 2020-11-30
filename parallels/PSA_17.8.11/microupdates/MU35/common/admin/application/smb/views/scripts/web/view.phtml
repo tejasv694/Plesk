@@ -1,0 +1,201 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<script>
+Jsw.Locale.addSection('smb.controllers.web._informer', <?php echo json_encode(Zend_Registry::get('translate')->getSection('smb.controllers.web._informer')) ?>);
+</script>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.onReady(function() {
+    new Jsw.Hint({
+        renderTo: 'main',
+        renderMode: 'top',
+        hint: <?php echo $this->jsLmsg('buttonsAreaDescription'); ?>,
+        expandable: true
+    });
+    <?php if (is_array($this->activeStateComponentsWarning)): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->jsLmsg('activeStateComponentsWarning',
+            ['link' => $this->htmlLink('', $this->lmsg('activeStateComponentsWarningLink'),
+                ['href' => $this->activeStateComponentsWarning['kbUrl'], 'target' => '_blank'])
+            ]
+        );?>,
+        {
+            id: 'activeStateComponentsWarning',
+            closable: true,
+            renderTo: 'main',
+            onClose: function () {
+                $('activeStateComponentsWarning').remove();
+                new Ajax.Request(Jsw.prepareUrl(<?= $this->jsEscape($this->activeStateComponentsWarning['hideUrl']) ?>), { method: 'post' });
+            }
+        }
+    );
+    <?php endif; ?>
+
+    <?php if ($this->linkToSecurePasswords): ?>
+        Jsw.addStatusMessage('warning',
+            <?php echo $this->jsLmsg('toSecurePasswordsGoTo',
+                array('link' => $this->htmlLink('', $this->lmsg('securePasswords'),
+                    array('href' => $this->linkToSecurePasswords))
+                )
+            );?>,
+                {
+                    id: 'securePasswords',
+                    closable: true,
+                    renderTo: 'main',
+                    onClose: function() {
+                        $('securePasswords').remove();
+                        new Ajax.Request(Jsw.prepareUrl('/web/hide-secure-passwords'), { method: 'post'});
+                    }
+                }
+        );
+    <?php endif; ?>
+
+    <?php if ($this->linkToSyncDnsZones): ?>
+        Jsw.addStatusMessage('warning',
+            <?php echo $this->jsLmsg('upgradeDnsSyncSkip', array(
+                'link' => $this->htmlLink('', $this->lmsg('serverDns'),
+                    array('href' => $this->linkToSyncDnsZones)),
+                'learnMoreLink' => $this->htmlLink('', $this->lmsg('learnMore'), array(
+                        'href' => $this->baseUrl('/help/redirect/controller-name/redirect/action-name/pleskin/plesk-context/dns_t'),
+                        'target' => '_blank'
+                    )),
+            ));?>,
+                {
+                    id: 'dnsSyncSkip',
+                    closable: true,
+                    renderTo: 'main',
+                    onClose: function() {
+                        $('dnsSyncSkip').remove();
+                        new Ajax.Request(Jsw.prepareUrl('/web/hide-upgrade-dns-sync-skip'), { method: 'post'});
+                    }
+                }
+        );
+    <?php endif; ?>
+
+    <?php if ($this->linkToEncryptBackups): ?>
+        Jsw.addStatusMessage('warning',
+            <?php echo $this->jsLmsg('backEncryptionRequired', [
+                'link' => $this->htmlLink('', $this->lmsg('backupSettingPage'), ['href' => $this->linkToEncryptBackups])
+            ]);?>,
+            {
+                id: 'backEncryptionRequiredMessage',
+                closable: true,
+                renderTo: 'main',
+                onClose: function() {
+                    $('backEncryptionRequiredMessage').remove();
+                    new Ajax.Request(Jsw.prepareUrl('/backup/hide-backup-encryption-required-message'), {method: 'post'});
+                }
+            }
+        );
+    <?php endif; ?>
+
+    <?php if ($this->upgradeFailed): ?>
+        new Jsw.UpgradeFailureNotification({
+            renderTo: 'main',
+            renderMode: 'top',
+            isBootstrapRunning: <?php echo $this->isBootstrapRunning ? 'true' : 'false' ?>,
+            bootstrapExecutionUrl: '/web/bootstrap-execution',
+            bootstrapStatusUrl: '/web/bootstrap-status',
+            upgradeFailedMessage: '<?php echo Plesk_Base_Utils_String::safeForJs($this->upgradeFailedMessage) ?>',
+            bootstrapInProgressMessage: <?php echo $this->jsLmsg('components.upgrade-failure-notification.bootstrapInProgressMessage') ?>,
+            bootstrapLinkTitle: <?php echo $this->jsLmsg('components.upgrade-failure-notification.bootstrapLinkTitle') ?>
+        });
+    <?php endif; ?>
+
+    <?php if ($this->updateInProgress): ?>
+        new Smb.WebSitesAndDomains.UpdateProgressNotification({
+            renderTo: 'main',
+            renderMode: 'top',
+            message: <?php echo $this->jsLmsg('updateInProgress', array(
+                'bold' => '<b>' . $this->lmsg('boldPartUpdateInProgress') . '</b>',
+            )) ?>
+        });
+    <?php endif; ?>
+
+    <?php if ($this->updateFailed): ?>
+        new Smb.WebSitesAndDomains.UpdateResultNotification({
+            renderTo: 'main',
+            renderMode: 'top',
+            status: 'error',
+            message: '<?php echo Plesk_Base_Utils_String::safeForJs($this->updateFailedMessage) ?>'
+        });
+    <?php endif; ?>
+
+    <?php if ($this->updateCompleted): ?>
+        new Smb.WebSitesAndDomains.UpdateResultNotification({
+            renderTo: 'main',
+            renderMode: 'top',
+            status: 'info',
+            message: '<?php echo Plesk_Base_Utils_String::safeForJs($this->updateCompletedMessage) ?>'
+        });
+    <?php endif; ?>
+
+    <?php if ($this->webserverConfigurationFailed): ?>
+        <?php echo $this->partial('partials/webserver-configuration-failure.phtml', array(
+            'returnUrl' => '/smb/',
+            'configurationError' => $this->webserverConfigurationError,
+            'moduleInstalled' => $this->configurationTroubleshooterInstalled,
+        )); ?>
+    <?php endif; ?>
+
+    <?php if ($this->showForceUpdateApplicationsNotification): ?>
+        Jsw.addStatusMessage('info', <?php echo $this->jsLmsg('forceUpdateApplicationsNotification', array(
+                'link' => '<a href="' . $this->baseUrl('/app/force-update-all-applications') . '" data-method="post">' . $this->lmsg('forceUpdateAllApplicationsNotificationLink') . '</a>')
+        ); ?>,
+            {
+                renderTo: 'main',
+                id: 'forceUpdateApplication',
+                closable: true,
+                onClose: function() {
+                    $('forceUpdateApplication').remove();
+                    new Ajax.Request(Jsw.prepareUrl('/app/hide-force-update-applications-notification'), { method: 'post' });
+                }
+            }
+        );
+    <?php endif ?>
+
+    <?php if ($this->updatedAutomaticallyApplications): ?>
+        <?php $updatedAutomaticallyApplicationsMessage = $this->lmsg('updatedAutomaticallyApplicationsMessage'); ?>
+        <?php foreach ($this->updatedAutomaticallyApplications as $application): ?>
+            <?php $updatedAutomaticallyApplicationsMessage .= '<br>' . $this->escape($application); ?>
+        <?php endforeach; ?>
+        Jsw.addStatusMessage('info', '<?php echo $updatedAutomaticallyApplicationsMessage; ?>');
+    <?php endif ?>
+    <?php if ($this->unnotifiedApplicationsUpdates): ?>
+        new Smb.ApplicationUpdate({
+            title: <?php echo $this->jsLmsg('updatesAvailable'); ?>,
+            data: <?php echo Zend_Json::encode($this->unnotifiedApplicationsUpdates) ?>,
+            locale: {
+                install: <?php echo $this->jsLmsg('apsInstall'); ?>,
+                appInstall: <?php echo $this->jsLmsg('apsApplicationInstall'); ?>,
+                installAll: <?php echo $this->jsLmsg('apsInstallAll'); ?>,
+                changelog: <?php echo $this->jsLmsg('apsChangelog'); ?>,
+                appChangelog: <?php echo $this->jsLmsg('apsApplicationChangelog'); ?>,
+                instances: <?php echo $this->jsLmsg('apsInstances'); ?>,
+                loading: <?php echo $this->jsLmsg('loading'); ?>,
+                close: <?php echo $this->jsLmsg('close'); ?>,
+                viewMore: <?php echo $this->jsLmsg('viewMore'); ?>,
+                unableGetChangelog: <?php echo $this->jsLmsg('unableGetChangelog'); ?>
+            },
+            closable: true
+        });
+    <?php endif ?>
+});
+//]]>
+</script>
+
+<?php if ($this->sitesList->getActiveList()->isActiveListEnabled()): ?>
+<script>
+Jsw.Locale.addSection('components.buttons', <?php echo json_encode(Zend_Registry::get('translate')->getSection('components.buttons')) ?>);
+Jsw.Locale.addSection('components.forms.admin-info', <?php echo json_encode(Zend_Registry::get('translate')->getSection('components.forms.admin-info')) ?>);
+Jsw.Locale.addSection('components.icp-permit', <?php echo json_encode(Zend_Registry::get('translate')->getSection('components.icp-permit')) ?>);
+require(["app/domain/active-list"], function (List) {
+    Jsw.onReady(function() {
+        Jsw.render($('main'), new List(<?php echo Zend_Json::encode($this->sitesList->getActiveList()->getJsConfig(), false, ['enableJsonExprFinder' => true]); ?>));
+    });
+});
+</script>
+<?php else: ?>
+    <?php echo $this->render('web/view-classic.phtml'); ?>
+<?php endif; ?>

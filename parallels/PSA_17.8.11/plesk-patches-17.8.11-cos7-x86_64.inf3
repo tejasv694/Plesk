@@ -1,0 +1,907 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<patches>
+  <product id="plesk" version="17.8.11">
+    <patch revision="f8ec633f69facce36ef0e7fb7f663ad17d5184c3" timestamp="1582212141" version="83">
+      <package>
+        <file create_new="false" md5="e820be3de5d0507c2886a633c7d14b57" name="microupdates/MU1/common/admin/plib/Smb/Application/Cli/FileSharing.php" target="/usr/local/psa/admin/plib/Smb/Application/Cli/FileSharing.php" />
+        <file create_new="false" md5="daf770b0b9784ae0d75ab2905b1e726b" name="microupdates/MU1/common/admin/application/admin/views/scripts/php-handler/list.phtml" target="/usr/local/psa/admin/application/admin/views/scripts/php-handler/list.phtml" />
+        <file create_new="false" md5="4b05f182c74e6a3d9f23ca2a7cdcf116" name="microupdates/MU1/common/admin/plib/PersistentCache.php" target="/usr/local/psa/admin/plib/PersistentCache.php" />
+        <file create_new="false" md5="d61fcacf2334276cf0b473566d251233" name="microupdates/MU2/common/admin/plib/Upgrade/Task/17.8.10/2018-02-13-18-22-00_NewAdvisorExt.php" target="/usr/local/psa/admin/plib/Upgrade/Task/17.8.10/2018-02-13-18-22-00_NewAdvisorExt.php" />
+        <file create_new="false" md5="512f52a4092e6d41d308c92efe194817" name="microupdates/MU2/common/admin/plib/pm/Hook/Backup/Transport.php" target="/usr/local/psa/admin/plib/pm/Hook/Backup/Transport.php" />
+        <file create_new="false" md5="7fd5f47d2d7badb763cf2c5bb951fb63" name="microupdates/MU3/common/admin/plib/class.SystemStatisticsForm.php" target="/usr/local/psa/admin/plib/class.SystemStatisticsForm.php" />
+        <file create_new="false" md5="8bf47c438ca3058ee30c6a315804a454" name="microupdates/MU3/common/admin/plib/Db/Table/Row/ScheduledTask.php" target="/usr/local/psa/admin/plib/Db/Table/Row/ScheduledTask.php" />
+        <file create_new="false" md5="c883b33fcb57d880a0de0601c305293b" name="microupdates/MU3/common/admin/plib/backup/protocol/PMMResponseDumpList.php" target="/usr/local/psa/admin/plib/backup/protocol/PMMResponseDumpList.php" />
+        <file create_new="false" md5="4ed7a391a4704ba3706a37c9bd4bdc58" name="microupdates/MU3/common/admin/plib/backup/Utils/Dump.php" target="/usr/local/psa/admin/plib/backup/Utils/Dump.php" />
+        <file create_new="true" md5="7ccf98245ffe38d626b6ff554e015408" name="microupdates/MU3/common/MU3-pci_compliance.sh" target="/usr/local/psa/var/MU3-pci_compliance.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU3-pci_compliance.sh" />
+        <file create_new="false" md5="9bdc39621dcb8ad8f9627b17b44d919e" name="microupdates/MU4/common/admin/plib/Repair/Ssl/Certificates.php" target="/usr/local/psa/admin/plib/Repair/Ssl/Certificates.php" />
+        <file create_new="true" md5="359f1b58caba8a6b125cb0e8e268dc92" name="microupdates/MU4/common/admin/htdocs/error_docs/script.js" target="/usr/local/psa/admin/htdocs/error_docs/script.js">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="c0c2995cea550d8311508464e4d6ed1e" name="microupdates/MU4/common/MU4-fs_passwd.sh" target="/usr/local/psa/var/MU4-fs_passwd.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU4-fs_passwd.sh" />
+        <file create_new="false" md5="4d07d2a461a72722deec7815e80c2379" name="microupdates/MU4/common/admin/htdocs/error_docs/500.html" target="/usr/local/psa/admin/htdocs/error_docs/500.html" />
+        <file create_new="false" md5="abb7250f3f7564cf4a9e289676723f69" name="microupdates/MU4/common/admin/htdocs/error_docs/501.html" target="/usr/local/psa/admin/htdocs/error_docs/501.html" />
+        <file create_new="false" md5="1cc4187d90ce9da2fa21f8fb5309230f" name="microupdates/MU4/common/admin/htdocs/error_docs/502.html" target="/usr/local/psa/admin/htdocs/error_docs/502.html" />
+        <file create_new="false" md5="9df37977a9170b857ed31c62cb60c7c7" name="microupdates/MU4/common/admin/htdocs/error_docs/503.html" target="/usr/local/psa/admin/htdocs/error_docs/503.html" />
+        <file create_new="false" md5="9f75f56608e27d99774b72c6834d05d4" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/rating.svg" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/images/rating.svg" />
+        <file create_new="false" md5="6b5572509e41b935f4b22dbb985e5316" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/symbols.svg" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/images/symbols.svg" />
+        <file create_new="false" md5="21d5300e8b69fe0a38bd9d59b088af99" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library-rtl.css" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library-rtl.css" />
+        <file create_new="false" md5="bf697875ea5f4fcc79ba547b0c67da0a" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library-rtl.css.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library-rtl.css.map" />
+        <file create_new="false" md5="622daf761a5a94838640d4d4440616e2" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.css" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.css" />
+        <file create_new="false" md5="597ff052465e7200b9eb6010bb6f18a3" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.css.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.css.map" />
+        <file create_new="false" md5="3881a1a3214282a722d73ca030913dad" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.js" />
+        <file create_new="false" md5="4d858d193d401719d589a4ae775f03f0" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.js.map" />
+        <file create_new="false" md5="ed906c694b86c18046c61723056fd02b" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.min.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.min.js" />
+        <file create_new="false" md5="fbd7d8970346f255e4aa73e4b2ed7276" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/plesk-ui-library.min.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/plesk-ui-library.min.js.map" />
+        <file create_new="false" md5="a3cfc091e7dcf51464397f0bbf163fb6" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/react-sortable-hoc.plesk-ui-library.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/react-sortable-hoc.plesk-ui-library.js" />
+        <file create_new="false" md5="928b5479d03a256b9816080b6f082fc0" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/react-sortable-hoc.plesk-ui-library.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/react-sortable-hoc.plesk-ui-library.js.map" />
+        <file create_new="false" md5="2c38bb6f5aa475d06566c18baaebf1c7" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/react-sortable-hoc.plesk-ui-library.min.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/react-sortable-hoc.plesk-ui-library.min.js" />
+        <file create_new="false" md5="eb45c71a4d4fcd8eecee011fffca1bf4" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/react-sortable-hoc.plesk-ui-library.min.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/react-sortable-hoc.plesk-ui-library.min.js.map" />
+        <file create_new="false" md5="bed1c75b985a5583ec9815b342e73dec" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/codemirror.plesk-ui-library.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/codemirror.plesk-ui-library.js" />
+        <file create_new="false" md5="ed938595992e209a8f828ae7db3989ec" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/codemirror.plesk-ui-library.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/codemirror.plesk-ui-library.js.map" />
+        <file create_new="false" md5="f68c0cb6235d8aec7f72646a1eef9d82" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/codemirror.plesk-ui-library.min.js" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/codemirror.plesk-ui-library.min.js" />
+        <file create_new="false" md5="abec7743e21e3f9b7ecdeee5bce34045" name="microupdates/MU5/dist-rpm-CentOS-7-x86_64/codemirror.plesk-ui-library.min.js.map" target="/usr/local/psa/admin/htdocs/javascript/externals/plesk-ui-library/codemirror.plesk-ui-library.min.js.map" />
+        <file create_new="false" md5="1790bf254522d3c6246e9463e56bfd4a" name="microupdates/MU6/common/admin/plib/PhpSettings/Config.php" target="/usr/local/psa/admin/plib/PhpSettings/Config.php" />
+        <file create_new="false" md5="c177a064f83a12f856b952b29883d516" name="microupdates/MU6/common/admin/plib/Smb/Locale.php" target="/usr/local/psa/admin/plib/Smb/Locale.php" />
+        <file create_new="false" md5="520db8158782e36af1d1d5e723fd642c" name="microupdates/MU7/common/admin/plib/CommonPanel/Search/IndexManager.php" target="/usr/local/psa/admin/plib/CommonPanel/Search/IndexManager.php" />
+        <file create_new="false" md5="9a5f4f26ff702220635f7c9aa6745600" name="microupdates/MU7/common/admin/plib/Template/Bootstrap/Domains/Apache.php" target="/usr/local/psa/admin/plib/Template/Bootstrap/Domains/Apache.php" />
+        <file create_new="false" md5="f514a5f39d4f7173f8755f8f05288ebb" name="microupdates/MU7/common/admin/plib/Template/Bootstrap/Domains/Nginx.php" target="/usr/local/psa/admin/plib/Template/Bootstrap/Domains/Nginx.php" />
+        <file create_new="false" md5="eb7d8c589937992d7f892960b7b68f5c" name="microupdates/MU7/common/admin/plib/api-common/cuNotification.php" target="/usr/local/psa/admin/plib/api-common/cuNotification.php" />
+        <file create_new="false" md5="4683a76f843b65ba0655bbbb85dcf930" name="microupdates/MU7/common/admin/plib/Cloning.php" target="/usr/local/psa/admin/plib/Cloning.php" />
+        <file create_new="false" md5="759494fe47f15a3176d86df1a7e60992" name="microupdates/MU7/common/admin/plib/CommonPanel/Plesk/ClientScriptExecutor.php" target="/usr/local/psa/admin/plib/CommonPanel/Plesk/ClientScriptExecutor.php" />
+        <shell cmd="/usr/local/psa/var/MU7-cert-perm.sh" />
+        <file create_new="true" md5="6563125485e21a22f47b91d175a7c5cb" name="microupdates/MU7/common/MU7-cert-perm.sh" target="/usr/local/psa/var/MU7-cert-perm.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU7-cert-perm.sh" />
+        <file create_new="false" md5="4745d9673e2d7ce25d5a7f71d9e7359a" name="microupdates/MU7/dist-rpm-CentOS-7-x86_64/plesk.js" target="/usr/local/psa/admin/htdocs/javascript/plesk.js" />
+        <file create_new="false" md5="aa40f50823279cb70aec26380d566b15" name="microupdates/MU7/dist-rpm-CentOS-7-x86_64/plesk.js.map" target="/usr/local/psa/admin/htdocs/javascript/plesk.js.map" />
+        <file create_new="false" md5="90d837d23b6acf594bac70e1ec23f7f4" name="microupdates/MU7/common/admin/plib/CommonPanel/Form/Decorator/FormUiLibrary.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Decorator/FormUiLibrary.php" />
+        <file create_new="false" md5="9bb5f0593907a47d68da3d9fcf5559c5" name="microupdates/MU8/common/admin/application/default/layouts/_footer.phtml" target="/usr/local/psa/admin/application/default/layouts/_footer.phtml" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/EmailActivation/'" />
+        <file create_new="false" md5="10af2743dbc039d4e636e8fe536a2149" name="microupdates/MU8/common/admin/application/smb/controllers/UserController.php" target="/usr/local/psa/admin/application/smb/controllers/UserController.php" />
+        <file create_new="false" md5="1fd6adb58757d037fc14eb56c35ebd59" name="microupdates/MU8/common/admin/application/smb/views/scripts/user/_form/loginString.phtml" target="/usr/local/psa/admin/application/smb/views/scripts/user/_form/loginString.phtml" />
+        <file create_new="true" md5="50a43946262820d6f433c29bc952e8bd" name="microupdates/MU8/common/admin/htdocs/activate.php" target="/usr/local/psa/admin/htdocs/activate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="ab079bac4c4f73f83370e3093b0c49af" name="microupdates/MU8/common/admin/plib/AdminPanel/Form/Final/AdminAlias.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/Final/AdminAlias.php" />
+        <file create_new="false" md5="e09264b111093b93b91d6e1505016ef2" name="microupdates/MU8/common/admin/plib/AdminPanel/Form/LoginInfo.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/LoginInfo.php" />
+        <file create_new="false" md5="54d96a3f6c6ca1056b1e7eb853da5233" name="microupdates/MU8/common/admin/plib/Db/Table/Broker/AdminAliases.php" target="/usr/local/psa/admin/plib/Db/Table/Broker/AdminAliases.php" />
+        <file create_new="false" md5="ac7a00554e6e16cd9a38f13ef7cd65c3" name="microupdates/MU8/common/admin/plib/Db/Table/Broker/Clients.php" target="/usr/local/psa/admin/plib/Db/Table/Broker/Clients.php" />
+        <file create_new="true" md5="5660151597cc018ce8ef1f4b0ad0b236" name="microupdates/MU8/common/admin/plib/Db/Table/Broker/EmailActivations.php" target="/usr/local/psa/admin/plib/Db/Table/Broker/EmailActivations.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="b0f8a3727f85b09998643bd4c231ec49" name="microupdates/MU8/common/admin/plib/Db/Table/Row/AdminAliases.php" target="/usr/local/psa/admin/plib/Db/Table/Row/AdminAliases.php" />
+        <file create_new="false" md5="81443891010cd54c3ed061a6cbe05220" name="microupdates/MU8/common/admin/plib/Db/Table/Row/Client.php" target="/usr/local/psa/admin/plib/Db/Table/Row/Client.php" />
+        <file create_new="true" md5="5b6be8ecb30d3310022ba109a0230ead" name="microupdates/MU8/common/admin/plib/Db/Table/Row/EmailActivation.php" target="/usr/local/psa/admin/plib/Db/Table/Row/EmailActivation.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="b04be3ec9ff37472e297105702a1bf06" name="microupdates/MU8/common/admin/plib/EmailActivation/Activator.php" target="/usr/local/psa/admin/plib/EmailActivation/Activator.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="6ad87bd2232a1143ae67a6500f86ca0b" name="microupdates/MU8/common/admin/plib/EmailActivation/EventListener.php" target="/usr/local/psa/admin/plib/EmailActivation/EventListener.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="a34f49b4da0670a474f1ffeee49acfd5" name="microupdates/MU8/common/admin/plib/EmailActivation/Exception.php" target="/usr/local/psa/admin/plib/EmailActivation/Exception.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="e5e314b5105b2881e89dd0b8278d3f16" name="microupdates/MU8/common/admin/plib/Event.php" target="/usr/local/psa/admin/plib/Event.php" />
+        <file create_new="true" md5="db07525afa67a16aeb41712780254485" name="microupdates/MU8/common/admin/plib/Event/Event/AdminAliasCreate.php" target="/usr/local/psa/admin/plib/Event/Event/AdminAliasCreate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="338cb45f0961ca5274e63bc93b3bab65" name="microupdates/MU8/common/admin/plib/Event/Event/AdminAliasDelete.php" target="/usr/local/psa/admin/plib/Event/Event/AdminAliasDelete.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="2f41b0730e16da2447d3c6407f305962" name="microupdates/MU8/common/admin/plib/Event/Event/AdminAliasUpdate.php" target="/usr/local/psa/admin/plib/Event/Event/AdminAliasUpdate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="49bbe3e1e2656bff9d404590eb7042f1" name="microupdates/MU8/common/admin/plib/Event/Event/ClientCreate.php" target="/usr/local/psa/admin/plib/Event/Event/ClientCreate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="7885d7ad8f0d9cc413e62f5959eb713e" name="microupdates/MU8/common/admin/plib/Event/Event/ClientDelete.php" target="/usr/local/psa/admin/plib/Event/Event/ClientDelete.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="fec47f3977543e1e756dd7e0ba539b5d" name="microupdates/MU8/common/admin/plib/Event/Event/ClientUpdate.php" target="/usr/local/psa/admin/plib/Event/Event/ClientUpdate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="00ef5f2587889900b7179fbe87386e24" name="microupdates/MU8/common/admin/plib/Event/Event/SmbUserCreate.php" target="/usr/local/psa/admin/plib/Event/Event/SmbUserCreate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="04a0b1c9e57d0f8f1b00fed8e2513783" name="microupdates/MU8/common/admin/plib/Event/Event/SmbUserDelete.php" target="/usr/local/psa/admin/plib/Event/Event/SmbUserDelete.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="eb89bdd6a1b74be2018ae702969afeb3" name="microupdates/MU8/common/admin/plib/Event/Event/SmbUserUpdate.php" target="/usr/local/psa/admin/plib/Event/Event/SmbUserUpdate.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="abb527a4a366402c6d219022f9d303d1" name="microupdates/MU8/common/admin/plib/Smb/Db/Table/Broker/Users.php" target="/usr/local/psa/admin/plib/Smb/Db/Table/Broker/Users.php" />
+        <file create_new="false" md5="675e5bdb7f857d4c26c6124593d253e1" name="microupdates/MU8/common/admin/plib/Smb/Db/Table/Row/Role.php" target="/usr/local/psa/admin/plib/Smb/Db/Table/Row/Role.php" />
+        <file create_new="false" md5="c0d08778b2755ac4f4c498cf7c750cc1" name="microupdates/MU8/common/admin/plib/Smb/Form/Final/Role.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/Role.php" />
+        <file create_new="false" md5="2984de5e046c24f29af1dbba4567da34" name="microupdates/MU8/common/admin/plib/Smb/Form/Final/User.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/User.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Service/Driver/Web/LogRotation/'" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/LogRotation/'" />
+        <file create_new="false" md5="95175bc08425f016bbea5aacdb29aa93" name="microupdates/MU8/common/admin/plib/api-common/AbstractCuDomainTemplate.php" target="/usr/local/psa/admin/plib/api-common/AbstractCuDomainTemplate.php" />
+        <file create_new="false" md5="9e4a1075ce92fd875288d9d7e751f656" name="microupdates/MU8/common/admin/plib/Db/Table/Row/Domain.php" target="/usr/local/psa/admin/plib/Db/Table/Row/Domain.php" />
+        <file create_new="false" md5="735ee71ede653259d42ab5a37e6c28f1" name="microupdates/MU8/common/admin/plib/Db/Table/Row/Plan/Domain.php" target="/usr/local/psa/admin/plib/Db/Table/Row/Plan/Domain.php" />
+        <file create_new="false" md5="af3b62da8cb020e8dd5495bdeba25c0e" name="microupdates/MU8/common/admin/plib/Db/Table/Row/PlanProperty.php" target="/usr/local/psa/admin/plib/Db/Table/Row/PlanProperty.php" />
+        <file create_new="false" md5="26c4d2d37a8b3974ea3921743320ac17" name="microupdates/MU8/common/admin/plib/Domain/Properties.php" target="/usr/local/psa/admin/plib/Domain/Properties.php" />
+        <file create_new="true" md5="10a2ed07695f049425dbc9282c9ca99e" name="microupdates/MU8/common/admin/plib/LogRotation/SetupIpAnonymizationTask.php" target="/usr/local/psa/admin/plib/LogRotation/SetupIpAnonymizationTask.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="8f149051dc7f05a856dc7622d75f7658" name="microupdates/MU8/common/admin/plib/Plan/Synchronization/BaseDomain.php" target="/usr/local/psa/admin/plib/Plan/Synchronization/BaseDomain.php" />
+        <file create_new="false" md5="57609c848af1911d1256f5bb2b69f76f" name="microupdates/MU8/common/admin/plib/Repair/Db/ConsistencyRule/DomainLogRotation.php" target="/usr/local/psa/admin/plib/Repair/Db/ConsistencyRule/DomainLogRotation.php" />
+        <file create_new="true" md5="779953865fc66550fa2b277ae5a12d35" name="microupdates/MU8/common/admin/plib/ServerPreferencesForm.php" target="/usr/local/psa/admin/plib/ServerPreferencesForm.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="b87d5a160e23b59707dd97b7cc0cb5fb" name="microupdates/MU8/common/admin/plib/Service/Capability/Web/Abstract.php" target="/usr/local/psa/admin/plib/Service/Capability/Web/Abstract.php" />
+        <file create_new="false" md5="cca5d9cc608647eed9ee13f5082634b5" name="microupdates/MU8/common/admin/plib/Service/Capability/Web/Apache.php" target="/usr/local/psa/admin/plib/Service/Capability/Web/Apache.php" />
+        <file create_new="false" md5="8ececde2a38dfbbb110781ca269441de" name="microupdates/MU8/common/admin/plib/Service/Capability/Web/IIS.php" target="/usr/local/psa/admin/plib/Service/Capability/Web/IIS.php" />
+        <file create_new="false" md5="55fecde8256e497b017467d0ad6471d6" name="microupdates/MU8/common/admin/plib/Service/Capability/Web/Interface.php" target="/usr/local/psa/admin/plib/Service/Capability/Web/Interface.php" />
+        <file create_new="false" md5="82f00a89069590b6d87a045808fbb155" name="microupdates/MU8/common/admin/application/smb/views/scripts/user/create.phtml" target="/usr/local/psa/admin/application/smb/views/scripts/user/create.phtml" />
+        <file create_new="false" md5="82f00a89069590b6d87a045808fbb155" name="microupdates/MU8/common/admin/application/smb/views/scripts/user/edit.phtml" target="/usr/local/psa/admin/application/smb/views/scripts/user/edit.phtml" />
+        <file create_new="false" md5="5ac8ae9fb21e84df7cebb76d9e239729" name="microupdates/MU8/common/admin/plib/AdminPanel/Form/Final/Customer.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/Final/Customer.php" />
+        <file create_new="true" md5="57f86c1ecf042d781f18b421d595de38" name="microupdates/MU8/dist-rpm-CentOS-7-x86_64/cloud-backup-restriction.js" target="/usr/local/psa/admin/htdocs/javascript/app/cloud-backup-restriction.js" />
+        <file create_new="true" md5="5c6b65dbe9412c7a3beb4b088a630a45" name="microupdates/MU8/dist-rpm-CentOS-7-x86_64/cloud-backup-restriction.js.map" target="/usr/local/psa/admin/htdocs/javascript/app/cloud-backup-restriction.js.map" />
+        <file create_new="false" md5="b34f68d6c913052d416656297c6c9f9b" name="microupdates/MU8/common/admin/plib/backup/BackupObject.php" target="/usr/local/psa/admin/plib/backup/BackupObject.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Server/Preferences/Form/'" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Log/Task/'" />
+        <file create_new="true" md5="d340c19f2d177df2d576702c2741bb16" name="microupdates/MU8/common/admin/plib/Log/Task/DisableIpLoggingTask.php" target="/usr/local/psa/admin/plib/Log/Task/DisableIpLoggingTask.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="057527231f2da5fce4b71c6b087e5250" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/None/Server.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/None/Server.php" />
+        <file create_new="false" md5="e29bf2cefdd3b00d872eab36414f0b54" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/Plesk/Server.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/Plesk/Server.php" />
+        <file create_new="false" md5="d9af6b2eab96310a992dbb54b497143b" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/Plesk/Server/ApsMail.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/Plesk/Server/ApsMail.php" />
+        <file create_new="false" md5="f57fe2d19d76301e0dd6d0addebe88af" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/Plesk/Server/Unix.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/Plesk/Server/Unix.php" />
+        <file create_new="false" md5="d538939e73a14efe4a7c29ff431e50bb" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/Plesk/Server/Windows.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/Plesk/Server/Windows.php" />
+        <file create_new="false" md5="afdd3781d995f4c182a473aa76b07ecd" name="microupdates/MU8/common/admin/plib/Service/Capability/Mail/ServerInterface.php" target="/usr/local/psa/admin/plib/Service/Capability/Mail/ServerInterface.php" />
+        <file create_new="false" md5="5a30321318e3ec2776ea0406bfd126bc" name="microupdates/MU8/common/admin/application/default/views/scripts/backup/schedule.phtml" target="/usr/local/psa/admin/application/default/views/scripts/backup/schedule.phtml" />
+        <file create_new="false" md5="a8f5d57e6587ea6e938789e58758b766" name="microupdates/MU8/common/admin/plib/CommonPanel/Form/Backup.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup.php" />
+        <file create_new="false" md5="9a89d5685d026be1b22653e01dd07ade" name="microupdates/MU8/common/admin/plib/Db/Table/Row/Module.php" target="/usr/local/psa/admin/plib/Db/Table/Row/Module.php" />
+        <file create_new="false" md5="01d9c2b4abe3755730fd493a1c42e675" name="microupdates/MU8/common/admin/plib/Key/Primary.php" target="/usr/local/psa/admin/plib/Key/Primary.php" />
+        <file create_new="false" md5="891c47169316e1847ef1ccf0dc757fde" name="microupdates/MU8/common/admin/plib/backup/Utils/License.php" target="/usr/local/psa/admin/plib/backup/Utils/License.php" />
+        <file create_new="false" md5="6e0ed256867ccd2fac814f91b76d5d97" name="microupdates/MU8/common/admin/plib/pm/Context.php" target="/usr/local/psa/admin/plib/pm/Context.php" />
+        <file create_new="false" md5="2d68f1edc01adeaf6f7ba2645ac428a4" name="microupdates/MU8/common/admin/plib/api-common/cuDomain.php" target="/usr/local/psa/admin/plib/api-common/cuDomain.php" />
+        <file create_new="false" md5="77f71a8b74dbf7094c214f72bf948c43" name="microupdates/MU8/common/admin/htdocs/logout.php" target="/usr/local/psa/admin/htdocs/logout.php" />
+        <file create_new="true" md5="a57b665672dc2b290e266cd2a921be59" name="microupdates/MU8/common/admin/plib/api-common/RepairKitConfig.php" target="/usr/local/psa/admin/plib/api-common/RepairKitConfig.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="9a78f790a67bf0c65510d2fc74e57fb3" name="microupdates/MU9/common/MU9-fix-ip-anon.sh" target="/usr/local/psa/var/MU9-fix-ip-anon.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU9-fix-ip-anon.sh" />
+        <file create_new="true" md5="627581e05d38c07caa3831b3e064b63e" name="microupdates/MU10/common/admin/plib/Log/Task/SetupIpAnonymizationTask.php" target="/usr/local/psa/admin/plib/Log/Task/SetupIpAnonymizationTask.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="95e62702466d34775c436467e41b333c" name="microupdates/MU11/common/admin/plib/Server/Preferences/Form/Windows.php" target="/usr/local/psa/admin/plib/Server/Preferences/Form/Windows.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="8f40b8f561bbde1de3b6442855f01aa5" name="microupdates/MU11/common/admin/plib/Fail2Ban/EventListener.php" target="/usr/local/psa/admin/plib/Fail2Ban/EventListener.php" />
+        <file create_new="false" md5="1a352ed9661feff31fd512d7ec7f0ed5" name="microupdates/MU11/common/admin/plib/api-common/FTPUserManipulator.php" target="/usr/local/psa/admin/plib/api-common/FTPUserManipulator.php" />
+        <file create_new="false" md5="f27190ed2d71a3f2bbbc89fd0fa1acf3" name="microupdates/MU11/common/admin/plib/api-rpc/Agent.php" target="/usr/local/psa/admin/plib/api-rpc/Agent.php" />
+        <file create_new="false" md5="bd4d07910763b0c4436005df065b9612" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.7.0/agent_input.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.7.0/agent_input.xsd" />
+        <file create_new="false" md5="1a142c622d6087eacffda9cffd4e2417" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.7.0/agent_output.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.7.0/agent_output.xsd" />
+        <file create_new="true" md5="a1733674ef5a4c777a74f4ecf4113de6" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.7.0/ftpuser.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.7.0/ftpuser.xsd">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="b3b6f6845f2be3d000509971afd3af7a" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.8.0/agent_input.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.8.0/agent_input.xsd" />
+        <file create_new="false" md5="fd645537647ca236acee014e4c1864c4" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.8.0/agent_output.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.8.0/agent_output.xsd" />
+        <file create_new="true" md5="a1733674ef5a4c777a74f4ecf4113de6" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.8.0/ftpuser.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.8.0/ftpuser.xsd">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="b3b6f6845f2be3d000509971afd3af7a" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.0/agent_input.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.0/agent_input.xsd" />
+        <file create_new="false" md5="fd645537647ca236acee014e4c1864c4" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.0/agent_output.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.0/agent_output.xsd" />
+        <file create_new="true" md5="a1733674ef5a4c777a74f4ecf4113de6" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.0/ftpuser.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.0/ftpuser.xsd">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="8fe18eea41ba8ffa36f3238e86345b21" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.1/agent_input.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.1/agent_input.xsd" />
+        <file create_new="false" md5="4ab7d4c1a568c01ec315b4191bff063a" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.1/agent_output.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.1/agent_output.xsd" />
+        <file create_new="true" md5="a1733674ef5a4c777a74f4ecf4113de6" name="microupdates/MU11/common/admin/htdocs/schemas/rpc/1.6.9.1/ftpuser.xsd" target="/usr/local/psa/admin/htdocs/schemas/rpc/1.6.9.1/ftpuser.xsd">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="6b435deae2ef9990c76de4e611c9befe" name="microupdates/MU11/common/admin/plib/api-rpc/AgentFtpUser.php" target="/usr/local/psa/admin/plib/api-rpc/AgentFtpUser.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="e58e5750e88cfbbc97df236003b6f19d" name="microupdates/MU13/common/admin/plib/api-common/cuService.php" target="/usr/local/psa/admin/plib/api-common/cuService.php" />
+        <file create_new="false" md5="6186caae3c54464e2b7cf83dec84f1d2" name="microupdates/MU13/common/admin/plib/api-common/cuAdmin.php" target="/usr/local/psa/admin/plib/api-common/cuAdmin.php" />
+        <file create_new="false" md5="0690722442af0ed96671c8545a569ed7" name="microupdates/MU13/common/admin/plib/Auth/Otp.php" target="/usr/local/psa/admin/plib/Auth/Otp.php" />
+        <file create_new="false" md5="f64f1a79a6b285f8f2356ebed111aa7e" name="microupdates/MU14/common/admin/plib/CommonPanel/Form/Backup/Schedule.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup/Schedule.php" />
+        <file create_new="false" md5="80cac47de97e8d5cd5a709278d848365" name="microupdates/MU16/common/admin/plib/CommonPanel/Form/Backup/Subform.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup/Subform.php" />
+        <file create_new="false" md5="047a6f7cadf5dd7c2fef446cedf0357a" name="microupdates/MU16/common/admin/plib/AdminPanel/Form/Final/EditSubscription.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/Final/EditSubscription.php" />
+        <file create_new="false" md5="85e70264699a8cfcf94f28483b0cd6b6" name="microupdates/MU16/common/admin/plib/CommonPanel/Form/Decorator/PhpOption.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Decorator/PhpOption.php" />
+        <file create_new="false" md5="986bea5ee011faa61b2b317a2d989b0b" name="microupdates/MU16/common/admin/plib/CommonPanel/Form/PhpSettings/WithPhpHandler.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/PhpSettings/WithPhpHandler.php" />
+        <file create_new="false" md5="1685b4299f7d1ce7407348439d69544e" name="microupdates/MU18/dist-rpm-CentOS-7-x86_64/execution_result.xsd" target="/usr/local/psa/PMM/schemas/execution_result.xsd" />
+        <file create_new="false" md5="e9ec22da0d1072a0a03f661369e81e4a" name="microupdates/MU18/dist-rpm-CentOS-7-x86_64/execution_result.py" target="/usr/local/psa/admin/share/pmmcli/execution_result.py" />
+        <file create_new="false" md5="5a66a2f1765f45fc6bcd79ef358f908f" name="microupdates/MU18/common/PMM/agents/shared/DumpStatus.pm" target="/usr/local/psa/PMM/agents/shared/DumpStatus.pm" />
+        <file create_new="false" md5="e047c33bf30d26b20812030272c65b10" name="microupdates/MU18/common/PMM/agents/shared/MigrationDumpStatus.pm" target="/usr/local/psa/PMM/agents/shared/MigrationDumpStatus.pm" />
+        <file create_new="false" md5="7ba4b3ffab9575e75de0fc67b45dc7e4" name="microupdates/MU18/common/PMM/agents/shared/XmlLogger.pm" target="/usr/local/psa/PMM/agents/shared/XmlLogger.pm" />
+        <file create_new="false" md5="0a8bd6adc36355e70dbba72582879172" name="microupdates/MU18/common/admin/share/pmmcli/pmm_task.py" target="/usr/local/psa/admin/share/pmmcli/pmm_task.py" />
+        <file create_new="false" md5="40f2aa4682161b54f2e3eaf7d49d3d08" name="microupdates/MU19/common/PMM/agents/shared/Logging.pm" target="/usr/local/psa/PMM/agents/shared/Logging.pm" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/backup/Repository/Settings/Ftp/'" />
+        <file create_new="false" md5="9fcc7cb4ffa61e611b50f159705cc933" name="microupdates/MU19/common/admin/plib/CommonPanel/Form/Backup/RemoteSettings.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup/RemoteSettings.php" />
+        <file create_new="true" md5="96e7fd691e1f88bed1732a364dc42ffd" name="microupdates/MU19/common/admin/plib/Db/Table/Dictionary/BackupsLocalRepositorySettings.php" target="/usr/local/psa/admin/plib/Db/Table/Dictionary/BackupsLocalRepositorySettings.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="5f9304fe42f7f8f6505204343bb08a64" name="microupdates/MU19/common/admin/plib/Db/Table/Row/BackupScheduled.php" target="/usr/local/psa/admin/plib/Db/Table/Row/BackupScheduled.php" />
+        <file create_new="false" md5="58c8b4ca08483158650b3aac4134c54e" name="microupdates/MU19/common/admin/plib/ServerInfo/Backup.php" target="/usr/local/psa/admin/plib/ServerInfo/Backup.php" />
+        <file create_new="false" md5="cdf97eb77c07f8070c443708970a6311" name="microupdates/MU19/common/admin/plib/ServerInfo/Main.php" target="/usr/local/psa/admin/plib/ServerInfo/Main.php" />
+        <file create_new="false" md5="fadf72a63a3b3461113dfadc80a6d365" name="microupdates/MU19/common/admin/plib/backup/BackupFTPRepositorySettings.php" target="/usr/local/psa/admin/plib/backup/BackupFTPRepositorySettings.php" />
+        <file create_new="false" md5="9c23d121294748600ac0846e725d7667" name="microupdates/MU19/common/admin/plib/backup/Repository/Settings/Ext/Base.php" target="/usr/local/psa/admin/plib/backup/Repository/Settings/Ext/Base.php" />
+        <file create_new="true" md5="755868aed64f3e21863384afccb24b83" name="microupdates/MU19/common/admin/plib/backup/Repository/Settings/Ftp/Factory.php" target="/usr/local/psa/admin/plib/backup/Repository/Settings/Ftp/Factory.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="02ac46bcb569785fc6d0a8e20dc34a5f" name="microupdates/MU19/common/admin/plib/Service/Agent/Transport/LocalTransaction.php" target="/usr/local/psa/admin/plib/Service/Agent/Transport/LocalTransaction.php" />
+        <file create_new="false" md5="9976a397cb90bf94b71cc6cf354626bf" name="microupdates/MU19/common/admin/conf/templates/default/domain/domainVirtualHost.php" target="/usr/local/psa/admin/conf/templates/default/domain/domainVirtualHost.php" />
+        <file create_new="false" md5="034791d349a87938cee00aaec6222957" name="microupdates/MU19/common/admin/conf/templates/default/domain/frameForwarding.php" target="/usr/local/psa/admin/conf/templates/default/domain/frameForwarding.php" />
+        <file create_new="false" md5="c81c6198e8b90338fb27be6130ca501e" name="microupdates/MU19/common/admin/conf/templates/default/domain/standardForwarding.php" target="/usr/local/psa/admin/conf/templates/default/domain/standardForwarding.php" />
+        <file create_new="false" md5="83e355f0acf7180316354bcc7b704e2a" name="microupdates/MU19/common/admin/conf/templates/default/server.php" target="/usr/local/psa/admin/conf/templates/default/server.php" />
+        <file create_new="false" md5="0dfb1ac9babb8da43599d611ad648477" name="microupdates/MU19/common/admin/plib/Repair/DatabaseStructure.php" target="/usr/local/psa/admin/plib/Repair/DatabaseStructure.php" />
+        <file create_new="false" md5="438f8e7afa5764434a3336edd3ff44ef" name="microupdates/MU20/common/admin/htdocs/server/additional_key_download.php" target="/usr/local/psa/admin/htdocs/server/additional_key_download.php" />
+        <file create_new="false" md5="3557d3e5b688ec54594e740f5977a1fb" name="microupdates/MU20/common/admin/htdocs/server/additional_key_info.php" target="/usr/local/psa/admin/htdocs/server/additional_key_info.php" />
+        <file create_new="false" md5="5dfaac59ec8925e9f9b6bec05eea458e" name="microupdates/MU20/common/admin/htdocs/server/additional_key_revert.php" target="/usr/local/psa/admin/htdocs/server/additional_key_revert.php" />
+        <file create_new="false" md5="7bab42e5f3193ca34f9b2188ef8636bb" name="microupdates/MU20/common/admin/htdocs/server/additional_key_update.php" target="/usr/local/psa/admin/htdocs/server/additional_key_update.php" />
+        <file create_new="false" md5="f5a577dd0931cccae963dfaa36918607" name="microupdates/MU20/common/admin/htdocs/server/additional_key_upload.php" target="/usr/local/psa/admin/htdocs/server/additional_key_upload.php" />
+        <file create_new="false" md5="443d3d46c4412e866370e6ee3179a4bb" name="microupdates/MU20/common/admin/htdocs/server/additional_keys.php" target="/usr/local/psa/admin/htdocs/server/additional_keys.php" />
+        <file create_new="false" md5="3e2b13577f2e8f8ee6def1aafb720e60" name="microupdates/MU20/common/admin/htdocs/server/additional_keys_remove.php" target="/usr/local/psa/admin/htdocs/server/additional_keys_remove.php" />
+        <file create_new="false" md5="1a2cb1f4e73936fda8624e521c0797aa" name="microupdates/MU20/common/admin/htdocs/server/key_update.php" target="/usr/local/psa/admin/htdocs/server/key_update.php" />
+        <file create_new="false" md5="30c42b5eee7cf4a8ff663508dc6ec1bd" name="microupdates/MU20/common/admin/plib/Key/Additional/InfoForm.php" target="/usr/local/psa/admin/plib/Key/Additional/InfoForm.php" />
+        <file create_new="false" md5="ad006ccb352489f6604a00c9f91f5ca5" name="microupdates/MU20/common/admin/plib/Key/Additional/List.php" target="/usr/local/psa/admin/plib/Key/Additional/List.php" />
+        <file create_new="false" md5="ba52cf5d4a17c0bfb040d52858f24dbe" name="microupdates/MU20/common/admin/plib/Key/Additional/ListForm.php" target="/usr/local/psa/admin/plib/Key/Additional/ListForm.php" />
+        <file create_new="false" md5="8a3290c6907d3c0691ceea6aa8c3e4b0" name="microupdates/MU20/common/admin/plib/DailyMaintainance/Task/ExecuteWebStatistics.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/ExecuteWebStatistics.php" />
+        <file create_new="false" md5="e72853ef6737b8c18e2a0fa060aeec61" name="microupdates/MU20/common/admin/plib/Ip/Ban/Manager.php" target="/usr/local/psa/admin/plib/Ip/Ban/Manager.php" />
+        <file create_new="true" md5="a667385795f16172d90a2460fb05c57e" name="microupdates/MU20/common/admin/plib/ServerInfo/Fail2ban.php" target="/usr/local/psa/admin/plib/ServerInfo/Fail2ban.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="e2277fc07484dfe52d0c710bc45e78fe" name="microupdates/MU21/common/admin/plib/backup/Rotator.php" target="/usr/local/psa/admin/plib/backup/Rotator.php" />
+        <shell cmd="mkdir -p /usr/local/psa/admin/htdocs/javascript/app/dns-zone/" />
+        <file create_new="true" md5="73abad793f10d2e5b06b10c86437751e" name="microupdates/MU21/dist-rpm-CentOS-7-x86_64/soa-record-rname.js" target="/usr/local/psa/admin/htdocs/javascript/app/dns-zone/soa-record-rname.js" />
+        <file create_new="true" md5="9b4c72fb4927cc6e7a59734a1c932287" name="microupdates/MU21/dist-rpm-CentOS-7-x86_64/soa-record-rname.js.map" target="/usr/local/psa/admin/htdocs/javascript/app/dns-zone/soa-record-rname.js.map" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Dns/Synchronize/SOA/'" />
+        <file create_new="false" md5="ca2008b9afaa7e78f785f7b21a463c36" name="microupdates/MU21/common/admin/plib/api-common/cu.php" target="/usr/local/psa/admin/plib/api-common/cu.php" />
+        <file create_new="false" md5="65615ab5f850e5315e53d3ec6e836f06" name="microupdates/MU21/common/admin/application/smb/controllers/DnsZoneController.php" target="/usr/local/psa/admin/application/smb/controllers/DnsZoneController.php" />
+        <file create_new="true" md5="5c5637108f47f8dde72aad1d036ac0ee" name="microupdates/MU21/common/admin/application/smb/views/scripts/partials/dns-record/soa-record-rname.phtml" target="/usr/local/psa/admin/application/smb/views/scripts/partials/dns-record/soa-record-rname.phtml">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="3e3bd1b3735c5669238c337dbe8e6d69" name="microupdates/MU21/common/admin/htdocs/creation_templates/dns_t.php" target="/usr/local/psa/admin/htdocs/creation_templates/dns_t.php" />
+        <file create_new="true" md5="399c3984cdc1bb468203c67e464f63ee" name="microupdates/MU21/common/admin/htdocs/creation_templates/dns_zone_soa_sync.php" target="/usr/local/psa/admin/htdocs/creation_templates/dns_zone_soa_sync.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="d155262abb6126165c2f641408912ed1" name="microupdates/MU21/common/admin/plib/CommonPanel/View/Helper/RequireJs.php" target="/usr/local/psa/admin/plib/CommonPanel/View/Helper/RequireJs.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="c8a698ddfa8cf70e8390aa6fabeb5297" name="microupdates/MU21/common/admin/plib/Dns/Synchronize/SOA/Form.php" target="/usr/local/psa/admin/plib/Dns/Synchronize/SOA/Form.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="726eb616cf4fc747903830abdd47b1a8" name="microupdates/MU21/common/admin/plib/Dns/Synchronize/SOA/Task.php" target="/usr/local/psa/admin/plib/Dns/Synchronize/SOA/Task.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="cad746a25989b7527150727a0e5ef1d4" name="microupdates/MU21/common/admin/plib/Dns/Synchronize/TaskReal.php" target="/usr/local/psa/admin/plib/Dns/Synchronize/TaskReal.php" />
+        <file create_new="false" md5="44623401300883559aa8410b2ec4b02c" name="microupdates/MU21/common/admin/plib/Dns/Template/Form.php" target="/usr/local/psa/admin/plib/Dns/Template/Form.php" />
+        <file create_new="false" md5="0e2f2118af3e9dd53a77c90b1832522a" name="microupdates/MU21/common/admin/plib/Dns/Template/Zone.php" target="/usr/local/psa/admin/plib/Dns/Template/Zone.php" />
+        <file create_new="false" md5="7f448361e49b92f7d2d55dbe42e34564" name="microupdates/MU21/common/admin/plib/Dns/Zone/Abstract.php" target="/usr/local/psa/admin/plib/Dns/Zone/Abstract.php" />
+        <file create_new="false" md5="206f2e4faa8f2b337fae381fef833e0a" name="microupdates/MU21/common/admin/plib/DomainAlias/Manager.php" target="/usr/local/psa/admin/plib/DomainAlias/Manager.php" />
+        <file create_new="false" md5="e1cb23b5d87db3bd4e7a49378ea85b25" name="microupdates/MU21/common/admin/plib/Smb/Form/Final/DnsZone/SoaRecord.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/DnsZone/SoaRecord.php" />
+        <file create_new="false" md5="12729037ca5939c396a8a1a9ebe561ca" name="microupdates/MU21/common/admin/plib/auth.php" target="/usr/local/psa/admin/plib/auth.php" />
+        <file create_new="false" md5="0c81b51278b84fcf692db4fe861a8178" name="microupdates/MU21/common/admin/plib/chowner/chowner.php" target="/usr/local/psa/admin/plib/chowner/chowner.php" />
+        <file create_new="true" md5="d2d8a1484eb9d85986c12f082aa86a13" name="microupdates/MU21/common/admin/plib/templates/dns_zone_soa_sync.tpl" target="/usr/local/psa/admin/plib/templates/dns_zone_soa_sync.tpl">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="543289dbee36e3bec1313d7c6ec6fa2b" name="microupdates/MU21/common/PMM/pmm-common.xsd" target="/usr/local/psa/PMM/pmm-common.xsd" />
+        <file create_new="false" md5="1086049fb9bdc086bfd10941604f1e6e" name="microupdates/MU21/common/admin/plib/Dns/Template/SOAForm.php" target="/usr/local/psa/admin/plib/Dns/Template/SOAForm.php" />
+        <file create_new="false" md5="cca9fca1a9f3b01cc28423190df27cac" name="microupdates/MU21/common/admin/plib/Dns/Template/Zone/Form.php" target="/usr/local/psa/admin/plib/Dns/Template/Zone/Form.php" />
+        <file create_new="false" md5="f083f4993c914959f0ca82780b2b3981" name="microupdates/MU21/common/admin/plib/Dns/Zone.php" target="/usr/local/psa/admin/plib/Dns/Zone.php" />
+        <file create_new="false" md5="a9d90dd40ab2d7b8e0a6bdc694e7ceb5" name="microupdates/MU21/common/admin/plib/templates/dns_soa.tpl" target="/usr/local/psa/admin/plib/templates/dns_soa.tpl" />
+        <file create_new="false" md5="0b8840d33457a54416a0e3422781e62d" name="microupdates/MU21/common/admin/plib/uipointer_uplevel_table.php" target="/usr/local/psa/admin/plib/uipointer_uplevel_table.php" />
+        <file create_new="false" md5="1d4dc15334e918c160ad5a89b5a94045" name="microupdates/MU22/common/admin/htdocs/creation_templates/dns_t_soa.php" target="/usr/local/psa/admin/htdocs/creation_templates/dns_t_soa.php" />
+        <file create_new="false" md5="99eb0e52f0dbf164b6935242739dc67a" name="microupdates/MU22/common/admin/plib/Dns/Template/Manager.php" target="/usr/local/psa/admin/plib/Dns/Template/Manager.php" />
+        <file create_new="false" md5="247038c18d63fc8ae834f949fd296f6f" name="microupdates/MU22/common/admin/plib/Dns/Manager/Common.php" target="/usr/local/psa/admin/plib/Dns/Manager/Common.php" />
+        <file create_new="false" md5="9c639c864fe2dc9393f8732fd185ea5d" name="microupdates/MU22/common/admin/plib/Dns/Manager.php" target="/usr/local/psa/admin/plib/Dns/Manager.php" />
+        <file create_new="false" md5="11d593b14cc567e6a5e9fd14452a8224" name="microupdates/MU23/common/admin/plib/Service/Capability/ModSecurity/Plesk.php" target="/usr/local/psa/admin/plib/Service/Capability/ModSecurity/Plesk.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Screenshot/'" />
+        <file create_new="true" md5="bcf71dcb8f934f1e2e2b4d947c1af944" name="microupdates/MU23/common/admin/plib/Screenshot/Manager.php" target="/usr/local/psa/admin/plib/Screenshot/Manager.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="6380525608de4648d2c39092b72c9a25" name="microupdates/MU23/common/admin/plib/Skin.php" target="/usr/local/psa/admin/plib/Skin.php" />
+        <file create_new="false" md5="5018a6f185ac6d808450658fb36f63bc" name="microupdates/MU23/common/admin/plib/pm/Domain.php" target="/usr/local/psa/admin/plib/pm/Domain.php" />
+        <file create_new="false" md5="34049b9dbf221ff2af6f1f8a817533c7" name="microupdates/MU23/common/admin/plib/CommonPanel/Form/Backup/ConflictIp.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup/ConflictIp.php" />
+        <file create_new="false" md5="927fc6977f00722a1eaa89d0fc5dc7b3" name="microupdates/MU23/common/PMM/agents/shared/Storage/FileNameCreator.pm" target="/usr/local/psa/PMM/agents/shared/Storage/FileNameCreator.pm" />
+        <file create_new="false" md5="c0b96ecd42c56335cc8ee400ca377c75" name="microupdates/MU24/common/admin/plib/ServerInfo/Domains.php" target="/usr/local/psa/admin/plib/ServerInfo/Domains.php" />
+        <file create_new="false" md5="0e0773cdfc708ca9ec1accf82a3806ed" name="microupdates/MU24/dist-rpm-CentOS-7-x86_64/timemng" target="/usr/local/psa/admin/sbin/timemng" />
+        <shell cmd="/usr/local/psa/var/MU24-postconf.sh" />
+        <shell cmd="/usr/local/psa/var/MU24-postconf.sh" />
+        <file create_new="true" md5="6a4cf6c76affd8361596843357e709f2" name="microupdates/MU24/common/MU24-postconf.sh" target="/usr/local/psa/var/MU24-postconf.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU24-postconf.sh" />
+        <file create_new="false" md5="7aca8ef42d73e1e5ba94247abad5e022" name="microupdates/MU24/common/admin/plib/Repair/Db/ConsistencyRule.php" target="/usr/local/psa/admin/plib/Repair/Db/ConsistencyRule.php" />
+        <file create_new="false" md5="821530ec2e373b780489e26510e0a182" name="microupdates/MU24/common/admin/plib/Repair/Fs/Abstract.php" target="/usr/local/psa/admin/plib/Repair/Fs/Abstract.php" />
+        <file create_new="false" md5="c7ec6f74230401593e94dfec6f829913" name="microupdates/MU24/common/admin/plib/Repair/Fs/SuspiciousFiles.php" target="/usr/local/psa/admin/plib/Repair/Fs/SuspiciousFiles.php" />
+        <file create_new="false" md5="c024e702612759a4393af259696d09da" name="microupdates/MU24/common/admin/plib/Repair/HelperTrait.php" target="/usr/local/psa/admin/plib/Repair/HelperTrait.php" />
+        <file create_new="false" md5="f3e6586f9f86e482369a6a20236f3363" name="microupdates/MU24/common/admin/plib/Repair/IO/Output.php" target="/usr/local/psa/admin/plib/Repair/IO/Output.php" />
+        <file create_new="false" md5="fd715cb347e9a6a112fc46137590f603" name="microupdates/MU24/common/admin/plib/Repair/IO/Structure.php" target="/usr/local/psa/admin/plib/Repair/IO/Structure.php" />
+        <file create_new="false" md5="c0aa619d51276393ca4b9c3c66826e7c" name="microupdates/MU24/common/admin/plib/Repair/PhpHandlers.php" target="/usr/local/psa/admin/plib/Repair/PhpHandlers.php" />
+        <file create_new="false" md5="7b3fce2cef9b95a9f634c58a66f79cd1" name="microupdates/MU24/common/admin/plib/Repair/Web.php" target="/usr/local/psa/admin/plib/Repair/Web.php" />
+        <file create_new="false" md5="a0dbf59a3f4d4afca578442472d43b41" name="microupdates/MU24/common/admin/plib/Repair/Aspect/Fs/Unix.php" target="/usr/local/psa/admin/plib/Repair/Aspect/Fs/Unix.php" />
+        <file create_new="false" md5="6c1c3c55441f8ce558833a27198fc609" name="microupdates/MU24/common/admin/plib/Repair/Fs/WwwRootDirOwner.php" target="/usr/local/psa/admin/plib/Repair/Fs/WwwRootDirOwner.php" />
+        <file create_new="false" md5="0895b1d4d23d30ef833a5fc45dd02414" name="microupdates/MU24/common/admin/plib/Repair/Aspect/Fs.php" target="/usr/local/psa/admin/plib/Repair/Aspect/Fs.php" />
+        <file create_new="false" md5="339bd87306762a9402a835b4dca91ed2" name="microupdates/MU24/common/admin/plib/Repair/Aspect/Fs/Windows.php" target="/usr/local/psa/admin/plib/Repair/Aspect/Fs/Windows.php" />
+        <file create_new="false" md5="16bcc47973d928655154d3291731006a" name="microupdates/MU24/common/admin/plib/api-common/cuMailImapRestore.php" target="/usr/local/psa/admin/plib/api-common/cuMailImapRestore.php" />
+        <file create_new="false" md5="d3c0abe953cd8ce6e8f7ef2bd7f0a90e" name="microupdates/MU24/common/admin/application/admin/controllers/ResellerController.php" target="/usr/local/psa/admin/application/admin/controllers/ResellerController.php" />
+        <file create_new="false" md5="23eef44db0ed0f1181bc316e13b81be4" name="microupdates/MU25/dist-rpm-CentOS-7-x86_64/reconfigurator" target="/usr/local/psa/bin/reconfigurator" />
+        <file create_new="false" md5="c555786acb98b9ffdd363fa37c4f801f" name="microupdates/MU26/common/admin/plib/api-common/cuCertificate.php" target="/usr/local/psa/admin/plib/api-common/cuCertificate.php" />
+        <file create_new="false" md5="e450c9afe945f594972bfb27c98a2351" name="microupdates/MU26/common/admin/plib/api-rpc/AgentCertificate.php" target="/usr/local/psa/admin/plib/api-rpc/AgentCertificate.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/LogRotation/'" />
+        <file create_new="false" md5="bd2524c678515bf37833b6b234774fc6" name="microupdates/MU26/common/admin/application/default/views/scripts/partials/logrotation.phtml" target="/usr/local/psa/admin/application/default/views/scripts/partials/logrotation.phtml" />
+        <file create_new="false" md5="f9f81388abef19d66516c4b962fcb4a5" name="microupdates/MU26/common/admin/plib/AdminPanel/Form/Final/ServicePlan/Misc.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/Final/ServicePlan/Misc.php" />
+        <file create_new="false" md5="1e4e7d88cbe18c447a321561f42ac456" name="microupdates/MU26/common/admin/plib/CommonPanel/Form/LogRotation.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/LogRotation.php" />
+        <file create_new="true" md5="17473e1e00eb86ba800ee1faa99708ed" name="microupdates/MU26/common/admin/plib/Server/Preferences/Form/Common.php" target="/usr/local/psa/admin/plib/Server/Preferences/Form/Common.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="12d569bb4baee2715aa80384fc51b4d2" name="microupdates/MU26/common/admin/plib/Server/Preferences/Form/Unix.php" target="/usr/local/psa/admin/plib/Server/Preferences/Form/Unix.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="50ec01b6acccf1306e199c1a781f1e4f" name="microupdates/MU26/common/admin/htdocs/server/preferences.php" target="/usr/local/psa/admin/htdocs/server/preferences.php" />
+        <file create_new="false" md5="beaa51128d69b8cca2f5ae7f5dd644dc" name="microupdates/MU26/common/admin/plib/templates/server_preferences.tpl" target="/usr/local/psa/admin/plib/templates/server_preferences.tpl" />
+        <file create_new="false" md5="7b6628e41b46a7d7c280a3f9ae287fd5" name="microupdates/MU26/common/admin/plib/api-common/AbstractDomainTemplateManipulator.php" target="/usr/local/psa/admin/plib/api-common/AbstractDomainTemplateManipulator.php" />
+        <file create_new="false" md5="7f6b002683d6062129eff5b027f2e432" name="microupdates/MU26/common/admin/plib/api-rpc/AbstractAgentDomainTemplate.php" target="/usr/local/psa/admin/plib/api-rpc/AbstractAgentDomainTemplate.php" />
+        <file create_new="false" md5="0bad1a9324550765e78db378be54e6a9" name="microupdates/MU26/common/admin/plib/api-rpc/AgentLogRotation.php" target="/usr/local/psa/admin/plib/api-rpc/AgentLogRotation.php" />
+        <file create_new="false" md5="a74aacbe6cb927261c96fac6ae8cccd8" name="microupdates/MU26/common/admin/plib/api-common/cuDomainTemplate.php" target="/usr/local/psa/admin/plib/api-common/cuDomainTemplate.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/backup/Serializer/Server/'" />
+        <file create_new="false" md5="5ccacfdcdb1c87dad0b6d2d0b28bafaf" name="microupdates/MU26/common/admin/plib/CommonPanel/Controller/Action/Task/Helper.php" target="/usr/local/psa/admin/plib/CommonPanel/Controller/Action/Task/Helper.php" />
+        <file create_new="true" md5="4c4605ec3ceace903aadbe39c48e1e8e" name="microupdates/MU26/common/admin/plib/LogRotation/Task.php" target="/usr/local/psa/admin/plib/LogRotation/Task.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="5ec0c0ab22fba40899ce030635e3e74b" name="microupdates/MU26/common/admin/plib/Service/Driver/Web/Interface/LogRotation.php" target="/usr/local/psa/admin/plib/Service/Driver/Web/Interface/LogRotation.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="18c3997794373295631d696fd96f560a" name="microupdates/MU26/common/admin/plib/Service/Driver/Web/LogRotation/Unix.php" target="/usr/local/psa/admin/plib/Service/Driver/Web/LogRotation/Unix.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="cb6699f44b9534a0eac9387b63b04d7c" name="microupdates/MU26/common/admin/plib/Service/IIS/Manager.php" target="/usr/local/psa/admin/plib/Service/IIS/Manager.php" />
+        <file create_new="false" md5="5efde5a15f0603bb1c82bbdda8287392" name="microupdates/MU26/common/admin/plib/api-common/cuBackupRestoreHelper.php" target="/usr/local/psa/admin/plib/api-common/cuBackupRestoreHelper.php" />
+        <file create_new="false" md5="2b930ecdec4fde96a5fef8c665f0f757" name="microupdates/MU26/common/admin/plib/backup/Serializer/Base.php" target="/usr/local/psa/admin/plib/backup/Serializer/Base.php" />
+        <file create_new="false" md5="ba89d3b647d4534d9b9e7d6f22fff693" name="microupdates/MU26/common/admin/plib/backup/Serializer/FileSharing.php" target="/usr/local/psa/admin/plib/backup/Serializer/FileSharing.php" />
+        <file create_new="false" md5="5cec87a5b9666e058374d7a525b95356" name="microupdates/MU26/common/admin/plib/backup/Serializer/WebSettings.php" target="/usr/local/psa/admin/plib/backup/Serializer/WebSettings.php" />
+        <file create_new="true" md5="9381c6bbcbeeb56abb2f48383611b03b" name="microupdates/MU26/common/admin/plib/LogRotation/Server.php" target="/usr/local/psa/admin/plib/LogRotation/Server.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="19d7bbe51ca02dd2b68f5e51f6998de8" name="microupdates/MU26/common/admin/plib/backup/BackupServerWideSettings.php" target="/usr/local/psa/admin/plib/backup/BackupServerWideSettings.php" />
+        <file create_new="true" md5="5f4797344ad593e31388e91224483d2b" name="microupdates/MU26/common/admin/plib/backup/Serializer/Server/MiscParams.php" target="/usr/local/psa/admin/plib/backup/Serializer/Server/MiscParams.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="120dc3c11ee6d3b7cc7c6d05c336c489" name="microupdates/MU27/common/PMM/agents/PleskX/BackupSizeCalculator.pm" target="/usr/local/psa/PMM/agents/PleskX/BackupSizeCalculator.pm" />
+        <file create_new="false" md5="c796c6693e341230a737d65a6e0fc8c1" name="microupdates/MU28/common/admin/plib/Repair/Db/MysqlConnector.php" target="/usr/local/psa/admin/plib/Repair/Db/MysqlConnector.php" />
+        <file create_new="false" md5="ec6e4ad8d51f272df72f32d006e3003d" name="microupdates/MU29/common/admin/htdocs/get_password.php" target="/usr/local/psa/admin/htdocs/get_password.php" />
+        <file create_new="false" md5="059ec6679d2b899ca379b4556f22ef38" name="microupdates/MU31/common/admin/plib/PhDomain.php" target="/usr/local/psa/admin/plib/PhDomain.php" />
+        <file create_new="false" md5="7a026c328b83961470bf3a60bb4fe23c" name="microupdates/MU32/common/admin/plib/class.LogRotation.php" target="/usr/local/psa/admin/plib/class.LogRotation.php" />
+        <file create_new="false" md5="b8bb98016d8a8516350f31482eb75537" name="microupdates/MU32/common/PMM/agents/shared/Storage/ArchiveStorage.pm" target="/usr/local/psa/PMM/agents/shared/Storage/ArchiveStorage.pm" />
+        <file create_new="false" md5="d0b76704ccedc43bc9c1396e490bf2b0" name="microupdates/MU32/common/admin/plib/ActionLog.php" target="/usr/local/psa/admin/plib/ActionLog.php" />
+        <file create_new="false" md5="c385aa27b0e3219f4a338e4ffe88243f" name="microupdates/MU32/common/admin/plib/ActionLog/Binding/Domain.php" target="/usr/local/psa/admin/plib/ActionLog/Binding/Domain.php" />
+        <file create_new="false" md5="592aab113e6ab901313ba2ed9669cdfb" name="microupdates/MU32/common/admin/plib/DomainPerformance.php" target="/usr/local/psa/admin/plib/DomainPerformance.php" />
+        <file create_new="false" md5="d943d7a4c92e8305314a017c6b27cd74" name="microupdates/MU32/common/admin/plib/PHostingManager/Abstract.php" target="/usr/local/psa/admin/plib/PHostingManager/Abstract.php" />
+        <file create_new="false" md5="d93cd11796bc4b5192434ad4488815e4" name="microupdates/MU32/common/admin/plib/Domain/Preview/Helper.php" target="/usr/local/psa/admin/plib/Domain/Preview/Helper.php" />
+        <file create_new="false" md5="0f73a243af5927250649cc57bc238396" name="microupdates/MU32/common/admin/plib/Lock/Manager/Hierarchical.php" target="/usr/local/psa/admin/plib/Lock/Manager/Hierarchical.php" />
+        <file create_new="false" md5="550f0788ed1e48a4bd3fc0597af85b8c" name="microupdates/MU32/common/admin/plib/pm/ApiCli.php" target="/usr/local/psa/admin/plib/pm/ApiCli.php" />
+        <file create_new="false" md5="86daaceaa51a0e044e99e8b90b208838" name="microupdates/MU32/common/admin/plib/ActionLog/Map.php" target="/usr/local/psa/admin/plib/ActionLog/Map.php" />
+        <shell cmd="/usr/local/psa/var/MU32-bind_service.sh" />
+        <file create_new="true" md5="1fced8e8bf8253d019c311edea15cb9e" name="microupdates/MU32/common/MU32-bind_service.sh" target="/usr/local/psa/var/MU32-bind_service.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU32-bind_service.sh" />
+        <file create_new="false" md5="d1e3dd7f872ceaa50623297405c8b307" name="microupdates/MU33/common/admin/htdocs/server/key_revert.php" target="/usr/local/psa/admin/htdocs/server/key_revert.php" />
+        <file create_new="false" md5="9a13583334105281fda2732b3ac14e29" name="microupdates/MU33/common/admin/htdocs/server/key_upload.php" target="/usr/local/psa/admin/htdocs/server/key_upload.php" />
+        <file create_new="false" md5="ca762ce0f0131d0864a476053919b675" name="microupdates/MU33/common/admin/plib/api-common/cuLicense.php" target="/usr/local/psa/admin/plib/api-common/cuLicense.php" />
+        <file create_new="false" md5="a34991e1c8f824823157d2bd91b74671" name="microupdates/MU33/common/admin/plib/report/class.ClientReport.php" target="/usr/local/psa/admin/plib/report/class.ClientReport.php" />
+        <file create_new="false" md5="194c29fdd17f3192c9b312bb3502698f" name="microupdates/MU33/common/admin/plib/CommonPanel/Form/PhpSettings.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/PhpSettings.php" />
+        <file create_new="false" md5="0b3618cd43cfd0bd6523a7dddc49e9c7" name="microupdates/MU33/common/admin/plib/Webspace.php" target="/usr/local/psa/admin/plib/Webspace.php" />
+        <file create_new="false" md5="60b2ccc316a3ee7c1c95744fa9efe326" name="microupdates/MU33/common/admin/plib/api-common/PhpSettingsCuExtension.php" target="/usr/local/psa/admin/plib/api-common/PhpSettingsCuExtension.php" />
+        <file create_new="false" md5="10c1afdfe82a82c908f73a0f8d168e0c" name="microupdates/MU33/common/admin/plib/Commands/CreateSubscription.php" target="/usr/local/psa/admin/plib/Commands/CreateSubscription.php" />
+        <file create_new="false" md5="a2911bbc4a16e6e9042cc6707c31bb0f" name="microupdates/MU33/common/admin/share/pmmcli/pmmcli.py" target="/usr/local/psa/admin/share/pmmcli/pmmcli.py" />
+        <file create_new="false" md5="f75f663cb787b34dffaf7595df17727e" name="microupdates/MU33/common/PMM/agents/PleskX/PmmCli.pm" target="/usr/local/psa/PMM/agents/PleskX/PmmCli.pm" />
+        <file create_new="false" md5="e85b4d442d096cdf641ef3c509b7a55a" name="microupdates/MU33/common/admin/bin/plesk_agent_manager" target="/usr/local/psa/admin/bin/plesk_agent_manager" />
+        <file create_new="false" md5="592173b98a1175e54db5668b728dd0e0" name="microupdates/MU33/common/bin/pleskbackup" target="/usr/local/psa/bin/pleskbackup" />
+        <file create_new="false" md5="0cfbd1342b396ff8edcb42c13a9eb9c4" name="microupdates/MU34/common/admin/plib/CommonPanel/Validate/DatabaseConnection.php" target="/usr/local/psa/admin/plib/CommonPanel/Validate/DatabaseConnection.php" />
+        <file create_new="false" md5="afa6baf7edc5aabb980b47040bdc6204" name="microupdates/MU34/common/admin/plib/DatabaseManagerMySQL.php" target="/usr/local/psa/admin/plib/DatabaseManagerMySQL.php" />
+        <file create_new="false" md5="23fb78cb36f8d7355658718566559eee" name="microupdates/MU35/common/admin/plib/Aps/Catalog/Feed/Reader.php" target="/usr/local/psa/admin/plib/Aps/Catalog/Feed/Reader.php" />
+        <file create_new="false" md5="0bba48bd5f2c50633467bee3a1efd2a6" name="microupdates/MU35/common/admin/application/smb/controllers/AppUpdateController.php" target="/usr/local/psa/admin/application/smb/controllers/AppUpdateController.php" />
+        <file create_new="false" md5="7f1dc67af1cc6d34060cc502c1037364" name="microupdates/MU35/common/admin/plib/Smb/Db/Table/Row/ApsInstance.php" target="/usr/local/psa/admin/plib/Smb/Db/Table/Row/ApsInstance.php" />
+        <file create_new="false" md5="c11941f250909088af48323ae9fb9258" name="microupdates/MU35/common/admin/plib/Smb/Plesk/Bridge/Aps/Catalog.php" target="/usr/local/psa/admin/plib/Smb/Plesk/Bridge/Aps/Catalog.php" />
+        <file create_new="false" md5="e2e39def1c15f630341cd72483eee17c" name="microupdates/MU35/common/admin/plib/CommonPanel/Aps/Requirement/Plesk/PhpVersion.php" target="/usr/local/psa/admin/plib/CommonPanel/Aps/Requirement/Plesk/PhpVersion.php" />
+        <file create_new="false" md5="763944159c356a73a80a68d6f9ec9b2a" name="microupdates/MU35/common/admin/plib/api-common/VirtualDirManipulator.php" target="/usr/local/psa/admin/plib/api-common/VirtualDirManipulator.php" />
+        <file create_new="false" md5="84b5db1a376e093d90e93ccab662e35b" name="microupdates/MU35/common/admin/plib/api-common/cuVirtualDir.php" target="/usr/local/psa/admin/plib/api-common/cuVirtualDir.php" />
+        <file create_new="false" md5="88b8fd4ffcede76ed5a3f7fcf559c232" name="microupdates/MU35/common/admin/plib/Aps/Fusion/UrlMapping/Creator/Windows.php" target="/usr/local/psa/admin/plib/Aps/Fusion/UrlMapping/Creator/Windows.php" />
+        <file create_new="false" md5="c4183dd26de0aafe3ef56881e3d96800" name="microupdates/MU35/common/admin/plib/Service/Capability/Packages/Windows.php" target="/usr/local/psa/admin/plib/Service/Capability/Packages/Windows.php" />
+        <file create_new="false" md5="e37bdce4251b104a5f27760975042414" name="microupdates/MU35/common/admin/plib/backup/Conflicts/Capability/Checker/RequiredComponent.php" target="/usr/local/psa/admin/plib/backup/Conflicts/Capability/Checker/RequiredComponent.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/CommonPanel/Controller/Action/ActiveStateComponentsWarning/'" />
+        <file create_new="false" md5="4a036ef810824dce1d0e3cb928409fa0" name="microupdates/MU35/common/admin/application/admin/controllers/HomeController.php" target="/usr/local/psa/admin/application/admin/controllers/HomeController.php" />
+        <file create_new="false" md5="72b85c57f3cae31fc8be0f67905d53a6" name="microupdates/MU35/common/admin/application/admin/views/scripts/home/admin.phtml" target="/usr/local/psa/admin/application/admin/views/scripts/home/admin.phtml" />
+        <file create_new="false" md5="dbbdd5b89d61b0282e63db7a152f469f" name="microupdates/MU35/common/admin/application/smb/views/scripts/web/view.phtml" target="/usr/local/psa/admin/application/smb/views/scripts/web/view.phtml" />
+        <file create_new="true" md5="117ce3da97bb65d487e3c83fd3ff6253" name="microupdates/MU35/common/admin/plib/CommonPanel/Controller/Action/ActiveStateComponentsWarning/Trait.php" target="/usr/local/psa/admin/plib/CommonPanel/Controller/Action/ActiveStateComponentsWarning/Trait.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="bde9bbb33823f0f9a526cc68ad222470" name="microupdates/MU35/common/admin/plib/Aps/Catalog/Update/Task.php" target="/usr/local/psa/admin/plib/Aps/Catalog/Update/Task.php" />
+        <file create_new="true" md5="3d69cb6730c590265e1757189b89d970" name="microupdates/MU37/common/admin/plib/DailyMaintainance/Task/CollectPerlAndPythonUsageStatistics.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/CollectPerlAndPythonUsageStatistics.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="1522e8d87b3584115269282ffdeb5349" name="microupdates/MU37/common/admin/plib/FileUtils.php" target="/usr/local/psa/admin/plib/FileUtils.php" />
+        <file create_new="false" md5="ff15d93d66d31ef68334a1a0d41efb59" name="microupdates/MU37/common/admin/plib/ServerInfo/UsageStats.php" target="/usr/local/psa/admin/plib/ServerInfo/UsageStats.php" />
+        <file create_new="false" md5="fabe1b4aa63b949992f1279c797ad182" name="microupdates/MU37/common/admin/plib/Service/Driver/Filesystem/Interface/Core.php" target="/usr/local/psa/admin/plib/Service/Driver/Filesystem/Interface/Core.php" />
+        <file create_new="false" md5="afe97aada788653c26bb6a7105d0f6eb" name="microupdates/MU37/common/admin/plib/Service/Driver/Filesystem/Plesk/Unix.php" target="/usr/local/psa/admin/plib/Service/Driver/Filesystem/Plesk/Unix.php" />
+        <file create_new="false" md5="063b25a4134d0e75002f90926a115e0c" name="microupdates/MU37/common/admin/plib/Service/Driver/Filesystem/Plesk/Windows.php" target="/usr/local/psa/admin/plib/Service/Driver/Filesystem/Plesk/Windows.php" />
+        <file create_new="false" md5="c81fb8ba69bb4eb680e11c8704a77e47" name="microupdates/MU37/common/admin/plib/api-common/AbstractCuDomain.php" target="/usr/local/psa/admin/plib/api-common/AbstractCuDomain.php" />
+        <file create_new="false" md5="48ca532432ec2cfbbcdfb0b3ba9cf451" name="microupdates/MU37/common/admin/plib/Task/Control/Abstract.php" target="/usr/local/psa/admin/plib/Task/Control/Abstract.php" />
+        <file create_new="false" md5="c58946b36830800b49ab5e02ca00780e" name="microupdates/MU39/common/admin/plib/Db/Table/Row/PhpSettings.php" target="/usr/local/psa/admin/plib/Db/Table/Row/PhpSettings.php" />
+        <file create_new="false" md5="d0d7891e86c1bf711b7b021543ff1666" name="microupdates/MU39/common/admin/plib/Dns/Zone/Rec.php" target="/usr/local/psa/admin/plib/Dns/Zone/Rec.php" />
+        <file create_new="false" md5="f7155936d8bbd02918b6e044d5828b0e" name="microupdates/MU39/common/admin/plib/Smb/Form/Final/DnsZone/Record.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/DnsZone/Record.php" />
+        <file create_new="false" md5="1cecad251496866ecbf83c10d68d0172" name="microupdates/MU39/common/admin/plib/Dns/Template/Zone/Rec.php" target="/usr/local/psa/admin/plib/Dns/Template/Zone/Rec.php" />
+        <file create_new="false" md5="c5727441787cc90dca5bfd257932fbd2" name="microupdates/MU40/common/admin/plib/Repair/DatabaseConsistency.php" target="/usr/local/psa/admin/plib/Repair/DatabaseConsistency.php" />
+        <file create_new="false" md5="2663650fc86deddb155e9b5936762746" name="microupdates/MU40/common/admin/plib/Commands/DeleteDomain.php" target="/usr/local/psa/admin/plib/Commands/DeleteDomain.php" />
+        <file create_new="true" md5="4f9d4dd6ea205d66b2184e9689758fc1" name="microupdates/MU40/common/admin/plib/Repair/Db/ConsistencyRule/UserSubscriptionDomain.php" target="/usr/local/psa/admin/plib/Repair/Db/ConsistencyRule/UserSubscriptionDomain.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="66e0338ebe0fe47f9feadc102adf60cc" name="microupdates/MU40/common/admin/plib/Plesk/Config.php" target="/usr/local/psa/admin/plib/Plesk/Config.php" />
+        <file create_new="false" md5="19c963e56b89c48c05d363bc33a850d4" name="microupdates/MU41/common/admin/plib/Service/IIS/Configuration/Bindings.php" target="/usr/local/psa/admin/plib/Service/IIS/Configuration/Bindings.php" />
+        <file create_new="true" md5="f71d20196d4caf35b6a670db8c70b03d" name="microupdates/MU41/common/admin/htdocs/robots.txt" target="/usr/local/psa/admin/htdocs/robots.txt">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="3a2eef6541b008e2798d45a23bed8a14" name="microupdates/MU42/common/admin/plib/Service/Node/Environment/PhpHandlers/Abstract.php" target="/usr/local/psa/admin/plib/Service/Node/Environment/PhpHandlers/Abstract.php" />
+        <file create_new="false" md5="815d762a9de3da93e3c52379311c7ff7" name="microupdates/MU42/common/admin/plib/api-common/cuRepair.php" target="/usr/local/psa/admin/plib/api-common/cuRepair.php" />
+        <file create_new="false" md5="337c9f132ec243bd1141553a185e582f" name="microupdates/MU42/common/admin/application/admin/controllers/SubscriptionController.php" target="/usr/local/psa/admin/application/admin/controllers/SubscriptionController.php" />
+        <file create_new="false" md5="028c5ce05420eb75c258ee8a012c94d0" name="microupdates/MU42/common/admin/plib/ApacheOptimizationSettings.php" target="/usr/local/psa/admin/plib/ApacheOptimizationSettings.php" />
+        <file create_new="false" md5="a08562ab44e42cf738922372f161f3da" name="microupdates/MU42/common/admin/plib/Service/Nginx/WebProxyManager.php" target="/usr/local/psa/admin/plib/Service/Nginx/WebProxyManager.php" />
+        <file create_new="false" md5="b9a51ccf175ceae4742f2eb4e76ccd39" name="microupdates/MU42/common/admin/plib/Shell.php" target="/usr/local/psa/admin/plib/Shell.php" />
+        <file create_new="false" md5="026d88f20bf129fd76e9529aaf1c8d19" name="microupdates/MU42/common/admin/plib/api-common/Httpdmng.php" target="/usr/local/psa/admin/plib/api-common/Httpdmng.php" />
+        <file create_new="false" md5="5756d1c2c81ecf7fdb34299c16dd5a26" name="microupdates/MU42/common/admin/plib/WebServerManager/Adapter/Apache.php" target="/usr/local/psa/admin/plib/WebServerManager/Adapter/Apache.php" />
+        <file create_new="false" md5="332f864d608decf13649aa68fe10ca80" name="microupdates/MU42/common/admin/plib/Service/Driver/Web/Server/Apache.php" target="/usr/local/psa/admin/plib/Service/Driver/Web/Server/Apache.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/ServerInfo/Report/'" />
+        <file create_new="false" md5="c138910b4afbae357487cb85434b666a" name="microupdates/MU42/common/admin/plib/License/Keys.php" target="/usr/local/psa/admin/plib/License/Keys.php" />
+        <file create_new="true" md5="0179f963fbb774d559a7b5bbe947a2d0" name="microupdates/MU42/common/admin/plib/ServerInfo/Report/Settings.php" target="/usr/local/psa/admin/plib/ServerInfo/Report/Settings.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="b6606c71781bbdd58e1c5b1c4a18e0e9" name="microupdates/MU42/common/PMM/agents/PleskX/PleskX.pm" target="/usr/local/psa/PMM/agents/PleskX/PleskX.pm" />
+        <file create_new="false" md5="84e5644e9c12b8578fb86bb94e713fbd" name="microupdates/MU42/common/PMM/plesk.xsd" target="/usr/local/psa/PMM/plesk.xsd" />
+        <file create_new="false" md5="412131b0d0dd32619b30d2158e5f84b8" name="microupdates/MU42/common/admin/plib/backup/ScheduledBackupObjects.php" target="/usr/local/psa/admin/plib/backup/ScheduledBackupObjects.php" />
+        <file create_new="false" md5="f9ec9c922d4cf309d8ed918702e820d7" name="microupdates/MU42/common/admin/plib/Smb/Form/Final/SslCertificate/Trait.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/SslCertificate/Trait.php" />
+        <file create_new="false" md5="2a40f840b28bf41678bed875c4aa66cd" name="microupdates/MU42/common/admin/plib/api-common/AbstractClientTemplateManipulator.php" target="/usr/local/psa/admin/plib/api-common/AbstractClientTemplateManipulator.php" />
+        <file create_new="false" md5="850c47890861ed8dc55e296183a8e7fc" name="microupdates/MU42/common/admin/plib/api-common/CuExecutor.php" target="/usr/local/psa/admin/plib/api-common/CuExecutor.php" />
+        <file create_new="false" md5="966859ec398d8c6afbd9445e8e2776eb" name="microupdates/MU42/common/admin/plib/api-common/cuDomainAddonTemplate.php" target="/usr/local/psa/admin/plib/api-common/cuDomainAddonTemplate.php" />
+        <file create_new="false" md5="8eae1964304c94396eecfd8f305e76e1" name="microupdates/MU42/common/admin/plib/api-rpc/AbstractAgentMail.php" target="/usr/local/psa/admin/plib/api-rpc/AbstractAgentMail.php" />
+        <file create_new="false" md5="c0cbf040371c7ac4802a8f7503b2f9fd" name="microupdates/MU42/common/admin/plib/Account.php" target="/usr/local/psa/admin/plib/Account.php" />
+        <file create_new="false" md5="bced57e59a342edd4b5e5851c3bc1604" name="microupdates/MU42/common/admin/plib/AdminPanel/Form/Final/SslCertificate/Trait.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/Final/SslCertificate/Trait.php" />
+        <file create_new="false" md5="50983dea6faa15b4656044091064b646" name="microupdates/MU42/common/admin/plib/AnonFtp.php" target="/usr/local/psa/admin/plib/AnonFtp.php" />
+        <file create_new="false" md5="bbb42d4ae0816de9d8fbc2cb2b41beac" name="microupdates/MU42/common/admin/plib/ClientBase.php" target="/usr/local/psa/admin/plib/ClientBase.php" />
+        <file create_new="false" md5="bc7e02b8634140f6899ab3214f8bd4e5" name="microupdates/MU42/common/admin/plib/CommonPanel/View/Helper/PrettyTimeFormat.php" target="/usr/local/psa/admin/plib/CommonPanel/View/Helper/PrettyTimeFormat.php" />
+        <file create_new="false" md5="9f2d0f755f8588754dfe05690a22d5c0" name="microupdates/MU42/common/admin/plib/CustomButton.php" target="/usr/local/psa/admin/plib/CustomButton.php" />
+        <file create_new="false" md5="48c4732a66177bd8cf9ff6876250febb" name="microupdates/MU42/common/admin/plib/DomainService.php" target="/usr/local/psa/admin/plib/DomainService.php" />
+        <file create_new="false" md5="2bb9744ec94e4c1ada4365598a143036" name="microupdates/MU42/common/admin/plib/Forwarding.php" target="/usr/local/psa/admin/plib/Forwarding.php" />
+        <file create_new="false" md5="0197ca067b37e96794af3dc71aebd573" name="microupdates/MU42/common/admin/plib/FtpUser.php" target="/usr/local/psa/admin/plib/FtpUser.php" />
+        <file create_new="false" md5="dccb13e33f19831478423293312d88a9" name="microupdates/MU42/common/admin/plib/IPPoolManager.php" target="/usr/local/psa/admin/plib/IPPoolManager.php" />
+        <file create_new="false" md5="6443de598c7ecf8a8e8ebee8ecf8bd20" name="microupdates/MU42/common/admin/plib/Mail/AbstractFacade.php" target="/usr/local/psa/admin/plib/Mail/AbstractFacade.php" />
+        <file create_new="false" md5="db25160bf57b8321088d336040541e72" name="microupdates/MU42/common/admin/plib/Mail/AbstractMailName.php" target="/usr/local/psa/admin/plib/Mail/AbstractMailName.php" />
+        <file create_new="false" md5="748c2dd3abbfc85d87e191c58a1a8384" name="microupdates/MU42/common/admin/plib/Mail/AbstractMailNameAutoResponders.php" target="/usr/local/psa/admin/plib/Mail/AbstractMailNameAutoResponders.php" />
+        <file create_new="false" md5="f1a2f2ac004a948bf77523b2cc034016" name="microupdates/MU42/common/admin/plib/PHosting/Abstract.php" target="/usr/local/psa/admin/plib/PHosting/Abstract.php" />
+        <file create_new="false" md5="3dc1e16e7192e1f6f88673a3ee340e0d" name="microupdates/MU42/common/admin/plib/Plesk/Base/Utils/String.php" target="/usr/local/psa/admin/plib/Plesk/Base/Utils/String.php" />
+        <file create_new="false" md5="a704c1cc321621b7dc8428771b0eed97" name="microupdates/MU42/common/admin/plib/SSLCertificate.php" target="/usr/local/psa/admin/plib/SSLCertificate.php" />
+        <file create_new="false" md5="7f70c78d1a53216b0ed42eb01efa13e5" name="microupdates/MU42/common/admin/plib/Service/Driver/Mail/Plesk/Domain/Abstract.php" target="/usr/local/psa/admin/plib/Service/Driver/Mail/Plesk/Domain/Abstract.php" />
+        <file create_new="false" md5="d3ca556d9b89a4a310b749c5e907705a" name="microupdates/MU42/common/admin/plib/Service/Driver/Mail/Plesk/Domain/Windows.php" target="/usr/local/psa/admin/plib/Service/Driver/Mail/Plesk/Domain/Windows.php" />
+        <file create_new="false" md5="f62e97d8a3add01c218d61451a0f8a29" name="microupdates/MU42/common/admin/plib/SysUser.php" target="/usr/local/psa/admin/plib/SysUser.php" />
+        <file create_new="false" md5="d85a04f473429b52548ab2ab362d061c" name="microupdates/MU42/common/admin/plib/WebUser.php" target="/usr/local/psa/admin/plib/WebUser.php" />
+        <file create_new="false" md5="9279d7a9295ec16f8047413c99066f6e" name="microupdates/MU42/common/admin/plib/cList.php" target="/usr/local/psa/admin/plib/cList.php" />
+        <file create_new="false" md5="3472c41811f9660b726abc1575867411" name="microupdates/MU42/common/admin/plib/cObject.php" target="/usr/local/psa/admin/plib/cObject.php" />
+        <file create_new="false" md5="6176fd434b8c103d96c6efeed4b9f01f" name="microupdates/MU42/common/admin/plib/class.IPClientsList.php" target="/usr/local/psa/admin/plib/class.IPClientsList.php" />
+        <file create_new="false" md5="7d7e7db680491798012196532f88b582" name="microupdates/MU42/common/admin/plib/class.Notification.php" target="/usr/local/psa/admin/plib/class.Notification.php" />
+        <file create_new="false" md5="9874bb0169026abeb1e1ab38843ebfdc" name="microupdates/MU42/common/admin/plib/class.ODBC.php" target="/usr/local/psa/admin/plib/class.ODBC.php" />
+        <file create_new="false" md5="0a02ab3c1888051e85fb13cf5b515d60" name="microupdates/MU42/common/admin/plib/report/class.Report.php" target="/usr/local/psa/admin/plib/report/class.Report.php" />
+        <file create_new="false" md5="41328cb0983054b90cd153a5696b40a0" name="microupdates/MU42/common/admin/plib/ui/client.ipaddress.delete.php" target="/usr/local/psa/admin/plib/ui/client.ipaddress.delete.php" />
+        <file create_new="false" md5="3f0f39a3c52f688bb2ea08736b82dee7" name="microupdates/MU42/common/admin/plib/ui/server.ip-address.client.delete.php" target="/usr/local/psa/admin/plib/ui/server.ip-address.client.delete.php" />
+        <file create_new="false" md5="ca8206f1c1dbd1d5c47926e48d055644" name="microupdates/MU42/common/admin/plib/ui_common/ReportLayoutDeleteUIPointer.php" target="/usr/local/psa/admin/plib/ui_common/ReportLayoutDeleteUIPointer.php" />
+        <file create_new="false" md5="9173072dd6e590685a696c6ba4e332a5" name="microupdates/MU42/common/admin/plib/api-common/cuMail.php" target="/usr/local/psa/admin/plib/api-common/cuMail.php" />
+        <file create_new="false" md5="7ea093447a16935cd3f935a1f7e4edac" name="microupdates/MU42/common/admin/plib/api-rpc/AgentSiteApp.php" target="/usr/local/psa/admin/plib/api-rpc/AgentSiteApp.php" />
+        <file create_new="false" md5="19d65c65f77fd13e9c81705b2e4384d5" name="microupdates/MU42/common/admin/htdocs/server/mail_blocked_domains_remove.php" target="/usr/local/psa/admin/htdocs/server/mail_blocked_domains_remove.php" />
+        <file create_new="false" md5="61c3834a21ed8fbf33d8f2209636381c" name="microupdates/MU42/common/admin/plib/Mail/VirusFilter/DrWeb/Manager.php" target="/usr/local/psa/admin/plib/Mail/VirusFilter/DrWeb/Manager.php" />
+        <file create_new="false" md5="3ae926e27c3adb7f8aacfcd45257ebe1" name="microupdates/MU42/common/admin/plib/DatabaseManagerPostgreSQL.php" target="/usr/local/psa/admin/plib/DatabaseManagerPostgreSQL.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Aps/Instances/'" />
+        <file create_new="true" md5="e01bc9ba1d2737f0db8771941e7a3060" name="microupdates/MU43/common/admin/plib/Aps/Instances/Provider.php" target="/usr/local/psa/admin/plib/Aps/Instances/Provider.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="8d0eb891f5e2a44ebe356844d20cc60c" name="microupdates/MU43/common/admin/plib/Domain/PhpSettings.php" target="/usr/local/psa/admin/plib/Domain/PhpSettings.php" />
+        <file create_new="false" md5="7824b6083f6e9deffd0c705a8ca31d30" name="microupdates/MU43/common/admin/plib/Extension/Hook/ActiveList.php" target="/usr/local/psa/admin/plib/Extension/Hook/ActiveList.php" />
+        <file create_new="true" md5="d55d121d89596a33c0b460f0de42e5ad" name="microupdates/MU43/common/admin/plib/ServerInfo/Websites.php" target="/usr/local/psa/admin/plib/ServerInfo/Websites.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="e1fab4191ec3077d5890aaf386a87327" name="microupdates/MU43/common/admin/plib/Service/Driver/Web/Proxy/Nginx.php" target="/usr/local/psa/admin/plib/Service/Driver/Web/Proxy/Nginx.php" />
+        <file create_new="false" md5="034433182da5178d7fa3a4ac63f48cd5" name="microupdates/MU43/common/admin/plib/Smb/View/List/App/Instances.php" target="/usr/local/psa/admin/plib/Smb/View/List/App/Instances.php" />
+        <file create_new="false" md5="60286b25a18f2b5677ad8245b7ab692d" name="microupdates/MU44/common/admin/plib/Domain/WebServerSettings.php" target="/usr/local/psa/admin/plib/Domain/WebServerSettings.php" />
+        <file create_new="false" md5="c61401e0389d9e1c6d6c215ab2b7a318" name="microupdates/MU46/common/admin/plib/CommonPanel/Exception.php" target="/usr/local/psa/admin/plib/CommonPanel/Exception.php" />
+        <file create_new="true" md5="90243831813bbbf5342d03b87780b550" name="microupdates/MU46/common/admin/plib/CommonPanel/Update/Roller.php" target="/usr/local/psa/admin/plib/CommonPanel/Update/Roller.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="true" md5="f10f8968550333919c44653d0b73ad23" name="microupdates/MU46/common/admin/plib/CommonPanel/Update/UpdateTicket.php" target="/usr/local/psa/admin/plib/CommonPanel/Update/UpdateTicket.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="2114e73a52661bd9df43310d7085bc53" name="microupdates/MU46/common/admin/plib/ServerInfo/System.php" target="/usr/local/psa/admin/plib/ServerInfo/System.php" />
+        <file create_new="false" md5="2645426b4b2b9221a2f2cce25be3f831" name="microupdates/MU46/common/admin/plib/DailyMaintainance/Task/UpgradeExtensions.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/UpgradeExtensions.php" />
+        <file create_new="false" md5="767dd1061828b32c86124c4728beffab" name="microupdates/MU46/common/admin/plib/ServerInfo/Locale.php" target="/usr/local/psa/admin/plib/ServerInfo/Locale.php" />
+        <file create_new="false" md5="4df00e79a5cb9c3ae318724b7aae8be3" name="microupdates/MU46/common/admin/plib/LogBrowser/Combiner.php" target="/usr/local/psa/admin/plib/LogBrowser/Combiner.php" />
+        <file create_new="false" md5="0a6993c073e90bcca1fb4f2d410c1ce2" name="microupdates/MU47/dist-rpm-CentOS-7-x86_64/mysqlmng" target="/usr/local/psa/admin/sbin/mysqlmng" />
+        <file create_new="false" md5="5cc263d8567d79c0edb5be279266f146" name="microupdates/MU47/common/admin/plib/api-common/AbstractDatabaseManipulator.php" target="/usr/local/psa/admin/plib/api-common/AbstractDatabaseManipulator.php" />
+        <file create_new="false" md5="41516069ce51b00334d4c1352e0ce22c" name="microupdates/MU48/common/admin/plib/License/Key/Ka.php" target="/usr/local/psa/admin/plib/License/Key/Ka.php" />
+        <file create_new="false" md5="e0fc197f2b3b073a91357fc141491fa0" name="microupdates/MU48/common/admin/plib/PleskException.php" target="/usr/local/psa/admin/plib/PleskException.php" />
+        <file create_new="false" md5="a64b37a83e2a07a0ae602e7ff492d529" name="microupdates/MU50/common/admin/plib/backup/Conflicts/ConflictConstants.php" target="/usr/local/psa/admin/plib/backup/Conflicts/ConflictConstants.php" />
+        <file create_new="false" md5="9b3e1bf500e059c4f342a84d692d94c0" name="microupdates/MU50/common/admin/plib/backup/Conflicts/PleskDataManager.php" target="/usr/local/psa/admin/plib/backup/Conflicts/PleskDataManager.php" />
+        <file create_new="false" md5="b84f70632f63e44bfac03f4daadd38b8" name="microupdates/MU50/common/admin/plib/backup/Conflicts/Resolver/DeployerActionsApplier.php" target="/usr/local/psa/admin/plib/backup/Conflicts/Resolver/DeployerActionsApplier.php" />
+        <file create_new="false" md5="3f896737b3ac671a7639e3bad016dba4" name="microupdates/MU50/common/PMM/restore-specification.xsd" target="/usr/local/psa/PMM/restore-specification.xsd" />
+        <file create_new="false" md5="8de5e27bfcb0c8c5ba29adb599b276c7" name="microupdates/MU50/common/admin/db/psadb.xml" target="/usr/local/psa/admin/db/psadb.xml" />
+        <file create_new="false" md5="d75d296b797f9ddb46e1eedfddc4d1cb" name="microupdates/MU50/common/admin/plib/Service/Driver/SystemUser/Unix.php" target="/usr/local/psa/admin/plib/Service/Driver/SystemUser/Unix.php" />
+        <file create_new="false" md5="6772364d27edc5541d74efdc204aec22" name="microupdates/MU50/common/admin/plib/ServerInfo/Stats.php" target="/usr/local/psa/admin/plib/ServerInfo/Stats.php" />
+        <file create_new="false" md5="03b790ddc9f302cfc8a4db7abefc7f23" name="microupdates/MU50/common/admin/plib/functions.php" target="/usr/local/psa/admin/plib/functions.php" />
+        <file create_new="false" md5="45176006bec839df0eaeffdcdaf43b31" name="microupdates/MU50/common/admin/share/pmmcli/pmmcli_daemon_actions.py" target="/usr/local/psa/admin/share/pmmcli/pmmcli_daemon_actions.py" />
+        <file create_new="false" md5="95e0d4fddbdf4b2d7f30c69272cf294d" name="microupdates/MU50/common/admin/share/pmmcli/pmm_config.py" target="/usr/local/psa/admin/share/pmmcli/pmm_config.py" />
+        <file create_new="false" md5="98410ff1292dbb4fd16893f435981908" name="microupdates/MU50/dist-rpm-CentOS-7-x86_64/filemng" target="/usr/local/psa/admin/sbin/filemng" />
+        <file create_new="true" md5="d58032bf46b877d2afabaa5625692b38" name="microupdates/MU50/common/admin/plib/ServerInfo/Collector/MailNotifications.php" target="/usr/local/psa/admin/plib/ServerInfo/Collector/MailNotifications.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="eb7d0a939924cd2a4f3aac9d4deefd77" name="microupdates/MU51/common/admin/plib/backup/Encryptor.php" target="/usr/local/psa/admin/plib/backup/Encryptor.php" />
+        <file create_new="false" md5="3bfb009d20028c75c8e67352d09ae2f8" name="microupdates/MU51/common/admin/plib/PHosting/Apache.php" target="/usr/local/psa/admin/plib/PHosting/Apache.php" />
+        <file create_new="false" md5="9d17534f67f87cb53b9438f4bf36a13e" name="microupdates/MU51/common/admin/plib/PHostingManager/Apache.php" target="/usr/local/psa/admin/plib/PHostingManager/Apache.php" />
+        <file create_new="false" md5="bb4b6a8c5c0c3367087e4feef23ad410" name="microupdates/MU51/common/admin/plib/Smb/Plesk/Bridge/Hosting.php" target="/usr/local/psa/admin/plib/Smb/Plesk/Bridge/Hosting.php" />
+        <file create_new="false" md5="691c657c214488deddf45cce49b377e9" name="microupdates/MU52/common/admin/plib/backup/cuScheduledBackup.php" target="/usr/local/psa/admin/plib/backup/cuScheduledBackup.php" />
+        <file create_new="false" md5="adf9adb50f84af9d737e381d30aff9f3" name="microupdates/MU53/common/admin/plib/api-rpc/AgentDatabase.php" target="/usr/local/psa/admin/plib/api-rpc/AgentDatabase.php" />
+        <file create_new="false" md5="d66b2c21d5873fba02004d120c535251" name="microupdates/MU53/common/admin/plib/ProtDirUser/Apache.php" target="/usr/local/psa/admin/plib/ProtDirUser/Apache.php" />
+        <file create_new="false" md5="c093817c7aaf692b9ca5642def28faa3" name="microupdates/MU53/common/admin/plib/ProtDirUser/IIS.php" target="/usr/local/psa/admin/plib/ProtDirUser/IIS.php" />
+        <file create_new="true" md5="75041cddac89fde6ede49582e891fc7d" name="microupdates/MU54/common/MU54-upgrade-key.sh" target="/usr/local/psa/var/MU54-upgrade-key.sh">
+          <permissions sticky="false">
+            <user exec="true" name="root" read="true" suid="false" write="true" />
+            <group exec="true" name="root" read="true" suid="false" write="false" />
+            <others exec="true" read="true" write="false" />
+          </permissions>
+        </file>
+        <shell cmd="/usr/local/psa/var/MU54-upgrade-key.sh" />
+        <file create_new="false" md5="684615a2b03608863b9d6d09f1c3862e" name="microupdates/MU54/common/admin/plib/DailyMaintainance/Task/UpgradePanel.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/UpgradePanel.php" />
+        <file create_new="false" md5="d7ce306a3b40abbf17df97d245e69219" name="microupdates/MU56/dist-rpm-CentOS-7-x86_64/usermng" target="/usr/local/psa/admin/sbin/usermng" />
+        <file create_new="false" md5="695ae65dcaf216be47b978f5416d6c76" name="microupdates/MU57/common/admin/plib/CommonPanel/Update/Autoinstaller.php" target="/usr/local/psa/admin/plib/CommonPanel/Update/Autoinstaller.php" />
+        <file create_new="false" md5="7293100edd193625e9a541d48dbfffa6" name="microupdates/MU57/common/admin/plib/CommonPanel/Update/Settings.php" target="/usr/local/psa/admin/plib/CommonPanel/Update/Settings.php" />
+        <file create_new="false" md5="39b267b80c5baa1c1c96000444edc10d" name="microupdates/MU57/common/admin/plib/api-common/AbstractCuServerPrefs.php" target="/usr/local/psa/admin/plib/api-common/AbstractCuServerPrefs.php" />
+        <file create_new="false" md5="6511dddbfae49581d39fc2f53f27ccb0" name="microupdates/MU57/common/admin/plib/ServerInfo/Common.php" target="/usr/local/psa/admin/plib/ServerInfo/Common.php" />
+        <file create_new="false" md5="d83370332ef6322a5d91dc13cdb1c3c9" name="microupdates/MU57/common/admin/plib/ServerInfo/Config.php" target="/usr/local/psa/admin/plib/ServerInfo/Config.php" />
+        <file create_new="false" md5="be49617d8dbc57675946964618e277ed" name="microupdates/MU57/common/admin/plib/ServerInfo/Extended.php" target="/usr/local/psa/admin/plib/ServerInfo/Extended.php" />
+        <file create_new="false" md5="2cde616cc5530b0f9576f297ee81815e" name="microupdates/MU57/common/admin/plib/ServerInfo/Structure.php" target="/usr/local/psa/admin/plib/ServerInfo/Structure.php" />
+        <shell cmd="mkdir -p '/usr/local/psa/admin/plib/Hosting/'" />
+        <file create_new="false" md5="0e854b7074758ec3d371c4373f7490e8" name="microupdates/MU58/common/admin/htdocs/javascript/app/domain/active-list.js" target="/usr/local/psa/admin/htdocs/javascript/app/domain/active-list.js" />
+        <file create_new="false" md5="ae47d8ebd7233aa3fc9c9359bc2b0d89" name="microupdates/MU58/common/admin/plib/AdminPanel/View/List/Domains.php" target="/usr/local/psa/admin/plib/AdminPanel/View/List/Domains.php" />
+        <file create_new="false" md5="fb0a90be32006a22636a47eb4319785f" name="microupdates/MU58/common/admin/plib/Db/Table/Row/DomainAlias.php" target="/usr/local/psa/admin/plib/Db/Table/Row/DomainAlias.php" />
+        <file create_new="false" md5="4c25a77c5b78597e8b51855b16c8f1be" name="microupdates/MU58/common/admin/plib/Domain.php" target="/usr/local/psa/admin/plib/Domain.php" />
+        <file create_new="true" md5="3a4c62c4f9f9181cfe8b1fb823a4cdc5" name="microupdates/MU58/common/admin/plib/Hosting/Type.php" target="/usr/local/psa/admin/plib/Hosting/Type.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="f2f0670d06b7fefcfb7f02991e631ca1" name="microupdates/MU58/common/admin/plib/Smb/View/Web/SiteRenderer.php" target="/usr/local/psa/admin/plib/Smb/View/Web/SiteRenderer.php" />
+        <file create_new="false" md5="9cd97eac4a46814274d2f116bcd8f70e" name="microupdates/MU58/common/admin/application/smb/controllers/FileManagerController.php" target="/usr/local/psa/admin/application/smb/controllers/FileManagerController.php" />
+        <file create_new="false" md5="3b4ea41eaf64d8ab6b8205fe461b4022" name="microupdates/MU58/common/admin/plib/Smb/View/List/ContentFiles.php" target="/usr/local/psa/admin/plib/Smb/View/List/ContentFiles.php" />
+        <file create_new="false" md5="d361842b8d3a26405b31f67122e37087" name="microupdates/MU58/common/admin/plib/api-common/cuDns.php" target="/usr/local/psa/admin/plib/api-common/cuDns.php" />
+        <file create_new="false" md5="f0b326ed306173fa5447f54df3381e09" name="microupdates/MU58/common/admin/plib/api-common/cuServerDns.php" target="/usr/local/psa/admin/plib/api-common/cuServerDns.php" />
+        <file create_new="false" md5="ab23d1f08f3d15ca34d9ba350149c145" name="microupdates/MU58/common/admin/plib/Smb/Form/Final/DnsZone/AclRecord.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/DnsZone/AclRecord.php" />
+        <file create_new="false" md5="df3cb39dbc4d2af2d157027c97778543" name="microupdates/MU60/common/admin/plib/PartnerCentral/ApiClient.php" target="/usr/local/psa/admin/plib/PartnerCentral/ApiClient.php" />
+        <file create_new="false" md5="55654a965c58910bcd7b31ff7692b3e9" name="microupdates/MU61/dist-rpm-CentOS-7-x86_64/jsw.js" target="/usr/local/psa/admin/htdocs/javascript/jsw.js" />
+        <file create_new="false" md5="7308d7315c6b6e2cc576c46f7adc61f8" name="microupdates/MU61/dist-rpm-CentOS-7-x86_64/jsw.min.js" target="/usr/local/psa/admin/htdocs/javascript/jsw.min.js" />
+        <file create_new="false" md5="cb4a959f75f78ecd85804b8654b695de" name="microupdates/MU61/dist-rpm-CentOS-7-x86_64/jsw.min.js.map" target="/usr/local/psa/admin/htdocs/javascript/jsw.min.js.map" />
+        <file create_new="false" md5="cb2b0381bb0b2c5ca1ecd151acf48864" name="microupdates/MU61/common/admin/plib/backup/Conflicts/Resolver/UnfitSettingsResolver.php" target="/usr/local/psa/admin/plib/backup/Conflicts/Resolver/UnfitSettingsResolver.php" />
+        <file create_new="false" md5="f54e75b2561be7552d4e025b38a2cf37" name="microupdates/MU61/common/admin/plib/backup/Serializer/Services.php" target="/usr/local/psa/admin/plib/backup/Serializer/Services.php" />
+        <file create_new="false" md5="7c2ff5af3fbfef16f828562fbce5f602" name="microupdates/MU62/common/admin/conf/templates/default/domain/nginxDomainVirtualHost.php" target="/usr/local/psa/admin/conf/templates/default/domain/nginxDomainVirtualHost.php" />
+        <file create_new="false" md5="2f56242614bc39fd3e335be1e76dfc4c" name="microupdates/MU62/common/admin/plib/api-rpc/AgentHosting.php" target="/usr/local/psa/admin/plib/api-rpc/AgentHosting.php" />
+        <file create_new="false" md5="8f32cc0487124907c588af0df0332727" name="microupdates/MU62/common/admin/application/default/views/scripts/backup/_list.phtml" target="/usr/local/psa/admin/application/default/views/scripts/backup/_list.phtml" />
+        <file create_new="false" md5="fe5ef838d0c2c250632ad25733a1c035" name="microupdates/MU62/common/admin/plib/CommonPanel/Controller/Action/Backup/Trait.php" target="/usr/local/psa/admin/plib/CommonPanel/Controller/Action/Backup/Trait.php" />
+        <file create_new="true" md5="b173ade749d7ce9fc2e31d2cc3d7f415" name="microupdates/MU62/common/admin/plib/CommonPanel/View/Helper/StorageIconUrl.php" target="/usr/local/psa/admin/plib/CommonPanel/View/Helper/StorageIconUrl.php">
+          <permissions sticky="false">
+            <user exec="false" name="root" read="true" suid="false" write="true" />
+            <group exec="false" name="root" read="true" suid="false" write="false" />
+            <others exec="false" read="true" write="false" />
+          </permissions>
+        </file>
+        <file create_new="false" md5="6aed008273b1991e9670f95368c40d17" name="microupdates/MU62/common/admin/plib/CommonPanel/View/List/Backup.php" target="/usr/local/psa/admin/plib/CommonPanel/View/List/Backup.php" />
+        <file create_new="false" md5="cf6ec7350ae9490e80fad0b87608dfc4" name="microupdates/MU62/common/admin/plib/Extension/Command/Pack.php" target="/usr/local/psa/admin/plib/Extension/Command/Pack.php" />
+        <file create_new="false" md5="ab7c32102ce943c6799bc167f75949d0" name="microupdates/MU62/common/admin/plib/Extension/Helper.php" target="/usr/local/psa/admin/plib/Extension/Helper.php" />
+        <file create_new="false" md5="6f5c2a74e1347963cc51180324eea87d" name="microupdates/MU64/common/admin/plib/DailyMaintainance/Runner/Abstract.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Runner/Abstract.php" />
+        <file create_new="false" md5="2cffeef8e92c72d09819b79d650daf1b" name="microupdates/MU64/common/admin/plib/DailyMaintainance/Runner/Batch/Main.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Runner/Batch/Main.php" />
+        <file create_new="false" md5="dce427a24732e89faebc677cf59d1a97" name="microupdates/MU64/common/admin/plib/PartnerCentral/Customizations.php" target="/usr/local/psa/admin/plib/PartnerCentral/Customizations.php" />
+        <file create_new="false" md5="91e8aa2579b5fd6dea9a6d4031c252f8" name="microupdates/MU64/common/admin/plib/ServerInfo/Modules.php" target="/usr/local/psa/admin/plib/ServerInfo/Modules.php" />
+        <file create_new="false" md5="28e24ea3b0340aede5fe0ad762bdf644" name="microupdates/MU64/common/admin/plib/DailyMaintainance/Task/PleskUsage.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/PleskUsage.php" />
+        <file create_new="false" md5="73e123811cb999a8e6c202eb05c1c2ff" name="microupdates/MU64/common/admin/plib/Extension/Hook/CustomInfo.php" target="/usr/local/psa/admin/plib/Extension/Hook/CustomInfo.php" />
+        <file create_new="false" md5="f8a57d4de0fe6580293531489a137d1a" name="microupdates/MU64/common/admin/plib/Extension/Package.php" target="/usr/local/psa/admin/plib/Extension/Package.php" />
+        <file create_new="false" md5="0cc2993dec2362663accec2129f9b861" name="microupdates/MU65/common/admin/plib/Task/Registry.php" target="/usr/local/psa/admin/plib/Task/Registry.php" />
+        <file create_new="false" md5="79056dbb8a30ae930615e5599df24166" name="microupdates/MU65/common/admin/plib/api-common/StatisticsCollector.php" target="/usr/local/psa/admin/plib/api-common/StatisticsCollector.php" />
+        <file create_new="false" md5="dfd83d92e032ec9ba52f5ce525955e82" name="microupdates/MU65/common/admin/conf/templates/default/domain/service/nginxCache.php" target="/usr/local/psa/admin/conf/templates/default/domain/service/nginxCache.php" />
+        <file create_new="false" md5="be014879aedf93e3727b93ac1967bae6" name="microupdates/MU65/common/admin/plib/LogBrowser/Parser.php" target="/usr/local/psa/admin/plib/LogBrowser/Parser.php" />
+        <file create_new="false" md5="5e6b42ebedd33dc96ef46a554346bfa3" name="microupdates/MU65/common/admin/plib/LogBrowser/Log.php" target="/usr/local/psa/admin/plib/LogBrowser/Log.php" />
+        <file create_new="false" md5="90d0c1e620cc4b21f6e97246a780f005" name="microupdates/MU65/common/admin/plib/Smb/Db/Table/Row/User.php" target="/usr/local/psa/admin/plib/Smb/Db/Table/Row/User.php" />
+        <file create_new="false" md5="2abac95adbea9798c1ef627d71dc7b72" name="microupdates/MU66/common/admin/plib/ServerInfo/Helper/Sanitizer.php" target="/usr/local/psa/admin/plib/ServerInfo/Helper/Sanitizer.php" />
+        <file create_new="false" md5="ff09432e0c3272c34975e4b42e90f0aa" name="microupdates/MU68/dist-rpm-CentOS-7-x86_64/packagemng" target="/usr/local/psa/admin/sbin/packagemng" />
+        <file create_new="false" md5="31f5a55c50f437e8debc6493f40217e7" name="microupdates/MU69/dist-rpm-CentOS-7-x86_64/mail_auth_dump.worker" target="/usr/local/psa/admin/sbin/mail_auth_dump.worker" />
+        <file create_new="false" md5="cdfd459054b237cef2c745432c1442cc" name="microupdates/MU69/common/admin/plib/api-common/cuMailAuthDump.php" target="/usr/local/psa/admin/plib/api-common/cuMailAuthDump.php" />
+        <file create_new="false" md5="2599595c38c7846dde6202c3ec7dce91" name="microupdates/MU69/common/admin/plib/backup/ScheduledBackupCore.php" target="/usr/local/psa/admin/plib/backup/ScheduledBackupCore.php" />
+        <file create_new="false" md5="668ad29459141c1fc07f082f509a4c70" name="microupdates/MU70/common/PMM/agents/PleskX/SpecificConfig.pm" target="/usr/local/psa/PMM/agents/PleskX/SpecificConfig.pm" />
+        <file create_new="false" md5="2cc1d2de95c1e2201c1a6bcc417dcab9" name="microupdates/MU70/common/PMM/agents/shared/CommonConfig.pm" target="/usr/local/psa/PMM/agents/shared/CommonConfig.pm" />
+        <file create_new="false" md5="935015e2d007e4a87fb84fafacc6a5eb" name="microupdates/MU70/common/PMM/agents/shared/HelpFuncs.pm" target="/usr/local/psa/PMM/agents/shared/HelpFuncs.pm" />
+        <file create_new="false" md5="0e03cc5a326b99fc13e84eb4b6976b1c" name="microupdates/MU70/common/PMM/agents/shared/Storage/Storage.pm" target="/usr/local/psa/PMM/agents/shared/Storage/Storage.pm" />
+        <file create_new="false" md5="42173871a043db394e0327d622c2f54e" name="microupdates/MU70/common/PMM/agents/shared/Storage/TarBundle.pm" target="/usr/local/psa/PMM/agents/shared/Storage/TarBundle.pm" />
+        <file create_new="false" md5="e4a871c8dd38d9fd603cc008aacee147" name="microupdates/MU71/common/admin/plib/CommonPanel/Form/Backup/Restore.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/Backup/Restore.php" />
+        <file create_new="false" md5="811a71fee6b7f8c126fb02df033f0d0e" name="microupdates/MU71/common/admin/plib/backup/cuPleskRestore.php" target="/usr/local/psa/admin/plib/backup/cuPleskRestore.php" />
+        <file create_new="false" md5="f7ccbf104821333c972f49455091b195" name="microupdates/MU71/dist-rpm-CentOS-7-x86_64/poppassd" target="/usr/local/psa/admin/sbin/poppassd" />
+        <file create_new="false" md5="6052b3d9b6357bc0fbcb04155c863a3a" name="microupdates/MU71/common/admin/plib/DailyMaintainance/Task/CheckForUpdates.php" target="/usr/local/psa/admin/plib/DailyMaintainance/Task/CheckForUpdates.php" />
+        <file create_new="false" md5="a0cf9f446bef29fe3adbc51c039955ed" name="microupdates/MU72/common/admin/plib/AdminPanel/Form/ContactInfo.php" target="/usr/local/psa/admin/plib/AdminPanel/Form/ContactInfo.php" />
+        <file create_new="false" md5="7a295dddc9f3a944732305954786a319" name="microupdates/MU72/common/admin/plib/Client.php" target="/usr/local/psa/admin/plib/Client.php" />
+        <file create_new="false" md5="94995da005d9ee79c2b970cee41d69b0" name="microupdates/MU72/common/admin/plib/CommonPanel/Setup/Manager.php" target="/usr/local/psa/admin/plib/CommonPanel/Setup/Manager.php" />
+        <file create_new="false" md5="b437fe1dfeb3ae9e3082c614e2d2c751" name="microupdates/MU74/common/admin/plib/api-common/cuInitConf.php" target="/usr/local/psa/admin/plib/api-common/cuInitConf.php" />
+        <file create_new="false" md5="3102291a6369e3243b493f48a6295a72" name="microupdates/MU74/common/admin/application/admin/controllers/SetupController.php" target="/usr/local/psa/admin/application/admin/controllers/SetupController.php" />
+        <file create_new="false" md5="5b5c2ee358ba93e398a35c0a006692e4" name="microupdates/MU74/common/admin/plib/CommonPanel/Config/Defaults.php" target="/usr/local/psa/admin/plib/CommonPanel/Config/Defaults.php" />
+        <file create_new="false" md5="cc043d098f4e669dacd4e4176dbe89c2" name="microupdates/MU74/common/admin/plib/CommonPanel/Setup/Form.php" target="/usr/local/psa/admin/plib/CommonPanel/Setup/Form.php" />
+        <file create_new="false" md5="c3bb8b3248286a3d7475f56c69da5fb1" name="microupdates/MU75/dist-rpm-CentOS-7-x86_64/reset_instance_data" target="/usr/local/psa/admin/sbin/reset_instance_data" />
+        <file create_new="false" md5="32e6712ec7251abbc1464d4f4a6f5b97" name="microupdates/MU76/common/admin/plib/FileManager.php" target="/usr/local/psa/admin/plib/FileManager.php" />
+        <file create_new="false" md5="9eda92dec7f8e4c58c5ef292e1f26a68" name="microupdates/MU76/common/admin/plib/pm/ServerFileManager.php" target="/usr/local/psa/admin/plib/pm/ServerFileManager.php" />
+        <file create_new="false" md5="ffaa5ac210272c8bf5b4bed248d5c9b8" name="microupdates/MU78/common/admin/plib/api-common/cuModule.php" target="/usr/local/psa/admin/plib/api-common/cuModule.php" />
+        <file create_new="false" md5="be4de2aa5664cf6aed52bb10c55d32dd" name="microupdates/MU78/common/admin/plib/Extension/Catalog.php" target="/usr/local/psa/admin/plib/Extension/Catalog.php" />
+        <file create_new="false" md5="c7d83ed6d1b1740cc0a83f7a2f4dcb33" name="microupdates/MU79/common/admin/plib/Dns/Record.php" target="/usr/local/psa/admin/plib/Dns/Record.php" />
+        <file create_new="false" md5="b175d65fd55cde25c0444ad6c3dbb0ec" name="microupdates/MU79/common/admin/plib/Service/Dns/Connector/Proxy.php" target="/usr/local/psa/admin/plib/Service/Dns/Connector/Proxy.php" />
+        <file create_new="false" md5="018c5d9b8e64f89897a66837e9346e6c" name="microupdates/MU79/common/admin/plib/DatabaseManagerMSSQL.php" target="/usr/local/psa/admin/plib/DatabaseManagerMSSQL.php" />
+        <file create_new="false" md5="b05500cd5faef11de49b738bc7be46b8" name="microupdates/MU80/dist-rpm-CentOS-7-x86_64/deployer" target="/usr/local/psa/admin/sbin/deployer" />
+        <file create_new="false" md5="4336e81b3a92f9289b19963cc737546b" name="microupdates/MU80/dist-rpm-CentOS-7-x86_64/pmm-ras" target="/usr/local/psa/admin/sbin/pmm-ras" />
+        <file create_new="false" md5="036d40ef25be9b5d2eb4761824263731" name="microupdates/MU80/common/PMM/agents/PleskX/Packer.pm" target="/usr/local/psa/PMM/agents/PleskX/Packer.pm" />
+        <file create_new="false" md5="e2eb99b7548d86d973dd4069c881584f" name="microupdates/MU80/common/admin/plib/CommonPanel/Form/DomainInfoSection.php" target="/usr/local/psa/admin/plib/CommonPanel/Form/DomainInfoSection.php" />
+        <file create_new="false" md5="2119a744ea4b50c4d87c7b9e324d480c" name="microupdates/MU80/common/admin/plib/Smb/Form/Final/Web/AddDomain.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/Web/AddDomain.php" />
+        <file create_new="false" md5="26c961c0e5a98fe6c72830a4522492b9" name="microupdates/MU80/common/admin/plib/Smb/Form/Final/Web/AddSubdomain.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/Web/AddSubdomain.php" />
+        <file create_new="false" md5="27034e9c3c1d3d9451056ab27879bac4" name="microupdates/MU80/common/admin/plib/CommonPanel/Validate/Domain/NameNotHostname.php" target="/usr/local/psa/admin/plib/CommonPanel/Validate/Domain/NameNotHostname.php" />
+        <file create_new="false" md5="cb0a4c5df13ed1abec02b9b1c62f8c41" name="microupdates/MU80/common/admin/plib/Smb/Form/Final/Web/Settings.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/Web/Settings.php" />
+        <file create_new="false" md5="69637de5cc70cf275e9be1d20e9674a0" name="microupdates/MU81/common/admin/application/default/views/scripts/partials/facebook-like-link.phtml" target="/usr/local/psa/admin/application/default/views/scripts/partials/facebook-like-link.phtml" />
+        <file create_new="false" md5="6d09cb0086d661a731284145ffdf845e" name="microupdates/MU81/common/admin/application/default/views/scripts/partials/twitter-follow-link.phtml" target="/usr/local/psa/admin/application/default/views/scripts/partials/twitter-follow-link.phtml" />
+        <file create_new="false" md5="91091b120e5dabb78d11eaf0b9bee276" name="microupdates/MU83/common/admin/application/smb/controllers/WebController.php" target="/usr/local/psa/admin/application/smb/controllers/WebController.php" />
+        <file create_new="false" md5="a3df5a4eac675aa7a9459dd97fe85f8a" name="microupdates/MU83/common/admin/plib/Smb/Form/Final/Web/PhpSettings.php" target="/usr/local/psa/admin/plib/Smb/Form/Final/Web/PhpSettings.php" />
+      </package>
+    </patch>
+  </product>
+</patches>

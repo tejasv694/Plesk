@@ -1,0 +1,39 @@
+<!--
+Do not modify the NAME value of any of the INPUT fields
+the FORM action, or any of the hidden fields (eg. input type=hidden).
+These are all required for this form to function correctly.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+<title></title>
+		<style type="text/css">
+
+			.myForm td, input, select, textarea, checkbox {
+				font-family: georgia, tahoma;
+				font-size: 14px;
+			}
+
+			.myForm {
+				background-color: #FBFAE7;
+				border: 1px solid #EFECBA;
+				padding: 10px;
+			}
+
+			.required {
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<form method="post" action="%%FormAction%%">
+			<table border="0" class="myForm" cellpadding="2">
+				%%FormContents%%
+				<tr>
+					<td>&nbsp;</td>
+					<td><br /><input type="submit" value="%%LNG_Form_ModifyDetails_Button%%" /><br/>%%LNG_Form_Branding%%</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

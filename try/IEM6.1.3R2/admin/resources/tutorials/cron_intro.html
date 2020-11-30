@@ -1,0 +1,198 @@
+<html>
+<head>
+<link rel="stylesheet" href="../../includes/styles/stylesheet.css" type="text/css">
+<style>
+	a { font-size: 12px; }
+	a { color: black; }
+
+</style>
+</head>
+<body class="popupBody">
+
+<div class="popupContainer">
+
+	<div class="Heading1">Setting Up Scheduled Sending Using Cron</div>
+	<br>
+  	<ul style="list-style:none; margin-left:-40px;">
+  		<a name="top"></a>
+    	<li><a href="#gettingstarted">Getting Started</a></li>
+        <li><a href="#paint">Cron - Paint By Colours</a></li>
+        <li><a href="#asterix">What is the asterisk and what does it do?</a></li>
+        <li><a href="#command">The command line</a></li>
+        <li><a href="#schedule">Setting up cron to run the scheduling script</a></li>
+        <li><a href="#runtime">Running the scheduling script regularly</a></li>
+        <li><a href="#control">Setting Crontabs Through Your Hosting Control Panel</a></li>
+	        <li><span style="padding-left:25px;"><a href="#cpanel">Cpanel 9 (Xskin)</a></span></li>
+          	<li><span style="padding-left:25px;"><a href="#plesk">Plesk (Reloaded)</a></span></li>
+    </ul>
+    <br>
+	Cron is a schedule based service that runs on just about every UNIX and Linux server. It allows you to run commands and scripts at a certain time and date that you can set in a "crontab". Cron can be set to run any Perl or PHP script and basically any command that can be run from a command line.
+	<br><br>
+	In this tutorial I will explain exactly what cron is and how you can use it to schedule the execution of the system's scheduled sending script (so you can schedule your email campaigns to be sent at a later date) on your web server.
+	<br><br>
+	I will also show you briefly how to create a crontab in Plesk Reloaded and in Cpanel (Xskin) using the online control panels. I will be using the system as the application that I am setting up the cron job for. The actual scheduled sending script will be used to send out emails and autoresponders.
+	<br><br>
+	<b><a name="gettingstarted">Getting Started</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	In order to get started with cron, you must have a server that is currently running cron. Your host will also be able to tell you where you are able to setup crontabs -- whether it's from a web based control panel, or through a telnet terminal window.
+	<br><br>
+	<b><a name="paint">Cron - Paint by Colors</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	Lets explore and begin to understand the crontab command and then we'll be able to apply it using the method that we have available (via control panel or telnet). Look at the following basic crontab:
+	<br><br>
+	<center>
+		<div style="width:450px" class="imageTag">
+			<img src="images/cron_1.jpg" title="A basic cron command" border="1">
+			<br>A typical crontab command, explained below.
+		</div>
+	</center>
+	<br>
+	I'll color code each "section" to allow me to visually explain the different parts of this crontab.
+	<br><br>
+	<center>
+		<div style="width:580px" class="imageTag">
+			<img src="images/cron_2.gif" title="A basic cron command, color coded" border="1">
+			<br>A color coded crontab command.
+		</div>
+	</center>
+	<br>
+	Here's an explanation of the above cron command:
+	<br><br>
+	<table border="0" width="650" align="center" cellspacing="0" cellpadding="0">
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: red">
+				<b>Minute of the hour</b><br>
+				Set to a number between 0 – 59 for the corresponding minute of the hour or * for every minute
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #FFCC00">
+				<b>Hour of the day</b><br>
+				Set to a number between 0-23 for the corresponding hour of the day or * for every hour
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #FFFF00">
+				<b>Day of the month</b><br>
+				Set to number between 1-31 for the corresponding day of the month or * for every day
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #66FF00">
+				<b>Month of the year</b><br>
+				Set to a number between 1-12 for the corresponding month of the year or * for every month You can use the name of the month of the year as well eg. march (not case sensitive)
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #33CC33">
+				<b>Day of the week</b><br>
+				Set to a number between 0-7 for the corresponding day of the week (0 or 7 is Sunday) You can use the name of the day of the week as well. Eg. Tuesday (not case sensitive)
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #00FFFF">
+				<b>Beginning of the command line</b><br>
+				Here you specify the path to PHP or Perl and any flags you might need.
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:10px; font-size: 13px; background-color: #0066FF">
+				<b>The path to your script</b><br>
+				Specify the path to your script that you want to run.
+			</td>
+		</tr>
+	</table>
+	<br>
+	<b><a name="asterix">What is the asterisk and what does it do?</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	The Asterisk specifies that the script should be run on every occurrence of a time change. For example, if you want to set a cron to run every hour, then you would place an asterisk in the 'hour' column. Eg. 0 * 1 1 1 Setting a range within a column.
+	<br><br>
+	You can set a range of values in the cron command so that it will run within that range. Eg. 2-5 will run 2, 3, 4 and 5 of the column you set it in. In the day of the month column, for example, this 2-5 setting will run on the 2nd, 3rd, 4th and 5th of the month and will look like this. 0 * 2-5 * * Setting the frequency within each column.
+	<br><br>
+	If you wanted to run a cronjob every 5 minutes, you would be able to use */5 in the minutes column. If it was every 5 hours, then */5 could be placed in the hours column. Many would confuse this */5 as a fraction, but it is actually setting the frequency that the cron takes place in that column. It means 'every five' rather than a fifth of it.
+	<br><br>
+	<b><a name="command">The command line</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	This section can be any command that can be run from a command line. In this case we are setting it up to run a script.
+	<ul style="font-size:13px">
+		<li>Path to PHP – The application will attempt to read this from your server information. If you do not see a path to PHP in your command then you will have to contact your host to determine what this is.<br><br></li>
+		<li>Flags for output – In this example I've used the –f flag which runs cron in quiet mode; this flag stops some unnecessary messages. You can also add /dev/null after the server path to stop error messages being output as well.<br><br></li>
+		<li>Server Path to your script – You will need to specify the full server path directly to your script. You can find this on the 'Cron Settings' tab from the settings page, as shown below.  If you can't find the 'Cron Settings' tab then you need to first enable scheduled sending. This is done by selecting the 'Yes, cron support is enabled option' shown in the image below.<br><br>
+		<center>
+			<div style="width:664px" class="imageTag">
+				<img src="images/cron_7.gif" title="The path to the scheduled sending script from the settings page" border="1">
+				<br>The path to the scheduled sending script from the settings page.
+			</div>
+		</center>
+		</li>
+	</ul>
+	<b><a name="schedule">Setting up cron to run the scheduling script</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	Now that we know what the different parts of the command line actually do, we can begin to setup a cron job for a real use. In the system, we need to run the 'admin/cron/cron.php' file to be able to make use of the scheduled emails, autoresponders and automatic bounce handling.
+	<ul style="font-size:13px">
+		<li>Decide what frequency you wish to run the script. For every minute, you would use * * * * *<br><br></li>
+		<li>Create the cronjob. Login to telnet or your control panel and type <b><i>crontab -e</i></b> at the command line. This will let you edit your crontab file. Type this text in:<br><br><b><i>* * * * * path/to/php –f /home/user1/public_html/sendstudio/admin/cron/cron.php</i></b><br><br></li>
+		<li>Sit back and let cron do the rest.</li>
+		<li>If you set your cron to send every minute on your server you can make full use of the in built functionality to be able to delay your running of emails, autoresponders and bounce processing.</li>
+	</ul>
+
+	<b><a name="runtime">Running the scheduling script regularly</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	You can run the scheduling script as often as you like and the more frequently you run the script the more precision you can have with your tasks. The settings inside the application's control panel control how often a particular task is run. For example, you can run the scheduling script every 2
+	minutes, then use the settings in the application's control panel to only run autoresponders every 15 minutes. This allows you to control everything from inside the application and you don't need to change your
+	cron settings in your hosting control panel.
+	<br><br>
+
+	<b><a name="control">Setting Crontabs Through Your Hosting Control Panel</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	Some 'front ends' to cron allow you to set the time and the command line for crontabs through your online hosting control panel. Look below for some examples of Cpanel and Plesk.
+	<br><br>
+	<b><a name="cpanel">Cpanel 9 (Xskin)</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	Login to your control panel and look for the cronjobs icon There are two 'modes' to set cron jobs in Cpanel – you can choose either the standard or the advanced mode. The standard mode looks like this:
+	<br><br>
+	<center>
+		<div style="width:509px" class="imageTag">
+			<img src="images/cron_3.gif" title="A basic cron setup in CPanel" border="1">
+			<br>Setting up a cronjob in Cpanel using the simple options.
+		</div>
+	</center>
+	<br>
+	This is a very simple way to add the frequency of the cron without needing to know what the asterisk or the numbers mean. In the command line you then add your path to PHP and the full path to your script. In the top field, you place the email address where the output will be sent – this is usually to alert you of errors etc.
+	<br><br>
+	For the advanced mode you will see the following:
+	<br><br>
+	<center>
+		<div style="width:557px" class="imageTag">
+			<img src="images/cron_4.gif" title="An advanced cron setup in CPanel" border="1">
+			<br>Setting up a cronjob in Cpanel using the advanced options.
+		</div>
+	</center>
+	<br>
+	In this mode, you simply place the full command and then enter your frequency in the corresponding columns – they are clearly labeled so you can see which column are using as well.
+	<br><br>
+	<b><a name="plesk">Plesk (Reloaded)</a></b> <sup><a href="#top" style="color:#666666; font-size:11px">[top]</a></sup>
+	<br><br>
+	Login to your Plesk control panel and look for the crontab icon. Crontabs are called 'tasks' in Plesk. In order to create a task click on the add new task icon. All current tasks will be shown in the tasks section for the specific user(in the dropdown).You can enter the email for cron output for this user in the email address field.
+	<br><br>
+	<center>
+		<div style="width:779px" class="imageTag">
+			<img src="images/cron_5.gif" title="A cron setup in Plesk Reloaded" border="1">
+			<br>Setting up a cronjob in Plesk using the tasks section.
+		</div>
+	</center>
+	<br>
+	Here's the "Add New Task" screen:
+	<br><br>
+	<center>
+		<div style="width:735px" class="imageTag">
+			<img src="images/cron_6.gif" title="The 'Add New Task' screen in Plesk's tasks section" border="1">
+			<br>The 'Add New Task' screen in Plesk's tasks section.
+		</div>
+	</center>
+	<br>
+	All fields are clearly marked so you know what time factor you are dealing with. Then just add your command to the command field and the task is complete.
+	<br><br>
+</div>
+</body>
+</html>

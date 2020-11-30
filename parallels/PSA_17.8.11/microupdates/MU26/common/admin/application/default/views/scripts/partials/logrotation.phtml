@@ -1,0 +1,59 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<?php echo $this->element->getElement('logRotationEnabled')->render($this); ?>
+<?php echo $this->partial('partials/forms/radio-controls.phtml', null, $this); ?>
+<?php echo $this->element->getElement('maximumNumberOfFiles')->render($this); ?>
+<?php echo $this->element->getElement('compress')->render($this); ?>
+<?php echo $this->element->getElement('sendLogToEmail')->render($this); ?>
+<?php $typeElement = $this->element->getElement($this->radio);?>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.namespace('AdminPanel.ServicePlan.Misc');
+
+AdminPanel.ServicePlan.Misc.LogRotation = {
+    updateControlsState: function() {
+	    <?php foreach($this->indentControls as $option => $control): ?>
+            radio = $('<?php echo $typeElement->getId() . '-' . $option ?>');
+            control = $('<?php echo $this->element->getElement($control)->getId() ?>');
+            if (radio.checked && !radio.disabled) {
+                control.enable();
+            } else {
+            	control.disable();
+            }
+        <?php endforeach;?>
+    },
+
+    enableControl: function(control, value) {
+        if (value) {
+            control.enable();
+        } else {
+            control.disable();
+        }
+    },
+
+    updateLogRotation: function() {
+        var isForced = <?= $this->isForced ?>;
+        checkbox = $('<?php echo $this->element->getElement('logRotationEnabled')->getId() ?>');
+        <?php foreach ($typeElement->getMultiOptions() as $option => $optionTitle): ?>
+            control = $('<?php echo $typeElement->getId() . '-' . $option ?>');
+            AdminPanel.ServicePlan.Misc.LogRotation.enableControl(control, !isForced && checkbox.checked);
+        <?php endforeach;?>
+        AdminPanel.ServicePlan.Misc.LogRotation.enableControl($('<?php echo $this->element->getElement('logRotationEnabled')->getId() ?>'), !isForced);
+        AdminPanel.ServicePlan.Misc.LogRotation.enableControl($('<?php echo $this->element->getElement('maximumNumberOfFiles')->getId() ?>'), checkbox.checked);
+        AdminPanel.ServicePlan.Misc.LogRotation.enableControl($('<?php echo $this->element->getElement('compress')->getId() ?>'), checkbox.checked);
+        AdminPanel.ServicePlan.Misc.LogRotation.enableControl($('<?php echo $this->element->getElement('sendLogToEmail')->getId() ?>'), checkbox.checked);
+        AdminPanel.ServicePlan.Misc.LogRotation.updateControlsState();
+    }
+}
+
+Jsw.onReady(function() {
+	<?php foreach ($typeElement->getMultiOptions() as $option => $optionTitle): ?>
+	control = $('<?php echo $typeElement->getId() . '-' . $option ?>');
+	control.observe('click', AdminPanel.ServicePlan.Misc.LogRotation.updateControlsState);
+	<?php endforeach;?>
+	$('<?php echo $this->element->getElement('logRotationEnabled')->getId() ?>').observe('click', AdminPanel.ServicePlan.Misc.LogRotation.updateLogRotation);
+	AdminPanel.ServicePlan.Misc.LogRotation.updateLogRotation();
+});
+//]]>
+</script>

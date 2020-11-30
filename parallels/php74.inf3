@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon id="php74" name="PHP v 7.4">
+	<release id="PHP74_17" name="PHP v 7.4" version="7.4">
+		<compatibility_info>
+			<compatible product_id="plesk" from_version="18.0.21" to_version="18.0.99" />
+		</compatibility_info>
+<!--
+		<build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="php74-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CentOS" os_version="8" os_arch="x86_64" config="php74-cos8-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="php74-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="10.0" os_arch="x86_64" config="php74-deb10.0-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Debian" os_version="9.0" os_arch="x86_64" config="php74-deb9.0-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="php74-cos7-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="RedHat" os_version="el8" os_arch="x86_64" config="php74-cos8-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="php74-ubt16.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="18.04" os_arch="x86_64" config="php74-ubt18.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="Ubuntu" os_version="20.04" os_arch="x86_64" config="php74-ubt20.04-x86_64.inf3" />
+		<build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="php74-cos7-x86_64.inf3" />
+-->
+		<build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="pool/PHP_7.4.8_59/php74-deb8.0-x86_64.inf3" />
+	</release>
+</addon>

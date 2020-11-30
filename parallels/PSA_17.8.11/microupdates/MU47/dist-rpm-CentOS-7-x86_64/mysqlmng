@@ -1,0 +1,1606 @@
+#!/bin/bash
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+#
+
+#
+# Plesk script
+#
+
+
+
+#default values
+
+product_default_conf()
+{
+
+PRODUCT_ROOT_D=/usr/local/psa
+PRODUCT_RC_D=/etc/rc.d/init.d
+PRODUCT_ETC_D=/usr/local/psa/etc
+PLESK_LIBEXEC_DIR=/usr/lib64/plesk-9.0
+HTTPD_VHOSTS_D=/var/www/vhosts
+HTTPD_CONF_D=/etc/httpd/conf
+HTTPD_INCLUDE_D=/etc/httpd/conf.d
+HTTPD_BIN=/usr/sbin/httpd
+HTTPD_LOG_D=/var/log/httpd
+HTTPD_SERVICE=httpd
+QMAIL_ROOT_D=/var/qmail
+PLESK_MAILNAMES_D=/var/qmail/mailnames
+RBLSMTPD=/usr/sbin/rblsmtpd
+NAMED_RUN_ROOT_D=/var/named/chroot
+NAMED_OPTIONS_CONF=
+NAMED_ZONES_CONF=
+WEB_STAT=/usr/bin/webalizer
+MYSQL_VAR_D=/var/lib/mysql
+MYSQL_BIN_D=/usr/bin
+MYSQL_SOCKET=/var/lib/mysql/mysql.sock
+PGSQL_DATA_D=/var/lib/pgsql/data
+PGSQL_CONF_D=/var/lib/pgsql/data
+PGSQL_BIN_D=/usr/bin
+DUMP_D=/var/lib/psa/dumps
+DUMP_TMP_D=/tmp
+MAILMAN_ROOT_D=/usr/lib/mailman
+MAILMAN_VAR_D=/var/lib/mailman
+PYTHON_BIN=/usr/bin/python
+DRWEB_ROOT_D=/opt/drweb
+DRWEB_ETC_D=/etc/drweb
+GPG_BIN=/usr/bin/gpg
+TAR_BIN=/bin/tar
+AWSTATS_ETC_D=/etc/awstats
+AWSTATS_BIN_D=/var/www/cgi-bin/awstats
+AWSTATS_TOOLS_D=/usr/share/awstats
+AWSTATS_DOC_D=/var/www/html/awstats
+OPENSSL_BIN=/usr/bin/openssl
+LIB_SSL_PATH=/lib/libssl.so
+LIB_CRYPTO_PATH=/lib/libcrypto.so
+CLIENT_PHP_BIN=/usr/local/psa/bin/php-cli
+SNI_SUPPORT=true
+APS_DB_DRIVER_LIBRARY=/usr/lib64/libmysqlserver.so.2
+IPv6_DISABLED=false
+SA_MAX_MAIL_SIZE=256000
+
+}
+
+# db_do [--inten <inten>] query
+# Runs query. If it fails, die
+# the inten string describes the query reason (to make finding the bug simpler)
+db_do()
+{
+	local desc="execute SQL query"
+	eval `sh_get_args '--inten) desc=" (to $2)"; shift;;'`
+	if [ "$db_fix_check_stage" = "yes" ]; then
+		return
+	fi
+
+	local query="$1"
+
+	mysql -e "$query" >>"$product_log" 2>&1 || die "$desc, the query was: $query"
+}
+
+# db_select <query>
+# runs <query> via mysql_raw
+# writes output to db_select_output
+# if query fails, output errors and return 1
+db_select()
+{
+	local desc="execute SQL query"
+	local query="$1"
+	local output="`mysql_raw -e \"$query\" 2>>\"$product_log\"`"
+	local status="$?"
+	if [ "$status" -ne "0" ]; then
+		p_echo "$output"
+		die "run the following SQL query: $query"
+	fi
+
+	db_select_output="$output"
+	return 0
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh
+# Usage:  pleskrc <service> <action>
+pleskrc()
+{
+	[ 2 -le $# ] || die "Not enough arguments"
+
+	local service_name=$1
+	local action=$2
+	local ret=0
+	local inten
+	shift
+	shift
+
+	# Now check redefined functions
+	if test "$machine" = "linux" && is_function "${service_name}_${action}_${machine}_${linux_distr}"; then
+		"${service_name}_${action}_${machine}_${linux_distr}" "$@"
+		return $?
+	elif is_function "${service_name}_${action}_${machine}"; then
+		"${service_name}_${action}_${machine}" "$@"
+		return $?
+	elif is_function "${service_name}_${action}"; then
+		"${service_name}_${action}" "$@"
+		return $?
+	fi
+
+	# Not redefined - call default action
+	eval "service=\$${service_name}_service"
+	[ -n "$service" ] || die "$action $service_name service (Empty service name for '$service_name')"
+
+	inten="$action service $service"
+	[ "$action" = "status" -o "$action" = "exists" ] || echo_try "$inten"
+
+	service_ctl "$action" "$service" "$service_name"
+
+	ret="$?"
+	if [ "$action" != "status" -a "${action}" != "exists" ]; then
+		if [ "$ret" -eq 0 ]; then
+			suc
+		else
+			if [ -x "/bin/systemctl" ]; then
+				p_echo "`/bin/systemctl -l status \"${service}.service\" | awk 'BEGIN {s=0} s==1 {s=2} /^$/ {s=1} s==2 {print}'`"
+			fi
+			warn "$inten"
+		fi
+	fi
+
+	return $ret
+}
+
+# NOTE:
+#	Function service_ctl is just helper for pleskrc().
+#	Do not call it directly, use pleskrc()!!!
+service_ctl()
+{
+	local action=$1
+	local service=$2
+	local service_name=$3
+
+	if [ "$action" != "exists" ]; then
+		_service_exec $service exists;
+		if [ "$?" != "0" ]; then
+			warn "attempt to ${inten} - control script doesn't exist or isn't executable"
+			return 1
+		fi
+	fi
+
+	case "$action" in
+		start)
+			pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		stop)
+			! pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		restart)
+			if pleskrc "$service_name" status; then
+				_service_exec "$service" "$action"
+			else
+				_service_exec "$service" start
+			fi
+			;;
+		reload)
+			! pleskrc "$service_name" status || _service_exec "$service" "$action"
+			;;
+		status)
+			_service_exec "$service" status
+			;;
+		try-restart)
+			if [ -x "/bin/systemctl" ]; then
+				_service_exec "$service" "$action"
+			else
+				! pleskrc "$service_name" status || _service_exec "$service" "restart"
+			fi
+			;;
+		try-reload)
+			! pleskrc "$service_name" status || _service_exec "$service" "reload"
+			;;
+		reload-or-restart)
+			if [ -x "/bin/systemctl" ]; then
+				_service_exec "$service" "$action"
+			elif pleskrc "$service_name" status; then
+				_service_exec "$service" "reload"
+			else
+				_service_exec "$service" "start"
+			fi
+			;;
+		*)
+			_service_exec "$service" "$action"
+			;;
+	esac >> "$product_log"
+}
+
+_service_exec()
+{
+	local service=$1
+	local action=$2
+
+	local action_cmd
+	local sysvinit_service="/etc/rc.d/init.d/$service"
+
+	if [ -x "/bin/systemctl" ]; then
+		case "${action}" in
+			exists)
+				if /bin/systemctl list-unit-files | awk 'BEGIN { rc = 1 } $1 == "'$service'.service" { rc = 0;} END { exit rc }'; then
+					return 0 # systemd unit
+				elif [ -x "$sysvinit_service" ]; then
+					return 0 # sysvinit compat
+				fi
+				return 1 # not found
+				;;
+			status)
+				action="is-active"
+				;;
+			reload|graceful)
+				action='reload-or-try-restart'
+				;;
+		esac
+		/bin/systemctl "$action" "${service}.service"
+	elif  [ -x "/sbin/initctl" -a -e "/etc/init/$service.conf" ]; then  # upstart (ubuntu)
+		if [ "$action" = "status" ]; then
+			/sbin/initctl status "$service" | grep -qE ' ([0-9]+)$' && return 0 || return 1
+		elif [ "$action" = "exists" ]; then
+			return 0
+		else
+			/sbin/initctl "$action" "$service"
+		fi
+	else
+		if [ -x "/usr/sbin/invoke-rc.d" ]; then
+			action_cmd="/usr/sbin/invoke-rc.d $service"
+		elif [ -x "/sbin/service" ]; then
+			action_cmd="/sbin/service $service"
+		elif [ -x "/usr/sbin/service" ]; then
+			action_cmd="/usr/sbin/service $service"
+		else
+			action_cmd="$sysvinit_service"
+		fi
+
+		if [ "$action" = "exists" ]; then
+			[ -x "$sysvinit_service" ] && return 0 || return 1
+		else
+			$action_cmd $action 2>/dev/null
+		fi
+	fi
+}
+
+is_function()
+{
+	local type_output=$(type -t "$1")
+	test "X${type_output}" = "Xfunction"
+}
+
+# echo message to product log, unless debug
+p_echo()
+{
+    if [ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" -o -z "$product_log" ] ; then
+        echo "$@" >&2
+    else
+        echo "$@" >> "$product_log" 2>&1
+    fi
+}
+
+# echo message to product log without new line, unless debug
+pnnl_echo()
+{
+    if [ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" -o -z "$product_log" ] ; then
+        echo -n "$*" >&2
+    else
+        echo -n "$*" >> "$product_log" 2>&1
+    fi
+}
+
+die()
+{
+	PACKAGE_SCRIPT_FAILED="$*"
+
+	report_problem \
+		"ERROR while trying to $*" \
+		"Check the error reason(see log file: ${product_log}), fix and try again"
+
+	selinux_close
+
+	exit 1
+}
+
+warn()
+{
+	local inten
+	inten="$1"
+	p_echo
+	p_echo "WARNING!"
+	pnnl_echo "Some problems are found during $inten"
+	p_echo "(see log file: ${product_log})"
+	p_echo
+	p_echo "Continue..."
+	p_echo
+
+	product_log_tail | send_error_report_with_input "Warning: $inten"
+
+	[ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" ] || \
+	product_log_tail
+}
+
+# Use this function to report failed actions.
+# Typical report should contain
+# - reason or problem description (example: file copying failed)
+# - how to resolve or investigate problem (example: check file permissions, free disk space)
+# - how to re-run action (example: perform specific command, restart bootstrapper script, run installation again)
+report_problem()
+{
+	[ -n "$product_problems_log" ] || product_problems_log="/dev/stderr"
+
+	p_echo
+	if [ "0$problems_occured" -eq 0 ]; then
+		echo "***** $process problem report *****" >> "$product_problems_log" 2>&1
+	fi
+	for problem_message in "$@"; do
+		p_echo "$problem_message"
+		echo "$problem_message" >> "$product_problems_log" 2>&1
+	done
+	p_echo
+
+	product_log_tail | send_error_report_with_input "Problem: $@"
+
+	[ -n "$PLESK_INSTALLER_DEBUG" -o -n "$PLESK_INSTALLER_VERBOSE" ] || \
+		product_log_tail
+
+	problems_occured=1
+}
+
+echo_try()
+{
+	msg="$*"
+	pnnl_echo " Trying to $msg... "
+}
+
+suc()
+{
+	p_echo "done"
+}
+
+# do not call it w/o input! Use send_error_report in these cases.
+send_error_report_with_input()
+{
+	get_product_versions
+	{
+		echo "$@"
+		echo ""
+		if [ -n "$error_report_context" ]; then
+			echo "Context: $error_report_context"
+			echo ""
+		fi
+		if [ -n "$RP_LOADED_PATCHES" ]; then
+			echo "Loaded runtime patches: $RP_LOADED_PATCHES"
+			echo ""
+		fi
+		cat -
+	} | $PRODUCT_ROOT_D/admin/bin/send-error-report --version "$product_this_version" install >/dev/null 2>&1
+}
+
+set_error_report_context()
+{
+	error_report_context="$*"
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+reexec_with_clean_env()
+{
+	# Usage: call this function as 'reexec_with_clean_env "$@"' at the start of a script.
+	#        Don't use with scripts that require sensitive environment variables.
+	#        Don't put the call under any input/output redirection.
+	# Purpose: make sure the script is executed with a sane environment.
+
+	export LANG=C LC_MESSAGES=C LC_ALL=C
+	export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+	umask 022
+
+	[ -z "$PLESK_INSTALLER_ENV_CLEANED" ] || { unset PLESK_INSTALLER_ENV_CLEANED; return 0; }
+	[ -n "$BASH" ] || exec /bin/bash "$0" "$@"
+
+	# N.B.: the following code requires Bash. On Dash it would cause syntax error upon parse w/o eval.
+	eval '
+	local extra_vars=()                     # list of variables to preserve
+	for var in "${!PLESK_@}"; do            # enumerate all PLESK_* variables
+		extra_vars+=("$var=${!var}")
+	done
+	extra_vars+=("PLESK_INSTALLER_ENV_CLEANED=1")
+
+	# Exec self with clean env except for extra_vars, shell opts, and arguments.
+	exec /usr/bin/env -i "${extra_vars[@]}" /bin/bash ${-:+-$-} "$0" "$@" || {
+		echo "Failed to reexec self ($0) with clean environment" >&2
+		exit 91		# Just some relatively unique error code
+	}
+	'
+}
+
+# accumulates chown and chmod
+set_ac()
+{
+	local u_owner g_owner perms node
+	u_owner="$1"
+	g_owner="$2"
+	perms="$3"
+	node="$4"
+
+	# A very small optimization - replacing of two execs by one,
+	#    it works only if the following conditions are observed:
+	#       - u_owner is username (not UID);
+	#       - g_owner is group (not GID);
+	#       - perms is in octal mode.
+	# If some conditions aren't observed,
+	#    optimization doesn't work,
+	#    but it doesn't break function
+	[ "$(stat -c '%U:%G 0%a' $node)" != "$u_owner:$g_owner $perms" ] || return 0
+	chown $u_owner:$g_owner $node || die "chown $u_owner:$g_owner $node"
+	chmod $perms $node || die "chmod $perms $node"
+}
+
+detect_vz()
+{
+	[ -z "$PLESK_VZ_RESULT" ] || return $PLESK_VZ_RESULT
+
+	PLESK_VZ_RESULT=1
+	PLESK_VZ=0
+	PLESK_VE_HW_NODE=0
+	PLESK_VZ_TYPE=
+
+	local issue_file="/etc/issue"
+	local vzcheck_file="/proc/self/status"
+	[ -f "$vzcheck_file" ] || return 1
+
+	local env_id=`sed -ne 's|^envID\:[[:space:]]*\([[:digit:]]\+\)$|\1|p' "$vzcheck_file"`
+	[ -n "$env_id" ] || return 1
+	if [ "$env_id" = "0" ]; then
+		# Either VZ/OpenVZ HW node or unjailed CloudLinux
+		PLESK_VE_HW_NODE=1
+		return 1
+	fi
+
+	if grep -q "CloudLinux" "$issue_file" >/dev/null 2>&1 ; then
+		return 1
+	fi
+
+	if [ -f "/proc/vz/veredir" ]; then
+		PLESK_VZ_TYPE="vz"
+	elif [ -d "/proc/vz" ]; then
+		PLESK_VZ_TYPE="openvz"
+	fi
+
+	PLESK_VZ=1
+	PLESK_VZ_RESULT=0
+	return 0
+}
+
+sh_get_args()
+{
+	echo 'while true; do case "$1" in '"$1"'*) break;; esac; shift; done'
+}
+
+get_narg()
+{
+	shift $1 2>/dev/null || return 0
+	echo $1
+}
+
+get_random_string()
+{
+	local str_length="$1"
+	local str_symbols="$2"
+	if [ -x "$PRODUCT_ROOT_D/admin/sbin/random_str" -a -z "$str_symbols" ]; then
+		"$PRODUCT_ROOT_D/admin/sbin/random_str" "$str_length"
+	else
+		# random_str utility may be unavailable in pre phase
+		if [ -z "$str_length" ]; then
+			str_length="14"
+		fi
+		if [ -z "$str_symbols" ]; then
+			str_symbols="A-Za-z0-9_"
+		fi
+
+		< /dev/urandom tr -dc "$str_symbols" 2>/dev/null | head -c "$str_length" 2>/dev/null
+	fi
+}
+
+sequence()
+{
+	if type seq >/dev/null 2>&1; then
+		seq $*
+	elif type jot >/dev/null 2>&1; then
+		jot $*
+	else
+		die "Unable to find seq or jot command"
+	fi
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+#-*- vim:syntax=sh
+
+product_log_name_ex()
+{
+	local aux_descr="$1"
+	local action="${CUSTOM_LOG_ACTION_NAME-installation}"
+
+	if [ -n "$aux_descr" ]; then
+		aux_descr="_${aux_descr}"
+	fi
+
+	if [ -n "$CUSTOM_LOG_NAME" ]; then
+		echo "${CUSTOM_LOG_NAME}${action:+_$action}${aux_descr}.log"
+	else
+		echo "plesk_17.8.11${action:+_$action}${aux_descr}.log"
+	fi
+}
+
+product_log_name()
+{
+	product_log_name_ex
+}
+
+product_problems_log_name()
+{
+	product_log_name_ex "problems"
+}
+
+product_log_tail()
+{
+	[ -f "$product_log" ] || return 0
+	{
+		tac "$product_log" | awk '/^START/ { exit } { print }' | tac
+	} 2>/dev/null
+}
+
+set_log_action_name()
+{
+	CUSTOM_LOG_ACTION_NAME="$1"
+}
+
+mktemp_log()
+{
+	local logname="$1"
+	local dir="$2"
+
+	if [ "${logname:0:1}" != "/" ]; then
+		logname="$dir/$logname"
+	fi
+	dir="`dirname $logname`"
+	if [ ! -d "$dir" ]; then
+		mkdir -p "$dir" || { echo "Unable to create log directory : $dir"; exit 1; }
+		if [ "$EUID" -eq "0" ]; then
+			set_ac root root 0700 "$dir"
+		fi
+	fi
+
+	if [ "${logname%XXX}" != "$logname" ]; then
+		mktemp "$logname"
+	else
+		echo "$logname"
+	fi
+}
+
+log_is_in_dev()
+{
+	test "${1:0:5}" = "/dev/"
+}
+
+start_writing_logfile()
+{
+	local logfile="$1"
+	local title="$2"
+	! log_is_in_dev "$logfile" || return 0
+	echo "START $title" >> "$logfile" || { echo "Cannot write installation log $logfile" >&2; exit 1; }
+	[ "$EUID" -ne "0" ] || set_ac root root 0600 "$logfile"
+}
+
+create_product_log_symlink()
+{
+	local logfile="$1"
+	local prevdir="$2"
+
+	local prevlog="$prevdir/`basename $logfile`"
+	[ -e "$prevlog" ] || ln -sf "$logfile" "$prevlog"
+}
+
+log_start()
+{
+	true product_log_name product_problems_log_name mktemp_log
+
+	local title="$1"
+	local custom_log="$2"
+	local custom_problems_log="$3"
+
+	local product_log_dir="/var/log/plesk/install"
+
+	product_log="$product_log_dir/`product_log_name`"
+	product_problems_log="$product_log_dir/`product_problems_log_name`"
+	problems_occured=0
+
+	# init product log
+	[ ! -n "$custom_log" ] || product_log="$custom_log"
+	product_log=`mktemp_log "$product_log" "$product_log_dir"`
+
+	# init problems log
+	if [ -n "$custom_problems_log" ]; then
+		product_problems_log=`mktemp_log "$custom_problems_log" "$product_log_dir"`
+	elif [ -n "$custom_log" ]; then
+		product_problems_log="$product_log"
+	else
+		product_problems_log=`mktemp_log "$product_problems_log" "$product_log_dir"`
+	fi
+
+	# write starting message into logs
+	start_writing_logfile "$product_log" "$title"
+	if [ "$product_log" != "$product_problems_log" ]; then
+		start_writing_logfile "$product_problems_log" "$title"
+	fi
+
+	# create compat symlinks if logs are written to default localtions
+	if [ -z "$custom_log" -a -z "$CUSTOM_LOG_NAME" ]; then
+		create_product_log_symlink "$product_log" "/tmp"
+		[ ! -z "$custom_problems_log" ] || create_product_log_symlink "$product_problems_log" "/tmp"
+	fi
+
+	is_function profiler_setup && profiler_setup "$title" || :
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh
+
+initial_conf()
+{
+	PRODNAME="psa"
+	PRODUCT_NAME="psa"
+	product_full="Plesk Onyx"
+	product=${PRODNAME}
+	PRODUCT_FULL_NAME="Plesk Onyx"
+
+	product_etc="/etc/${PRODNAME}"
+	prod_conf_t="/etc/psa/psa.conf"
+	prodkey="$product_etc/$PRODNAME.key"
+
+	support_contact="http://www.parallels.com/support"
+	sales_email="sales@parallels.com"
+
+	product_version="17.8.11"
+	product_db_version="017008011"
+	conceived_os_vendor=CentOS
+	conceived_os_version="7"
+
+	clients_group="${product}cln"
+	clients_GID=10001
+
+	services_group="psaserv"
+	services_GID=10003
+
+	product_suff="saved_by_${product}".`date "+%m.%d;%H:%M"`
+	product_suffo="saved_by_${product}"
+
+	# plesk default password
+	PRODUCT_DEFAULT_PASSWORD="setup"
+}
+
+get_my_cnf_param()
+{
+	local r=
+
+	local my_cnf
+	find_my_cnf "non-fatal" && \
+		r=`perl -e '$p="'"$1"'";
+		undef $/; $_=<>; s/#.*$//gm;
+		/\[mysqld\](.*?)\[/sg;
+		$_=substr($1, rindex $1,"$p") and
+		/$p\s*=(.*)/m and print $1
+		' ${my_cnf}`
+	echo $r
+}
+
+get_mysql_socket()
+{
+	# Marked as local as it's not used anywhere else now.
+	local mysql_socket="/var/lib/mysql/mysql.sock"
+
+	local mysqlsock=`get_my_cnf_param  socket`
+	local MYSQL_SOCKETS="/var/lib/mysql/mysql.sock /tmp/mysql.sock /var/run/mysqld/mysqld.sock"
+
+	for i in $mysql_socket $mysqlsock $MYSQL_SOCKETS; do
+		if [ -S "$i" ]; then
+			# This is used internally by mysqld_safe. Maybe this whole function isn't required nowadays.
+			# See also: http://dev.mysql.com/doc/refman/5.0/en/problems-with-mysql-sock.html
+			MYSQL_UNIX_PORT=$i
+			export MYSQL_UNIX_PORT
+			mysql_socket="$i"
+			break
+		fi
+	done
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+#-*- vim:ft=sh
+
+register_service() {
+
+	[ -n "$1" ] || die "register_service: service name not specified"
+	local inten="register service $1"
+	echo_try "$inten"
+
+	{
+		if [ -x "/bin/systemctl" ]; then
+			/bin/systemctl enable "$1.service"
+			/bin/systemctl --system daemon-reload >/dev/null 2>&1
+		fi
+
+
+		local rs_db="$PRODUCT_ROOT_D/admin/sbin/register_service_db"
+		[ ! -x "$rs_db" ] || "$rs_db" -a "$@"
+	}
+
+	suc
+}
+
+selinux_close()
+{
+	if [ -z "$SELINUX_ENFORCE" -o "$SELINUX_ENFORCE" = "Disabled" ]; then
+		return
+	fi
+
+	setenforce "$SELINUX_ENFORCE"
+}
+
+get_product_versions()
+{
+	local prod_root_d="/usr/local/psa"
+	
+	product_name="psa"
+	product_this_version="17.8.11"
+	product_this_version_tag="testing"
+	if [ -z "$product_prev_version" ]; then
+		if [ -r "$prod_root_d/version.upg" ]; then
+			product_prev_version=`awk '{ print $1 }' "$prod_root_d/version.upg"`
+		elif [ -r "$prod_root_d/version" ]; then
+			product_prev_version=`awk '{ print $1 }' "$prod_root_d/version"`
+		else
+			product_prev_version="$product_this_version"
+		fi
+	fi
+}
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# -*- vim:ft=sh
+
+# MySQL server configuration
+
+generate_mysql_credentials()
+{
+	local args="$*"
+	mysql_defaults=`echo $args | cut -d: -f 1`
+
+	mysql_user=`echo $args | cut -d: -f 2`
+	[ -n "$mysql_user" ] && mysql_user="--user=$mysql_user"
+
+	mysql_passwd=`echo $args | cut -d: -f 3-`
+	[ -n "$mysql_passwd" ] && mysql_passwd="$mysql_passwd"
+}
+
+# This function must be called *ONLY* for psa installation
+setup_admin_login()
+{
+	true mysql_quote_string
+
+	unset MYSQL_PWD
+	local mysql_db_name="mysql"
+	local sl
+	local inten="define valid mysql credentials"
+	local i
+
+	echo_try "$inten"
+	get_admin_passwd
+
+# --no-defaults:admin:$admin_passwd		admin with pass
+# --no-defaults:root:					root without pass
+# :root:								root with pass in defaults
+# --no-defaults:admin:					admin withiyt pass
+# --no-defaults:admin:$PRODUCT_DEFAULT_PASSWORD		admin with default pass
+# :admin:								admin with pass in defaults
+# ::									user and pass in defaults
+# --defaults-file=/root/.my.cnf			hspc defaults (paranoid)
+#
+	for sl in `sequence 20`; do
+		for i in	"--no-defaults:admin:$admin_passwd" \
+					"--no-defaults:root:" \
+					":root:" \
+					"--no-defaults:admin:" \
+					"--no-defaults:admin:$PRODUCT_DEFAULT_PASSWORD" \
+					":admin:" \
+					"::" \
+					"--defaults-file=/root/.my.cnf::"; do
+			generate_mysql_credentials "$i"
+			if mysql_test_connection; then
+				suc
+# 	create/Update admin superuser
+				echo "grant all privileges on *.* to 'admin'@'localhost' identified by '`mysql_quote_string $admin_passwd`' with grant option;flush privileges" | mysql_direct mysql
+				update_psa_shadow
+
+#	backup private my.cnf if it contains password (vz/hspc related)
+				rm -f /.my.cnf
+				if grep -q '\s*password\s*=' /root/.my.cnf 2>/dev/null; then
+					p_echo "WARNING: You current personal mysql config /root/.my.cnf has been renamed into /root/.my.cnf.bak"
+					mv -f /root/.my.cnf /root/.my.cnf.bak
+				fi
+
+				set_mysql_auth
+				return 0
+			fi
+		done
+		p_echo "One more attempt to connect"
+		try_reset_mysql_auth
+		sleep "$sl"
+	done
+	die "$inten. If you are installing Plesk on an already configured MySQL server, you need to specify the administrator's credentials to succeed with the installation." \
+		"To do this, you need to create a file - /root/.my.cnf with the 'client' section where you need to provide user and its password" \
+		"(\"user = \$admin_name\" and \"password = \$admin_pass\")." \
+		"After installation is finished, the file /root/.my.cnf will be renamed to /root/.my.cnf.bak"
+}
+
+update_psa_shadow()
+{
+	echo "$admin_passwd" > $mysql_passwd_file || die
+	chown $admin_user:$admin_group ${mysql_passwd_file} || die
+	chmod 600 ${mysql_passwd_file} || die
+}
+
+set_mysql_auth()
+{
+	# This function requires set_mysql_server_params and set_mysql_client_params (or set_mysqld_params)
+	# to be called before
+
+	local inten="set up mysql authentication"
+	get_admin_passwd
+
+	pleskrc mysql start
+
+	mysql_host=
+	mysql_user="--user=admin"
+	mysql_passwd="$admin_passwd"
+	unset mysql_defaults
+
+	if [ -z "$MYSQL_AUTH_SKIP_CONNECTION_CHECK" ]; then
+		mysql_test_connection 60 || die "$inten"
+	fi
+	suc
+}
+
+get_admin_passwd()
+{
+    [ -z "$admin_passwd" ] || return 0
+
+    if [ -f "$mysql_passwd_file" ]; then
+		admin_passwd=`cat "$mysql_passwd_file"`
+		return 0
+    fi
+
+	admin_passwd=`get_random_string 12 'A-Za-z0-9_'`
+
+	[ -n "$admin_passwd" ] || admin_passwd="$PRODUCT_DEFAULT_PASSWORD"
+}
+
+mysql_quote_string()
+{
+	echo "$1" | perl -pe 's|\\|\\\\|g'
+}
+
+mysql_test_connection()
+{
+	inten="establish test connection"
+	echo_try $inten
+	attempts=${1:-1}
+	for i in `sequence $attempts`; do
+		echo "" | mysql_direct mysql >> "$product_log" 2>&1
+		if [ "$?" -eq "0" ]; then
+			p_echo "connected"
+			return 0
+		fi
+		[ "$attempts" -eq "1" ] || sleep 2
+	done
+
+	p_echo "failed"
+	return 1
+}
+
+configure_mysql_innodb()
+{
+	local my_cnf="$1"
+
+	if grep -q '^skip-innodb' "$my_cnf"; then
+		sed -i -e '/^skip-innodb/ d' "$my_cnf"
+		need_mysql_restart=yes
+	fi
+}
+
+#bug #46837. Disable "LOAD DATA LOCAL INFILE" command.
+configure_mysql_infile()
+{
+	local my_cnf="$1"
+	local awk_script
+
+	if ! (test -f $my_cnf && grep -q '^\[mysqld\]' "$my_cnf"); then
+		echo "[mysqld]" >> $my_cnf
+		echo "local-infile=0" >> $my_cnf
+		need_mysql_restart=yes
+		return
+	fi
+
+	awk_script='/^\[mysqld\]$/{print; print "local-infile=0"; next;} {print}'
+	if ! grep -q '^local-infile' "$my_cnf"; then
+		awk "$awk_script" "$my_cnf" >"$my_cnf.tmp" && mv "$my_cnf.tmp" "$my_cnf" || die "edit $my_cnf"
+		need_mysql_restart=yes
+	fi
+}
+
+configure_mysql_address()
+{
+	local my_cnf="$1"
+	local address="$2"
+
+	if ! grep -q '^bind-address.*=.*$address' "$my_cnf"; then
+		sed -e "/^bind-address.*=.*/d" -i "$my_cnf" || \
+			die "remove 'bind-address' directive from '$my_cnf'"
+		sed -e "s|^\(\[mysqld\].*\)|\1\nbind-address = $address|" -i "$my_cnf" || \
+			die "configure MySQL server via '$my_cnf' to listen on address $address"
+		need_mysql_restart=yes
+	fi
+}
+
+check_ipv6_network_available()
+{
+	ping6 -c1 -q "::1" >/dev/null 2>&1
+}
+
+configure_mysql_address_all()
+{
+	local ipv6_supported_version="5.5.3"
+	local current_version="`mysql_raw_anydb -e \"select version();\"`"
+	local my_cnf="$1"
+	local address="0.0.0.0"
+
+	# if we cannot detect mysql-server version
+	# use ipv4 only address
+	if [ -n "$current_version" ]; then
+		mysql_compare_versions "$current_version" "$ipv6_supported_version"
+		if [ $? -ne 1 ] && check_ipv6_network_available; then
+			address="::"
+		fi
+	fi
+
+	configure_mysql_address "$my_cnf" "$address"
+}
+
+configure_mysql_address_local()
+{
+	local ipv6_supported_version="5.5.3"
+	local current_version="`mysql_raw_anydb -e \"select version();\"`"
+	local my_cnf="$1"
+	local address="127.0.0.1"
+
+	# if we cannot detect mysql-server version
+	# use ipv4 only address
+	if [ -n "$current_version" ]; then
+		mysql_compare_versions "$current_version" "$ipv6_supported_version"
+		if [ $? -ne 1 ] && check_ipv6_network_available; then
+			address="::ffff:127.0.0.1"
+		fi
+	fi
+
+	configure_mysql_address "$my_cnf" "$address"
+}
+
+configure_mysql_disable_old_passwords()
+{
+	local my_cnf="$1"
+	local awk_script='/^[[:space:]]*old_passwords/ { print "# Forced OLD_PASSWORD format is turned OFF by Plesk\n#" $0; next } { print }'
+
+	if awk "$awk_script" "$my_cnf" > "$my_cnf.tmp" || die "edit $my_cnf"; then
+		if diff -q "$my_cnf" "$my_cnf.tmp" 1>/dev/null ; then
+			rm -f "$my_cnf.tmp"
+		else
+			mv "$my_cnf.tmp" "$my_cnf" || die "disable old_passwords in $my_cnf"
+			need_mysql_restart=yes
+		fi
+	fi
+}
+
+configure_mysql_no_strict_mode()
+{
+	local my_cnf="$1"
+
+	local mysql_db_name="mysql"
+	db_select "SELECT @@""GLOBAL.sql_mode"
+	local sql_mode="$db_select_output"
+	[ -n "$sql_mode" ] || return 0
+
+	local ok_sql_mode="`echo "$sql_mode" |
+						tr ',' '\n' |
+						egrep -v 'STRICT_TRANS_TABLES|STRICT_ALL_TABLES|NO_ZERO_DATE' |
+						xargs | tr ' ' ','`"
+	[ "$ok_sql_mode" != "$sql_mode" ] || return 0
+
+	sed -e "/^sql_mode.*=.*/d" -i "$my_cnf" || \
+		die "remove 'sql_mode' directive from '$my_cnf'"
+	sed -e "s|^\(\[mysqld\].*\)|\1\nsql_mode=$ok_sql_mode|" -i "$my_cnf" || \
+		die "configure MySQL server via '$my_cnf' with no strict mode"
+	need_mysql_restart=yes
+}
+
+find_my_cnf()
+{
+	local non_fatal="$1"
+	local cnf_files="/etc/my.cnf /etc/mysql/my.cnf /var/db/mysql/my.cnf"
+
+	for my_cnf in $cnf_files; do
+		if [ -f ${my_cnf} ]; then
+			break
+		fi
+	done
+
+	[ -f "$my_cnf" -o -n "$non_fatal" ] || die "find MySQL server configuration file. " \
+		"If you use thirdparty MySQL server build, make sure you don't use implicit default configuration " \
+		"and have MySQL configuration file in one of the following locations: $cnf_files"
+	[ -f "$my_cnf" ]
+}
+
+run_configure_mysql_funcs()
+{
+	local need_mysql_restart=
+	local my_cnf=
+	find_my_cnf
+
+	for func in "$@"; do
+		eval "$func $my_cnf"
+	done
+
+	if [ -n "$need_mysql_restart" ]; then
+		pleskrc mysql restart
+	fi
+}
+
+mysql_install_init()
+{
+
+	register_service "$mysql_service"
+
+	run_configure_mysql_funcs \
+		configure_mysql_innodb \
+		configure_mysql_infile \
+		configure_mysql_disable_old_passwords \
+		tune_vz_mysql
+
+	setup_admin_login
+	mysql_fix_remove_bad_users
+
+	run_configure_mysql_funcs \
+		configure_mysql_address_local \
+		configure_mysql_no_strict_mode
+}
+
+mysql_fix_remove_bad_users()
+{
+	local mysql_db_name="mysql"
+	db_do "drop database if exists test"
+	db_do "delete from user where User=''"
+
+	# This removes the root user if possible.
+	# On Debian > 8 and Ubuntu > 16.04 the debian-sys-maint user is no longer present/used
+	# and got "replaced" with a root user, configured to be authenticated using the unix socket.
+	# On RPM-based systems there are no default maintenance tasks, so removing root is OK as well.
+	egrep -q "^user\s*=\s*root\s*$" /etc/mysql/debian.cnf 2>/dev/null ||
+		db_do "delete from user where User='root'"
+
+	db_do "flush privileges"
+}
+
+mysql_compare_versions()
+{
+	local l_greater=2
+	local l_equal=0
+	local l_less=1
+
+	local lhs_major="`echo $1 | cut -d'.' -f1`"
+	local lhs_minor="`echo $1 | cut -d'.' -f2`"
+	local lhs_patch="`echo $1 | cut -d'.' -f3 | grep -o -e '^[0-9]\+'`"
+
+	local rhs_major="`echo $2 | cut -d'.' -f1`"
+	local rhs_minor="`echo $2 | cut -d'.' -f2`"
+	local rhs_patch="`echo $2 | cut -d'.' -f3 | grep -o -e '^[0-9]\+'`"
+
+	# TODO(galtukhov): rewrite string comparision as python one-liner
+
+	if [ "$lhs_major" -gt "$rhs_major" ]; then
+		return $l_greater
+	elif [ "$lhs_major" -lt "$rhs_major" ]; then
+		return $l_less
+	else
+		if [ "$lhs_minor" -gt "$rhs_minor" ]; then
+			return $l_greater
+		elif  [ "$lhs_minor" -lt "$rhs_minor" ]; then
+			return $l_less
+		else
+			if [ "$lhs_patch" -gt "$rhs_patch" ]; then
+				return $l_greater
+			elif [ "$lhs_patch" -lt "$rhs_patch" ]; then
+				return $l_less
+			else
+				return $l_equal
+			fi
+		fi
+	fi
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# -*- vim:ft=sh
+
+# mysql
+
+set_mysqld_params()
+{
+	mysqld_user="mysql"
+	mysqld_UID=3306
+	mysqld_group="mysql"
+	mysqld_GID=3306
+
+	product_db_sql="$PRODUCT_BOOTSTRAPPER_DIR/db/${PRODNAME}_db.sql"
+
+	set_mysql_server_params
+	set_mysql_client_params
+}
+
+set_mysql_server_params()
+{
+	get_mysql_socket
+
+	if [ -x "${PRODUCT_RC_D}/mysqld" ]; then
+	    mysql_service="mysqld"
+	elif [ -x "${PRODUCT_RC_D}/mysqld.sh" ]; then
+	    mysql_service="mysqld.sh"
+	elif [ -x "${PRODUCT_RC_D}/mysqld" ]; then
+	    mysql_service="mysqld"
+	elif [ -x "${PRODUCT_RC_D}/mysql" ]; then
+	    mysql_service="mysql"
+	elif [ -n "/usr/lib/systemd/system" -a -f "/usr/lib/systemd/system/mariadb.service" ]; then
+	    mysql_service="mariadb"
+	elif [ -n "/usr/lib/systemd/system" -a -f "/usr/lib/systemd/system/mysqld.service" ]; then
+	    # Percona server
+	    mysql_service="mysqld"
+	else
+	    die "detect MySQL service name"
+	fi
+}
+
+set_mysql_client_params()
+{
+	mysql_client="$MYSQL_BIN_D/mysql"
+
+	# Override this variable as needed
+	mysql_db_name="$PRODNAME"
+	mysql_passwd_file="$product_etc/.${PRODNAME}.shadow"
+
+	mysql_args="-N"
+	mysql_args_raw="-Br"
+}
+
+#Invoke mysql
+mysql()
+{
+	mysql_anydb -D$mysql_db_name "$@"
+}
+
+mysql_anydb()
+{
+	(
+		export MYSQL_PWD="$mysql_passwd"
+		$mysql_client $mysql_host $mysql_user $mysql_args "$@" 2>>"$product_log"
+		local status=$?
+
+		if [ $status -gt 0 ]; then
+			$mysql_client $mysql_host $mysql_user $mysql_args -D$mysql_db_name $mysql_args_raw -e "SHOW ENGINE innodb status" >>"$product_log" 2>&1
+		fi
+		unset MYSQL_PWD
+		return $status
+	)
+}
+
+# Invoke mysql without any wrapper or something else
+mysql_direct()
+{
+	# a bit dirty but it works properly for passwords with spaces, quotes and double quotes:
+	if [ -n "$mysql_passwd" ]; then
+		(
+			export MYSQL_PWD="$mysql_passwd"
+			$mysql_client $mysql_host $mysql_defaults $mysql_user $mysql_args "$@" 2>>"$product_log"
+			rc=$?
+			unset MYSQL_PWD
+			return $rc
+		)
+	else
+		$mysql_client $mysql_host $mysql_defaults $mysql_user $mysql_args "$@" 2>>"$product_log"
+	fi
+}
+
+# Invoke mysql in raw mode
+mysql_raw()
+{
+	mysql $mysql_args_raw "$@"
+}
+
+mysql_raw_anydb()
+{
+	mysql_anydb $mysql_args_raw "$@"
+}
+
+requires_configured_mysql()
+{
+	# Initialize and configure local MySQL server if it is not usable yet.
+	# This function is for use in components that require MySQL, particularly on SN.
+
+	set_mysqld_params
+
+	if [ ! -s "$mysql_passwd_file" ]; then
+		mysql_install_init
+	else
+		set_mysql_auth
+	fi
+}
+
+# -- end of mysqlnd old passwords upgrade --
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+# Reset mysqld authentication in case we are unable to guess password
+
+create_reset_mysql_auth_sql_file()
+{
+	true mysql_quote_string
+
+	(
+		umask 0027
+		local sql="`mktemp /tmp/plesk-reset-mysql-auth.XXXXXX.sql`"
+		cat > "$sql" <<-EOT
+			-- WARNING: each statement in this file MUST be on one line, no comments on statement lines.
+			-- DB must be selected to create procedures.
+			USE mysql;
+
+			-- Remove password strength validation.
+			CREATE PROCEDURE plesk_uninstall_validate_password() BEGIN IF EXISTS (SELECT * FROM mysql.plugin WHERE name = 'validate_password') THEN UNINSTALL PLUGIN validate_password; END IF; END;
+			CALL plesk_uninstall_validate_password();
+			DROP PROCEDURE IF EXISTS plesk_uninstall_validate_password;
+
+			-- Create or reset admin superuser.
+			GRANT ALL PRIVILEGES ON *.* TO 'admin'@'localhost' IDENTIFIED BY '`mysql_quote_string "$admin_passwd"`' WITH GRANT OPTION;
+			FLUSH PRIVILEGES;
+
+			-- Shut down mysqld.
+			SHUTDOWN;
+
+			EOT
+		chgrp "$mysqld_group" "$sql" >&2
+		chmod 640 "$sql" >&2
+		echo "$sql"
+	)
+}
+
+try_reset_mysql_auth()
+{
+	# Don't try this more than once. It won't succeed anyway.
+	[ -z "$PLESK_INSTALLER_TRIED_MYSQL_AUTH_RESET" ] || return 0
+	PLESK_INSTALLER_TRIED_MYSQL_AUTH_RESET="yes"
+
+	local inten="reset authentication for MySQL server"
+	echo_try "$inten"
+
+	pleskrc mysql stop
+
+	get_admin_passwd
+
+	# Run mysqld in "reset authentication" mode.
+	p_echo "Starting mysqld in authentication reset mode."
+	local init_sql="`create_reset_mysql_auth_sql_file`"
+	PATH="$PATH:/usr/libexec:/libexec" mysqld --user "$mysqld_user" --init-file "$init_sql" >> "$product_log" 2>&1 &
+	local pid="$!"
+
+	# Normally the command above should stop by itself. Wait for it.
+	local tries=60 i=
+	pnnl_echo "Waiting for mysqld to stop ($tries seconds at most)"
+	for i in `sequence $tries`; do
+		kill -0 "$pid" 2>/dev/null || break
+		pnnl_echo "."
+		sleep 1
+	done
+	pnnl_echo " "
+
+	# If it didn't stop, likely error occurred before SHUTDOWN query. Request shutdown via signal.
+	kill -s TERM "$pid" 2>/dev/null \
+		&& p_echo "We had to send mysqld signal to shutdown. This likely means that authentication reset failed (see mysqld log for details, search for 'init_file')." \
+		|| p_echo "Looks like mysqld stopped normally."
+
+	# SIGTERM might not have been honored by mysqld, but I've seen no such behavior.
+	pnnl_echo "Waiting for mysqld return code (if this hangs, try 'kill -9 $pid')... "
+	wait "$pid"
+	local rc="$?"
+	if [ "$rc" -ne 0 ]; then
+		p_echo "mysqld failed with code $rc, authentication reset failed (see mysqld log for details)."
+	else
+		suc
+	fi
+
+	rm -f "$init_sql"
+
+	pleskrc mysql restart
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+__tune_vz_mysql_sig_handler() {
+	local rc=$?
+	trap - EXIT
+	rm -f -- "$1"
+	exit $rc
+}
+
+__tune_vz_mysql()
+{
+	local myCnf myCnfTemp ||:
+
+	myCnf=$1
+	if test -z "$myCnf"; then
+		warn "E:usage: $PROG /path/to/my.cnf"
+		return 1
+	fi
+
+	if ! test -s "$myCnf" ; then
+		warn "E: $myCnf doesn't exist or empty"
+		return 100
+	fi
+	
+	myCnfTemp=`mktemp ${myCnf}.XXXXXXX`
+	if test $? -ne 0 ; then
+		warn "E:Unable to create a temporary configuration file"
+		return 2
+	fi
+	
+	$cp_preserve $myCnf $myCnfTemp || {
+		warn "E:Unable to create a temporary configuration file"
+		return 2
+	}
+
+	trap "__tune_vz_mysql_sig_handler \"$myCnfTemp\""  HUP PIPE INT TERM EXIT
+
+	local rc ||:
+
+	local db_select_output
+	local mysql_db_name=mysql
+	db_select "SHOW VARIABLES LIKE 'have_innodb'"
+	local have_innodb=`get_narg 2 ${db_select_output}`
+	[ -n "$have_innodb" ] || have_innodb="NO"
+
+	db_select "SHOW VARIABLES LIKE 'have_bdb'"
+	local have_bdb=`get_narg 2 ${db_select_output}`
+	[ -n "$have_bdb" ] || have_bdb="NO"
+
+	cat "$myCnf" | gawk \
+				-v have_innodb="${have_innodb}" \
+				-v have_bdb="${have_bdb}" \
+				'
+function getsize(sizestr)
+{
+  if (match(sizestr, "[^[:digit:]]")) {
+    size=substr(sizestr, 0, RSTART);
+    mult=substr(sizestr, RSTART, 1);
+    if ("K" == mult) {
+      mult=1024;
+    } else if ("M" == mult) {
+      mult=1024*1024;
+    } else if ("G" == mult) {
+      mult=1024*1024*1024;
+    }
+    size = size * mult;
+  } else {
+    size = sizestr;
+  }
+  return size;
+}
+
+# add unspecified variables
+function finalize_section()
+{
+  if (have_bdb && 0 == skipbdb) {
+    printf("skip-bdb\n\n");
+    changed=1;
+  }
+  if (have_innodb && 0 == ibp_size) {
+    print "innodb_buffer_pool_size=2M"
+    changed=1;
+  }
+  if (have_innodb && 0 == iamp_size) {
+    print "innodb_additional_mem_pool_size=500K"
+    changed=1;
+  }
+  if (have_innodb && 0 == ilb_size) {
+    print "innodb_log_buffer_size=500K"
+    changed=1;
+  }
+  if (have_innodb && 0 == thread_conc_set) {
+    print "innodb_thread_concurrency=2"
+    changed=1;
+  }
+}
+
+# decrease value of "varname" if it exceed the upper bound limit.
+# If value fit (less or equal), leave it unmodified.
+function adjustSetting(varstr, varname, minsize, sizestr)
+{
+  if (match(varstr,"^[[:space:]]*(set-variable[[:space:]]*=[[:space:]]*)?" varname "[[:space:]]*=[[:space:]]*")) {
+    if (have_innodb) {
+      size = getsize(substr(varstr, RSTART+RLENGTH));
+      if (minsize < size) {
+        changed = 1;
+        print "#", $0;
+        print varname "=" sizestr;
+      } else {
+        print $0
+      }
+    } else {
+      # we do not have innodb so we need to disable this setting
+      print "#", $0;
+      changed = 1;
+    }
+    return 1;
+  }
+  return 0;
+}
+
+function reset_variables()
+{
+  skipbdb=0;   # already have skip-bdb
+  ibp_size=0;  # already set innodb_buffer_pool_size
+  iamp_size=0; # already set innodb_additional_mem_pool_size
+  ilb_size=0;  # already set innodb_log_buffer_size
+  thread_conc_set=0; # -*- innodb_thread_concurrency
+}
+
+BEGIN {
+  insect=0;    # within one of server sections
+  changed=0;   # already changed smth
+  have_bdb = (tolower(have_bdb) == "yes") ;
+  have_innodb = (tolower(have_innodb) == "yes") ;
+  reset_variables()
+}
+/^[[:space:]]*\[.+\]/ {
+  if (0 != insect) {
+# need to close a previous section
+    finalize_section();
+    # section is ended. Reset variables
+    reset_variables()
+    insect    = 0;
+  }
+  if ( match($0, "^[[:space:]]*\\[(mysqld|server|mysqld_safe|safe_mysqld)\\]")) {
+    insect = 1;
+#    print "# in server section";
+  }
+}
+
+(match($0, "^[[:space:]]*(set-variable[[:space:]]*=)?[[:space:]]*") && 0 != insect) {
+  varstr=substr($0, RSTART+RLENGTH);
+  if (adjustSetting(varstr, "innodb_buffer_pool_size", 2 * 1024 * 1024, "2M")) { ibp_size=1; next; }
+  if (adjustSetting(varstr, "innodb_additional_mem_pool_size", 500 * 1024, "500K")) { iamp_size=1; next; }
+  if (adjustSetting(varstr, "innodb_log_buffer_size", 500 * 1024, "500K")) { ilb_size=1; next; }
+  if (adjustSetting(varstr, "innodb_thread_concurrency", 2, "2")) { thread_conc_set=1; next; }
+}
+
+(adjustSetting($0, "innodb_buffer_pool_size", 2 * 1024 * 1024, "2M")) { ibp_size=1; next; }
+(adjustSetting($0, "innodb_additional_mem_pool_size", 500 * 1024, "500K")) { iamp_size=1; next; }
+(adjustSetting($0, "innodb_log_buffer_size", 500 * 1024, "500K")) { ilb_size=1; next; }
+(adjustSetting($0, "innodb_thread_concurrency", 2, "2")) { thread_conc_set=1; next; }
+
+/^[[:space:]]*skip-bdb[[:space:]]*(#.*)?$/ { skipbdb=1; }
+
+{ print $0; }
+
+END {
+  if (0 != insect) {
+    finalize_section();
+  }
+
+  if (0 == changed) {
+    exit 110;
+  }
+}
+' > "$myCnfTemp"
+	rc=$?
+
+	if test $rc -eq 110; then
+		# nothing was changed
+		p_echo "I: nothing to change in $myCnf"
+		return 5
+	fi
+
+	if test $rc -ne 0; then
+		warn "E: unable to process ${myCnf}: rc=$rc"
+		return 2
+	fi
+	
+	local myCnfBak ||:
+	myCnfBak="${myCnf}.bak"
+
+	if ! ln -f "$myCnf" "$myCnfBak" ; then
+		warn "E: Unable to create a backup file"
+		return 3
+	fi
+
+	if ! mv -f "$myCnfTemp" "$myCnf"; then
+		warn "E: Unable to overwrite the configuration file"
+		return 4
+	fi
+	
+	trap - EXIT
+	return 0
+}
+
+tune_vz_mysql()
+{
+	# check if we in VZ environment
+	detect_vz
+	test "x$PLESK_VZ" = "x1" || return 0;
+	# run in subshell to isolate TRAP usage
+	( __tune_vz_mysql "$1" )
+	local rc="$?"
+	! [ "$rc" -eq 0 ] || need_mysql_restart=yes		# Configuration file was updated
+	! [ "$rc" -eq 5 ] || rc=0						# Everything is OK, no changes are required
+	return "$rc"
+}
+
+### Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+# vim:ft=sh:
+
+usage()
+{
+	cat >&2 <<-EOT
+		Usage: $prog [OPTIONS]
+
+		OPTIONS:
+			--bind-address <local|all>        Configure MySQL server to listen only for local connections or for all connections
+	EOT
+
+	exit 2
+}
+
+reexec_with_clean_env "$@"
+
+prog="`basename $0`"
+set_log_action_name "$prog"
+log_start "$prog"
+set_error_report_context "$prog"
+product_default_conf
+initial_conf
+
+configure_funcs_list=
+
+ARGS=`getopt -o "" --longoptions help,bind-address: --name "$prog" -- "$@"`
+eval set -- "${ARGS}"
+
+while true; do
+	case "$1" in
+		--bind-address)
+			if [ "$2" = "all" ]; then
+				configure_funcs_list="$configure_funcs_list configure_mysql_address_all"
+			elif [ "$2" = "local" ]; then
+				configure_funcs_list="$configure_funcs_list configure_mysql_address_local"
+			else
+				echo "Unrecognized argument $2 for option $1" >&2
+				usage
+			fi
+			shift ;;
+		--)
+			shift
+			break ;;
+		--help)
+			usage ;;
+		*)
+			echo "Unrecognized option: $1" >&2
+			usage ;;
+	esac
+	shift
+done
+
+[ -n "$configure_funcs_list" ] || usage
+
+requires_configured_mysql
+run_configure_mysql_funcs "$configure_funcs_list"

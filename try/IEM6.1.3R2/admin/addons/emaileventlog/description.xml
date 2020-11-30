@@ -1,0 +1,7 @@
+<addon_description>
+	<name>Automatic Event Log</name>
+	<description>Emails, autoresponders and triggers sent to contacts will be logged as events for that contact automatically.</description>
+	<author>Interspire</author>
+	<version>1.0</version>
+	<hasconfiguration>0</hasconfiguration>
+</addon_description>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<style type="text/css">
+	p {
+		color: blue;
+	}
+
+	.FormDesc {
+		width: 200;
+		float: left;
+	}
+
+	.FormOption {
+		margin-left: 200;
+	}
+
+	textarea, select {
+		width: 200px;
+	}
+</style>
+</head>
+<body>
+	<p>
+		test
+	</p>
+	<form method="post" action="%%FormAction%%">
+		<div id="main">
+			%%FormContents%%
+			<div>
+				<div class="FormDesc">
+					<input type="submit" value="Unsubscribe" />
+					<br/>%%LNG_Form_Branding%%
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>

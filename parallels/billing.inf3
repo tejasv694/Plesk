@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="billing" name="Parallels Panel Billing">
+
+ <release id="PPB_7_0_0" name="Parallels Billing" version="7.0.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.0.0" to_version="10.0.0" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_7.0.0/billing-7.0.0-deball-all.inf3"/>
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="BILLING_7.0.0/billing-7.0.0-frall-all.inf3"/>
+-->
+
+
+ </release>
+
+ <release id="PPB_7_0_1" name="Parallels Billing" version="7.0.1">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.0.1" to_version="10.0.1" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_7.0.1/billing-7.0.1-deball-all.inf3"/>
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="BILLING_7.0.1/billing-7.0.1-frall-all.inf3"/>
+-->
+
+
+ </release>
+
+ <release id="PPB_10_1_0" name="Parallels Billing" version="10.1.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.1.0" to_version="10.1.1" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.0"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-rhall-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+  <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_10.1.0/billing-10.1.0-deball-all.inf3"
+      patches="BILLING_10.1.0/billing-patches-10.1.0-all.inf3"/>
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="BILLING_10.1.0/billing-10.1.0-frall-all.inf3"/>
+-->
+
+
+ </release>
+
+ <release id="PPB_10_2_0" name="Parallels Billing" version="10.2.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.2.0" to_version="10.2.0" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+  <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_10.2.0/billing-10.2.0-deball-all.inf3"/>
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="BILLING_10.2.0/billing-10.2.0-frall-all.inf3"/>
+-->
+
+
+ </release>
+
+ <release id="PPB_10_3_0" name="Parallels Billing" version="10.3.0">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.3.0" to_version="10.4.0" />
+  </compatibility_info>
+<!--
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.2"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="4.3"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+-->
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+<!--
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el4"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+-->
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+  <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_10.3.0/billing-10.3.0-deball-all.inf3"/>
+<!--
+   <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1"
+      os_arch="i386" config="BILLING_10.3.0/billing-10.3.0-frall-all.inf3"/>
+-->
+
+
+ </release>
+
+ <release id="PPB_10_4_4" name="Parallels Billing" version="10.4.4">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="10.4.4" to_version="10.5.0" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-suseall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-suseall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_10.4.4/billing-10.4.4-deball-all.inf3"/>
+
+ </release>
+
+<release id="PPB_11_0_9" name="Parallels Billing" version="11.0.9">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="11.0.9" to_version="11.0.9" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_11.0.9/billing-11.0.9-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_11" name="Parallels Billing" version="11.1.11">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="11.1.11" to_version="11.1.11" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.4"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_11.1.11/billing-11.1.11-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_12" name="Parallels Billing" version="11.1.12">
+
+  <compatibility_info>
+   <compatible product_id="plesk" from_version="11.1.12" to_version="11.1.12" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="6"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-rhall-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="i386" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0"
+      os_arch="x86_64" config="BILLING_11.1.12/billing-11.1.12-deball-all.inf3"/>
+
+ </release>
+
+  <release id="PPB_11_1_13" name="Parallels Billing" version="11.1.13">
+
+  <compatibility_info>
+  <compatible product_id="plesk" from_version="11.1.13" to_version="11.1.13" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.13/billing-11.1.13-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_14" name="Parallels Billing" version="11.1.14">
+
+  <compatibility_info>
+  <compatible product_id="plesk" from_version="11.1.14" to_version="11.1.14" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.14/billing-11.1.14-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_15" name="Parallels Billing" version="11.1.15">
+
+  <compatibility_info>
+  <compatible product_id="plesk" from_version="11.1.15" to_version="11.1.15" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.15/billing-11.1.15-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_16" name="Parallels Billing" version="11.1.16">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="11.1.16" to_version="11.1.16" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.16/billing-11.1.16-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_17" name="Parallels Billing" version="11.1.17">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="11.1.17" to_version="11.1.17" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.17/billing-11.1.17-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_1_18" name="Parallels Billing" version="11.1.18">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="11.1.18" to_version="11.1.18" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.1.18/billing-11.1.18-deball-all.inf3"/>
+ </release>
+
+  <release id="PPB_11_5_19" name="Parallels Billing" version="11.5.19">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="11.5.19" to_version="11.5.19" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.1" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.19/billing-11.5.19-deball-all.inf3"/>
+ </release>
+
+<release id="PPB_11_5_20" name="Parallels Billing" version="11.5.20">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.20" to_version="11.5.20" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.20/billing-11.5.20-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_21" name="Parallels Billing" version="11.5.21">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.21" to_version="11.5.21" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.21/billing-11.5.21-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_22" name="Parallels Billing" version="11.5.22">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.22" to_version="11.5.22" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.22/billing-11.5.22-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_23" name="Parallels Billing" version="11.5.23">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.23" to_version="11.5.25" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.23/billing-11.5.23-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_26" name="Parallels Billing" version="11.5.26">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.26" to_version="11.5.26" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.26/billing-11.5.26-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_27" name="Parallels Billing" version="11.5.27">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.27" to_version="11.5.27" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.27/billing-11.5.27-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_28" name="Parallels Billing" version="11.5.28">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.28" to_version="11.5.28" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.28/billing-11.5.28-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_5_29" name="Parallels Billing" version="11.5.29">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.29" to_version="11.5.29" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.29/billing-11.5.29-deball-all.inf3"/>
+</release>
+<release id="PPB_11_5_30" name="Parallels Billing" version="11.5.30">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.5.30" to_version="11.5.99" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_11.5.30/billing-11.5.30-deball-all.inf3"/>
+</release>
+
+<release id="PPB_11_6_1" name="Parallels Billing" version="11.6.1">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="11.6.1" to_version="12.0.17" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_11.6.1/billing-11.6.1-deball-all.inf3"/>
+</release>
+
+<release id="PPB_12_0_18" name="Parallels Billing" version="12.0.18">
+
+<compatibility_info>
+  <compatible product_id="plesk" from_version="12.0.18" to_version="12.0.99" />
+</compatibility_info>
+
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.2" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="SuSE" os_version="12.3" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-rhall-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="10.04" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+ <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_12.0.18/billing-12.0.18-deball-all.inf3"/>
+</release>
+
+ <release id="PPB_12_1_22" name="Plesk billing" version="12.1.22">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="12.1.22" to_version="12.5.26" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_12.1.22/billing-12.1.22-deball-all.inf3"/>
+ </release>
+
+ <release id="PPB_12.5.27" name="Plesk billing" version="12.5.27">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="12.5.27" to_version="12.5.28" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_12.5.27/billing-12.5.27-deball-all.inf3"/>
+ </release>
+
+ <release id="PPB_12.5.29" name="Plesk billing" version="12.5.29">
+
+  <compatibility_info>
+    <compatible product_id="plesk" from_version="12.5.29" to_version="12.5.99" />
+  </compatibility_info>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-rhall-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="6.0" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="i386" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+   <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="BILLING_12.5.29/billing-12.5.29-deball-all.inf3"/>
+ </release>
+</addon>

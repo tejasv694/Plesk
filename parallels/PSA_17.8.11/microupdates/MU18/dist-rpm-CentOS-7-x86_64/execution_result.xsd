@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2017. Plesk International GmbH. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- execution-result -->
+	<xs:complexType name="ExecutionResultMixed">
+		<xs:sequence>
+			<xs:element name="backup" type="ExecutionResult" minOccurs="0"/>
+			<xs:element name="transfer" type="ExecutionResult" minOccurs="0"/>
+			<xs:element name="restore" type="ExecutionResultRestore" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="status" type="ExecutionResultStatus" use="required"/>
+		<xs:attribute name="log-location" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ExecutionResultRestore">
+		<xs:sequence>
+			<xs:element name="conflict-resolve" type="ExecutionResult" minOccurs="0"/>
+			<xs:element name="import" type="ExecutionResult" minOccurs="0"/>
+			<xs:element name="deploy" type="ExecutionResult" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="status" type="ExecutionResultStatus" use="required"/>
+		<xs:attribute name="log-location" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="ExecutionResult">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="message" type="MessageType"/>
+			<xs:element name="object" type="ObjectType"/>
+		</xs:choice>
+		<xs:attribute name="status" type="ExecutionResultStatus" use="required"/>
+		<xs:attribute name="log-location" type="xs:string" use="optional"/>
+		<xs:attribute name="local-dump-created" type="xs:boolean" use="required"/>
+		<xs:attribute name="export-dump-created" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:simpleType name="ExecutionResultStatus">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="error"/>
+			<xs:enumeration value="success"/>
+			<xs:enumeration value="warnings"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ObjectType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="message" type="MessageType"/>
+			<xs:element name="object" type="ObjectType"/>
+		</xs:choice>
+		<xs:attribute name="type" type="xs:string" use="required"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="MessageType">
+		<xs:sequence>
+			<xs:element name="description" type="DescriptionType"/>
+			<xs:element name="resolution" type="xs:string" minOccurs="0"/>
+			<xs:element name="message" type="MessageType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="severity" type="xs:string" use="required"/>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+		<xs:attribute name="code"/>
+	</xs:complexType>
+	<xs:complexType name="DescriptionType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="encoding">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="base64"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="restore" type="ExecutionResultRestore"/>
+	<xs:element name="execution-result" type="ExecutionResult"/>
+	<xs:element name="backup" type="ExecutionResult"/>
+	<xs:element name="deploy" type="ExecutionResult"/>
+	<xs:element name="conflict-resolve" type="ExecutionResult"/>
+	<xs:element name="execution-result-mixed" type="ExecutionResultMixed"/>
+</xs:schema>

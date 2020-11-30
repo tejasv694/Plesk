@@ -1,0 +1,47 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+$element = $this->element;
+$typeElement = $element->getElement('rname_type');
+$enforceElement = $element->getElement('rname_enforce_email');
+?>
+<?php foreach ($typeElement->getMultiOptions() as $optionName => $optionTitle): ?>
+    <div class="form-row" id="<?= $typeElement->getBelongsTo() . "-rname_$optionName-form-row" ?>">
+        <?php if ($optionName == Dns_Zone::RNAME_TYPE_OWNER): ?>
+            <div class="field-name">
+                RNAME
+                <span class="required">*</span>
+            </div>
+        <?php endif; ?>
+        <div class="field-value">
+            <div class="indent-box">
+                <input
+                        type="radio"
+                        class="radio"
+                        value="<?= $optionName ?>"
+                        id="<?= $typeElement->getBelongsTo() . "-rname_type_$optionName" ?>"
+                        name="<?= $typeElement->getBelongsTo() . '[' . $typeElement->getName() . ']' ?>"
+                    <?= ($optionName == $typeElement->getValue()) ? 'checked="checked"' : '' ?>
+                />
+                <div class="indent-box-content">
+                    <label for="<?= $typeElement->getBelongsTo() . "-rname_type_$optionName" ?>"><?= $optionTitle ?></label>
+                    <?php if ($optionName != Dns_Zone::RNAME_TYPE_OWNER): ?>
+                        <div class="b-subitem">
+                            <input
+                                    type="text"
+                                    name="<?= $typeElement->getBelongsTo() . '[rname_' . $optionName . ']' ?>"
+                                    id="soaRecord-rname_<?= $optionName ?>"
+                                    value="<?= $element->getElement("rname_$optionName")->getValue() ?>"
+                                    maxlength="100"
+                                    size="17"
+                            />
+                            <?= ($optionName == Dns_Zone::RNAME_TYPE_DOMAIN) ? '@&lt;domain&gt;' : '' ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <span class="field-errors" style="display: none;"/>
+        </div>
+    </div>
+<?php endforeach; ?>
+<?= $this->requireJs('app/dns-zone/soa-record-rname') ?>

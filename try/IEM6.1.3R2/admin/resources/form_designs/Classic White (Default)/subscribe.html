@@ -1,0 +1,35 @@
+<!--
+Do not modify the NAME value of any of the INPUT fields
+the FORM action, or any of the hidden fields (eg. input type=hidden).
+These are all required for this form to function correctly.
+-->
+<style type="text/css">
+
+	.myForm td, input, select, textarea, checkbox  {
+		font-family: tahoma;
+		font-size: 12px;
+	}
+
+	.required {
+		color: red;
+	}
+
+</style>
+<form method="post" action="%%FormAction%%" id="frmSS%%FormID%%" onsubmit="return CheckForm%%FormID%%(this);">
+	<table border="0" cellpadding="2" class="myForm">
+		%%FormContents%%
+		<tr>
+			<td></td>
+			<td>
+				<input type="submit" value="%%LNG_Form_Subscribe_Button%%" />
+				<br/>%%LNG_Form_Branding%%
+			</td>
+		</tr>
+	</table>
+</form>
+
+<script type="text/javascript">
+// <![CDATA[
+%%Javascript%%
+// ]]>
+</script>

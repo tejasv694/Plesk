@@ -1,0 +1,76 @@
+﻿You can review our upgrade guide online at: https://www.interspire.com/support/kb/questions/1200/Upgrade+Guide
+================================================================================
+
+It is always a good idea to backup your data before performing any sort of 
+update. Before you begin the upgrade process, you must ensure that you have a
+full backup of your database.  After you have backed up your database, ensure
+that you download the complete contents of your current installation to a safe
+location on your local machine.
+	
+	BACKUP YOUR DATABASE AND INSTALLATION BEFORE YOU BEGIN
+	
+--------------------------------------------------------------------------------
+
+[Overview]
+
+Essentially what you're about to do is replace your current Email Marketer or SendStudio files with the latest files and then restore any private labeling assets that you have in your current installation, as well as restoring the following directories and files:
+
+• /admin/includes/config.php
+• /admin/temp/
+
+
+The renaming process outlined below serves to reduce the likelihood that someone visits your site while key Email Marketer files are mid-update. It also serves to provide a working backup of your existing installation, should something go wrong during the upgrade.
+
+
+
+[Downloading Files]
+
+
+If you haven't already, be sure to download the complete contents of your existing installation to a safe location on your PC.
+
+1. Download the new version from the Interspire client area, https://www.interspire.com/clientarea/index.php
+
+2. Unpack the Email Marketer archive. Windows comes with a built in tool to handle zip files, but you can also download a program like WinZip or unRar for free if needed
+
+Uploading Files
+1. Using an FTP program (such as Filezilla which is free) login to your web server and create a new directory along side your existing Email Marketer directory using the same name as your current installation only with '-new' at the end. For example, if your copy of Email Marketer is located in a directory named /marketing/, create a new directory named /marketing-new/. After you have created your new folder, simply upload the contents of the Email Marketer archive to your new directory. Please note, when you unpack your download, it will create a folder named /emailmarketer. Please DO NOT upload this folder. Rather, upload the CONTENTS of this folder in the new directory you just created.
+
+2. Once the upload is complete, restore the contents of the following folders on your server:
+◦ /somename/admin/includes/config.php ---> /somename-new/admin/includes/ (be sure to overwrite the old config.php)
+◦ /somename/admin/temp/ ---> /somename-new/admin/temp/
+
+3. Restore any private labeling that you have from your original installation to your new installation.
+
+4. After you have restored all the items above, rename the folder on your server:
+◦ /somename/ ----------> /somename-old/
+◦ /somename-new/ ---------> /somename/
+
+5. Clear your browser's cache and visit your installation's URL.
+
+6. You will now see an Upgrade Wizard show. Click the button on this page to upgrade to the latest version.
+
+
+
+[File Permissions]
+
+
+Interspire Email Marketer requires the following files/directories to have 'write' permissions set. If you're running on a Linux or Unix web host, you can use your FTP program and use the 'CHMOD' ('Change Mode') function to grant write permissions. If your host is running Windows, you will need to contact them about setting up write permissions on these files/folders. If a folder listed here doesn't exist please create it.
+
+Files, CHMOD this file to 646:
+• /admin/includes/config.php
+Note: Although it says 646, some webhosts may require 664 or 666 instead.
+
+Folders, CHMOD these to 757:
+• /admin/temp/
+• /admin/com/storage/
+• /admin/import/
+Note: Although it says 757, some webhosts may require 775 or 777 instead.
+
+
+
+[Restoring Your Files]
+
+
+If you have modified your Interspire Email Marketer files with custom functions or changed the look and feel of the application, you should now upload these files. You should check the changelog.txt file found in the root folder of the zip file you downloaded to see what files have been modified so that you can make sure your customizations all still work.
+
+Congratulations, you are now ready to login to the Interspire Email Marketer control panel and start adding content! Your control panel will be accessible by browsing to http://www.example.com/youremailmarketerinstallation/admin.

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="apache" name="Apache with SNI support">
+
+  <release id="APACHE_2.2.31" name="Apache 2.2.31 with SNI support" version="2.2.31">
+
+	<compatibility_info>
+		<compatible product_id="plesk" from_version="11.0.0" to_version="17.0.99" />
+	</compatibility_info>
+
+	<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="APACHE_2.2.31/apache-2.2.31-rh5-i386.inf3"/>
+	<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="APACHE_2.2.31/apache-2.2.31-rh5-x86_64.inf3"/>
+	<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="APACHE_2.2.31/apache-2.2.31-rh5-i386.inf3"/>
+	<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="APACHE_2.2.31/apache-2.2.31-rh5-x86_64.inf3"/>
+  </release>
+
+  <release id="APACHE_2_2_22" name="Apache 2.2.22 with SNI support" version="2.2.22">
+
+	<compatibility_info>
+		<compatible product_id="plesk" from_version="10.2.0" to_version="10.9.99" />
+	</compatibility_info>
+
+	<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="APACHE_2.2.22/apache-2.2.22-rh5-i386.inf3"/>
+	<build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="APACHE_2.2.22/apache-2.2.22-rh5-x86_64.inf3"/>
+	<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="i386" config="APACHE_2.2.22/apache-2.2.22-rh5-i386.inf3"/>
+	<build os_name="Linux" os_vendor="CloudLinux" os_version="5" os_arch="x86_64" config="APACHE_2.2.22/apache-2.2.22-rh5-x86_64.inf3"/>
+  </release>
+</addon>

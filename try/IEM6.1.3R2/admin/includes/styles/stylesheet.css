@@ -1,0 +1,1706 @@
+body
+{
+	color: #676767;
+	background-color: #ededed;
+	font: normal 11px Tahoma, Verdana, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	background: #ededed url(../../images/gradient.jpg) repeat-x;
+}
+
+div#IEM_HTML_Body
+{
+	margin: 0;
+	padding: 10px 30px 30px 30px;
+}
+
+.body
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.popupBody {
+	background-color:#F3F2E9;
+	color:black;
+	font-size:11px;
+	line-height:1.5;
+	margin:20px;
+	padding:0pt;
+}
+.popupContainer {
+	background-color:#FFFFFF;
+	border:1px solid #CAC7BD;
+	padding:20px;
+}
+
+div#IEM_Header_TrialNotificationBar {
+	background: #FEFCD0 url(../../images/infoballon.gif) no-repeat fixed 7px 9px;
+	padding: 10px 10px 10px 35px;
+	border: 1px solid #DDDA8C;
+	border-width: 0 0 1px 0;
+	font-size: 11px;
+}
+
+.helpTip
+{
+	font-size: 11px;
+	line-height: 120%;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	color: black;
+}
+
+form
+{
+	margin-top:0px;
+	margin-bottom:0px;
+}
+
+input[type="text"],input[type="password"], textarea
+{
+/*
+	border: 1px solid #AAA;
+	border-collapse: collapse;
+*/
+}
+
+input[type="checkbox"]
+{
+	margin-top: 2px;
+	margin-bottom: 3px;
+	vertical-align: middle;
+}
+
+.Intro
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	padding: 0px 0px 3px 2px;
+}
+
+.Intro div
+{
+	margin: 10px 0px 11px 0px;
+}
+
+.Intro .Button
+{
+	font-size: 11px;
+	width: 150px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.Header {
+	display: block;
+	clear: both;
+}
+
+.Header_Top {
+	display: block;
+	clear: both;
+}
+
+.Header_Bottom {
+	display: block;
+	clear: both;
+}
+
+.textlinks a
+{
+	color: #005fa3;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: normal;
+	font-size-adjust: none;
+	font-stretch: normal;
+}
+.textlinks a img {
+	text-decoration: underline;
+}
+
+.textlinks
+{
+	color: #fbfbfc;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 11px;
+	line-height: normal;
+	font-size-adjust: none;
+	font-stretch: normal;
+	float: right;
+	clear: right;
+}
+
+.top {
+	color: #7CACDA;
+}
+
+.disabledlink {
+	font-weight: normal;
+	font-size: 11px;
+	color: gray;
+	font-style: normal;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.Heading1
+{
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	padding-bottom: 10px;
+}
+
+.Heading1 a {
+	font-size:18px;
+	color:#005FA3;
+}
+
+.Heading1 ul,
+.Heading1 ul li,
+.Heading1 ul li a {
+	display: block;
+	width: 100%;
+}
+
+.Heading2, tr.Heading2 td
+{
+	font-weight: bold;
+	font-size: 11px;
+	color: #000000;
+	height: 16pt;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	background-color: #EDECEC;
+	/*padding: 4px 4px 4px 10px;*/
+	background-image: url(../../images/table_bg.gif);
+}
+
+.Heading3
+{
+	PADDING-LEFT: 4pt;
+	FONT-WEIGHT: bold;
+	font-size: 11px;
+	COLOR: #ffffff;
+	FONT-FAMILY: Tahoma, Verdana, Helvetica, sans-serif;
+	TEXT-DECORATION: none;
+}
+
+.Heading3 TD
+{
+	vertical-align: middle;
+	background-image: url(../../images/table_bg.gif);
+	background-repeat: repeat-x;
+	padding-top: 4px;
+	padding-right: 4px;
+	padding-bottom: 4px;
+	padding-left: 4px;
+	background-color: #e4e4e4;
+	color: #000000;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #dddddd;
+}
+
+.ISSelectReplacement
+{
+	width: 450px;
+	height: 250px;
+}
+
+input.ISSelectSearch
+{
+	width: 447px;
+	font-size: 11px;
+	font-family: Tahoma,Verdana,Helvetica,Sans-Serif;
+	color: #333;
+	border: 1px solid #7F9DB9;
+	margin-top:1px;
+}
+
+.Field,
+.Field30,
+.Field50,
+.Field150,
+.Field250,
+.Field300,
+.Field450
+{
+	font-size: 11px;
+	color: #333333;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	margin-top: 3px;
+	margin-right: 5px;
+}
+
+.Field30 
+{
+	width: 30px;	
+}
+
+.Field50
+{
+	width: 50px;
+}
+
+.Field150
+{
+	width: 150px;
+}
+
+.Field250
+{
+	width: 250px;
+}
+
+.Field300
+{
+	width: 300px;
+}
+
+.Field450
+{
+	width: 450px;
+}
+
+.error
+{
+	border: #CD1143 2px solid;
+	font-weight: bold;
+	font-size: 11px;
+	color: #ffffff;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	background-color: #FCEEF3;
+}
+
+.toolTipBox
+{
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	padding: 5px;
+	margin-top: 10px;
+	background-color: #E0ECFF;
+	color: #333333;
+	text-decoration: none;
+	margin-bottom: 15px;
+}
+
+.hide
+{
+	display: none;
+	visibility: hidden;
+}
+
+.paging
+{
+	font-size: 8pt;
+	color: white;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.required
+{
+	font-size: 8pt;
+	color: red;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.aside
+{
+	margin: 0;
+	padding: 0;
+	color: #999;
+	font-family: Tahoma,Verdana,Helvetica,Sans-Serif;
+	font-size: 11px;
+}
+
+.PageFooter
+{
+	padding-top: 5px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	text-align: right;
+	color: #808080;
+}
+
+.PageFooter a
+{
+	font-size: 11px;
+	color: #676767;
+}
+
+.MidHeading
+{
+	color: #000000;
+	font-weight: bold;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	background-color: #F9F9F9;
+	width: 80%;
+	padding: 3px 1px 1px 6px;
+}
+
+.MidHeading img
+{
+	vertical-align: middle;
+}
+
+.RightHeader
+{
+	font-weight: bold;
+	font-size: 11px;
+	color: black;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	background-color: #EDECEC;
+	padding: 3px 1px 1px 6px;
+	height: 18px;
+}
+
+ul, a
+{
+	color: #333333;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+label#triggeremails_triggeractions_removelist_enabled_label ul
+{
+	color: #676767;
+}
+
+.ContentContainer ul li
+{
+	line-height: 170%;
+}
+
+ul.RssFeed {
+	padding-left: 0px;
+	margin-left: 0px;
+}
+
+ul.RssFeed li {
+	padding-left: 0px;
+	margin-left: 5px;
+}
+
+.Text
+{
+	color: #333333;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	margin-top: 5px;
+}
+
+.CalendarSelect
+{
+	width: 100px;
+}
+
+.CalendarSelectSmall
+{
+	width: 50px;
+}
+
+div.FlashError
+{
+	background-color: #FFECEC;
+	padding: 5px 5px 8px 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+img.FlashError
+{
+	padding-right: 4px;
+	margin-top: -2px;
+}
+
+.FlashError ul
+{
+	padding-left: 100px;
+}
+
+
+div.FlashSuccess
+{
+	background-color: #FFF1A8;
+	padding: 5px 5px 8px 10px;
+	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+img.FlashSuccess
+{
+	padding-right: 4px;
+	margin-top: -2px;
+}
+
+.Message
+{
+	background-color: #FFF1A8;
+	font-weight: normal;
+	font-size: 11px;
+	color: #4e4f4f;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	/*
+	padding-top: 5px;
+	padding-bottom: 5px;*/
+	padding: 5px;
+	vertical-align: top;
+}
+
+.Info
+{
+	background-color: #EEEEEE;
+	font-weight: normal;
+	font-size: 11px;
+	color: #4e4f4f;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	padding: 5px;
+	vertical-align: top;
+}
+
+.PageHeader
+{
+	width: 100%;
+	/* border-collapse: collapse; */
+	background-color: #F7F7F7;
+}
+
+.PageHeader .Menu
+{
+	text-align: right;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	padding-right: 20px;
+	vertical-align: bottom;
+	padding-bottom: 5px;
+}
+
+.PageHeader .Menu A
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+.PageHeader .Menu A:hover
+{
+	text-decoration: underline;
+}
+
+.Panel
+{
+	background-color: #F9F9F9;
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border-bottom: 5px solid #F9F9F9;
+}
+
+.Panel a
+{
+	color: #333333;
+}
+
+.Panel td
+{
+	font-size: 11px;
+	height: 22px;
+	/*line-height: 22px;*/
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.PanelContent
+{
+	height: 354px;
+}
+
+.FieldLabel
+{
+	padding: 6px 10px 0px 10px;
+	font-weight: normal;
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	text-decoration: none;
+	vertical-align: top;
+	width: 200px;
+	height: 26px;
+}
+
+.SmallFieldLabel
+{
+	padding: 6px 10px 0px 10px;
+    font-weight: normal;
+    font-size: 11px;
+    font-family: Tahoma, Verdana, Helvetica, sans-serif;
+    text-decoration: none;
+    vertical-align: top;
+    width: 120px;
+	height: 26px;
+}
+
+TR.GridRow TD
+{
+	padding: 3px 3px 3px 5px;
+	background-color: #f9f9f9;
+	border-bottom: solid 1px #edecec;
+}
+
+TR.GridRowOver TD
+{
+	padding: 3px 3px 3px 5px;
+	background-color: #f3f3f3;
+	border-bottom: solid 1px #edecec;
+}
+
+.SmallButton
+{
+	font-size: 11px;
+	width: 130px;
+    font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.FormButton
+{
+	font-size: 11px;
+    width: 80px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.FormButton_wide
+{
+	font-size: 11px;
+	width: 100px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.HelpText
+{
+	cursor: help;
+	border-bottom: 1px dotted #28609B;
+}
+
+/* CS Created */
+
+select
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	width: 250px;
+}
+
+.DateTimeBox
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	margin-bottom: 4px;
+	width: 50px;
+}
+
+.infotiplist, .customfieldlist
+{
+	font-family: Verdana;
+	font-size: 11px;
+	color: #000000;
+	text-decoration: none;
+	line-height: 125%;
+}
+
+.Panel .Gap
+{
+	height: 5px;
+}
+
+.datefield
+{
+	width: 70px;
+	font-size: 11px;
+	color: #333333;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	margin-top: 3px;
+	margin-right: 5px;
+	margin-bottom: 3px;
+}
+
+.UserInfo
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	color: #000000;
+	background-color: #FFFDE0;
+	padding: 7px;
+}
+
+.templategroup
+{
+	font-weight: bold;
+	font-style: normal;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+#tabnav
+{
+	height: 20px;
+	margin: 0;
+	padding-left: 10px;
+	background: url(../../images/tab_bottom.gif) repeat-x bottom;
+}
+
+#tabnav li
+{
+	margin: 0;
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+}
+
+#tabnav a:link, #tabnav a:visited
+{
+	float: left;
+	background: #f3f3f3;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	padding: 2px 10px 2px 10px;
+	margin-right: 4px;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	color: #666;
+}
+
+#tabnav a:link.active, #tabnav a:visited.active
+{
+	border-bottom: 1px solid #fff;
+	background: #fff;
+	color: #000;
+}
+
+#tabnav a:hover
+{
+	background: #fff;
+}
+
+.timePicker
+{
+	font-size: 11px;
+	width: 80px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	color: black;
+	border: 2px inset !important;
+}
+
+.timePicker button {
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	color: black;
+	height: 10px;
+	padding: 0px;
+	margin: 0px;
+	width: 16px;
+}
+
+.imageTag
+{
+	font-size: 11px;
+	background-color: #FFF1A8;
+	border: solid 1px #EDEACA;
+	padding: 20px;
+	line-height: 100%;
+}
+
+.imageTag img
+{
+	margin-bottom: 10px;
+}
+
+.quote
+{
+	border-left: solid 5px #CACACA;
+	padding-left: 20px;
+	line-height: 140%;
+}
+
+.customField
+{
+	background-color: pink;
+}
+
+.emailcredits
+{
+}
+
+
+/* ADDED IN NX 1.1.4 */
+.PanelPlain
+{
+	background-color: #FFFFFF;
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	border-bottom: 5px solid #FFFFFF;
+}
+
+.PanelPlain td
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+}
+
+.didyouKnowBox, .systemMessageBox
+{
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	padding: 5px;
+	border: solid 1px #e3e3e3;
+	background-color: #f4feff;
+	color: #333333;
+	text-decoration: none;
+	margin-bottom: 15px;
+}
+
+.spam_notspam {
+	background-color: #00FF00;
+	height:5px;
+}
+.spam_alert {
+	background-color: #FFFF66;
+	height:5px;
+}
+.spam_spam {
+	background-color: #FF0000;
+	height:5px;
+}
+.spam_info {
+	padding: 4px 8px 4px 8px;
+}
+
+/* Interspire Select Replacemnt CSS */
+.ISSelect {
+	background:#FFFFFF none repeat scroll 0%;
+	border:1px solid #7F9DB9;
+	float:left;
+	height:200px;
+	overflow:auto;
+	width:300px;
+}
+
+.ISSelect ul, .ISSelect li {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0pt;
+	padding:0pt;
+}
+.ISSelect li {
+	border-bottom:1px solid #FFFFFF;
+	border-top:1px solid #FFFFFF;
+	cursor:default;
+	padding-bottom:0px;
+	padding-left:4px;
+	padding-top:0px;
+}
+.ISSelect li.ISSelectGroup {
+	padding-left:0pt;
+}
+.ISSelect input {
+	vertical-align:middle;
+}
+.ISSelectGroup li {
+	padding-left:20px;
+}
+.ISSelect .ISSelectOptionHover {
+	background:#EFEFEF none repeat scroll 0%;
+}
+.ISSelectGroup div {
+	font-style:italic;
+	font-weight:bold;
+	padding-left:4px;
+}
+.ISSelect li.ISSelectGroup {
+	background:transparent none repeat scroll 0%;
+	border-bottom:0pt none;
+	border-top:0pt none;
+	padding-bottom:0pt;
+}
+.ISSelect .SelectedRow {
+	background:#316AC5 none repeat scroll 0%;
+	border-bottom:1px solid #316AC5;
+	border-top:1px solid #316AC5;
+	color:#FFFFFF;
+}
+
+
+/* ADDED IN NX 1.2.0 */
+
+
+label {
+	cursor: pointer;
+}
+
+/* For the loading indicator on the Statistics page */
+.loading_indicator {
+	position: fixed;
+	top: 0px;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	text-align: center;
+}
+.loading_indicator span {
+	text-align: center;
+	display: block;
+}
+.loading_indicator div {
+	text-align: center;
+	background: #FFF1A8;
+	width: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	font-size: 11px;
+	padding: 3px;
+}
+
+/* Added in NX 1.3.3 */
+
+.tutorial_example
+{
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 9pt;
+	padding: 10px;
+	margin-top: 10px;
+	border: solid 1px #EDEACA;
+	background-color: #FFF1A8;
+	color: #333333;
+	text-decoration: none;
+	width:300px;
+	margin: auto 33% auto 33%;
+}
+
+.center_div
+{
+	margin: auto 33% auto 33%;
+}
+
+.TestModeEnabled
+{
+	font-size: 11px;
+	font-family: Tahoma, Verdana, Helvetica, sans-serif;
+	color: #000000;
+	background-color: #E0ECFF;
+	padding: 5px 5px 10px 5px;
+	line-height: 11px;
+	margin-bottom: 10px;
+}
+
+.DropShadowContainer {
+	left: 3px;
+	top: 3px;
+	margin-right: 3px;
+	margin-bottom: 3px;
+	z-index: 1000000;
+	position: relative;
+}
+
+.DropShadowContainer .Shadow1,
+.DropShadowContainer .Shadow3,
+.DropShadowContainer .ItemContainer {
+	left: -1px;
+	top: -1px;
+	position: relative;
+}
+
+.DropShadowContainer .Shadow2 {
+	background: #efefef;
+}
+
+.DropShadowContainer .Shadow3 {
+	background: #dedede;
+}
+
+.DropShadowContainer .ItemContainer {
+	background: #ffffff;
+	border: 1px solid #cacaca;
+}
+
+.PopDownMenuContainer {
+	z-index: 1000;
+}
+
+.DropDownMenu ul, .DropDownMenu li {
+	text-align: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.DropDownMenu a {
+	padding: 4px 10px;
+	display: block;
+	line-height: 1.7;
+	text-decoration: none;
+}
+
+.DropDownMenu a:hover, .DropDownMenu a:hover {
+	background-color: #efefef;
+}
+
+.DropDownMenu li.Break {
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+}
+
+.DropDownMenu hr {
+	color: #cacaca;
+	background-color: #cacaca;
+	height: 1px;
+	border: 0;
+	margin: 2px auto;
+	padding: 0;
+	line-height: 0;
+	font-size: 1px;
+	width: 90%;
+}
+
+.textlinks .ActiveButton {
+	background: #fff;
+	border: 1px solid #cacaca;
+	border-bottom: 0;
+	margin: 0 1px 0 3px;
+	text-decoration: none !important;
+	z-index: 1000000;
+	position: relative;
+}
+
+.MenuText
+{
+	color: #7cacda;
+	Font-Family: Tahoma, Verdana, Helvetica, sans-serif;
+	font-size: 11px;
+	text-decoration: none;
+	margin:0pt 2px 0pt 4px;
+	padding:4px 6px;
+}
+
+.loggedinas
+{
+	margin-top: 5px;
+	font-size: 11px;
+}
+
+a.MenuText
+{
+	text-decoration: underline;
+}
+
+#logo
+{
+	margin: 15px 0 15px 3px;
+	float: left;
+	clear: left;
+}
+
+.ContentContainer {
+	padding: 10px 10px 10px 10px;
+	background-color: #fff;
+	border: solid 1px #CFCFCF;
+	border-top: none;
+	min-height: 370px;
+}
+
+.BodyContainer
+{
+	width: 97%;
+	margin: 0 10px 10px 10px;
+}
+
+.loginBox td {
+	font-size: 11px;
+	color: #676767;
+}
+.DashboardPanel {
+	border: 5px solid #ececec;
+	margin-bottom: 10px;
+}
+
+.DashboardPanel td {
+	font-size: 11px;
+	color: #000000;
+}
+
+.DashboardPanel .Heading2 {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+.DashboardPanel .PanelContent {
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+.DashboardPanel .PanelContent ul {
+	padding:0px;
+	list-style-position: inside;
+	margin: 0px 0px 0px 20px;
+}
+.DashboardPanel .PanelToggle {
+	padding:4px 5px 0 0;
+}
+
+.DashboardPanel .PanelToggle a {
+	color: gray;
+}
+
+.DashboardPanel .PanelHeader {
+	height: 16px;
+	padding-top: 4px;
+}
+
+div#HomeGettingStarted td.taskComplete a, td.taskComplete {
+	color: #cacaca;
+}
+.LoginError {
+	color: red;
+}
+.pageinfo p {
+	margin-top: 0px;
+	margin-bottom: 11px;
+}
+.message_box {
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 5px;
+}
+ul#interspirerss {
+	list-style-position: outside;
+	margin: 10px 20px;
+	padding: 0px;
+	list-style-type: disc;
+}
+ul#interspirerss li {
+	margin-left: 0px;
+}
+
+ul#popularRecentContactList {
+	list-style-position: outside;
+	margin: 10px 20px;
+	padding: 0px;
+	list-style-type: disc;
+}
+ul#popularRecentContactList li {
+	margin-left: 0px;
+}
+
+
+.gettingstarted_helpinfo {
+	background-color: #FFF1A8;
+	margin:5px 0px;
+}
+
+.UpgradeNotice {
+	border:1px solid #CCCCCC;
+	background-color: #FFFFCC;
+}
+
+#upgradenotice {
+	padding-left:10px;
+	padding-top:0px;
+}
+
+.UpgradeNotice .Heading2 {
+	background: #91CB8A url('../../images/upgrade_bg.gif') repeat-x;
+	border-color: #7CB778;
+	border-top: 1px solid #7CB778;
+}
+
+.UpgradeNotice .PanelContent {
+	border-color: #7CB778;
+	padding: 0px;
+}
+
+table.WISIWYG_Editor_Choices td {
+	line-height: normal;
+	height: auto;
+}
+
+.EmptyRow
+{
+	background-color: #FFFFFF;
+	height: 10px !important;
+}
+
+a.DropDownArrow {
+	text-decoration: none;
+}
+
+textarea.ContentsTextEditor {
+	background: #ffffff url(../../images/textbox_wrap_bg.gif) repeat-y;
+	width: 95%;
+	height: 580px;
+}
+
+.TemplateHeading {
+	font-size:14px;
+	font-weight:bold;
+	padding-bottom:5px;
+}
+
+.TemplateBox {
+	border:5px solid white;
+	color:#333333;
+	display:inline;
+	float:left;
+	font-family:Tahoma;
+	font-size:11px;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	height:220px;
+	line-height:normal;
+	margin-top:5px;
+	padding:5px;
+	text-align:center;
+	width: 200px;
+}
+
+.TemplateBoxOver
+{
+	color: #333333;
+	font: normal 11px Tahoma;
+	margin-top: 5px;
+	text-align: center;
+	padding: 5px;
+	float: left;
+	display: inline;
+	height: 220px;
+	border: 5px solid  #FFCC66;
+	background-color:#FFFFCC;
+	width: 200px;
+}
+
+.plusButton {
+	cursor: pointer;
+}
+.subscriberEventRow {
+	display: none;
+}
+.subscriberEventRow td {
+	border-bottom: solid 1px #edecec;
+}
+tr.subscriberEventRowActive td {
+	background-color: #DBF3D1;
+}
+tr.subscriberEventRow div.dataArea {
+	background-color: #DBF3D1;
+}
+.subscriberEventRow td {
+	padding: 0 3px 0 5px;
+}
+.subscriberEventRow td.eventtype {
+	font-weight: bold;
+}
+.subscriberEventRow td.dataCol {
+	padding: 0 0 0 70px;
+}
+.subscriberEventTable {
+	margin: 0 10px 10px 10px;
+}
+.subscriberEventTable td {
+	border: none;
+}
+.subscriberEventTable td {
+	vertical-align: top;
+}
+.subscriberEventTable td.eventdate, .subscriberEventTable td.eventnotes {
+	width: 30px;
+}
+#eventAddForm button {
+font-size: 11px;
+}
+#eventAddForm #eventType {
+	width:100%;margin-bottom:4px;
+}
+table#subscriberEvents {
+	margin: 0px;
+}
+table#subscriberEvents td.buttons input {
+	margin-bottom: 11px;
+}
+table#subscriberEvents td.pagination div {
+	margin-bottom: 11px;
+}
+div#eventTypes {
+	position: absolute;
+	margin-top: 15px;
+	height: 150px;
+	overflow: auto;
+	background: #fff;
+	border: 1px solid #000;
+	z-index: 1024;
+	display: none;
+}
+div#eventTypes ul {
+	list-style-type: none;
+	margin: 0px;
+	padding:0px;
+}
+
+div#eventTypes ul li {
+	margin: 0px;
+	padding:2px;
+	cursor: pointer;
+}
+div#eventTypes ul li.selected {
+	background: #316AC5;
+	color: #fff;
+}
+div#googleCalendarForm {
+	display: none;
+}
+.HelpInfo, p.HelpInfo {
+	background:#FFF1A8 none repeat scroll 0% 0%;
+	color:#000000;
+	margin: 5px 5px 8px 0px;
+	padding:10px;
+}
+
+ul.Folder, ul.Folder li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	cursor: default;
+}
+
+/* IE 7 hack */
+*:first-child+html ul.Folder li {
+	display: inline;
+}
+
+/* IE 6 Hack */
+* html ul.Folder li {
+	display: inline;
+}
+
+.SortableRowHelper, .SortableRowHelper td, .RowDown td {
+	background: #D5E0F1 !important;
+}
+
+#dragHelper .SortableRow td {
+	background: transparent;
+	border: 0;
+}
+
+#dragHelper .SortableRow .HideOnDrag {
+	display: none;
+}
+
+.IndexPage_GettingStarted_Content {
+	padding-left: 15px;
+	background-position: right bottom;
+	background-repeat: no-repeat;
+}
+
+.IndexPage_GettingStarted_Content_Header {
+	font-size: 15px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.IndexPage_GettingStarted_Content_Intro {
+	padding-bottom: 10px;
+}
+
+.IndexPage_GettingStarted_Content_Link {
+	font-size: 14px;
+	font-weight: bold;
+	color: #05386D;
+}
+
+#Bounce_Step_Nav_Container ul {
+    padding-left:0px;
+    font-weight:bold;
+    color: #2B61AF;
+}
+
+#Bounce_Step_Nav_Container li {
+    display:inline;
+    list-style-type:none;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_Selected_First span {
+    background: url('../../images/cap-left-dark.gif') no-repeat center left;
+    background-color: #A8C6F2;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_Selected span {
+    background: url('../../images/arrow-left.gif') no-repeat center left;
+    background-color: #A8C6F2;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_First span {
+    background: url('../../images/cap-left-light.gif') no-repeat center left;
+    background-color: #D7E7FF;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_Last span {
+    background: url('../../images/cap-right-light.gif') no-repeat center left;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_Selected_Last span {
+    background: url('../../images/cap-right-dark.gif') no-repeat center left;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav_After_Selected span {
+    background: url('../../images/arrow-right.gif') no-repeat center left;
+    background-color: #D7E7FF;
+}
+
+#Bounce_Step_Nav_Container .Bounce_Step_Nav span {
+    background: url('../../images/arrow-clear.gif') no-repeat center left;
+    background-color: #D7E7FF;
+}
+
+.Bounce_Step_Nav_General_First {
+    padding: 9px 12px 9px 15px;
+}
+
+.Bounce_Step_Nav_General {
+    padding: 9px 12px 9px 25px;
+}
+
+.Bounce_Step_Nav_Number {
+	display:inline;
+	padding-left:20px;
+}
+
+.Bounce_ISSelector_Title, .Bounce_Process_Option_Recommended {
+	font-weight: bold;
+}
+
+.Bounce_ISSelector_Description {
+	display: block;
+	margin-left: 35px;
+}
+
+.Bounce_Help_Header {
+	font-weight: bold;
+	background: url('../../images/help.gif') no-repeat center left;
+	padding-left:20px;
+	margin-bottom:10px;
+}
+
+.Bounce_Help_Item {
+	margin-bottom:10px;
+}
+
+.Bounce_Process_Option, .Bounce_Process_Option_Recommended {
+    color: #676767;
+    display:block;
+	font-size: 13px;
+}
+
+.Bounce_Process_Option_Intro {
+	display:block;
+	padding:5px 0px 10px 25px;
+}
+
+.inPlaceImageBoxDefault {
+	background-color:transparent;
+	border:1px solid transparent;
+	color:#676767;
+	padding:3px;
+	text-align: left;
+	width: 180px;
+}
+
+.inPlaceFieldFocus {
+	background-color:#FFF;
+	border:1px solid #809DB9;
+	padding:3px;
+}
+
+.swfupload {
+	position: absolute;
+	z-index: 1;
+	outline: none;
+}
+
+.ManageImageBox {
+	color: #333333;
+	font: normal 11px Tahoma;
+	margin-top: 5px;
+	text-align: center;
+	padding: 5px;
+	float: left;
+	display: inline;
+	height: 250px;
+	border: 5px solid transparent;
+}
+
+.inPlaceImageBoxFieldHover {
+	background-color:#FFFFDD !important;
+	border-color:#666666 rgb(221, 221, 221) rgb(221, 221, 221) rgb(102, 102, 102) !important;
+	border-style:solid;
+	border-width:1px;padding:3px;
+}
+
+.PanelContentBox1 {
+	padding: 0px;
+	border: 1px solid #BADCDE;
+}
+
+.DashboardPanelBox1 {
+	border: 5px solid #E6F2F3;
+	margin-bottom: 10px;
+}
+
+.DashboardPanelSubBox1 {
+	border-bottom:1px solid #BADCDE;
+}
+
+.DashboardPanelSubBox2 {
+	padding:7px 16px;
+}
+
+.DashboardPanelSubBox3, .DashboardPanelSubBox1 {
+	background:transparent url(../../images/getstarted-bg-noborder.gif) repeat-x scroll left bottom;
+	float:left;
+	padding:0px 16px 0px 16px;
+}
+
+.DashboardPanelSubBox3 ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-bottom: 10px;
+}
+
+.DashboardPanelSubBox3 li {
+	background-image: url(../../images/checkmark.gif);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 1px 0 1px 25px;
+	margin: .4em 0;
+}
+
+.DashboardPanelSubBox2 div {
+	float:left;
+	height:30px;
+	width:180px;
+}
+
+.PanelHeaderBox1 {
+	font-family: Arial, Tahoma,Verdana,Helvetica,Sans-Serif;
+	font-size: 14px;
+	color: #000000;
+	padding:16px 16px 10px 16px;
+}
+
+.IndexContent a
+{
+	color:#005FA3;
+	text-decoration: none;
+}
+
+.IndexContent a:hover
+{
+	color:#005FA3;
+	text-decoration: underline;
+}
+
+a#HideThis {
+	text-decoration: none;
+}
+
+.PanelHeaderBox1 .QuickLink, .HideThis {
+	padding: 0px 5px 0px 10px;
+	font-weight:normal;
+	float:right;
+}
+
+.CampaignOptionsLinks {
+	background-color:#E0ECFF !important;
+	border-top:1px solid #BADCDE;
+	border-bottom:1px solid #BADCDE;
+	padding:7px 10px 10px 10px;
+}
+
+.NonCampaignOptionsSelected span {
+	padding-top:5px;
+	padding-bottom:5px;
+	padding-left:7px;
+	padding-right:0px;
+}
+
+.CampaignOptionsSelected {
+	background-color:#FFFFFF !important;
+	background:transparent url(../../images/selector-mid-slice.gif) 50% 27% repeat-x;
+	padding-top:2px;
+	padding-bottom:6px;
+	padding-right:0px;
+	padding-left:0px;
+}
+
+.CampaignOptionsSelected .left, .CampaignOptionsSelected .right {
+	padding-top:5px;
+	padding-bottom:10px;
+	padding-left:0px;
+	padding-right:6px;
+}
+
+
+.CampaignOptionsSelected .left {
+	background:transparent url(../../images/selector-left-cap.gif) left center no-repeat;
+}
+.CampaignOptionsSelected .right {
+	background:transparent url(../../images/selector-right-cap.gif) left center no-repeat;
+}
+
+/* IE 7 hack */
+*:first-child+html .CampaignOptionsSelected {
+	padding-left:7px;
+}
+
+/* IE 6 Hack */
+* html .CampaignOptionsSelected {
+	padding-left:7px;
+}
+
+#RecentContactListItem ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	padding-bottom: 10px;
+}
+
+#RecentContactListItem li {
+	background-image: url(../../images/dottedline.gif);
+	background-repeat: repeat-x;
+	background-position: 0 0%;
+	padding: 10px 0 3px 0px;
+	margin: .4em 0;
+}
+#RecentContactListItem li .ListLink {
+	background-image: url(../../images/home-clisticon.gif);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding: 10px 0 10px 35px;
+	margin: .4em 0;
+}
+
+.ActionButton {
+	background:transparent url(../../images/but-mid-sliver.gif) repeat scroll 0 0;
+	height:32px;
+}
+
+.BrowseCLButton, .BrowseCLButton a {
+	width:180px;
+}
+
+.ViewAllStatsButton, .ViewAllStatsButton a {
+	width:125px;
+}
+
+.ViewAllCampaignsButton, .ViewAllCampaignsButton a {
+	width:150px;
+}
+
+.BrowseCLButton, .ViewAllStatsButton, .ViewAllCampaignsButton {
+	float:right;
+}
+
+.BrowseCLButton, .ViewAllStatsButton, .ViewAllCampaignsButton {
+	margin-top:10px;
+}
+
+.ActionButton a span.RightEnd {
+	background:transparent url(../../images/but-right-cap-white.gif) no-repeat scroll right top;
+	display:block;
+	float:right;
+	height:32px;
+	width:10px;
+}
+
+.ActionButton a span.ActionIcon {
+	background:transparent url(../../images/but-arrow.gif) no-repeat scroll left center;
+	display:block;
+	float:right;
+	height:32px;
+	width:22px;
+}
+
+.ActionButton a span.ButtonText {
+	display:block;
+	padding-right:5px;
+	padding-top:9px;
+}
+
+.BrowseCLButton a span.ButtonText {
+	padding-left:30px;
+}
+
+.ViewAllStatsButton a span.ButtonText, .ViewAllCampaignsButton a span.ButtonText {
+	padding-left:15px;
+}
+
+a span.ButtonText {
+	white-space: nowrap;
+}
+
+.ActionButton a {
+	background:transparent url(../../images/but-left-cap-white.gif) no-repeat scroll left top;
+	color:#184F87;
+	display:block;
+	font-family:arial;
+	font-size:1em;
+	height:32px;
+}
+
+#Campaign_id .LeftImage, #Campaign_id .RightImage {
+	height:54px;
+	display:block;
+}
+
+#Campaign_id .LeftImage {
+	background:transparent url(../../images/campaigns-left-cap.gif) no-repeat scroll left top;
+	width:3px;
+}
+
+#Campaign_id .RightImage {
+	background:transparent url(../../images/campaigns-right-cap.gif) no-repeat scroll left top;
+	width:5px;
+}
+
+#Campaign_id .MidImage {
+	background:transparent url(../../images/campaign-mid-slice.gif) repeat-x scroll left top;
+	float:left;
+	height:42px;
+	padding:8px;
+	width:378px;
+}
+
+#Campaign_id .CampIcon {
+	background:transparent url(../../images/icon_mail.gif) no-repeat scroll left;
+	float:left;
+	height:37px;
+	width:35px;
+	padding-right:10px;
+}
+
+.CampaignListText {
+	padding-top:4px;
+}
+
+.HelpToolTipPos {
+	display:inline;
+	position:absolute;
+	padding-left:5px;
+}

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product id="sso" name="SSO">
+  <keypackages>
+    <keypackage>sw-sso</keypackage>
+  </keypackages>
+
+  <release id="SSO_2_0" name="SSO 2.0" version="2.0" upgrade_allowed_from="1.0" nokeyupdate_from="1.0">
+    <!-- RHAS -->
+    <build os_name="Linux" os_vendor="RedHat" os_version="el4" os_arch="i386" config="SSO_2.0/sso-2.0-rhel4-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el4" os_arch="x86_64" config="SSO_2.0/sso-2.0-rhel4-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el3" os_arch="i386" config="SSO_2.0/sso-2.0-rhel3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el3" os_arch="x86_64" config="SSO_2.0/sso-2.0-rhel3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="SSO_2.0/sso-2.0-rhel5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="SSO_2.0/sso-2.0-rhel5-x86_64.inf3"/>
+    <!-- FedoraCore -->
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="4" os_arch="i386" config="SSO_2.0/sso-2.0-fc4-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="4" os_arch="x86_64" config="SSO_2.0/sso-2.0-fc4-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="5" os_arch="i386" config="SSO_2.0/sso-2.0-fc5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="5" os_arch="x86_64" config="SSO_2.0/sso-2.0-fc5-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="6" os_arch="i386" config="SSO_2.0/sso-2.0-fc6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="6" os_arch="x86_64" config="SSO_2.0/sso-2.0-fc6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="7" os_arch="i386" config="SSO_2.0/sso-2.0-fc7-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="7" os_arch="x86_64" config="SSO_2.0/sso-2.0-fc7-x86_64.inf3"/>
+    <!-- CentOS -->
+    <build os_name="Linux" os_vendor="CentOS" os_version="3.6" os_arch="i386" config="SSO_2.0/sso-2.0-cos3.6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.2" os_arch="i386" config="SSO_2.0/sso-2.0-cos4.2-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.3" os_arch="x86_64" config="SSO_2.0/sso-2.0-cos4.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="SSO_2.0/sso-2.0-cos5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="SSO_2.0/sso-2.0-cos5-x86_64.inf3"/>
+    <!-- Debian and Ubuntu -->
+    <build os_name="Linux" os_vendor="Debian" os_version="3.1" os_arch="i386" config="SSO_2.0/sso-2.0-deb3.1-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="4.0" os_arch="i386" config="SSO_2.0/sso-2.0-deb4.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="4.0" os_arch="x86_64" config="SSO_2.0/sso-2.0-deb4.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06" os_arch="i386" config="SSO_2.0/sso-2.0-ubt6.06-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06" os_arch="x86_64" config="SSO_2.0/sso-2.0-ubt6.06-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10" os_arch="i386" config="SSO_2.0/sso-2.0-ubt7.10-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10" os_arch="x86_64" config="SSO_2.0/sso-2.0-ubt7.10-x86_64.inf3"/>
+    <!-- FreeBSD -->
+    <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1" os_arch="i386" config="SSO_2.0/sso-2.0-fr6.1-i386.inf3"/>
+    <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="5.5" os_arch="i386" config="SSO_2.0/sso-2.0-fr5.5-i386.inf3"/>
+    <!-- SuSE -->
+    <build os_name="Linux" os_vendor="SuSE" os_version="9.3" os_arch="x86_64" config="SSO_2.0/sso-2.0-suse9.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="9.3" os_arch="i386" config="SSO_2.0/sso-2.0-suse9.3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.0" os_arch="i386" config="SSO_2.0/sso-2.0-suse10.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.0" os_arch="x86_64" config="SSO_2.0/sso-2.0-suse10.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.1" os_arch="i386" config="SSO_2.0/sso-2.0-suse10.1-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.1" os_arch="x86_64" config="SSO_2.0/sso-2.0-suse10.1-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.2" os_arch="i386" config="SSO_2.0/sso-2.0-suse10.2-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.2" os_arch="x86_64" config="SSO_2.0/sso-2.0-suse10.2-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.3" os_arch="i386" config="SSO_2.0/sso-2.0-suse10.3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.3" os_arch="x86_64" config="SSO_2.0/sso-2.0-suse10.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es9" os_arch="x86_64" config="SSO_2.0/sso-2.0-susees9-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es10" os_arch="i386" config="SSO_2.0/sso-2.0-susees10-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es10" os_arch="x86_64" config="SSO_2.0/sso-2.0-susees10-x86_64.inf3"/>
+  </release>
+
+  <release id="SSO_2_1" name="SSO 2.1" version="2.1" upgrade_allowed_from="2.0" nokeyupdate_from="1.0">
+    <!-- RHAS -->
+    <build os_name="Linux" os_vendor="RedHat" os_version="el4" os_arch="i386" config="SSO_2.1/sso-2.1-rhel4-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el4" os_arch="x86_64" config="SSO_2.1/sso-2.1-rhel4-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el3" os_arch="i386" config="SSO_2.1/sso-2.1-rhel3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el3" os_arch="x86_64" config="SSO_2.1/sso-2.1-rhel3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="i386" config="SSO_2.1/sso-2.1-rhel5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el5" os_arch="x86_64" config="SSO_2.1/sso-2.1-rhel5-x86_64.inf3"/>
+    <!-- FedoraCore -->
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="4" os_arch="i386" config="SSO_2.1/sso-2.1-fc4-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="4" os_arch="x86_64" config="SSO_2.1/sso-2.1-fc4-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="5" os_arch="i386" config="SSO_2.1/sso-2.1-fc5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="5" os_arch="x86_64" config="SSO_2.1/sso-2.1-fc5-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="6" os_arch="i386" config="SSO_2.1/sso-2.1-fc6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="6" os_arch="x86_64" config="SSO_2.1/sso-2.1-fc6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="7" os_arch="i386" config="SSO_2.1/sso-2.1-fc7-i386.inf3"/>
+    <build os_name="Linux" os_vendor="FedoraCore" os_version="7" os_arch="x86_64" config="SSO_2.1/sso-2.1-fc7-x86_64.inf3"/>
+    <!-- CentOS -->
+    <build os_name="Linux" os_vendor="CentOS" os_version="3.6" os_arch="i386" config="SSO_2.1/sso-2.1-cos3.6-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.2" os_arch="i386" config="SSO_2.1/sso-2.1-cos4.2-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="4.3" os_arch="x86_64" config="SSO_2.1/sso-2.1-cos4.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="i386" config="SSO_2.1/sso-2.1-cos5-i386.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="5" os_arch="x86_64" config="SSO_2.1/sso-2.1-cos5-x86_64.inf3"/>
+    <!-- Debian and Ubuntu -->
+    <build os_name="Linux" os_vendor="Debian" os_version="3.1" os_arch="i386" config="SSO_2.1/sso-2.1-deb3.1-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="4.0" os_arch="i386" config="SSO_2.1/sso-2.1-deb4.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="4.0" os_arch="x86_64" config="SSO_2.1/sso-2.1-deb4.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06" os_arch="i386" config="SSO_2.1/sso-2.1-ubt6.06-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="6.06" os_arch="x86_64" config="SSO_2.1/sso-2.1-ubt6.06-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10" os_arch="i386" config="SSO_2.1/sso-2.1-ubt7.10-i386.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="7.10" os_arch="x86_64" config="SSO_2.1/sso-2.1-ubt7.10-x86_64.inf3"/>
+    <!-- FreeBSD -->
+    <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="6.1" os_arch="i386" config="SSO_2.1/sso-2.1-fr6.1-i386.inf3"/>
+    <build os_name="FreeBSD" os_vendor="FreeBSD" os_version="5.5" os_arch="i386" config="SSO_2.1/sso-2.1-fr5.5-i386.inf3"/>
+    <!-- SuSE -->
+    <build os_name="Linux" os_vendor="SuSE" os_version="9.3" os_arch="x86_64" config="SSO_2.1/sso-2.1-suse9.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="9.3" os_arch="i386" config="SSO_2.1/sso-2.1-suse9.3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.0" os_arch="i386" config="SSO_2.1/sso-2.1-suse10.0-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.0" os_arch="x86_64" config="SSO_2.1/sso-2.1-suse10.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.1" os_arch="i386" config="SSO_2.1/sso-2.1-suse10.1-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.1" os_arch="x86_64" config="SSO_2.1/sso-2.1-suse10.1-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.2" os_arch="i386" config="SSO_2.1/sso-2.1-suse10.2-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.2" os_arch="x86_64" config="SSO_2.1/sso-2.1-suse10.2-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.3" os_arch="i386" config="SSO_2.1/sso-2.1-suse10.3-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="10.3" os_arch="x86_64" config="SSO_2.1/sso-2.1-suse10.3-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es9" os_arch="x86_64" config="SSO_2.1/sso-2.1-susees9-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es10" os_arch="i386" config="SSO_2.1/sso-2.1-susees10-i386.inf3"/>
+    <build os_name="Linux" os_vendor="SuSE" os_version="es10" os_arch="x86_64" config="SSO_2.1/sso-2.1-susees10-x86_64.inf3"/>
+  </release>
+</product>

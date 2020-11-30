@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+</head>
+
+<body>
+<form method="post" action="%%FormAction%%" class="myForm">
+<!--
+Do not modify the NAME value of any of the INPUT fields
+the FORM action, or any of the hidden fields (eg. input type=hidden).
+These are all required for this form to function correctly.
+-->
+<dl>
+	<dt>Your Name:</dt>
+	<dd><input type="text" name="myname" value="" /></dd>
+
+	<dt>Your Email:</dt>
+	<dd><input type="text" name="myemail" value="%%Email%%" /></dd>
+
+	<dt>Friends Name:</dt>
+	<dd><input type="text" name="friendsname" value="" /></dd>
+
+	<dt>Friends Email:</dt>
+	<dd><input type="text" name="friendsemail" value="" /></dd>
+
+	<dt>&nbsp;</dt>
+	<dd><textarea name="introduction" rows="5" cols="30">Hey, I found this really interesting newsletter that I thought you might like to read for yourself.</textarea></dd>
+
+	<dt>&nbsp;</dt>
+	<dd><input type="submit" value="Send To Friend" /><br/>%%LNG_Form_Branding%%</dd>
+</dl>
+
+</form>
+</body>
+</html>

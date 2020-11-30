@@ -1,0 +1,52 @@
+#headermenu li ul {
+	margin-top: 0px;
+	margin-left: 2px;
+}
+
+#leadtab {
+	height: 19px;
+	width: 1px;
+}
+
+.menu_statistics_button
+{
+	width: 140px;
+}
+
+.menu_subscriber_button
+{
+	width: 160px;
+}
+
+.menu_list_button
+{
+	width: 135px;
+}
+
+.menu_newsletter_button
+{
+	width: 158px;
+}
+
+.menu_autoresponder_button
+{
+	width: 152px;
+}
+
+.menu_template_button
+{
+	width: 155px;
+}
+
+/* IE doesn't support position:fixed */
+.loading_indicator {
+  position: absolute;
+  top: expression( ( 0 + ( ignoreMe = document.body.scrollTop ) ) + 'px' );
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+}
+.BodyContainer {
+	width: 99%;
+}

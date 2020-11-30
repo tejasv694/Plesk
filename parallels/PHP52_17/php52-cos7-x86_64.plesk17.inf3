@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP52" yum_repo_name="PHP 5.2 for Plesk 17" headers_file="build-5.2.17-cos7-x86_64.hdr.gz">
+    <product id="php52">
+        <keypackages>
+            <keypackage>plesk-php52</keypackage>
+        </keypackages>
+        <release id="PHP_5_2" name="PHP v 5.2" version="5.2.17" upgrade_allowed_from="" />
+    </product>
+    <component name="php5.2" description="PHP 5.2 (outdated)" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php52" />
+        </keypackages>
+        <package name="plesk-php52" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-5.2.17-centos7.17090118.x86_64.rpm" size="80296" buildtime="1504264505" md5="05bb63f036d8ee8201201e06f7ec621f" arch="x86_64" />
+        <package name="plesk-php52-apc" version="3.1.9" release="centos7.15100614" file="packages/plesk-php52-apc-3.1.9-centos7.15100614.x86_64.rpm" size="58952" buildtime="1444121809" md5="e793e1c37cfab835074392bb6e848550" arch="x86_64" />
+        <package name="plesk-php52-bcmath" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-bcmath-5.2.17-centos7.17090118.x86_64.rpm" size="16720" buildtime="1504264505" md5="cf1b10dc242f7c19d0a0f8ae9194ec67" arch="x86_64" />
+        <package name="plesk-php52-cli" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-cli-5.2.17-centos7.17090118.x86_64.rpm" size="3607284" buildtime="1504264505" md5="50212c32fb7f614da60af227eab6b477" arch="x86_64" />
+        <package name="plesk-php52-dba" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-dba-5.2.17-centos7.17090118.x86_64.rpm" size="21368" buildtime="1504264505" md5="6110647edef5e5961fdcb1081494bd13" arch="x86_64" />
+        <package name="plesk-php52-gd" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-gd-5.2.17-centos7.17090118.x86_64.rpm" size="93456" buildtime="1504264505" md5="c40552f3d8d717dbfcf6eb4670dc50a0" arch="x86_64" />
+        <package name="plesk-php52-imagick" version="3.1.2" release="centos7.20042209" file="packages/plesk-php52-imagick-3.1.2-centos7.20042209.x86_64.rpm" size="93020" buildtime="1587522697" md5="56b89db437124dd34b9ecbea759ccb3d" arch="x86_64" />
+        <package name="plesk-php52-imap" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-imap-5.2.17-centos7.17090118.x86_64.rpm" size="33560" buildtime="1504264505" md5="6be70daade7b49da00eda82bb974700f" arch="x86_64" />
+        <package name="plesk-php52-intl" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-intl-5.2.17-centos7.17090118.x86_64.rpm" size="113508" buildtime="1504264505" md5="9671763e8f5e4dde2070797c790b5e9f" arch="x86_64" />
+        <package name="plesk-php52-ioncube-loader" version="5.0.18" release="centos7.15101218" file="packages/plesk-php52-ioncube-loader-5.0.18-centos7.15101218.x86_64.rpm" size="316608" buildtime="1444653962" md5="4d018488cf71fccfcf88e150c53134b1" arch="x86_64" />
+        <package name="plesk-php52-ldap" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-ldap-5.2.17-centos7.17090118.x86_64.rpm" size="18432" buildtime="1504264505" md5="235bd2fdd59bb13c21915b6d922bc861" arch="x86_64" />
+        <package name="plesk-php52-mbstring" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-mbstring-5.2.17-centos7.17090118.x86_64.rpm" size="418912" buildtime="1504264505" md5="2bdeb035ea5279db67b0bdb18a919e22" arch="x86_64" />
+        <package name="plesk-php52-mcrypt" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-mcrypt-5.2.17-centos7.17090118.x86_64.rpm" size="12988" buildtime="1504264505" md5="afac036ac4e86958ffb6f80455a2f2ab" arch="x86_64" />
+        <package name="plesk-php52-mysql" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-mysql-5.2.17-centos7.17090118.x86_64.rpm" size="58844" buildtime="1504264505" md5="590cb5d3b8df5db58ca794aab36ceff9" arch="x86_64" />
+        <package name="plesk-php52-odbc" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-odbc-5.2.17-centos7.17090118.x86_64.rpm" size="33580" buildtime="1504264505" md5="f1727471b99a400da2a65fa5157e21f0" arch="x86_64" />
+        <package name="plesk-php52-pdo" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-pdo-5.2.17-centos7.17090118.x86_64.rpm" size="49032" buildtime="1504264505" md5="31690dc9cdba46135c27637e4b16539d" arch="x86_64" />
+        <package name="plesk-php52-pear" version="1.9.4" release="centos7.17090118" file="packages/plesk-php52-pear-1.9.4-centos7.17090118.noarch.rpm" size="343940" buildtime="1504264527" md5="1872a418681b04f79ef57e586ee1f77c" arch="noarch" />
+        <package name="plesk-php52-pgsql" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-pgsql-5.2.17-centos7.17090118.x86_64.rpm" size="48832" buildtime="1504264505" md5="bb2571261591617cb298f8190da732cd" arch="x86_64" />
+        <package name="plesk-php52-process" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-process-5.2.17-centos7.17090118.x86_64.rpm" size="19824" buildtime="1504264505" md5="fc0fdd54be87d86085358c24475a22f7" arch="x86_64" />
+        <package name="plesk-php52-pspell" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-pspell-5.2.17-centos7.17090118.x86_64.rpm" size="9708" buildtime="1504264505" md5="f20af9a44a48fd1ec97bd6fb94dd2b62" arch="x86_64" />
+        <package name="plesk-php52-redis" version="2.2.5" release="centos7.15100614" file="packages/plesk-php52-redis-2.2.5-centos7.15100614.x86_64.rpm" size="83736" buildtime="1444121774" md5="cad25e11d009ca511bc6a45b67e7a0ba" arch="x86_64" />
+        <package name="plesk-php52-snmp" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-snmp-5.2.17-centos7.17090118.x86_64.rpm" size="11912" buildtime="1504264505" md5="b7cd605443609992c125bf4172eb01aa" arch="x86_64" />
+        <package name="plesk-php52-soap" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-soap-5.2.17-centos7.17090118.x86_64.rpm" size="123112" buildtime="1504264505" md5="1d1b8223e6bd41bb91ccb1ce00f6718f" arch="x86_64" />
+        <package name="plesk-php52-tidy" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-tidy-5.2.17-centos7.17090118.x86_64.rpm" size="16180" buildtime="1504264505" md5="bc418dd1c33cfae6ab76504a2c600beb" arch="x86_64" />
+        <package name="plesk-php52-xcache" version="3.2.0" release="centos7.15100614" file="packages/plesk-php52-xcache-3.2.0-centos7.15100614.x86_64.rpm" size="55628" buildtime="1444121786" md5="cb789f02043957cdecc1a7248651e09b" arch="x86_64" />
+        <package name="plesk-php52-xdebug" version="2.2.3" release="centos7.15100614" file="packages/plesk-php52-xdebug-2.2.3-centos7.15100614.x86_64.rpm" size="76024" buildtime="1444121798" md5="83514f72f2240278fd06d749201bafe2" arch="x86_64" />
+        <package name="plesk-php52-xml" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-xml-5.2.17-centos7.17090118.x86_64.rpm" size="75168" buildtime="1504264505" md5="0d6fcb5949bffba659ff55ae14921ee1" arch="x86_64" />
+        <package name="plesk-php52-xmlrpc" version="5.2.17" release="centos7.17090118" file="packages/plesk-php52-xmlrpc-5.2.17-centos7.17090118.x86_64.rpm" size="36604" buildtime="1504264505" md5="822acd7b64bb2fb1cabbf08aa85430e4" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-5.2.17-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-5.2.17-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

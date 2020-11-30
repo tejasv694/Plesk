@@ -1,0 +1,392 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.onReady(function() {
+    <?php if ($this->linkToEncryptBackups): ?>
+    Jsw.addStatusMessage('warning',
+        <?php echo $this->backupList->jsLmsg('backEncryptionRequired', [
+            'link' => $this->htmlLink('', $this->backupList->jsLmsg('backupSettingPage'), ['href' => $this->linkToEncryptBackups])
+        ]);?>,
+        {
+            id: 'backEncryptionRequiredMessage',
+            closable: true,
+            renderTo: 'main',
+            onClose: function() {
+                $('backEncryptionRequiredMessage').remove();
+                new Ajax.Request(Jsw.prepareUrl('/backup/hide-backup-encryption-required-message'), {method: 'post'});
+            }
+        }
+    );
+    <?php endif; ?>
+
+    var operations = [
+        {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonBackup',
+            title: <?php echo $this->backupList->jsLmsg('buttonBackup');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintBackup'); ?>,
+            addCls: 'sb-backup',
+            href: <?php echo $this->jsEscape($this->backupUrl); ?>
+        },
+        <?php if ($this->showUploadButton): ?>
+        {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonUpload',
+            title: <?php echo $this->backupList->jsLmsg('buttonUpload');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintUpload'); ?>,
+            addCls: 'sb-upload',
+            href: <?php echo $this->jsEscape($this->uploadUrl); ?>
+        },
+        <?php endif; ?>
+        {
+            componentType: 'Jsw.bar.Separator'
+        },
+        {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonRemoveBackup',
+            title: <?php echo $this->backupList->jsLmsg('buttonRemove');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintRemove'); ?>,
+            addCls: 'sb-remove-selected',
+            handler: function(event) {
+                Jsw.getComponent('backup-list').execGroupOperation({
+                    url: <?php echo $this->jsEscape($this->deleteUrl) ?>,
+                    subtype: 'delete',
+                    mouseEvent: event,
+                    locale: {
+                        confirmOnGroupOperation:<?php echo $this->backupList->jsLmsg('confirmOnDelete'); ?>
+                    },
+
+                    isAjax: true,
+                    requestUrl: <?php echo $this->jsEscape($this->getIncrementsUrl) ?> ,
+                    loadingTitle: <?php echo $this->backupList->jsLmsg('incrementsRemovalLoading'); ?>
+                });
+            }
+        }, {
+            componentType: 'Jsw.bar.Separator'
+        }, {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonSchedule',
+            title: <?php echo $this->backupList->jsLmsg('buttonSchedule');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintSchedule'); ?>,
+            addCls: 'sb-schedule',
+            href: <?php echo $this->jsEscape($this->scheduleUrl); ?>
+        }
+        <?php if ($this->showSettingsButton): ?>
+        , {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonSettings',
+            title: <?php echo $this->backupList->jsLmsg('buttonSettings');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintSettings'); ?>,
+            addCls: 'sb-settings',
+            href: <?php echo $this->jsEscape($this->settingsUrl); ?>
+        }
+        <?php endif; ?>
+        <?php if ($this->showFtpSettingsButton): ?>
+        , {
+            componentType: 'Jsw.SmallButton',
+            id: 'buttonRemoteStorages',
+            title: <?php echo $this->backupList->jsLmsg('buttonRemoteStorages');?>,
+            description: <?php echo $this->backupList->jsLmsg('hintRemoteStorages'); ?>,
+            addCls: 'sb-ftp-settings',
+            href: <?php echo $this->jsEscape($this->remoteStoragesUrl); ?>
+        }
+        <?php endif; ?>
+    ];
+
+    var additionalOperations = [];
+    <?php if ($this->showBackupDatabaseButton): ?>
+    additionalOperations.push({
+        componentType: 'Jsw.SmallButton',
+        id: 'buttonBackupDatabase',
+        title: <?php echo $this->backupList->jsLmsg('buttonBackupDatabase');?>,
+        description: <?php echo $this->backupList->jsLmsg('hintBackupDatabase'); ?>,
+        addCls: 'sb-backup-database',
+        cls: 'sb-btn',
+        href: <?php echo $this->jsEscape($this->backupDatabaseUrl); ?>
+    });
+    <?php endif; ?>
+
+    if (additionalOperations.length) {
+        operations.push({
+            componentType: 'Jsw.list.AdditionalActions',
+            title: <?php echo $this->backupList->jsLmsg('buttonMoreActions'); ?>,
+            operations: additionalOperations
+        });
+    }
+
+    new Jsw.Panel({
+        cls: 'list-box',
+        renderTo: 'main',
+        items: [
+            new Jsw.List({
+                id: 'backup-list',
+                searchFilters: <?php echo Zend_Json::encode($this->backupList->getSearchFilterConfig()); ?>,
+                searchOveral: 'name',
+                data: <?php echo Zend_Json::encode($this->backupList->fetchData()); ?>,
+                dataUrl: <?php echo $this->jsEscape($this->dataUrl) ?>,
+                disabledSelectHint: <?php echo $this->backupList->jsLmsg('disabledSelectHint');?>,
+                operations: operations,
+                columns: [
+                    Jsw.list.COLUMN_SELECTION,
+                    {
+                        header: <?php echo $this->backupList->jsLmsg('status');?>,
+                        sortable: false,
+                        cls: 'min',
+                        dataIndex: 'status',
+                        renderer: function(item, isDisabled) {
+                            var messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/question.png') ?>';
+                            var messageText = '';
+                            if (item.status == 'off') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/off.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusOff'); ?>;
+                            } else if (item.status == 'warning') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/att.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusWarning'); ?>;
+                            } else if (item.status == 'info') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/info.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusInfo'); ?>;
+                            } else if (item.status == 'on') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/on.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusOn'); ?>;
+                            } else if (item.status == 'task-progress') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/indicator.gif') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskProgress'); ?>;
+                            } else if (item.status == 'task-info') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/ok.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskInfo'); ?>;
+                            } else if (item.status == 'task-warning') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/att.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskWarnings'); ?>;
+                            } else if (item.status == 'task-failed') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/warning.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskFailed'); ?>;
+                            } else if (item.status == 'task-stopping') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/indicator.gif') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskStopping'); ?>;
+                            } else if (item.status == 'task-stopped') {
+                                messageIcon = '<?php echo $this->skinUrl('/icons/16/plesk/att.png') ?>';
+                                messageText = <?php echo $this->backupList->jsLmsg('statusTaskStopped'); ?>;
+                            }
+                            return '<div class="b-indent"><span class="b-indent-icon"><span>' +
+                                '<span class="tooltipData">' + messageText + '</span>' +
+                                '<img src="' + messageIcon + '" data-status="' + item.status + '" alt="' + item.ownerType + '" title="">' +
+                                '</span>';
+                        }
+                    },
+                    {
+                        header: <?php echo $this->backupList->jsLmsg('date');?>,
+                        sortable: true,
+                        dataIndex: 'date',
+                        cls: 'number',
+                        renderer: function(item) {
+                            var url, itemData = item.id.split(':');
+                            if ('task' === itemData[0]) {
+                                url = Jsw.addUrlParams(<?=$this->jsEscape($this->taskDetails)?>, {taskId: itemData[1]})
+                            } else {
+                                var restoreParams = {type: itemData[0], dumpId: itemData[1]};
+                                if (itemData.length > 2) {
+                                    restoreParams.storageName = itemData[2];
+                                }
+                                url = Jsw.addUrlParams(<?=$this->jsEscape($this->restore)?>, restoreParams);
+                            }
+
+                            var syncElement = '';
+                            if ('task-progress' == item.status || 'task-stopping' == item.status) {
+                                var statusElementId = 'task-sync-status-' + itemData[1];
+                                syncElement = '<div id="' + statusElementId + '"></div>';
+                            }
+
+                            return '<a href="' + url.escapeHTML() + '">'
+                                    + item.dateString.escapeHTML()
+                                + '</a>' + syncElement;
+                        }
+                    },
+                    <?php if ($this->showCommentColumn): ?>
+                    {
+                        header: <?php echo $this->backupList->jsLmsg('comment');?>,
+                        sortable: true,
+                        dataIndex: 'comment'
+                    },
+                    <?php endif; ?>
+                    <?php if ($this->showSystemNotesColumn): ?>
+                    {
+                        header: <?php echo $this->backupList->jsLmsg('systemNotes');?>,
+                        sortable: true,
+                        dataIndex: 'systemNotes',
+                        renderer: function(item, isDisabled) {
+                            var remoteStorageTitle = <?php echo $this->backupList->jsLmsg('remoteStorage') ?>;
+                            var storageIcon = '';
+                            if ('ftp' == item.storageType) {
+                                remoteStorageTitle = remoteStorageTitle.replace('%%storage%%', 'FTP');
+                                storageIcon = '<img src="' + item.storageIconUrl.escapeHTML() + '" data-storage="ftp" alt="' + remoteStorageTitle + '" title="' + remoteStorageTitle + '"> '
+                            } else if ('extension' == item.storageType) {
+                                remoteStorageTitle = remoteStorageTitle.replace('%%storage%%', item.storageTitle.escapeHTML());
+                                storageIcon = '<img src="' + item.storageIconUrl.escapeHTML() + '" data-storage="ext" alt="' + remoteStorageTitle + '" title="' + remoteStorageTitle + '"> '
+                            }
+                            var systemNotes = storageIcon + item.systemNotes.escapeHTML();
+
+                            var messageVolumes = '';
+                            $A(item.volumes).each(function(volume) {
+                                messageVolumes += '<div class="hint-sub multi-volume">' + volume.name.escapeHTML() + '</div>';
+                            });
+                            if (0 < messageVolumes.length) {
+                                systemNotes += ' <a class="toggler multi-volume-toggle" href="#">['
+                                    + '<span class="multi-volume-show">'
+                                    + <?php echo $this->backupList->jsLmsg('multiVolumeShow') ?>
+                                    + '</span>'
+                                    + '<span class="multi-volume-hide">'
+                                    + <?php echo $this->backupList->jsLmsg('multiVolumeHide') ?>
+                                    + '</span>'
+                                    + ']</a>'
+                                    + messageVolumes;
+                            }
+
+                            return systemNotes;
+                        }
+                    },
+                    <?php endif; ?>
+                    {
+                        header: <?php echo $this->backupList->jsLmsg('size');?>,
+                        sortable: true,
+                        cls: 't-r number',
+                        dataIndex: 'size',
+                        renderer: function(item, isDisabled) {
+                            if (item.isTask) {
+                                return '';
+                            }
+                            var message = item.sizeString.escapeHTML();
+                            if (item.isIncremental) {
+                                message = '<a href="#" class="toggler backup-size-hint">+' + message + '</a>';
+                            }
+                            $A(item.volumes).each(function(volume) {
+                                message += '<div class="hint-sub multi-volume">' + volume.sizeString.escapeHTML() + '</div>';
+                            });
+                            return message;
+                        }
+                    <?php if ($this->backupList->showDownloadColumn()): ?>
+                    },
+                    {
+                        header: '',
+                        sortable: false,
+                        cls: 'min',
+                        renderer: function(item) {
+                            if (item.isTask) {
+                                return '';
+                            }
+                            <?php if ($this->backupList->isDownloadEnabled()): ?>
+                                var itemData = item.id.split(':');
+                                var urlParams = {type: itemData[0], dumpId: itemData[1]};
+                                if (itemData.length > 2) {
+                                    urlParams.storageName = itemData[2];
+                                }
+
+                                var downloadUrl = ('local' == itemData[0]
+                                    ? <?=$this->jsEscape($this->downloadLocal)?>
+                                    : <?=$this->jsEscape($this->downloadFtp)?>);
+                                var renderDownloadButton = function (downloadUrl) {
+                                    return '<span class="tooltipData">' + <?=$this->backupList->jsLmsg('download')?> + '</span>' +
+                                        '<a href="' + downloadUrl.escapeHTML() + '" class="s-btn sb-download">' +
+                                        '<span></span>' +
+                                        '</a>';
+                                };
+
+                                var message = renderDownloadButton(Jsw.addUrlParams(downloadUrl, urlParams));
+                                $A(item.volumes).each(function(volume) {
+                                    message += '<div class="hint-sub multi-volume">' +
+                                        renderDownloadButton(Jsw.addUrlParams(downloadUrl, {dumpId: volume.id, volume: true})) +
+                                        '</div>';
+                                });
+                                return message;
+                            <?php else : ?>
+                                var downloadTitle = <?php echo $this->backupList->jsLmsg('downloadDisabled') ?>;
+                                return '<span class="tooltipData">' + downloadTitle + '</span>' +
+                                    '<span class="s-btn sb-download btn-disabled">' +
+                                        '<span></span>' +
+                                    '</span>';
+                            <?php endif ?>
+                        }
+                    <?php endif ?>
+                    }
+                ],
+                onRedraw: function() {
+                    $$('.multi-volume, .multi-volume-hide').each(Element.hide);
+
+                    $$('.multi-volume-toggle').each(function(item) {
+                        $(item).observe('click', function(event) {
+                            event.preventDefault();
+                            $(this).up('tr').select('.multi-volume, .multi-volume-show, .multi-volume-hide').each(function(multiVolumeItem) {
+                                $(multiVolumeItem).toggle();
+                            });
+                        });
+                    });
+
+                    $$('.backup-size-hint').each(function(hintElement) {
+                        var itemData = hintElement.up('tr').down('.select input').value.split(':');
+                        var urlParams = {type: itemData[0], dumpId: itemData[1]};
+                        if (itemData.length > 2) {
+                            urlParams.storageName = itemData[2];
+                        }
+
+                        new Jsw.DynamicPopupHint.Instance({
+                            title: <?php echo $this->jsLmsg('controllers.backup.size-hint.title'); ?>,
+                            waitMsg: <?php echo $this->jsLmsg('controllers.backup.size-hint.waitMessage'); ?>,
+                            url: Jsw.addUrlParams(<?=$this->jsEscape($this->sizeHintUrl)?>, urlParams),
+                            placement: 'left',
+                            target: hintElement
+                        });
+                    });
+
+                    var randomId = this._getRandomNumber();
+                    this._randomId = randomId;
+                    var context = this;
+
+                    this._data.each(function(item) {
+                        if ('task-progress' != item.status && 'task-stopping' != item.status) {
+                            return;
+                        }
+                        var itemData = item.id.split(':');
+
+                        setTimeout(function(){
+                            context.checkSyncStatus(
+                                'task-sync-status-' + itemData[1],
+                                Jsw.addUrlParams(<?=$this->jsEscape($this->taskStatusUrl)?>, {taskId: itemData[1]}),
+                                function (statusElement, result) {
+                                    context.reload();
+                                },
+                                randomId,
+                                {
+                                    timeout: 5000,
+                                    progressStatus: 'progress'
+                                }
+                            );
+                        }, 5000);
+                    });
+
+                    <?php echo $this->partial('backup/_status.phtml', null, [
+                        'taskStatuses' => 'this._additionalData.taskStatuses',
+                        'closeStatusUrl' => $this->closeStatusUrl,
+                        'restoreStatusUrl' => $this->restoreStatusUrl,
+                        'stopTaskUrl' => $this->stopTaskUrl,
+                    ]); ?>
+                },
+                'getTotalInfo' : function() {
+                    var messageTotal = <?php echo $this->backupList->jsLmsg('total'); ?>;
+                    var messageTotalFound = <?php echo $this->backupList->jsLmsg('totalFound'); ?>;
+                    var message = '';
+                    if (this._state.searchFilters.name.searchText) {
+                        message = messageTotalFound;
+                        message = message.replace('%%found%%', this._pager.totalItemCount);
+                    } else {
+                        message = messageTotal;
+                    }
+                    message = message.replace('%%total%%', this._additionalData.totalCount);
+                    message = message.replace('%%totalSize%%', this._additionalData.totalSize);
+                    return message;
+                }
+            })]
+    });
+});
+//]]>
+</script>

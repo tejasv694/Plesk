@@ -1,0 +1,21 @@
+<!--
+Do not modify the NAME value of any of the INPUT fields
+the FORM action, or any of the hidden fields (eg. input type=hidden).
+These are all required for this form to function correctly.
+-->
+<form method="post" action="%%FormAction%%" id="frmSS%%FormID%%" onsubmit="return CheckForm%%FormID%%(this);" class="myForm">
+	<dl>
+		%%FormContents%%
+		<dt>&nbsp;</dt>
+		<dd>
+			<input type="submit" value="Subscribe" />
+			<br/>%%LNG_Form_Branding%%
+		</dd>
+	</dl>
+</form>
+
+<script type="text/javascript">
+// <![CDATA[
+%%Javascript%%
+// ]]>
+</script>

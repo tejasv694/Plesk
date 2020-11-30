@@ -1,0 +1,1203 @@
+################################################################################
+# Outerspire | Flipmode's Email Marketing Deluxe | Ultimate Edition. Changelog #
+################################################################################
+# This file contains the changes made in each release of:                      #
+#    Flipmode's Email Marketing Deluxe v6.1.3 Ultimate Edition @ 2012.07.19    #
+#                                                                              #
+# UPGRADING: When upgrading to a new version, it is recommended to upload ALL  #
+# files EXCEPT for admin/includes/config.php. If you have ANY customisations,  #
+# it is up to YOU to ensure they are first backed up, then updated correctly.  #
+################################################################################
+
+Version: 6.1.3
+Released: 19th July, 2012
+
+- Merged all changes from the 6.1.2 patch
+- Added a check for DOM library existence in system settings (required for surveys)
+- Statistics Pages will correctly remember the "Results per page:" setting.
+- Advanced user settings will now save when creating user account
+- Resolved a bug where images uploaded through the Image manager were inaccessible to existing campaigns
+- Resolved several "undefined offset" or "undefined index" notices
+- Resolved several incorrect "Permission Denied" errors
+- Resolved a bug where contacts added through the XML API would not get autoresponders unless the "add_to_autoresponder" parameter was passed
+- Resolved several timezone issues, including the 
+- Resolved a bug where user images were being copied to new campagins
+- Fixed a bug where a contacts date field would be displayed in the wrong order (e.g. d/m/y instead of m/d/y)
+- Resolved an issue where the default dynamic content tag was always included
+- Fixed an issue where triggers do not send emails / add to list correctly
+- Fixed an issue where the manage trigger page does not display "When" time correctly
+- Resolved several foreign character display issues
+- Fixed a missing 'AND' modifier in subscriber API 'IsUnSubscriber' method
+- Fixed a bug where the image manager generated a DOM Exception error in Internet Explorer
+- Fixed a bug that was causing multiple start/stop notifications for campaigns
+- Fixed a bug where segments do not work properly when using "OR" modifier
+- Resolved an issue with the application settings randomly losing values
+...
+
+Files Changes:
+  admin/addons/dynamiccontenttags/dynamiccontenttags.php
+  admin/addons/surveys/templates/survey_success.tpl
+  admin/com/init-legacy.php
+  admin/com/language/default/usersgroups.php
+  admin/com/lib/IEM.class.php
+  admin/com/templates/settings_systeminfo.tpl
+  admin/com/upgrades/20120608/update_db_version.php
+  admin/functions/api/api.php
+  admin/functions/api/customfields.php
+  admin/functions/api/customfields_date.php
+  admin/functions/api/jobs.php
+  admin/functions/api/jobs_send.php
+  admin/functions/api/jobs_triggeremails.php
+  admin/functions/api/settings.php
+  admin/functions/api/stats.php
+  admin/functions/api/subscribers.php
+  admin/functions/api/upgrade.php
+  admin/functions/api/user.php
+  admin/functions/lib/general/convertdate.php
+  admin/functions/autoresponders.php
+  admin/functions/customfields.php
+  admin/functions/imagemanager.php
+  admin/functions/installer.php
+  admin/functions/lists.php
+  admin/functions/newsletters.php
+  admin/functions/schedule.php
+  admin/functions/send.php
+  admin/functions/sendstudio_functions.php
+  admin/functions/settings.php
+  admin/functions/subscribers_export.php
+  admin/functions/subscribers_view.php
+  admin/includes/js/jquery/plugins/ajax.file.upload.js
+  admin/includes/js/tiny_mce/plugins/fullpage/editor_plugin.js
+  changelog.txt
+  version.txt
+  display.php
+  unsubscribe.php
+  xml.php
+...
+
+--------------------------------------------------------------------------------
+Version: 6.1.2
+Released: 12 Oct, 2011
+
+Bugs Fixed:
+- Fixed a bug that would not allow dynamic content tags to be deleted.
+- Fixed multiple permission denied errors
+- Fixed a bug that was causing subscriber events to show "permission denied" errors.
+- Changed it so that the logout function will log back into the admin account when they are 'disguised' as a user.
+- Fixed a bug where user accounts could not be deleted.
+- Removed a query that deletes valid subscriber dates.
+...
+
+Files Changes:
+  admin/functions/subscribers_event.php
+  admin/functions/newsletters.php
+  admin/functions/logout.php
+  admin/functions/api/user.php
+  admin/functions/api/upgrade.php
+  admin/com/lib/HelperUserDelete.class.php
+  admin/com/lib/IEM.class.php
+  admin/com/lib/Maintenance.class.php
+  admin/com/lib/IEM/Installer.class.php
+  admin/addons/dynamiccontenttags/dynamiccontenttags.php
+  changelog.txt
+  version.txt
+...
+
+--------------------------------------------------------------------------------
+Version: 6.1.1
+Released: 26 August, 2011
+
+Bugs Fixed:
+  - Fixed an issue that prevented the system from creating or editing templates.
+  - Fixed unknown column id error from NotifyOwner() caused by invalid SQL syntax.
+  - Fixed a bug that caused an undefined offset error when a confirmation email is sent.
+  - Fixed a javascript error that occurs when adding another value to pick list custom fields.
+  - Fixed a bug that prevented link tracking from turning off.
+  - Fixed JavaScript error from Insert buttons in Autoresponders.
+  - Fixed an issue that caused date fields to be formatted as dd/mm/yy automatically.
+  - Fixed a bug with adding values to checkbox custom fields when they have over 60 keys.
+  - Removed option to use Flash Uploader in Image Manager, opting to use non-Flash uploader in all cases.
+  - Fixed bounce processing redirect, so that non-Admin users are not sent to an admin page, resulting in permission denied errors.
+  - Refactored the addsubscribertolist XML call to also add subscribers to autoresponders.
+  - Fixed a bug that caused low credit reminder emails to halt scheduled sends.
+  - Fixes for usergroup and user permission system.
+  - Fixed a bug that caused user group credits to calculate incorrectly and pause scheduled sends.
+  - Fixed a bug that caused the send-to-friend links to generate incorrectly.
+  - Fixed an issue where the bounce processing wizard freezes the browser. Also fixed an issue where it redirects to admin settings page if you choose automatic.
+  - Removed an optimize table query that caused the send process to halt on some servers.
+  - Removed extra quotation mark in content-type header for survey.tpl.
+  - Added mysql_real_escape_string() function to fix filtering contacts based on link clicked.
+  - Added an index on the confirmed column in list_subscribers. Also added new database version and upgrade folder.
+  - Added new DB version and upgrade folder
+  - Fixed a bug where the application allowed email suppressions without an @ symbol prepending them.
+  - Added additional countries to country list.
+  - Fixed undefined offset error in jobs_autoresponders.php.
+  - Fixed segment rule 'has not opened any campaign' returning all contacts.
+  - Fixed datepicker for second date field in segment date range selection.
+  - Removed the pgsql option from install script.
+  - Fixed dynamic content tags so that all matching blocks will be included, rather than only the first.
+  - Fixed newsletter attachment search to skip disabled newsletters.
+  - Fixed checking dynamic content tags when no subscriber is present, such as archived campaigns.
+  - Fixed permission problem for downloading survey attchments.
+  - Fixed date formatting in web version.
+  - Fixed an issue with duplicate confirmations and confirmation failure on deleted forms.
+  - Fixed undefined index error for subscriberid in display.php.
+  - Fixed rendering of install page.
+  - Fixed character encoding in MySQL to use UTF-8 when available.
+  - Fixes error generated when a contact is created.
+  - Removed duplicate language file defines in admin/com/language/defaults/forms.php.
+  - Removed code dealing with non-existant user permissions in admin/functions/users.php.
+  - Fixed call to undefined function in dynamiccontenttags.php.
+  - Fixed bounce details form to display correctly in IE8.
+  - Fixed Stats_API:: error.
+  - Setup IEM to explicitly choose UTF-8 character set by default.
+  - Additional fixes for low credit reminder emails.
+  - Added missing parentheses to denote group to fully fix Send to Friend link issue in api.php.
+  - Added upgrade script to populate list permissions for existing lists.
+  - Additional fixes for Dynamic Content Tags block selection logic.
+  - Use mysql_set_charset() in DBFACTORY and Installer classes to set everything to UTF-8.
+  - Replace space with underscore in File Uploads for Surveys.
+  - Added logic to escape survey links properly, so that they are replaced properly later in the send process.
+  - Moved Google Calendar login test button to correct tab in User Settings.
+  - Additional fixes for user credit issues.
+  - Fixed survey attachment filename handling.
+  - Fix for memory limit issue
+  - Remove empty subscriber data records, and prevent them from being created.
+  - Removed reference to discounted prices with SMTP.com, since we do not appear to have discounted prices.
+  - Changed SELECT query for statistics when sending to a segment to valid SQL.
+  - Remove unused folders in temp folder
+  - updated Installer.class.php for errors and system log addon
+  - Fix upgrade error. Also fixed various upgrade issues.
+  - Fix already defined error
+  - Eemove deprecated user permission references in template file
+  - Upgrading TinyMCE to 3.4.2
+  - Fix monthly credit check timezone issue and datetime php error
+  - Fixed an issue where non-admins couldn't delete triggers
+  - Changed it so that users can not delete a list or subscriber while a campaign is sending to it
+  - Fixed an issue where installer was giving an error regarding config.php before installation
+  - Added in the import folder
+  - Changed list delete process to open a new window to allow users to continue using the application while deleting a list
+  - Fixed an issue where bounce processing gave imap error when bounce processing is disabled. Repaired IEM-332. Disabled the ability for users to delete list/subscribers when a campaign is sending to that list/subscriber.
+  - Application checks stats_newsletters for campaign credits and user_credit for everything else.
+  - Properly checks for future sends when calculating credit
+  - Use the 'jobs' table instead of 'stats_users' in /record/Users.class.php when checking credit for future sends
+  - Modify list delete
+  - Fixed surveys throw DOM_INDEX_SIZE_ERR exception
+  - Fixed when a URL matches the application URL link tracking is not applied.
+  - Fixed an issue where multiple exports did not complete
+  - Fixed an issue that caused the maintenance job to time out
+  - Fixed an issue with exporting multiple lists
+  - Fixed dynamic content tags can not be deleted.
+  - Fixed an issue with searching for contacts by "opened a specific campaign" in postgresql.
+  - Fixed a bug with deleting or emptying multiple lists
+  - Working to resolve newsletter session issues
+  - Added error handling for upgrade files that are not found/not readable
+  - Added proper error handing for addsubscribertolist method.
+  - Fixed the bug where users were unable to use some uploaded images.  Refactored the funtion that caused the users directory to be copied to each newsletter
+  - Fixing issues and cleaning/removing deprecated code
+  - Fixed pause permission missing from autoresponders page
+  - Fixed get text content from editor does not work in Chrome or FireFox
+  - Fixed exporting multiple contact lists with different custom fields causes export to hang indefinitely
+  - Fixed 'remember me' option for log in
+  - Fixed ability to delete dynamic content tags
+  - Fixed XSS vulnerabilities in the 'Page' query string
+  - Fixed XML API function parameters not passed to API functions properly
+  - Fixed browse survey responses returns invalid survey id
+  - Fixed assorted user permission issues
+  - Fixed php notices when editing contacts
+  - Fixed graphic representation of charts not showing when viewing print preview of email campaign statistics
+  - Fixed Cyrillic characters break import popup window
+  - Fixed blank page when viewing contacts
+  - Fixed icons in dynamic content blocks get misaligned
+  - Fixed function LoadSubscriberList does not take list id into account
+  - Fixed special characters in chart labels are not labelled correctly in split test statistics
+  - Fixed php notices when creating a date type custom field.
+  - Fixed modify details forms do not correctly pull data for numbers only fields
+  - Fixed survey file uploads do not work if field is required
+  - Fixed exporting Contacts from two different user accounts within the same group or shared contact list produces a different result set
+  - Fixed outdated documentation links
+  - Fixed invalid emails cause permanent partial sends
+  - Fix ie9 tinymce error
+  - Fix tinymce background issue
+...
+
+Files Changed:
+  admin/import
+  admin/cron/bounce.php
+  admin/cron/triggeremails.php
+  admin/cron/maintenance.php
+  admin/temp/send/BLANK
+  admin/temp/send
+  admin/temp/autoresponder/BLANK
+  admin/temp/autoresponder
+  admin/includes/js/javascript.js
+  admin/includes/js/tiny_mce/jquery.tinymce.js
+  admin/includes/js/tiny_mce/plugins/lists
+  admin/includes/js/tiny_mce/plugins/media/moxieplayer.swf
+  admin/includes/js/tiny_mce/plugins/media/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/media/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/media/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/media/media.htm
+  admin/includes/js/tiny_mce/plugins/media/css/media.css
+  admin/includes/js/tiny_mce/plugins/media/js/media.js
+  admin/includes/js/tiny_mce/plugins/pagebreak/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/pagebreak/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/noneditable/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/noneditable/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/inlinepopups/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/inlinepopups/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/inlinepopups/skins/clearlooks2/window.css
+  admin/includes/js/tiny_mce/plugins/autoresize/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/autoresize/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/emotions/emotions.htm
+  admin/includes/js/tiny_mce/plugins/advhr/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/advhr/rule.htm
+  admin/includes/js/tiny_mce/plugins/tabfocus/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/tabfocus/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advimage/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/advimage/image.htm
+  admin/includes/js/tiny_mce/plugins/advimage/js/image.js
+  admin/includes/js/tiny_mce/plugins/preview/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/wordcount/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/wordcount/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/visualchars/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/visualchars/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/autosave/langs
+  admin/includes/js/tiny_mce/plugins/autosave/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/autosave/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/table/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/table/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/table/cell.htm
+  admin/includes/js/tiny_mce/plugins/table/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/table/merge_cells.htm
+  admin/includes/js/tiny_mce/plugins/table/js/row.js
+  admin/includes/js/tiny_mce/plugins/table/js/table.js
+  admin/includes/js/tiny_mce/plugins/table/js/cell.js
+  admin/includes/js/tiny_mce/plugins/table/row.htm
+  admin/includes/js/tiny_mce/plugins/table/table.htm
+  admin/includes/js/tiny_mce/plugins/advlink/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/advlink/link.htm
+  admin/includes/js/tiny_mce/plugins/advlink/js/advlink.js
+  admin/includes/js/tiny_mce/plugins/nonbreaking/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/nonbreaking/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/fullpage/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/fullpage/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/fullpage/fullpage.htm
+  admin/includes/js/tiny_mce/plugins/fullpage/css/fullpage.css
+  admin/includes/js/tiny_mce/plugins/fullpage/js/fullpage.js
+  admin/includes/js/tiny_mce/plugins/style/langs/en_dlg.js
+  admin/includes/js/tiny_mce/plugins/style/props.htm
+  admin/includes/js/tiny_mce/plugins/style/js/props.js
+  admin/includes/js/tiny_mce/plugins/searchreplace/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/searchreplace/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/searchreplace/searchreplace.htm
+  admin/includes/js/tiny_mce/plugins/searchreplace/js/searchreplace.js
+  admin/includes/js/tiny_mce/plugins/fullscreen/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/fullscreen/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/spellchecker/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/spellchecker/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/contextmenu/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/contextmenu/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/template/js/template.js
+  admin/includes/js/tiny_mce/plugins/paste/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/paste/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/bbcode/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/bbcode/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/acronym.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/ins.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/cite.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/del.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/del.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/attributes.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/ins.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/element_common.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/abbr.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/attributes.htm
+  admin/includes/js/tiny_mce/tiny_mce.js
+  admin/includes/js/tiny_mce/themes/advanced/skins/highcontrast
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/ui_black.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/content.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/ui.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/dialog.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/ui_silver.css
+  admin/includes/js/tiny_mce/tiny_mce_popup.js
+  admin/includes/js/tiny_mce/tiny_mce_src.js
+  admin/includes
+  admin/addons/surveys/styles/survey_front.css
+  admin/addons/surveys/surveys.php
+  admin/addons/surveys/templates/survey.tpl
+  admin/addons/systemlog/systemlog.php
+  admin/addons/splittest/api/splittest_stats.php
+  admin/addons/splittest/splittest_send.php
+  admin/addons/dynamiccontenttags/dynamiccontenttags.php
+  admin/addons/dynamiccontenttags/api/dynamiccontentblock.php
+  admin/addons/dynamiccontenttags/templates/dynamiccontenttags_form.tpl
+  admin/addons/dynamiccontenttags/templates/manage_display.tpl
+  admin/addons/dynamiccontenttags/templates/dynamiccontentblocks_form.tpl
+  admin/functions/send.php
+  admin/functions/subscribers_edit.php
+  admin/functions/upgradenx.php
+  admin/functions/lists.php
+  admin/functions/subscribers_manage.php
+  admin/functions/settings.php
+  admin/functions/customfields.php
+  admin/functions/users.php
+  admin/functions/subscribers_remove.php
+  admin/functions/addons.php
+  admin/functions/login.php
+  admin/functions/logout.php
+  admin/functions/imagemanager.php
+  admin/functions/autoresponders.php
+  admin/functions/newsletters.php
+  admin/functions/subscribers_import.php
+  admin/functions/lib/general/convertdate.php
+  admin/functions/subscribers_export.php
+  admin/functions/schedule.php
+  admin/functions/subscribers_banned.php
+  admin/functions/installer.php
+  admin/functions/templates.php
+  admin/functions/sendstudio_functions.php
+  admin/functions/bounce.php
+  admin/functions/amcharts/graphpite/Image/Graph/DataPreprocessor/Array.php
+  admin/functions/amcharts/graphpite/Image/Graph/DataPreprocessor/Formatted.php
+  admin/functions/amcharts/graphpite/Image/Graph/DataPreprocessor/Function.php
+  admin/functions/amcharts/graphpite/Image/Graph/Grid/Lines.php
+  admin/functions/amcharts/graphpite/Image/Graph/Fill/Gradient.php
+  admin/functions/amcharts/graphpite/Image/Graph/Fill/Image.php
+  admin/functions/amcharts/graphpite/Image/Graph/Line/Solid.php
+  admin/functions/amcharts/graphpite/Image/Graph/Axis.php
+  admin/functions/amcharts/graphpite/Image/Graph/Font.php
+  admin/functions/amcharts/graphpite/Image/Graph/Plotarea.php
+  admin/functions/amcharts/graphpite/Image/Graph/Font/TTF.php
+  admin/functions/amcharts/graphpite/Image/Graph/Title.php
+  admin/functions/amcharts/graphpite/Image/Graph/Text.php
+  admin/functions/amcharts/graphpite/Image/Graph/Marker/Value.php
+  admin/functions/amcharts/graphpite/Image/Graph/Marker/Pointing/Angular.php
+  admin/functions/amcharts/graphpite/Image/Graph/Marker/Pointing.php
+  admin/functions/amcharts/graphpite/Image/Graph/Dataset/Trivial.php
+  admin/functions/amcharts/graphpite/Image/Graph/Logo.php
+  admin/functions/amcharts/graphpite/Image/Graph/Layout.php
+  admin/functions/amcharts/graphpite/Image/Graph/Color.php
+  admin/functions/amcharts/graphpite/Image/Graph/Plot.php
+  admin/functions/amcharts/graphpite/Image/Graph/Layout/Horizontal.php
+  admin/functions/amcharts/graphpite/Image/Graph/Layout/Plotarea.php
+  admin/functions/amcharts/graphpite/Image/Graph/Plot/MultipleData.php
+  admin/functions/amcharts/graphpite/Image/Graph.php
+  admin/functions/api/send.php
+  admin/functions/api/ss_email.php
+  admin/functions/api/lists.php
+  admin/functions/api/settings.php
+  admin/functions/api/customfields.php
+  admin/functions/api/jobs_send.php
+  admin/functions/api/jobs_triggeremails.php
+  admin/functions/api/imagemanager.php
+  admin/functions/api/forms.php
+  admin/functions/api/subscribers.php
+  admin/functions/api/upgrade.php
+  admin/functions/api/jobs_autoresponders.php
+  admin/functions/api/jobs.php
+  admin/functions/api/triggeremails.php
+  admin/functions/api/stats.php
+  admin/functions/api/segment.php
+  admin/functions/api/api.php
+  admin/functions/api/bounce.php
+  admin/functions/api/user.php
+  admin/resources/form_designs/Definition List Plain Form
+  admin/index.php
+  admin/com/language/default/lists.php
+  admin/com/language/default/autoresponders.php
+  admin/com/language/default/forms.php
+  admin/com/language/default/whitelabel.php
+  admin/com/storage/BLANK
+  admin/com/lib/IEM.class.php
+  admin/com/lib/Interspire/HtmlCleaner.class.php
+  admin/com/lib/API/USERS.class.php
+  admin/com/lib/IEM/DBFACTORY.class.php
+  admin/com/lib/IEM/Installer.class.php
+  admin/com/lib/IEM/InterspireTemplate.class.php
+  admin/com/lib/HelperUserDelete.class.php
+  admin/com/lib/Maintenance.class.php
+  admin/com/lib/record/Users.class.php
+  admin/com/init.php
+  admin/com/resources/country_list.res
+  admin/com/upgrades/20101204
+  admin/com/upgrades/20090420/add_settings_credit_warnings_table.php
+  admin/com/upgrades/20090420
+  admin/com/init-legacy.php
+  admin/com/templates/segment_form.tpl
+  admin/com/templates/autoresponder_form_step4.tpl
+  admin/com/templates/lists_manage.tpl
+  admin/com/templates/customfield_form_step2_checkbox_edit.tpl
+  admin/com/templates/bouncestep1.tpl
+  admin/com/templates/user_form.tpl
+  admin/com/templates/progressreport_popup.tpl
+  admin/com/templates/editor.tpl
+  admin/com/templates/bouncestep2.tpl
+  admin/com/templates/image_manage.tpl
+  admin/com/templates/bounce_details.tpl
+  admin/com/templates/customfield_form_step2_dropdown_edit.tpl
+  admin/com/templates
+  confirm.php
+  display.php
+  upgrade.txt
+  readme.txt
+  surveys_submit.php
+  changelog.txt
+  version.txt
+  xml.php
+...
+
+--------------------------------------------------------------------------------
+Version: 6.1.0
+Released: 23 August, 2010
+
+Bugs Fixed:
+  - Updated German language files.
+  - Fixed an issue that prevented Content Tag addon installation in pgsql environments.
+  - Fixed an issue that caused IonCube Loader errors.
+  - Fixed an issue where members of a user group could not export contacts from contact lists created by a different user within the same user group.
+  - Fixed an issue where the private labeling menu item was disabled by default.
+  - Fixed an issue where the "Total Maximum Number of Emails" field on the 'Edit User Group' page is blank regardless of any value being set.
+  - Fixed an issue that prevented Survey Widgets from being custom styled with CSS.
+  - Fixed an issue where the application was stripping '+' characters from bounce usernames, thus preventing the application from connecting to the bounce email account.
+  - Fixed an issue that prevented email campaigns, autoresponders, and triggers from correctly deducting credits.
+  - Fixed an issue that prevented system administrators from viewing surveys created by non-admin users.
+  - Fixed an issue that prevented Split Tests from honoring a user group's hourly rate limit.
+  - Fixed an issue that prevented Split Tests from properly deducting email credits.
+  - Fixed an issue that prevented the "Send an email to contacts who match my search criteria in the selected list(s) below"  option to autoload to the next page without being able to select matching contacts.
+  - Fixed an issue where survey responses were failing to be recorded if a survey's fields contained single quotation marks.
+  - Fixed an issue where deleting a user would also delete an associated user group's permissions.
+  - Fixed an issue that caused the 'Insert Survey' button to insert an unsubscribe link within a text only email campaign.
+  - Fixed an issue where the application tried to free a resource that didn't exist, causing a "Resource is not really a resource" error.
+  - Fixed an issue where adding options to a 'Picklist' custom field would generate a JavaScript error.
+  - Fixed an issue when searching contacts causing the application to redirect to the 'All Contacts' view.
+  - Fixed an issue where upgrading the product to a new version prevented users from using the drop down actions on the "View Contact Lists" page.
+  - Fixed an issue that caused the navigation menu to intermittently break.
+  - Fixed an issue where deleting a split test campaign would also delete all that split test's statistics.
+  - Fixed an issue where the application would fail to "Remember Details" on the user login page.
+  - Fixed behavior of custom fields and default values.  The application will display data from subscribers_data table for custom fields or display nothing, rather than showing default values in View, Edit, and Export.  Brought behavior into consistency with database, and with filters/searches.
+  - Fixed an issue that prevented the dynamic content tag edit form from displaying correctly.
+  - Fixed an issue where importing an email campaign from an external URL when the WYSIWYG editor is disabled causes a JavaScript error.
+  - Fixed an issue where a very large newsletters table causes the Trigger page to crash.
+  - Fixed an issue that prevented the application from storing URLs longer than 255 characters long.
+  - Fixed an issue where a Segment query fails to distinguish "Numbers Only" and "Text Field" type custom fields; assumes all are numbers.
+  - Fixed an issue that caused links within Custom Fields not to be tracked in the statistics.
+  - Fixed an issue that caused links within Dynamic Content Tags not to be tracked in the statistics.
+  - Fixed an issue that prevented the application from displaying certain built-in templates.
+  - Fixed an issue that prevented users from archiving email campaigns.
+  - Fixed an issue that prevented the WYSIWYG editor's "Get text content from editor" button from copying over foreign characters into the Text Version of an email campaign.
+  - Fixed an issue that caused the sending status of email campaigns to hang at "in progress".
+  - Fixed an issue that prevented jobs marked as complete from deduct credits.
+  - Fixed an issue where the Statistics Pages failed to remember the "Results per page:" setting.
+  - Fixed an issue where the "Yes, force all campaigns and autoresponders to be spam checked before they can be sent" option failed to force email campaigns and autoresponders to check for spam.
+  - Fixed an issue that prevented users from making their own custom email templates "Active".
+  - Fixed algorithm errors in Contact List statistics table data.
+  - Fixed contact list statistics graph display problem caused by sign error.
+  - Fixed handling of minus sign in Segments and Search Contacts.
+  - Fixed an issue where a Survey's introductory text or instructions would truncate all characters proceeding the use of an apostrophe.
+  - Fixed an issue where exporting contacts to a CSV file resulted in a blank file or an empty file containing only the CSV headers.
+  - Fixed an issue where the WYSIWYG editor inserted extraneous paragraphs when importing some HTML files using Internet Explorer.
+  - Upgraded TinyMCE from version 3.2.7 to 3.3.8.
+  - Fixed an issue where the WYSIWYG editor failed to properly encode characters.
+  - Fixed an issue where whitespace or new line characters caused dynamic content blocks to generate a JavaScript error, preventing them from loading.
+  - Fixed an issue that prevented WebKit and Opera browsers from saving dynamic content tags.
+  - Fixed an issue where certain PHP environment configurations would attempt to autoload /admin/functions/sendstudio_functions.php.
+  - Fixed an issue where %%todaysdate%% failed to interpolate in the web version of an email campaign.
+  - Fixed an issue where the use of brackets or commas in campaign names would cause statistics charts to incorrectly offset the display of data.
+  - Fixed an issue that prevented segments' "in between" date ranges from going past the year 2000 on the 2nd calendar control.
+  - Fixed an issue that prevented the survey editor to copy a paragraph of text.
+  - Fixed an issue where files uploaded from a Survey were generating 404 Not Found errors.
+  - Fixed TinyMCE image upload so that user is notified when they attempt to upload duplicate files.
+  - Changed upload directory do be user's image manager directory, to further avoid confusion around duplicate image names.
+  - Fixed an issue that prevented multiple email campaigns, autoresponders, triggers, etc, from being edited simultaneously in separate browser tabs.  Doing so would cause one of the edited items to retain properties of the other.
+...
+
+Files Changed:
+  confirm.php
+  admin/temp
+  admin/includes/js/javascript.js
+  admin/includes/js/tiny_mce/utils/mctabs.js
+  admin/includes/js/tiny_mce/utils/validate.js
+  admin/includes/js/tiny_mce/utils/editable_selects.js
+  admin/includes/js/tiny_mce/utils/form_utils.js
+  admin/includes/js/tiny_mce/jquery.tinymce.js
+  admin/includes/js/tiny_mce/plugins/media/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/media/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/media/media.htm
+  admin/includes/js/tiny_mce/plugins/pagebreak/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/insertdatetime/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/noneditable/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/inlinepopups/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/autoresize/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/autoresize/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/example/dialog.htm
+  admin/includes/js/tiny_mce/plugins/example/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/emotions/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/emotions/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/iespell/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/save/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advhr/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advhr/rule.htm
+  admin/includes/js/tiny_mce/plugins/tabfocus/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/tabfocus/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/layer/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advimage/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advimage/image.htm
+  admin/includes/js/tiny_mce/plugins/advimage/js/image.js
+  admin/includes/js/tiny_mce/plugins/preview/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/directionality/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/wordcount/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/wordcount/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/visualchars/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/visualchars/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/autosave/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/autosave/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/table/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/table/cell.htm
+  admin/includes/js/tiny_mce/plugins/table/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/table/merge_cells.htm
+  admin/includes/js/tiny_mce/plugins/table/js/row.js
+  admin/includes/js/tiny_mce/plugins/table/js/table.js
+  admin/includes/js/tiny_mce/plugins/table/js/cell.js
+  admin/includes/js/tiny_mce/plugins/table/js/merge_cells.js
+  admin/includes/js/tiny_mce/plugins/table/row.htm
+  admin/includes/js/tiny_mce/plugins/table/table.htm
+  admin/includes/js/tiny_mce/plugins/advlink/link.htm
+  admin/includes/js/tiny_mce/plugins/advlink/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/advlink/js/advlink.js
+  admin/includes/js/tiny_mce/plugins/print/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/nonbreaking/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/nonbreaking/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/fullpage/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/fullpage/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/fullpage/fullpage.htm
+  admin/includes/js/tiny_mce/plugins/fullpage/js/fullpage.js
+  admin/includes/js/tiny_mce/plugins/style/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/style/props.htm
+  admin/includes/js/tiny_mce/plugins/searchreplace/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/searchreplace/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/searchreplace/searchreplace.htm
+  admin/includes/js/tiny_mce/plugins/searchreplace/js/searchreplace.js
+  admin/includes/js/tiny_mce/plugins/fullscreen/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/fullscreen/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/fullscreen/fullscreen.htm
+  admin/includes/js/tiny_mce/plugins/spellchecker/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/spellchecker/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/contextmenu/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/contextmenu/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/template/template.htm
+  admin/includes/js/tiny_mce/plugins/template/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/paste/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/paste/pasteword.htm
+  admin/includes/js/tiny_mce/plugins/paste/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/paste/pastetext.htm
+  admin/includes/js/tiny_mce/plugins/bbcode/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/acronym.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/editor_plugin.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/ins.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/editor_plugin_src.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/cite.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/del.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/cite.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/del.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/abbr.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/attributes.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/acronym.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/ins.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/js/element_common.js
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/abbr.htm
+  admin/includes/js/tiny_mce/plugins/xhtmlxtras/attributes.htm
+  admin/includes/js/tiny_mce/tiny_mce.js
+  admin/includes/js/tiny_mce/langs/en.js
+  admin/includes/js/tiny_mce/themes/advanced/about.htm
+  admin/includes/js/tiny_mce/themes/advanced/anchor.htm
+  admin/includes/js/tiny_mce/themes/advanced/charmap.htm
+  admin/includes/js/tiny_mce/themes/advanced/color_picker.htm
+  admin/includes/js/tiny_mce/themes/advanced/editor_template_src.js
+  admin/includes/js/tiny_mce/themes/advanced/link.htm
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/content.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/ui.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/o2k7/dialog.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/default/content.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/default/ui.css
+  admin/includes/js/tiny_mce/themes/advanced/skins/default/dialog.css
+  admin/includes/js/tiny_mce/themes/advanced/image.htm
+  admin/includes/js/tiny_mce/themes/advanced/editor_template.js
+  admin/includes/js/tiny_mce/themes/advanced/img/icons.gif
+  admin/includes/js/tiny_mce/themes/advanced/js/anchor.js
+  admin/includes/js/tiny_mce/themes/advanced/js/charmap.js
+  admin/includes/js/tiny_mce/themes/advanced/js/image.js
+  admin/includes/js/tiny_mce/themes/advanced/source_editor.htm
+  admin/includes/js/tiny_mce/themes/simple/editor_template_src.js
+  admin/includes/js/tiny_mce/tiny_mce_popup.js
+  admin/includes/js/tiny_mce/tiny_mce_src.js
+  admin/includes
+  admin/addons/surveys/surveys.php
+  admin/addons/surveys/api/responsesvalue.php
+  admin/addons/surveys/api/surveys.php
+  admin/addons/surveys/templates/widget.textarea.tpl
+  admin/addons/surveys/templates/survey_form.tpl
+  admin/addons/interspire_addons.php
+  admin/addons/splittest/splittest_stats.php
+  admin/addons/splittest/print_stats.php
+  admin/addons/splittest/splittest.php
+  admin/addons/splittest/api/splittest_stats.php
+  admin/addons/splittest/api/splittest_send.php
+  admin/addons/splittest/splittest_send.php
+  admin/addons/dynamiccontenttags/dynamiccontenttags.php
+  admin/addons/dynamiccontenttags/schema.pgsql.php
+  admin/addons/dynamiccontenttags/templates/dynamiccontenttags_form.tpl
+  admin/addons/dynamiccontenttags/templates/dynamiccontentblocks_form.tpl
+  admin/functions/send.php
+  admin/functions/subscribers_edit.php
+  admin/functions/upgradenx.php
+  admin/functions/folders.php
+  admin/functions/lists.php
+  admin/functions/subscribers_add.php
+  admin/functions/subscribers_manage.php
+  admin/functions/settings.php
+  admin/functions/customfields.php
+  admin/functions/users.php
+  admin/functions/showcustomfields.php
+  admin/functions/subscribers_remove.php
+  admin/functions/addons.php
+  admin/functions/login.php
+  admin/functions/logout.php
+  admin/functions/remote_stats.php
+  admin/functions/imagemanager.php
+  admin/functions/autoresponders.php
+  admin/functions/newsletters.php
+  admin/functions/subscribers_import.php
+  admin/functions/subscribers.php
+  admin/functions/forms.php
+  admin/functions/subscribers_export.php
+  admin/functions/remote.php
+  admin/functions/schedule.php
+  admin/functions/subscribers_banned.php
+  admin/functions/stats.php
+  admin/functions/templates.php
+  admin/functions/triggeremails.php
+  admin/functions/segment.php
+  admin/functions/manageaccount.php
+  admin/functions/index.php
+  admin/functions/sendstudio_functions.php
+  admin/functions/bounce.php
+  admin/functions/stats_chart.php
+  admin/functions/subscribers_view.php
+  admin/functions/api/ss_email.php
+  admin/functions/api/lists.php
+  admin/functions/api/customfields_date.php
+  admin/functions/api/customfields_textarea.php
+  admin/functions/api/folders.php
+  admin/functions/api/customfields.php
+  admin/functions/api/jobs_send.php
+  admin/functions/api/imagemanager.php
+  admin/functions/api/newsletters.php
+  admin/functions/api/forms.php
+  admin/functions/api/subscribers.php
+  admin/functions/api/upgrade.php
+  admin/functions/api/jobs.php
+  admin/functions/api/triggeremails.php
+  admin/functions/api/templates.php
+  admin/functions/api/stats.php
+  admin/functions/api/segment.php
+  admin/functions/api/customfields_text.php
+  admin/functions/api/customfields_checkbox.php
+  admin/functions/api/customfields_number.php
+  admin/functions/api/api.php
+  admin/functions/api/user.php
+  admin/functions/api/jobs_bounce.php
+  admin/functions/subscribers_event.php
+  admin/resources/form_designs/Definition List Plain Form
+  admin/resources/email_templates/Travel and Tourism 1
+  admin/resources/email_templates/Travel and Tourism 2
+  admin/resources/email_templates/Family and Friends 1
+  admin/resources/email_templates/Family and Friends 2
+  admin/resources/email_templates/Family and Friends/Floral/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Floral/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Floral/RightTop.gif
+  admin/resources/email_templates/Family and Friends/Floral/preview.gif
+  admin/resources/email_templates/Family and Friends/Floral/RightBottom.gif
+  admin/resources/email_templates/Family and Friends/Floral/c1.gif
+  admin/resources/email_templates/Family and Friends/Floral/c2.gif
+  admin/resources/email_templates/Family and Friends/Floral/c3.gif
+  admin/resources/email_templates/Family and Friends/Floral/c4.gif
+  admin/resources/email_templates/Family and Friends/Floral/index.html
+  admin/resources/email_templates/Family and Friends/Floral/blank.gif
+  admin/resources/email_templates/Family and Friends/Floral
+  admin/resources/email_templates/Family and Friends/Crowds/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Crowds/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Crowds/preview.gif
+  admin/resources/email_templates/Family and Friends/Crowds/top1.gif
+  admin/resources/email_templates/Family and Friends/Crowds/top2.gif
+  admin/resources/email_templates/Family and Friends/Crowds/bottom1.gif
+  admin/resources/email_templates/Family and Friends/Crowds/top3.gif
+  admin/resources/email_templates/Family and Friends/Crowds/bottom2.gif
+  admin/resources/email_templates/Family and Friends/Crowds/index.html
+  admin/resources/email_templates/Family and Friends/Crowds/bottom3.gif
+  admin/resources/email_templates/Family and Friends/Crowds
+  admin/resources/email_templates/Family and Friends/Lounge Around/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Lounge Around/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Lounge Around/preview.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/top1.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/top2.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/bottom1.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/top3.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/bottom2.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around/index.html
+  admin/resources/email_templates/Family and Friends/Lounge Around/bottom3.gif
+  admin/resources/email_templates/Family and Friends/Lounge Around
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/more_ico.png
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/li_ico.png
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/bkg_header_left.jpg
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/preview.gif
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/bkg_header_right.jpg
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/index.html
+  admin/resources/email_templates/Family and Friends/Community (1 Column)/bkg_header_top.jpg
+  admin/resources/email_templates/Family and Friends/Community (1 Column)
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_header.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_content_top.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_body.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_newsitem_top.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_newsitem1_top.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_newsitem_bottom.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/bg_newsitem1_bottom.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images/header.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/images
+  admin/resources/email_templates/Family and Friends/People (1 Column)/preview.gif
+  admin/resources/email_templates/Family and Friends/People (1 Column)/index.html
+  admin/resources/email_templates/Family and Friends/People (1 Column)
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/more_ico.png
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/li_ico.png
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/bkg_header_left.jpg
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/preview.gif
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/bkg_header_right.jpg
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/index.html
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)/bkg_header_top.jpg
+  admin/resources/email_templates/Family and Friends/Community (2 Columns)
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/preview.gif
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/c1.gif
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/c2.gif
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/c3.gif
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/c4.gif
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)/index.html
+  admin/resources/email_templates/Family and Friends/Youth (1 Column)
+  admin/resources/email_templates/Family and Friends/Gift/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Gift/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Gift/preview.gif
+  admin/resources/email_templates/Family and Friends/Gift/c1.gif
+  admin/resources/email_templates/Family and Friends/Gift/c2.gif
+  admin/resources/email_templates/Family and Friends/Gift/c3.gif
+  admin/resources/email_templates/Family and Friends/Gift/c4.gif
+  admin/resources/email_templates/Family and Friends/Gift/index.html
+  admin/resources/email_templates/Family and Friends/Gift
+  admin/resources/email_templates/Family and Friends/Family Fun/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Family Fun/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Family Fun/preview.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/top1.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/top2.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/bottom1.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/top3.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/bottom2.gif
+  admin/resources/email_templates/Family and Friends/Family Fun/index.html
+  admin/resources/email_templates/Family and Friends/Family Fun/bottom3.gif
+  admin/resources/email_templates/Family and Friends/Family Fun
+  admin/resources/email_templates/Family and Friends/Friendship/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Friendship/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Friendship/preview.gif
+  admin/resources/email_templates/Family and Friends/Friendship/c1.gif
+  admin/resources/email_templates/Family and Friends/Friendship/c2.gif
+  admin/resources/email_templates/Family and Friends/Friendship/c3.gif
+  admin/resources/email_templates/Family and Friends/Friendship/c4.gif
+  admin/resources/email_templates/Family and Friends/Friendship/index.html
+  admin/resources/email_templates/Family and Friends/Friendship
+  admin/resources/email_templates/Family and Friends/Childs Play/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Childs Play/MainImg1.jpg
+  admin/resources/email_templates/Family and Friends/Childs Play/preview.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/top1.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/top2.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/bottom1.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/top3.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/bottom2.gif
+  admin/resources/email_templates/Family and Friends/Childs Play/index.html
+  admin/resources/email_templates/Family and Friends/Childs Play/bottom3.gif
+  admin/resources/email_templates/Family and Friends/Childs Play
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/MainImg.jpg
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/preview.gif
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/c1.gif
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/c2.gif
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/c3.gif
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/c4.gif
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)/index.html
+  admin/resources/email_templates/Family and Friends/Youth (2 Columns)
+  admin/resources/email_templates/Family and Friends
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/bkg_header_left.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/bkg_footer.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/bkg_header_right.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/BkgRightTop.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/BkgRightBottom.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/index.html
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)/bkg_header_top.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (2 Columns)
+  admin/resources/email_templates/Travel & Tourism/Country Escape/MainImg.jpg
+  admin/resources/email_templates/Travel & Tourism/Country Escape/MainImg1.jpg
+  admin/resources/email_templates/Travel & Tourism/Country Escape/BkgPage.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/c1.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/c2.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Country Escape/c3.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/c4.gif
+  admin/resources/email_templates/Travel & Tourism/Country Escape/index.html
+  admin/resources/email_templates/Travel & Tourism/Country Escape
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/MainImg.jpg
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/c1.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/c2.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/c3.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/c4.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)/index.html
+  admin/resources/email_templates/Travel & Tourism/Vacation (1 Column)
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/MainImg.jpg
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/MainImg1.jpg
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/c1.gif
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/c2.gif
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/c3.gif
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/c4.gif
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland/index.html
+  admin/resources/email_templates/Travel & Tourism/Winter Wonderland
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/MainImg.jpg
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/c1.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/c2.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/c3.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/c4.gif
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)/index.html
+  admin/resources/email_templates/Travel & Tourism/Vacation (2 Columns)
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/MainImg.jpg
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/MainImg1.jpg
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/BkgPage.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/c1.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/c2.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/c3.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/c4.gif
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise/index.html
+  admin/resources/email_templates/Travel & Tourism/Beach Paradise
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/bkg_header_left.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/bkg_footer.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/preview.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/bkg_header_right.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/BkgRightTop.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/credit.txt
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/BkgRightBottom.gif
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/index.html
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)/bkg_header_top.jpg
+  admin/resources/email_templates/Travel & Tourism/Travel (1 Column)
+  admin/resources/email_templates/Travel & Tourism
+  admin/resources/email_templates/Shopping Cart/Arts and Crafts
+  admin/resources/email_templates/Shopping Cart/Art and Framing
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/main_pic.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/shdw_left.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/shdw_right.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/bg_content_top.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/bg_top_left.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/bg_content_bottom.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images/bg_top_right.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/images
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/preview.gif
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts/index.html
+  admin/resources/email_templates/Shopping Cart/Arts & Crafts
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/bg_header.jpg
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/bg_header_top.jpg
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/shdw_left.gif
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/shdw_right.gif
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/divider.gif
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images/shdw_top.gif
+  admin/resources/email_templates/Shopping Cart/Art & Framing/images
+  admin/resources/email_templates/Shopping Cart/Art & Framing/preview.gif
+  admin/resources/email_templates/Shopping Cart/Art & Framing/index.html
+  admin/resources/email_templates/Shopping Cart/Art & Framing
+  admin/resources/email_templates/Family & Friends/Floral/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Floral/RightTop.gif
+  admin/resources/email_templates/Family & Friends/Floral/preview.gif
+  admin/resources/email_templates/Family & Friends/Floral/RightBottom.gif
+  admin/resources/email_templates/Family & Friends/Floral/c1.gif
+  admin/resources/email_templates/Family & Friends/Floral/c2.gif
+  admin/resources/email_templates/Family & Friends/Floral/credit.txt
+  admin/resources/email_templates/Family & Friends/Floral/c3.gif
+  admin/resources/email_templates/Family & Friends/Floral/c4.gif
+  admin/resources/email_templates/Family & Friends/Floral/index.html
+  admin/resources/email_templates/Family & Friends/Floral/blank.gif
+  admin/resources/email_templates/Family & Friends/Floral
+  admin/resources/email_templates/Family & Friends/Lounge Around/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Lounge Around/preview.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/top1.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/credit.txt
+  admin/resources/email_templates/Family & Friends/Lounge Around/top2.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/bottom1.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/top3.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/bottom2.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around/index.html
+  admin/resources/email_templates/Family & Friends/Lounge Around/bottom3.gif
+  admin/resources/email_templates/Family & Friends/Lounge Around
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_header.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_content_top.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_body.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_newsitem_top.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_newsitem1_top.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_newsitem_bottom.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/bg_newsitem1_bottom.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images/header.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/images
+  admin/resources/email_templates/Family & Friends/People (1 Column)/preview.gif
+  admin/resources/email_templates/Family & Friends/People (1 Column)/credit.txt
+  admin/resources/email_templates/Family & Friends/People (1 Column)/index.html
+  admin/resources/email_templates/Family & Friends/People (1 Column)
+  admin/resources/email_templates/Family & Friends/Gift/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Gift/preview.gif
+  admin/resources/email_templates/Family & Friends/Gift/c1.gif
+  admin/resources/email_templates/Family & Friends/Gift/c2.gif
+  admin/resources/email_templates/Family & Friends/Gift/credit.txt
+  admin/resources/email_templates/Family & Friends/Gift/c3.gif
+  admin/resources/email_templates/Family & Friends/Gift/c4.gif
+  admin/resources/email_templates/Family & Friends/Gift/index.html
+  admin/resources/email_templates/Family & Friends/Gift
+  admin/resources/email_templates/Family & Friends/Family Fun/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Family Fun/preview.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/top1.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/credit.txt
+  admin/resources/email_templates/Family & Friends/Family Fun/top2.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/bottom1.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/top3.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/bottom2.gif
+  admin/resources/email_templates/Family & Friends/Family Fun/index.html
+  admin/resources/email_templates/Family & Friends/Family Fun/bottom3.gif
+  admin/resources/email_templates/Family & Friends/Family Fun
+  admin/resources/email_templates/Family & Friends/Friendship/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Friendship/preview.gif
+  admin/resources/email_templates/Family & Friends/Friendship/c1.gif
+  admin/resources/email_templates/Family & Friends/Friendship/c2.gif
+  admin/resources/email_templates/Family & Friends/Friendship/credit.txt
+  admin/resources/email_templates/Family & Friends/Friendship/c3.gif
+  admin/resources/email_templates/Family & Friends/Friendship/c4.gif
+  admin/resources/email_templates/Family & Friends/Friendship/index.html
+  admin/resources/email_templates/Family & Friends/Friendship
+  admin/resources/email_templates/Family & Friends/Childs Play/MainImg.jpg
+  admin/resources/email_templates/Family & Friends/Childs Play/preview.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/top1.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/credit.txt
+  admin/resources/email_templates/Family & Friends/Childs Play/top2.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/bottom1.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/top3.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/bottom2.gif
+  admin/resources/email_templates/Family & Friends/Childs Play/index.html
+  admin/resources/email_templates/Family & Friends/Childs Play/bottom3.gif
+  admin/resources/email_templates/Family & Friends/Childs Play
+  admin/resources/email_templates/Family & Friends
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/bkg_header_left.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/bkg_footer.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/bkg_header_right.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/BkgRightTop.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/BkgRightBottom.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/index.html
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)/bkg_header_top.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (2 Columns)
+  admin/resources/email_templates/Travel and Tourism/Country Escape/MainImg.jpg
+  admin/resources/email_templates/Travel and Tourism/Country Escape/MainImg1.jpg
+  admin/resources/email_templates/Travel and Tourism/Country Escape/BkgPage.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/c1.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/c2.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/c3.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/c4.gif
+  admin/resources/email_templates/Travel and Tourism/Country Escape/index.html
+  admin/resources/email_templates/Travel and Tourism/Country Escape
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/MainImg.jpg
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/c1.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/c2.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/c3.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/c4.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)/index.html
+  admin/resources/email_templates/Travel and Tourism/Vacation (1 Column)
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/MainImg.jpg
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/MainImg1.jpg
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/c1.gif
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/c2.gif
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/c3.gif
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/c4.gif
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland/index.html
+  admin/resources/email_templates/Travel and Tourism/Winter Wonderland
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/MainImg.jpg
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/c1.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/c2.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/c3.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/c4.gif
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)/index.html
+  admin/resources/email_templates/Travel and Tourism/Vacation (2 Columns)
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/MainImg.jpg
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/MainImg1.jpg
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/BkgPage.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/c1.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/c2.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/c3.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/c4.gif
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise/index.html
+  admin/resources/email_templates/Travel and Tourism/Beach Paradise
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/bkg_header_left.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/bkg_footer.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/preview.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/bkg_header_right.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/BkgRightTop.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/BkgRightBottom.gif
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/index.html
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)/bkg_header_top.jpg
+  admin/resources/email_templates/Travel and Tourism/Travel (1 Column)
+  admin/resources/email_templates/Travel and Tourism
+  admin/com/language/default/customfields.php
+  admin/com/language/default/whitelabel.php
+  admin/com/storage
+  admin/com/install/schema.indexes.php
+  admin/com/lib/SendStudio
+  admin/com/lib/IEM.class.php
+  admin/com/lib/API/USERS.class.php
+  admin/com/lib/IEM/Support.php
+  admin/com/lib/HelperUserDelete.class.php
+  admin/com/lib/record/Users.class.php
+  admin/com/init.php
+  admin/com/upgrades/20100731
+  admin/com/upgrades/20090420/add_settings_credit_warnings_table.php
+  admin/com/upgrades/20090420
+  admin/com/init-legacy.php
+  admin/com/templates/segment_form.tpl
+  admin/com/templates/header.tpl
+  admin/com/templates/customfield_form_step2_checkbox_edit.tpl
+  admin/com/templates/customfield_form_step2_date.tpl
+  admin/com/templates/customfield_form_step2_radiobutton_edit.tpl
+  admin/com/templates/customfield_form_step2_textarea.tpl
+  admin/com/templates/editor_text.tpl
+  admin/com/templates/progressreport_popup.tpl
+  admin/com/templates/usersgroups_form.tpl
+  admin/com/templates/editor.tpl
+  admin/com/templates/customfield_form_step2_number.tpl
+  admin/com/templates/customfield_form_step2_text.tpl
+  admin/com/templates/customfield_form_step2_dropdown_edit.tpl
+  admin/com/templates
+  admin/com
+  surveys_submit.php
+  form.php
+  users/form.php
+  send_friend.php
+  unsubform.php
+  updatedetails.php
+  changelog.txt
+  version.txt
+...
+
+--------------------------------------------------------------------------------
+Version: 6.0.2
+Released: 11th December, 2009
+
+Bugs Fixed:
+  - Add fix for notice in survey addon permissions.
+  - Fix issue where hourly limits were not being throttled and were showing a notice saying the user has gone over their limit. Emails are not throttled to the specified hourly rate on the group.
+  - Fix a potential issue in autoloading function when class is checked for existence. Since the default behavior of class_exists is to autoload, the second parameter needed to be set to false so that the class isn't attempted to be autoloaded.
+  - Fix when exporting contacts where the filtering options weren't working properly and always took the user to the filter page.
+  - Simplify UI on contact exporting page. Instead of 2 radio buttons, there is now a single checkbox that shows the option to either filter or not. Bey default, filtering is disabled.
+...
+
+Files Changed:
+  admin/cron/send.php
+  admin/addons/surveys/surveys.php
+  admin/functions/subscribers_export.php
+  admin/functions/stats.php
+  admin/functions/usersgroups.php
+  admin/functions/api/send.php
+  admin/functions/api/jobs_send.php
+  admin/functions/api/jobs.php
+  admin/functions/api/stats.php
+  admin/com/language/default/subscribers.php
+  admin/com/language/default/usersgroups.php
+  admin/com/language/default/language.php
+  admin/com/lib/IEM.class.php
+  admin/com/lib/API/USERS.class.php
+  admin/com/lib/IEM/InterspireTemplate.class.php
+  admin/com/lib/record/Users.class.php
+  admin/com/init.php
+  admin/com/templates/subscribers_export_step1.tpl
+  admin/com/templates/usersgroups_form.tpl
+  admin/com/templates/subscribers_export_step3.tpl
+  version.txt
+  changelog.txt
+...
+
+--------------------------------------------------------------------------------
+Version: 6.0.1
+Released: 1st December, 2009
+
+Bugs Fixed:
+  - Fix issue where user credit isn't being calculated correctly.
+  - Fix issue where user credit isn't being displayed correctly.
+  - Fix language variable names for contact list permissions when editing a user group.
+...
+
+Files Changed:
+  admin/functions/usersgroups.php
+  admin/com/language/default/usersgroups.php
+  admin/com/lib/IEM.class.php
+  admin/com/lib/IEM/InterspireTemplate.class.php
+  admin/com/lib/record/Users.class.php
+  admin/com/templates/usersgroups_form.tpl
+  changelog.txt
+  version.txt
+...
+
+--------------------------------------------------------------------------------
+Version: 6.0.0
+Released: 25th November, 2009
+
+Bugs Fixed:
+  - Content wasn't being properly encoded. Added a call to htmlentities() so that the content being pulled out of the database is properly encoded for a textarea (thus being correctly displayed in TinyMCE).
+  - Fixes an issue where the Split Test Cron settings weren't appearing to save.
+  - Remove old TinyMCE and replace with a jQuery build of TinyMCE (faster, smaller, etc.)
+  - Add check for gd library when displaying the CAPTCHA option in website forms. If GD is present, the use of a CAPTRCHA is available, if not, then CAPTCHA's are disabled.
+  - Add ability to specify an admin username during the installation process both in the installer and XML API installer.
+  - Fix issues relating to user permission checking that was causing the admin user to not be saved. Also implemented a check to see if the user that is being edited is able to have their user group changed.
+  - Adding security check to see if addon is enabled or not.
+  - Fix issue with Checkbox Custom Field not being replaced correctly.
+  - Fixed the custom field issue for triggers.
+  - Fix issues related to user credit not being calculated/refunded correctly if a campaign is cancelled/deleted before sending.
+  - Fix display issues with system logger addon configure settings page.
+  - Fixed the issue with date input wasn't saved to database.
+  - Update whitelabel to autodetect the version number in the footer copyright.
+  - Update email templates with credits and new images.
+  - Fix bug where email stats would be recorded before the campaign was actually sent.
+  - Fixed the issue where custom fields wouldn't be replaced when sending auto-responders.
+...
+
+Core Features Added:
+  - User Groups
+
+Addons Added:
+  - Dynamic Content
+  - Surveys
+
+Files Changed:
+  Every single file was changed.
+  Please update all files EXCEPT admin/includes/config.php.
+...

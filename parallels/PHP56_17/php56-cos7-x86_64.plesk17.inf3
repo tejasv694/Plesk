@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" persistent_repo="true" yum_repo_id="PLESK_17_PHP56" yum_repo_name="PHP 5.6 for Plesk 17" headers_file="build-5.6.40-cos7-x86_64.hdr.gz">
+    <product id="php56">
+        <keypackages>
+            <keypackage>plesk-php56</keypackage>
+        </keypackages>
+        <release id="PHP_5_6" name="PHP v 5.6" version="5.6.40" upgrade_allowed_from="" />
+    </product>
+    <component name="php5.6" description="PHP 5.6 (outdated)" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="plesk-php56" />
+        </keypackages>
+        <package name="plesk-php56" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-5.6.40-centos7.19011112.x86_64.rpm" size="374292" buildtime="1547183488" md5="457c5f3ae37fcb0f98a688d600a30ec5" arch="x86_64" />
+        <package name="plesk-php56-bcmath" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-bcmath-5.6.40-centos7.19011112.x86_64.rpm" size="14928" buildtime="1547183488" md5="76a71250bc5179219053c75eb6b852dc" arch="x86_64" />
+        <package name="plesk-php56-cli" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-cli-5.6.40-centos7.19011112.x86_64.rpm" size="5922120" buildtime="1547183488" md5="8787133bb33426e0041460b94b336d81" arch="x86_64" />
+        <package name="plesk-php56-dba" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-dba-5.6.40-centos7.19011112.x86_64.rpm" size="21288" buildtime="1547183488" md5="4288c607903feef2e782e6634d57bdc9" arch="x86_64" />
+        <package name="plesk-php56-enchant" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-enchant-5.6.40-centos7.19011112.x86_64.rpm" size="9112" buildtime="1547183488" md5="710490d20f0988f43673dec360407c26" arch="x86_64" />
+        <package name="plesk-php56-fpm" version="5.6.40" release="centos7.19011112" file="extra/plesk-php56-fpm-5.6.40-centos7.19011112.x86_64.rpm" size="1496464" buildtime="1547183488" md5="1a995e2d787a724720a74a631aeb82d1" arch="x86_64" />
+        <package name="plesk-php56-gd" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-gd-5.6.40-centos7.19011112.x86_64.rpm" size="107512" buildtime="1547183488" md5="8c9c3372ef9e80061912158aa45dd4e3" arch="x86_64" />
+        <package name="plesk-php56-imagick" version="3.1.2" release="centos7.20042209" file="packages/plesk-php56-imagick-3.1.2-centos7.20042209.x86_64.rpm" size="88404" buildtime="1587522956" md5="558d6568e5e9d857de9f593479ce6800" arch="x86_64" />
+        <package name="plesk-php56-imap" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-imap-5.6.40-centos7.19011112.x86_64.rpm" size="31228" buildtime="1547183488" md5="e45dc398c0ee2360e21739d2eb80b0d3" arch="x86_64" />
+        <package name="plesk-php56-intl" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-intl-5.6.40-centos7.19011112.x86_64.rpm" size="111588" buildtime="1547183488" md5="39015d834c6c07f14faaa2fa85a2ab05" arch="x86_64" />
+        <package name="plesk-php56-ioncube-loader" version="6.0.7" release="centos7.18010913" file="packages/plesk-php56-ioncube-loader-6.0.7-centos7.18010913.x86_64.rpm" size="467856" buildtime="1515479203" md5="09d9f58544caf90fd2504287e0b15abd" arch="x86_64" />
+        <package name="plesk-php56-ldap" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-ldap-5.6.40-centos7.19011112.x86_64.rpm" size="22364" buildtime="1547183488" md5="371f9f16e608c27c504af276762979e1" arch="x86_64" />
+        <package name="plesk-php56-mbstring" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-mbstring-5.6.40-centos7.19011112.x86_64.rpm" size="477336" buildtime="1547183488" md5="45e0dd78c759f5bcb9d39a4ae84887b5" arch="x86_64" />
+        <package name="plesk-php56-mcrypt" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-mcrypt-5.6.40-centos7.19011112.x86_64.rpm" size="15020" buildtime="1547183488" md5="afa822226c927efc0de295836bdb1c0d" arch="x86_64" />
+        <package name="plesk-php56-mysql" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-mysql-5.6.40-centos7.19011112.x86_64.rpm" size="142252" buildtime="1547183488" md5="1a23a3f3c1ee6a009c6fbce658860f88" arch="x86_64" />
+        <package name="plesk-php56-odbc" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-odbc-5.6.40-centos7.19011112.x86_64.rpm" size="31120" buildtime="1547183488" md5="f41d8274b8afabb9664ea033f37fd605" arch="x86_64" />
+        <package name="plesk-php56-opcache" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-opcache-5.6.40-centos7.19011112.x86_64.rpm" size="65452" buildtime="1547183488" md5="85725b1ac03ecd5f882d058ba70f7862" arch="x86_64" />
+        <package name="plesk-php56-pdo" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-pdo-5.6.40-centos7.19011112.x86_64.rpm" size="420108" buildtime="1547183488" md5="a77bbdfca5fc39ab16588d82f53d5462" arch="x86_64" />
+        <package name="plesk-php56-pear" version="1.9.4" release="centos7.19011112" file="packages/plesk-php56-pear-1.9.4-centos7.19011112.noarch.rpm" size="343896" buildtime="1547183514" md5="4928e06b59ed47d57a932dbdc8c7dd3c" arch="noarch" />
+        <package name="plesk-php56-pgsql" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-pgsql-5.6.40-centos7.19011112.x86_64.rpm" size="59024" buildtime="1547183488" md5="f791881074f47d96a56cedf6f074ce39" arch="x86_64" />
+        <package name="plesk-php56-process" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-process-5.6.40-centos7.19011112.x86_64.rpm" size="19668" buildtime="1547183488" md5="287b74148e0c1e282f6c8bd673c67201" arch="x86_64" />
+        <package name="plesk-php56-pspell" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-pspell-5.6.40-centos7.19011112.x86_64.rpm" size="8368" buildtime="1547183488" md5="0efbe91aeeb3a05f09caf1e48d9cc7bf" arch="x86_64" />
+        <package name="plesk-php56-redis" version="2.2.5" release="centos7.18010913" file="packages/plesk-php56-redis-2.2.5-centos7.18010913.x86_64.rpm" size="85460" buildtime="1515479218" md5="cb2798533a557a12b7234ff6a37b7606" arch="x86_64" />
+        <package name="plesk-php56-snmp" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-snmp-5.6.40-centos7.19011112.x86_64.rpm" size="19564" buildtime="1547183488" md5="25d7b536fd4cdd3d9e649594c0a6d0e1" arch="x86_64" />
+        <package name="plesk-php56-soap" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-soap-5.6.40-centos7.19011112.x86_64.rpm" size="130596" buildtime="1547183488" md5="cba4ad61a35ebcb976b83f0e4594ebe0" arch="x86_64" />
+        <package name="plesk-php56-tidy" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-tidy-5.6.40-centos7.19011112.x86_64.rpm" size="16944" buildtime="1547183488" md5="719adfc6742ea9a2f2af655991a124b1" arch="x86_64" />
+        <package name="plesk-php56-xdebug" version="2.2.3" release="centos7.18010913" file="packages/plesk-php56-xdebug-2.2.3-centos7.18010913.x86_64.rpm" size="77524" buildtime="1515479230" md5="f5736ad849baa15a01ca0be573e1a71e" arch="x86_64" />
+        <package name="plesk-php56-xml" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-xml-5.6.40-centos7.19011112.x86_64.rpm" size="74376" buildtime="1547183488" md5="ef0c1c18ef2db5d8098b688c45efbb6f" arch="x86_64" />
+        <package name="plesk-php56-xmlrpc" version="5.6.40" release="centos7.19011112" file="packages/plesk-php56-xmlrpc-5.6.40-centos7.19011112.x86_64.rpm" size="33288" buildtime="1547183488" md5="7a3bb5dcc92296c266afb9c4d915e5f5" arch="x86_64" />
+    </component>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-5.6.40-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-5.6.40-cos7-x86_64.hdr.gz" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build>

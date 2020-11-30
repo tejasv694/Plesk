@@ -1,0 +1,609 @@
+/**
+ * Accordion
+ *
+ * Makes borders look better with UI accordion
+ */
+.ui-accordion-header {
+	width : 90%;
+}
+.ui-accordion-content {
+	width      : 90%;
+	padding    : 10px;
+	border     : 1px solid #ccc;
+	border-top : 0;
+	background : #fff none;
+	margin     : 0 0 10px 0;
+}
+.ui-accordion-header {
+	border-top : 0;
+}
+.ui-accordion-header:first-child {
+	border-top : 1px solid #ccc;
+}
+.ui-corner-bottom {
+}
+
+#tab-survey-designers  {
+	width: 850px;
+}
+
+#tab-survey-designers ul {
+	margin  : 0;
+	padding : 0;
+	margin-right: 12px;
+	left: 0px !importance;
+}
+
+.tab-survey-designers-panel {
+	float: left;
+	width: 190px;
+	margin-right : 4px; 
+	left: 0 !important;
+	
+}
+
+#tab-survey-designers .tab-survey-designers-panel ul li {
+	margin-bottom       : 5px;
+	padding             : 3px 6px;
+	border              : 1px solid #ccc;
+	background-color    : #f3f3f3;
+	background-position : 4px 4px;
+	background-repeat   : no-repeat;
+	list-style          : none;
+	padding-left        : 28px;
+}
+#tab-survey-designers .tab-survey-designers-panel ul li:last-child {
+	margin-bottom : 0;
+}
+#tab-survey-designers .tab-survey-designers-panel ul li:hover {
+ 	background-color : #fff; 
+}
+
+
+
+.form-menu {
+	position     : relative;
+	float        : left;
+	margin-right : 10px; 
+	width        : 100%;
+}
+
+
+.form-menu > div {
+	padding    : 9px;
+	/* border     : 1px solid #ccc; */
+	border-top : 0;
+	margin-top : -6px;
+}
+.form-menu input[type="text"] {
+	width : 140px;
+}
+
+.space {
+	height: 18px;	
+}
+
+
+/**
+ * Canvas
+ */
+#form-title.example-field, 
+#form-title.edit-in-place {
+	font-weight: bold;	
+}
+
+input.example-field, 
+input.edit-in-place {
+	border: 1px solid transparent !important;
+}
+
+#form-title.edit-in-place:hover 
+#form-title.edit-in-place:hover,
+#form-title.edit-in-place:focus,
+input.edit-in-place:focus,
+input.example-field:hover, 
+input.edit-in-place:hover {
+		border: 1px solid #CCC !important;
+}
+
+.form-element-content ul li textarea {
+	border: 1px solid #AFAFAF;	
+}
+
+
+#canvas {
+	float	   : left;
+	width      : 630px;
+	height	   : auto;
+	min-height : 448px;
+	border     : 1px solid #ccc;
+	padding    : 6px 10px;
+	margin     : 0 0 10px 0;
+}
+
+#canvas-empty {
+	position   : relative;
+	top        : -130px;
+	left       : 0;
+	width      : 100%;
+	text-align : center;
+	font-size  : 1.8em;
+	color      : #acacac;
+}
+#canvas > h3 {
+	background : #e7e7e7 url(../images/tab_bg.gif) repeat-x top left;
+	border     : 1px solid #ccc;
+	display    : block;
+	padding    : 6px;
+}
+#canvas > ul {
+	margin     : 0;
+	padding    : 10px 10px 10px 30px;
+	min-height : 200px;
+}
+#canvas ul {
+	padding : 0;
+	margin  : 0;
+}
+#canvas > ul > li {
+	list-style    : none;
+	margin-bottom : 10px;
+}
+#canvas ul li {
+	list-style-type : none;
+}
+#canvas .ui-sortable-placeholder {
+	border           : 3px dashed #94a3c4;
+	height           : 66px;
+	margin-bottom    : 10px;
+	background-color : #fff;
+}
+#canvas .__from-sidebar__ {
+	background  : transparent url(../../../../admin/images/loadingAnimation.gif) no-repeat top center;
+	text-indent : -10000px;
+}
+#canvas li.__widget_placeholder__ {
+	background  : transparent url(../../../../admin/images/loadingAnimation.gif) no-repeat top center;
+	text-indent : -10000px;
+}
+
+
+
+input,
+select,
+textarea {
+	font-size : 11px;
+	padding   : 2px 4px;
+}
+input[type="radio"],
+input[type="checkbox"] {
+	cursor : pointer;
+}
+#canvas h2 input[type="text"] {
+	font-size : 18px;
+}
+
+
+
+/**
+ * Elements in menu
+ */
+#form-element-text {
+	background-position : 6px 6px;
+	background-image    : url(../images/textfield.png);
+}
+#form-element-textarea {
+	background-position : 6px 6px;
+	background-image    : url(../images/multitext.png);
+}
+#form-element-radio {
+	background-position : 6px 6px;
+	background-image    : url(../images/radiobutton.png);
+}
+#form-element-checkbox {
+	background-image : url(../images/tick.png);
+}
+#form-element-select {
+	background-position : 5px 5px;
+	background-image    : url(../images/picklist.png);
+}
+#form-element-select-country {
+	background-image : url(../images/world.png);
+}
+#form-element-file {
+	background-image : url(../images/folder_go.png);
+}
+#form-element-section-break {
+	background-position : 6px 6px;
+	background-image    : url(../images/text_horizontalrule.png);
+}
+
+/**
+ * Editable form elements
+ */
+.form-element {
+	position      : relative;
+	margin-bottom : 10px;
+	background    : #fff;
+}
+
+.form-element input[type="text"],
+.form-element textarea {
+	width         : 250px;
+	margin-bottom : 3px;
+}
+
+input[type="text"],input[type="password"], textarea
+{
+	border: 1px solid #ccc;
+	border-collapse: seperate !important;
+}
+
+.form-element textarea {
+	margin-bottom : 0;
+}
+.form-element ul.inline input[type="text"] {
+	margin-bottom : 0;
+}
+.form-element.ui-draggable-dragging {
+	padding    : 10px;
+	background : #eee;
+}
+.form-element-title {
+	position : relative;
+	cursor   : move;
+}
+.form-element-title .title input {
+	font-size : 15px;
+	width     : 555px;
+}
+.form-element > .form-element-content > input {
+	width : 616px;
+}
+.form-element-title a {
+	position        : absolute;
+	top             : 6px;
+	text-indent     : -10000px;
+	width           : 18px;
+	height          : 16px;
+	border          : 0;
+	text-decoration : none;
+}
+.form-element-minimize {
+	right       : 40px;
+	background  : transparent url(../images/arrow_up.png) no-repeat bottom left;
+}
+.form-element-maximize {
+	right       : 40px;
+	background  : transparent url(../images/arrow_down.png) no-repeat bottom left;
+}
+.form-element-duplicate {
+	right      : 20px;
+	background : transparent url(../images/add.png) no-repeat bottom left;
+}
+.form-element-remove {
+	right      : -2px;
+	background : transparent url(../images/delete.png) no-repeat bottom left;
+}
+.form-element-removing {
+	background : #ffe4e4 none;
+}
+.form-element-required {
+	display  : none;
+	position : absolute;
+	left     : -5px;
+	top      : 0px;
+	color    : #ff0000;
+}
+.form-element-content > ul > li {
+	padding-top  : 3px;
+	padding-left : 6px;
+	margin-left  : 6px;
+}
+.form-element-options {
+	color      : #000;
+	margin-top : 5px;
+	padding    : 3px 6px;
+	border     : 1px solid #ccc; 
+	background : #e7e7e7 url(../images/tab_bg.gif) repeat-x top left;
+}
+.form-element-options label {
+	position : relative;
+	top      : 1px;
+}
+.form-element-options select,
+.form-element-options input[type="text"] {
+	position : relative;
+	top      : -1px;
+}
+.form-element-options select,
+.form-element-options input[type="text"] {
+	width : 160px;
+}
+.form-element-options img.tooltip {
+	cursor   : help; 
+	position : relative; 
+	top      : 1px;
+	left     : 2px;
+}
+.form-element-options ul.inline li {
+	position : relative;
+	top      : 1px;
+}
+.form-element-hr {
+	padding    : 0;
+	margin     : 10px 0;
+	border     : 0;
+	height     : 5px;
+	background : transparent url(../images/grid.gif) repeat-x top left;
+}
+.form-element .other-field {
+	padding : 4px 0 0 6px;
+}
+.form-element .other-field input {
+	min-width : 223px;
+	width     : 223px;
+}
+.form-widget-fields {
+	max-height : 250px;
+	overflow   : auto;
+}
+
+
+
+/**
+ * Note, with the helper styles, width and height had to be put inline due to jQuery UI
+ * behaving undesirably as usual.
+ */
+.form-element-drag-helper {
+	cursor     : move;
+	background : transparent url(../images/form-element-drag-helper.png) no-repeat top left;
+}
+.form-element-drag-helper img {
+	position   : absolute;
+	top        : 27px;
+	left       : 20px;
+}
+.form-element-drag-helper p {
+	position   : relative;
+	top        : 17px;
+	left       : 46px;
+	text-align : left;
+	font-size  : 11px;
+}
+.form-element-sort-helper {
+	cursor     : move;
+	background : transparent url(../images/form-element-sort-helper.png) no-repeat top left;
+}
+.form-element-sort-helper p {
+	position   : relative;
+	top        : 12px;
+	text-align : center;
+	font-size  : 14px;
+}
+
+
+
+/**
+ * Edit in place fields
+ */
+ 
+.edit-in-place:hover,
+.edit-in-place:focus {
+	font-size        : 11px;
+	margin           : 0;
+	border           : 1px solid #ccc;
+	background-color : #ffffcc;
+	cursor           : text;
+}
+.edit-in-place:hover {
+	background-color : #ffffcc;
+}
+.edit-in-place {
+	border           : 1px solid transparent;
+	margin           : 0;
+	background-color : transparent;
+}
+
+
+.add-option-to-list {
+	display    : block; 
+	width      : 16px; 
+	height     : 16px; 
+	background : transparent url(../images/add.png);
+}
+.remove-option-from-list {
+	display    : block; 
+	width      : 16px; 
+	height     : 16px; 
+	background : transparent url(../images/delete.png);
+}
+.remove-other {
+	display    : block; 
+	width      : 16px; 
+	height     : 16px; 
+	background : transparent url(../images/delete.png);
+}
+
+
+
+.form-element-file-file-types li.file-type {
+	position   : relative;
+	padding    : 1px 24px 2px 6px;
+	border     : 1px solid #ccc;
+	background : #fff;
+}
+.form-element-file-file-types a {
+	text-indent : -10000px;
+	width       : 16px;
+	height      : 16px;
+	position    : absolute;
+	top         : 4px;
+	right       : 3px;
+	background  : transparent url(../images/cross.png) no-repeat top left;
+}
+
+
+
+/**
+ * General
+ */
+.w5   { width : 5%;   }
+.w10  { width : 10%;  }
+.w20  { width : 20%;  }
+.w25  { width : 25%;  }
+.w40  { width : 40%;  }
+.w50  { width : 25%;  }
+.w60  { width : 60%;  }
+.w75  { width : 25%;  }
+.w80  { width : 80%;  }
+.w100 { width : 100%; }
+.left {
+	float : left;
+}
+dl,
+dl dt,
+dl dd {
+	margin : 0;
+	padding : 0;
+}
+dl dt { margin-bottom : 2px; }
+dl dd { margin-bottom : 5px; }
+.right {
+	float : right;
+}
+.clear,
+ul.inline li.clear {
+	float       : none;
+	clear       : both; 
+	height      : 0; 
+	line-height : 0;
+	font-size   : 0;
+}
+.em {
+	font-style : italic;
+}
+.strong {
+	font-weight : bold;
+}
+.light {
+	color : #888;
+}
+.hide {
+	display : none;
+}
+.required {
+	color : red;
+}
+.text-right {
+	text-align : right;
+}
+.hr {
+	height        : 0;
+	margin        : 10px 0;
+	padding       : 0;
+	border        : 0;
+	border-bottom : 2px solid #acacac;
+	width         : 100%;
+}
+input[disabled],
+button[disabled],
+textarea[disabled] {
+	cursor : not-allowed;
+}
+
+
+
+/**
+ * General UI
+ */
+.ui-draggable {
+	cursor : move;
+}
+
+
+
+/**
+ * General lists
+ */
+ul.inline {
+	padding : 0;
+	margin  : 0;
+}
+ul.inline li {
+	margin     : 0 10px 0 0;
+	padding    : 0 10px 0 0;
+	float      : left;
+	list-style : none;
+}
+
+.FloatLeft {
+	float: left;
+}
+
+.FloatRight {
+	float: right;
+}
+
+.ClearLeft {
+	clear: left;
+}
+
+.ClearRight {
+	clear: right;
+}
+
+.tabnav {
+	width: 100%;
+	height: 20px;
+	margin: 0 0 5px 0;
+	padding-left: 10px;
+	background: url(../images/tab_bottom.gif) repeat-x bottom;
+}
+
+.tabnav li {
+	margin: 0;
+	padding: 0;
+	display: inline;
+	list-style-type: none;
+}
+
+.tabnav a:link, .tabnav a:visited {
+	float: left;
+	background: url(../images/tab_bg.gif) repeat-x;
+	font-size: 10px;
+	line-height: 14px;
+	font-weight: bold;
+	padding: 2px 10px 2px 10px;
+	margin-right: 4px;
+	border: 1px solid #ccc;
+	text-decoration: none;
+	color: #666;
+}
+
+.tabnav .ui-tabs-selected a {
+	outline: none;
+	border-bottom: 1px solid #fff;
+	background: #fff;
+	color: #000;
+	display: inline;
+
+}
+
+#tabMenu {
+	clear: both;
+}
+.tabnav  a {
+	display: inline;
+	width: auto;
+}
+
+.tabnav a:hover {
+	background: #fff;
+}
+
+.ui-tabs-hide {
+	display:none;
+}
+
+

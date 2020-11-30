@@ -1,0 +1,1 @@
+<input class="SmallButton" type="button" style="width: 180px;" onclick="window.location.href='{$AdminUrl}&Action=edit';" value="{$lang.Addon_dynamiccontenttags_CreateTagButton}" name="CreateTagButton" id="CreateTagButton" />

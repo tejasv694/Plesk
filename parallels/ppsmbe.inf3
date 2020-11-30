@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product id="ppsmbe" name="Parallels Panel SMB Edition">
+
+ <active_icon src="http://autoinstall.plesk.com/icon_ppsmbe.gif" />
+ <disabled_icon src="http://autoinstall.plesk.com/icon_ppsmbe_disabled.gif" />
+ <product_site src="http://www.parallels.com/en/products/small-business-panel/" />
+
+ <keypackages>
+  <keypackage>ppsmbe</keypackage>
+ </keypackages>
+
+<release id="PPSMBE_10_2_0" name="Parallels Small Business Panel 10.2.0" version="10.2.0"
+    upgrade_allowed_from="10.0" nokeyupdate_from="10.0"
+    details_url="http://download1.parallels.com/Plesk/Plesk9.0/Doc/ppsmbe9.0_whatsnew.htm" >
+
+<!--
+   <compatibility_info>
+     <best_with product_id="sitebuilder">
+       <version>4.5.0</version>
+     </best_with>
+     <best_with product_id="sso">
+       <version>2.2</version>
+     </best_with>
+   </compatibility_info>
+-->
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-cos5-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-cos5-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-cos5-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-cos5-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-fc11-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-fc11-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-fc11-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-fc11-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-fc8-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-fc8-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-fc8-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-fc8-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-rhel5-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-rhel5-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-rhel5-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-rhel5-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse10.3-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-suse10.3-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse10.3-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-suse10.3-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse11.1-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-suse11.1-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse11.1-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-suse11.1-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse11.3-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.3"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-suse11.3-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-deb4.0-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-deb4.0-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-deb4.0-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-deb4.0-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-deb5.0-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-deb5.0-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-deb5.0-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-deb5.0-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="PPSMBE_10.2.0/ppsmbe-10.2.0-ubt8.04-i386.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-ubt8.04-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="PPSMBE_10.2.0/ppsmbe-10.2.0-ubt8.04-x86_64.inf3"
+      patches="PPSMBE_10.2.0/ppsmbe-patches-10.2.0-ubt8.04-x86_64.inf3" />
+</release>
+
+<release id="PPSMBE_10_1_0" name="Parallels Small Business Panel 10.1.0" version="10.1.0"
+    upgrade_allowed_from="10.0" nokeyupdate_from="10.0"
+    details_url="http://download1.parallels.com/Plesk/Plesk9.0/Doc/ppsmbe9.0_whatsnew.htm" >
+
+<!--
+   <compatibility_info>
+     <best_with product_id="sitebuilder">
+       <version>4.5.0</version>
+     </best_with>
+     <best_with product_id="sso">
+       <version>2.2</version>
+     </best_with>
+   </compatibility_info>
+-->
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-cos5-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-cos5-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-cos5-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-cos5-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-fc11-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-fc11-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-fc11-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-fc11-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-fc8-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-fc8-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-fc8-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-fc8-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-rhel5-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-rhel5-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-rhel5-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-rhel5-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-suse10.3-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-suse10.3-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-suse10.3-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-suse10.3-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-suse11.1-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-suse11.1-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-suse11.1-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-suse11.1-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-deb4.0-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-deb4.0-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-deb4.0-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-deb4.0-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-deb5.0-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-deb5.0-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-deb5.0-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-deb5.0-x86_64.inf3" />
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="PPSMBE_10.1.0/ppsmbe-10.1.0-ubt8.04-i386.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-ubt8.04-i386.inf3" />
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="PPSMBE_10.1.0/ppsmbe-10.1.0-ubt8.04-x86_64.inf3"
+      patches="PPSMBE_10.1.0/ppsmbe-patches-10.1.0-ubt8.04-x86_64.inf3" />
+
+</release>
+
+<release id="PPSMBE_10_0_0" name="Parallels Small Business Panel 10.0.0" version="10.0.0"
+    upgrade_allowed_from="10.0" nokeyupdate_from="10.0"
+    details_url="http://download1.parallels.com/Plesk/Plesk9.0/Doc/ppsmbe9.0_whatsnew.htm" >
+
+<!--
+   <compatibility_info>
+     <best_with product_id="sitebuilder">
+       <version>4.5.0</version>
+     </best_with>
+     <best_with product_id="sso">
+       <version>2.2</version>
+     </best_with>
+   </compatibility_info>
+-->
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-cos5-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-cos5-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-fc11-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="11"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-fc11-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-fc8-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="FedoraCore" os_version="8"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-fc8-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-rhel5-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="RedHat" os_version="el5"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-rhel5-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-suse10.3-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="10.3"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-suse10.3-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-suse11.1-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="SuSE" os_version="11.1"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-suse11.1-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-deb4.0-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="4.0"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-deb4.0-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-deb5.0-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Debian" os_version="5.0"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-deb5.0-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="i386" config="PPSMBE_10.0.0/ppsmbe-10.0.0-ubt8.04-i386.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+   <build os_name="Linux" os_vendor="Ubuntu" os_version="8.04"
+      os_arch="x86_64" config="PPSMBE_10.0.0/ppsmbe-10.0.0-ubt8.04-x86_64.inf3"
+      patches="PPSMBE_10.0.0_MU/ppsmbe-patches-10.0.0-common.inf3"/>
+
+</release>
+
+<!--
+<release id="PPSMBE_10_0_0_DEMO" name="Parallels Small Business Panel Demo 10.0.0" version="10.0.0"
+    upgrade_allowed_from="10.0" nokeyupdate_from="10.0"
+    details_url="http://download1.parallels.com/Plesk/Plesk9.0/Doc/ppsmbe9.0_whatsnew.htm" >
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="i386" config="PPSMBE_10.0.0_DEMO/ppsmbe-10.0.0-cos5-i386.inf3"/>
+
+   <build os_name="Linux" os_vendor="CentOS" os_version="5"
+      os_arch="x86_64" config="PPSMBE_10.0.0_DEMO/ppsmbe-10.0.0-cos5-x86_64.inf3"/>
+</release>
+-->
+ 
+</product>

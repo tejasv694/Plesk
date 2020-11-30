@@ -1,0 +1,22 @@
+.m-t-10{
+        margin-top: 10px;
+}
+.m-t-100{
+    margin-top: 100px;
+}
+.m-b-20{
+    margin-bottom: 20px;
+}
+.blind{
+    display: none;
+}
+.create_list_head :hover{
+    cursor: pointer;
+    background-color: #337AB7;
+    color : #fff;
+}
+.main-row{
+    /* background-image: url('css/bk.jpg'); */
+    /* border: 1px solid #337AB7 ;  */
+    /* border-radius: 1em; */
+}

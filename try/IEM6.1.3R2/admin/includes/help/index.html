@@ -1,0 +1,55 @@
+<html>
+<head>
+<link rel="stylesheet" href="stylesheet.css" type="text/css">
+<link type="text/css" rel="stylesheet" href="xtree.css">
+<script language="javascript" src="xtree.js"></script>
+</head>
+
+<body topmargin="0" marginheight="0" bgcolor="#FFFFEB">
+
+<p><img src="../../images/help_window_icon.gif" align="absmiddle">&nbsp;&nbsp;<b>Help</b></p>
+
+<hr size="1">
+
+<p class="body" style="line-height: 150%">
+
+<img src="images/openfoldericon.png" width='16' height='16' align=left> Table of Contents
+<br><br>
+
+
+<script>
+
+if (document.getElementById) {
+	var tree = new WebFXTree('Table of Contents');
+	tree.setBehavior('classic');
+	var a = new WebFXTreeItem('Getting Started');
+	tree.add(a);
+
+	a.add(new WebFXTreeItem('Step 1','javascript:parent.GoTo(\'getting_started/1.html\')'));
+	a.add(new WebFXTreeItem('Step 2','javascript:parent.GoTo(\'getting_started/2.html\')'));
+	a.add(new WebFXTreeItem('Step 3','javascript:parent.GoTo(\'getting_started/3.html\')'));
+	a.add(new WebFXTreeItem('Step 4','javascript:parent.GoTo(\'getting_started/4.html\')'));
+	a.add(new WebFXTreeItem('Step 5','javascript:parent.GoTo(\'getting_started/5.html\')'));
+	a.add(new WebFXTreeItem('Step 6','javascript:parent.GoTo(\'getting_started/6.html\')'));
+
+
+	var b = new WebFXTreeItem('Forms');
+	b.add(new WebFXTreeItem('Manage forms','javascript:parent.GoTo(\'forms/1.html\')'));
+	b.add(new WebFXTreeItem('Subscription form','javascript:parent.GoTo(\'forms/2.html\')'));
+	b.add(new WebFXTreeItem('Unsubscribe form','javascript:parent.GoTo(\'forms/3.html\')'));
+	b.add(new WebFXTreeItem('Modify Details form','javascript:parent.GoTo(\'forms/2.html\')'));
+	b.add(new WebFXTreeItem('Send to a Friend form','javascript:parent.GoTo(\'forms/2.html\')'));
+	tree.add(b);
+
+	// b.add(new WebFXTreeItem('Manage Mailing Lists'));
+	// b.add(new WebFXTreeItem('Create Mailing List'));
+	// b.add(new WebFXTreeItem('Manage Custom Fields'));
+
+	document.write(tree);
+}
+
+</script>
+
+</p>
+</body>
+</html>

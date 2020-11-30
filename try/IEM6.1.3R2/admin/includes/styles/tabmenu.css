@@ -1,0 +1,247 @@
+
+#headerMenu {
+	font-size: 10px;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	height: 28px;
+}
+
+#headerMenu ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	line-height: 1;
+}
+
+#headerMenu li {
+	float: left;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+#headerMenu a {
+	text-decoration: none;
+	display: block;
+}
+
+#headerMenu ul ul {
+	border: solid 1px #BCBCBC;
+	display: none;
+	z-index: 250;
+	position: absolute;
+	clear: both;
+}
+
+#headerMenu li.over ul {
+	display: block;
+}
+
+#headerMenu li li {
+	clear: left;
+}
+
+#headerMenu li.dropselected ul {
+	border: 1px solid #05386d;
+}
+
+#headerMenu li.over a{
+	z-index: 400;
+}
+
+#headerMenu li li a
+{
+	background-color: #FFFFFF;
+	color: black;
+	margin: 0;
+	font-weight:normal;
+	font-size: 11px;
+	border:0;
+	display: block;
+	padding: 5px 8px 5px 27px;
+	text-decoration: none;
+	background-repeat: no-repeat;
+	background-position: 5px 7px;
+}
+
+#headerMenu li li a strong
+{
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+#headerMenu li li b, #headerMenu li li span {
+	display: block;
+	line-height: 1.2;
+}
+
+#headerMenu li li span {
+	padding: 5px 0px 5px 0px;
+}
+
+#headerMenu li li b {
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+#headerMenu li.dropselected li a {
+	background-color: #05386D;
+	color: white;
+}
+
+#headerMenu li.dropselected li:last-child a, #headerMenu li.dropselected li.last a {
+	border-bottom: 0;
+}
+
+#headerMenu li li a:hover
+{
+	background-color: #f5f5f5;
+	color: #005fa3;
+}
+
+#headerMenu li.dropselected li a:hover {
+	background-color: #DFEDFC;
+	color: black;
+}
+
+#headerMenu li li a.menu_mnuArticles
+{
+	width: 200px;
+}
+
+#headerMenu li li a.menu_mnuCategories
+{
+	width: 200px;
+}
+
+#headerMenu li li a.menu_mnuGroups
+{
+	width: 200px;
+}
+
+#headerMenu li li a.menu_mnuUsers
+{
+	width: 200px;
+}
+
+#headerMenu li li a.menu_mnuComments
+{
+	width: 200px;
+}
+
+#headerMenu li li a.menu_mnuStats
+{
+	width: 200px;
+}
+
+.menuBar
+{
+	border-bottom-width: 7px;
+	border-bottom-style: solid;
+	border-bottom-color: #05386d;
+}
+
+#headerMenu li li a.menu_list_button
+{
+	width: 120px;
+}
+
+#headerMenu li li a.menu_subscriber_button
+{
+	width: 147px;
+}
+
+#headerMenu li li a.menu_newsletter_button
+{
+	width: 145px;
+}
+
+#headerMenu li li a.menu_template_button
+{
+	width: 145px;
+}
+
+#headerMenu li li a.menu_autoresponder_button
+{
+	width: 140px;
+}
+
+#headerMenu li li a.menu_statistics_button
+{
+	width: 125px;
+}
+
+
+/** CSS FOR HEADER MENU TABLE **/
+
+#headerMenu td {
+	padding: 0;
+	vertical-align: top;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+
+#headerMenu table {
+	margin-right: 2px;
+}
+
+#headerMenu td img {
+	border: 0;
+	cursor: pointer;
+}
+
+#headerMenu td.dropdown-tab-icon,
+
+#headerMenu td.dropdown-tab-arrow,
+
+#headerMenu td.dropdown-tab-label {
+	padding-top: 8px;
+	/*background: url(../../images/mnu_middle.gif) repeat-x top left; */
+	font-family: Tahoma;
+	font-weight: normal;
+	text-decoration: none;
+	font-size: 12px;
+	color: #000;
+}
+
+#headerMenu td.dropdown-tab-label span  {
+	text-decoration: none;
+}
+
+#headerMenu td.dropdown-tab-icon {
+	padding-right: 6px;
+}
+
+
+#headerMenu td.dropdown-tab-arrow {
+	padding-top: 15px;
+	padding-left: 6px;
+}
+
+#headerMenu li.dropselected td.dropdown-tab-icon,
+
+#headerMenu li.dropselected td.dropdown-tab-arrow,
+
+#headerMenu li.dropselected td.dropdown-tab-label {
+	background-image: url(../../images/mnu_on_middle.gif); 
+	color: #FFF;
+}
+
+#headerMenu li.dropdown-on ul {
+	border-color: #05386D;
+}
+
+#headerMenu li.dropdown-on li a {
+	text-decoration: none;
+	background-color: #05386D;
+	color: #FFF;
+}
+
+#headerMenu li.dropdown-on li a:hover {
+	background-color: #DFEDFC;
+	color: #000;
+}
+
+/** End of Header Menubar **/

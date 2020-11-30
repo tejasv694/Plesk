@@ -1,0 +1,161 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+
+$addComponentsUrl = $this->url(['controller' => 'update', 'action' => 'add-components']);
+
+?>
+<script type="text/javascript">
+//<![CDATA[
+Jsw.onReady(function() {
+    new Jsw.Panel({
+        cls: 'list-box',
+        renderTo: 'main',
+        items: [
+            <?php if (Session::get()->panel()->getAcl()->isAllowed($addComponentsUrl)): ?>
+            new Jsw.Hint({
+                renderTo: 'main',
+                hint: <?php echo $this->jsLmsg('hint',
+                    ['link' => $this->linkHref(
+                        $this->lmsg('hintLink'), $addComponentsUrl,
+                        '', '', false, false, '_blank')]); ?>
+            }),
+            <?php endif; ?>
+
+            new Jsw.List({
+                id: 'php-handler-list',
+                data: <?php echo Zend_Json::encode($this->phpHandlerList->fetchData()); ?>,
+                dataUrl: '/php-handler/list-data',
+                columns: [
+                    {
+                        header: '',
+                        cls: 'icon',
+                        renderer: function(item) {
+                            var status;
+                            var statusIcon;
+                            var statusDescription;
+                            if (!item.registered) {
+                                status = 'warning';
+                                statusIcon = '<?php echo $this->skinUrl('/icons/16/plesk/warning.png') ?>';
+                                statusDescription =<?php echo $this->phpHandlerList->jsLmsg('statusBroken');?>;
+                            } else if (!item.allowed) {
+                                status = 'warning';
+                                statusIcon = '<?php echo $this->skinUrl('/icons/16/plesk/warning.png') ?>';
+                                if (item.id === 'module') {
+                                    statusDescription = <?php echo $this->phpHandlerList->jsLmsg('statusDisallowedApacheModule');?>;
+                                } else {
+                                    statusDescription = <?php echo $this->phpHandlerList->jsLmsg('statusDisallowed');?>;
+                                }
+                            } else if (item.enabled) {
+                                status = 'on';
+                                statusIcon = '<?php echo $this->skinUrl('/icons/16/plesk/on.png') ?>';
+                                statusDescription =<?php echo $this->phpHandlerList->jsLmsg('statusOn');?>;
+                            } else {
+                                status = 'off';
+                                statusIcon = '<?php echo $this->skinUrl('/icons/16/plesk/off.png') ?>';
+                                statusDescription =<?php echo $this->phpHandlerList->jsLmsg('statusOff');?>;
+                            }
+                            if (status === 'warning') {
+                                return '<span class="b-indent-icon">'
+                                    + '<span class="tooltipData">' + statusDescription.escapeHTML() + '</span>'
+                                    + '<img src="' + statusIcon + '" alt="' + status + '" title="">'
+                                    + '</span>';
+                            }
+                            return '<span class="tooltipData">' + statusDescription.escapeHTML() + '</span>'
+                                +'<a data-method="post" href="' + Jsw.baseUrl + '/php-handler/toggle/id/' + item.id + '">'
+                                + '<img src="' + statusIcon + '" alt="' + status + '" title="">'
+                                + '</a>';
+                        }
+                    },
+                    {
+                        header: <?php echo $this->phpHandlerList->jsLmsg('name');?>,
+                        sortable: false,
+                        dataIndex: 'name',
+                        renderer: function(item) {
+                            var badge = '';
+                            if (item.outdated) {
+                                badge = item.deprecated ?
+                                    <?php echo $this->phpHandlerList->jsLmsg('handlerOutdatedAndDeprecated')?> :
+                                    <?php echo $this->phpHandlerList->jsLmsg('handlerOutdated')?>;
+                            } else if (item.deprecated) {
+                                badge = <?php echo $this->phpHandlerList->jsLmsg('handlerDeprecated')?>;
+                            }
+                            if (badge) {
+                                badge = ' <span class="state-error">' + badge + '</span>'
+                            }
+                            if (item.syncTaskId) {
+                                return '<span>' + item.name.escapeHTML() + '</span>' +
+                                    badge +
+                                    '<div id="handler-sync-status-' + item.id + '" class="hint-sub hint-wait">' + item.syncMessage + '</div>';
+                            }
+                            if (!item.registered) {
+                                return item.name.escapeHTML() + badge;
+                            }
+
+                            return '<a href="' + Jsw.prepareUrl(Jsw.baseUrl + '/php-handler/modules/id/' + item.id) + '">' + item.name.escapeHTML() + '</a>' + badge;
+                        }
+                    }, {
+                        header: <?php echo $this->phpHandlerList->jsLmsg('domains');?>,
+                        sortable: false,
+                        cls: 'number t-r',
+                        dataIndex: 'domains',
+                        renderer: function(item) {
+                            if (!item.enabled && item.domains.length == 0) {
+                                return '';
+                            }
+                            if (item.domains.length == 0) {
+                                return '0'
+                            }
+                            var domainsTitle = <?php echo $this->phpHandlerList->jsLmsg('domainsTitle'); ?>;
+                            domainsTitle = domainsTitle.replace('%%domains%%', item.domains.length).replace('%%handler%%', item.name);
+                            var closeTitle = <?php echo $this->phpHandlerList->jsLmsg('closeTitle'); ?>;
+                            var domains = item.domains.each(function(domain) {return domain.escapeHTML()}).join('<br/>');
+                            domains = '<div class=&quot;apps-box clearfix&quot; style=&quot;overflow: auto; max-height: 300px;&quot;>' + domains + '</div>';
+                            var link =
+                                '<a href="#" onclick="(' +
+                                'new Jsw.Popup({closeButtonEnabled: true, title: \'' + domainsTitle.escapeHTML() + '\', content: \'' + domains + '\', buttons: [{' +
+                                'title: \'' + closeTitle.escapeHTML() + '\','+
+                                'handler: function(event, popup) {' +
+                                    'popup.hide();' +
+                                '}' +
+                                '}] })).show()">' +
+                                item.domains.length +
+                                '</a>';
+                            return link;
+                        }
+                    }
+                ],
+                onRedraw: function () {
+                    if (!this._data) {
+                        return ;
+                    }
+                    var randomId = this._getRandomNumber();
+                    this._randomId = randomId;
+                    var context = this;
+
+                    this._data.each(function(item) {
+                        if (!item.syncTaskId) {
+                            return;
+                        }
+                        context.checkSyncStatus(
+                            'handler-sync-status-' + item.id,
+                            Jsw.baseUrl + '/php-handler/sync-status/id/' + item.syncTaskId,
+                            function (statusElement, result) {
+                                statusElement.update(result.message);
+                                statusElement.removeClassName('hint-wait');
+                                if ('done' == result.status) {
+                                    statusElement.addClassName('hint-ok');
+                                } else {
+                                    statusElement.addClassName('hint-warning');
+                                }
+                                statusElement.up().down('span').update('<a href="' + Jsw.prepareUrl(Jsw.baseUrl + '/php-handler/modules/id/' + item.id) + '">' + item.name.escapeHTML() + '</a>');
+                            },
+                            randomId
+                        );
+                    });
+                }
+            })
+        ]}
+    );
+});
+//]]>
+</script>

@@ -1,0 +1,50 @@
+<?php
+// Copyright 1999-2017. Plesk International GmbH. All rights reserved.
+?>
+                    </div> <!-- /page-content -->
+                </div> <!-- /page-content-wrapper -->
+            </div> <!-- /page-main -->
+        </div> <!-- /page-main-wrapper -->
+        <?php echo $eula = $this->eula(); ?>
+        <?php $isShowModal = !empty($eula); ?>
+        <?php if (Session::get()->panel()->showFrames): ?>
+        <div class="page-footer-wrapper">
+            <div class="page-footer">
+                <a href="<?php echo Plesk_Config::get()->product->siteUrl; ?>" target="_blank">plesk.com</a>
+                <?php if (Plesk_Config::get()->facebook->showLikeLink && Session::get()->auth()->getUser()->isAdmin()): ?>
+                    <?php echo $this->partial('partials/facebook-like-link.phtml', [
+                        'href' => Plesk_Config::get()->facebook->pleskPage,
+                    ]); ?>
+                <?php endif;?>
+                <?php if (Plesk_Config::get()->twitter->showFollowLink && Session::get()->auth()->getUser()->isAdmin()): ?>
+                    <?php echo $this->partial('partials/twitter-follow-link.phtml', [
+                        'href' => Plesk_Config::get()->twitter->pleskPage,
+                    ]); ?>
+                <?php endif;?>
+                <?php if (Plesk_Config::get()->rating->enabled && Session::get()->auth()->getUser()->isAdmin() && !$isShowModal): ?>
+                    <div class="feedback-actions">
+                        <?php echo $this->partial('partials/rating.phtml', [
+                            'dialogCause' => $ratingDialogCause = Rating::getDialogCause(),
+                            'supportUrl' => Plesk_Config::get()->product->supportUrl,
+                        ]); ?>
+                        <?php $isShowModal = $ratingDialogCause !== Rating::DIALOG_CAUSE_MANUAL; ?>
+                    </div>
+                <?php endif;?>
+                <?php if (Plesk_Config::get()->feedback->userVoice): ?>
+                    <div class="feedback-actions">
+                        <a class="s-btn sb-feedback" href="<?php echo Plesk_Config::get()->feedback->userVoiceUrl ?>" target="_blank">
+                            <span><?php echo $this->lmsg('smb.components.shortcuts.userFeedback') ?></span>
+                        </a>
+                    </div>
+                <?php endif;?>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div> <!-- /page-container -->
+    <?php if (!$isShowModal && NewsletterSubscription::isShowDialog()) {
+        echo $this->partial('partials/newsletter-subscription.phtml', []);
+    } ?>
+    <?php echo $this->layout()->extensionsAdditionalBody; ?>
+    <div id="bottomAnchor" style="position: fixed; top: 0; z-index: -1; opacity: 0.001;"></div>
+</body>
+</html>

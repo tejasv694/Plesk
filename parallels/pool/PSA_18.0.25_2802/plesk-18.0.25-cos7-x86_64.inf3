@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<build_1 confver="3.11" os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" environment="" build_dir="dist-rpm-CentOS-7-x86_64" send_feedback="true" uninstall_support="yes" gpgcheck="yes" headers_file="build-18.0.25-cos7-x86_64.hdr.gz">
+    <exact_required_autoinstaller version="3.24.0" binary_directory="Installer/3.24.0" />
+    <required_autoinstaller version="3.18.12" binary_directory="Parallels_Installer" />
+    <bootstrapper>
+        <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+        <action sequence="prep" sequence-order="-2" stage="execute" exec-cmd="touch /var/lock/plesk-report-update.flag; :" />
+        <action sequence="prep" sequence-order="-1" stage="execute" exec-cmd="touch /tmp/pp-bootstrapper-mode.flag; touch /var/lock/parallels-panel-maintenance-mode.flag; rm -f /var/lock/parallels-panel-upgrade-failure.flag; :" />
+        <action sequence="prep" sequence-order="1" stage="rollback" exec-cmd="rm -f /tmp/pp-bootstrapper-mode.flag; rm -f /var/lock/parallels-panel-maintenance-mode.flag; rm -f /var/lock/parallels-panel-upgrade-failure.flag; :" />
+        <action sequence="pkgs" sequence-order="1" stage="rollback" exec-cmd="rm -f /tmp/pp-bootstrapper-mode.flag; rm -f /var/lock/parallels-panel-maintenance-mode.flag; touch /var/lock/parallels-panel-upgrade-failure.flag; :" />
+        <action sequence="post" sequence-order="1" stage="rollback" exec-cmd="rm -f /tmp/pp-bootstrapper-mode.flag; rm -f /var/lock/parallels-panel-maintenance-mode.flag; touch /var/lock/parallels-panel-upgrade-failure.flag; :" />
+        <action sequence="post" sequence-order="1" stage="commit" exec-cmd="rm -f /tmp/pp-bootstrapper-mode.flag; rm -f /var/lock/parallels-panel-maintenance-mode.flag; :" />
+        <action sequence="post" sequence-order="9990" exec-cmd="test ! -x /usr/local/psa/admin/sbin/packagemng || /usr/local/psa/admin/sbin/packagemng --set-dirty-flag" />
+        <action sequence="post" sequence-order="9991" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh perform-deferred-actions" />
+        <action sequence="post" sequence-order="9998" exec-cmd="/usr/local/psa/admin/sbin/update_history" />
+    </bootstrapper>
+    <examine name="Enabled repositories check" scope="pre_install" script="examiners/repository_check.sh" />
+    <examine name="Available disk space check" scope="pre_install" script="examiners/disk_space_check.sh" options="install" />
+    <examine name="Available disk space check" scope="pre_upgrade" script="examiners/disk_space_check.sh" options="upgrade" />
+    <examine name="Available disk space check" scope="pre_update" script="examiners/disk_space_check.sh" options="update" />
+    <examine name="Installation is finished" scope="post_install" script="examiners/congratulations.sh" options="install" />
+    <examine name="Upgrade is finished" scope="post_upgrade" script="examiners/congratulations.sh" options="upgrade" />
+    <examine name="Prepare result notification" scope="pre_any" script="examiners/sh_cmd.sh" options="touch /var/lock/plesk-report-update.flag" always="true" />
+    <examine name="Installation result notification" scope="post_install" script="/report-update" launcher="examiners/py_launcher.sh" options="--op install --rc {RC} --start-flag /var/lock/plesk-report-update.flag --to=18.0.25.2" always="true" />
+    <examine name="Upgrade result notification" scope="post_upgrade" script="/report-update" launcher="examiners/py_launcher.sh" options="--op upgrade --rc {RC} --start-flag /var/lock/plesk-report-update.flag --to=18.0.25.2 --from={FROM_RELEASE_VERSION}" always="true" />
+    <examine name="Update result notification" scope="post_update" script="/report-update" launcher="examiners/py_launcher.sh" options="--op update  --rc {RC} --start-flag /var/lock/plesk-report-update.flag --to=18.0.25.2 --from={FROM_RELEASE_VERSION}" always="true" />
+    <gpg_public_key>-----BEGIN PGP PUBLIC KEY BLOCK-----&#x0A;Version: GnuPG v2.0.22 (GNU/Linux)&#x0A;&#x0A;mQGiBFXAUiARBAC9lDsyU9L2dZRyhOp27adDZ99+tfPq9L0aX1xmZvpF+rO6FEa1&#x0A;HCEi1blRq/icL784esCEuEe/k6eGeqKgOv6E05ZG9txvP/vhUofFJX6vAHsiScKN&#x0A;QXwZQQqM2Fz3oPqeN/7zOE/dfASrTC8fET7J7+d+KNOOnDSSxIG9XJbGTwCg0BCd&#x0A;2vNB4CduMm2oyTVNGcWXmCMEAIFJALIEEeNlevXvBxBPv86DB3eFdLUgYJNlwIfJ&#x0A;aDCFr9plRNb6O/MMGPFPsp113r4E+o1M8bW5RBfZgnxXH+6Xi3i/kMBh9GtovAv+&#x0A;qe4lMJQ+t7cFDedvsgsmigq7cl0cmSwe00zhYzT4t3lEg5F3l543Wwxk/kwQj2wp&#x0A;t5cCA/9rAUUCZ4ewdO74tiuF5nmTb+lHNvIq4EKXacgA5gsVVMTw/SH8G0m0z+YH&#x0A;3xJuVJaO18+6OrdCjGzmzJ78k8j6z1fuAZVWWaUK+XtjP6mn/ZsjwvrIGMxrbJ85&#x0A;B/v+j4W7MOjIHmD37PScSibK56ItlQHjd2y0S6jy+e4UFIOnA7QbUGxlc2sgVGVh&#x0A;bSA8aW5mb0BwbGVzay5jb20+iGAEExECACAFAlXAUiACGwMGCwkIBwMCBBUCCAME&#x0A;FgIDAQIeAQIXgAAKCRC9EaaqkUvfflh7AKCDstpjOFDR1FarF2BU/sA6+rFteQCg&#x0A;xHjO3vh+i2QiTnGlBhOUlCxuNFq5Ag0EVcBSJxAIAID5a6RrDkEIkaAc6u+BJJsp&#x0A;Rychg18z+IdHPUrBABEeT7vCmH5KISP1bdhur8vgeDdFanhLjTjC7mYJ5OJnb3ZM&#x0A;nl/L8B5uz/RQ8i7Sv/buwr69h/llVElkeOyx2SkkIdsHLPNXuxydZfADfz5B5Zjx&#x0A;R7IVepDxEeA755rCQd3alAwk6lA0Iy+LCdCaNIGpzzC6j7goLeGE1tAoG3J0Lvja&#x0A;xXGgTmqHHhImGjc875wngrDRo4yDu6Tfwi6b0RCfbkm6wgEWGvDwzSXz1+7iWRAC&#x0A;kyagGrZPOqKJiKBfj+hVMnflB3EFZd2j5hfWl35U4j18U6v6JkxKIn0DvD5+cz8A&#x0A;BAsH/RVWit+s/zXJbxd9U07EPbVS+ujZrhannBgV6xpMuGWDbl1QcMWXoQXU0zK4&#x0A;Gr44UmHbe3h1F38GeMzELjfMYi8XAMvOQkC5i8Clv9jHJwfHxt8wcA/tE4kPtRNx&#x0A;KhDhh3i2sZTg123h0EpEOlMvrVoboFyH8K7BN+KdEl3YtWgmbM9zhOO8R7LFGQ6m&#x0A;VxxL4BlX7QNZ9cpDQ5sNTiPu4pij++oFoSaquXZKGXOO3KvTBQHHceps+w1cpYXv&#x0A;EGzNjxvTvPmBYXZAVlu8dOInDMfl8wwctAmHXxPeh0kTGRlZT4QHJs1pJVgNuQbP&#x0A;pjqmxx1SGEnYmE/TNDP+J1F7GISISQQYEQIACQUCVcBSJwIbDAAKCRC9EaaqkUvf&#x0A;fmn2AJ9q31HpLe/9sHWQHAL/ul6qeSNIJwCeK2hBWeBcx0iC/ISo8T/EX8KTCcw=&#x0A;=NB3w&#x0A;-----END PGP PUBLIC KEY BLOCK-----</gpg_public_key>
+    <product id="plesk">
+        <keypackages>
+            <keypackage>psa</keypackage>
+        </keypackages>
+        <release id="PLESK_18_0_25" name="Plesk Obsidian 18.0.25" version="18.0.25" upgrade_allowed_from="17.0.17" />
+    </product>
+    <ext_catalog url="https://ext.plesk.com/api/v2/packages" />
+    <component name="panel" description="Plesk" nokeyupdate_from="18.0" version_packages="plesk-core" get_key_info_script="plesk_getkeyinfo.sh" classes="vendor=parallels,patched,aspect=panel" deny_implicit_removal="true">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="prep" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh prep-install BASE" />
+            <action sequence="post" exec-cmd="touch /var/lock/plesk_deferred_awstats_configure" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install psa-vhost" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install BASE" sequence-order="100" />
+            <action sequence="prep" critical="false" sequence-order="9999" stage="rollback" exec-cmd="test ! -f /usr/local/psa/admin/plib/scripts/update-failure-notification.php || /usr/local/psa/admin/bin/php /usr/local/psa/admin/plib/scripts/update-failure-notification.php" />
+            <action sequence="pkgs" critical="false" sequence-order="9999" stage="rollback" exec-cmd="test ! -f /usr/local/psa/admin/plib/scripts/update-failure-notification.php || /usr/local/psa/admin/bin/php /usr/local/psa/admin/plib/scripts/update-failure-notification.php" />
+            <action sequence="post" critical="false" sequence-order="9999" stage="rollback" exec-cmd="test ! -f /usr/local/psa/admin/plib/scripts/update-failure-notification.php || /usr/local/psa/admin/bin/php /usr/local/psa/admin/plib/scripts/update-failure-notification.php" />
+            <action sequence="post" critical="false" sequence-order="9999" stage="commit" exec-cmd="test ! -f /usr/local/psa/admin/plib/scripts/update-success-notification.php || /usr/local/psa/admin/bin/php /usr/local/psa/admin/plib/scripts/update-success-notification.php" />
+        </bootstrapper>
+        <examine name="Plesk pre-upgrade check" scope="pre_upgrade" script="examiners/panel_preupgrade_checker.php" launcher="examiners/php_launcher.sh" options="&apos;&apos;" />
+        <keypackages>
+            <keypackage name="plesk-core" />
+            <keypackage name="psa" />
+            <keypackage name="plesk-web-hosting" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="plesk-core" />
+            <keypackage name="psa" />
+        </keypackages>
+        <requires>mysqlgroup</requires>
+        <requires>l10n</requires>
+        <requires>proftpd</requires>
+        <requires>webservers</requires>
+        <package name="libaps" version="1.0.10" release="1centos.7.200310.1211" file="engine/libaps-1.0.10-1centos.7.200310.1211.x86_64.rpm" size="1395421" buildtime="1583817126" md5="2dae82acb99e596542b8e958e94a8eff" classes="aspect=panel" arch="x86_64" />
+        <package name="log4cplus" version="1.2.0.1" release="1centos.7.200310.1211" file="engine/log4cplus-1.2.0.1-1centos.7.200310.1211.x86_64.rpm" size="184322" buildtime="1583817126" md5="f4128b3ee8b98a81a4a7f8df85706faf" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-backup-utilities" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-backup-utilities-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="3634884" buildtime="1585142300" md5="9283a482284d7efdc939e7a3b81c37f8" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-completion" version="18.0" release="2.centos.7+p18.0.23.0+t200114.1847" file="base/plesk-completion-18.0-2.centos.7+p18.0.23.0+t200114.1847.x86_64.rpm" size="793191" buildtime="1579005563" md5="dd68402b6c50fbb411b94c65c169b3e5" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-control-panel" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-control-panel-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="9838675" buildtime="1585142410" md5="f2ccdea835d2ede6486f48dde0e41cbe" classes="aspect=panel" arch="noarch" />
+        <package name="plesk-core" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-core-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="28933334" buildtime="1585142450" md5="9a838c3637a2c30a5e9c53d4fd96d16c" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-core-utilities" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-core-utilities-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="895774" buildtime="1585142311" md5="a1850a1cc56b794724288cdf32f97620" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-engine" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="engine/plesk-engine-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="1637" buildtime="1585142247" md5="f0007bc93dc33cefe43b998ca7c11164" classes="aspect=panel" arch="noarch" />
+        <package name="plesk-libmaodbc" version="3.0.8" release="2.centos.7+p18.0.23.0+t191224.1303" file="base/plesk-libmaodbc-3.0.8-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="200647" buildtime="1577171199" md5="eef825040dfe0c1c68a8d159b8cd0726" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-lmlib" version="0.2.4" release="1centos.7.200310.1211" file="engine/plesk-lmlib-0.2.4-1centos.7.200310.1211.x86_64.rpm" size="366213" buildtime="1583817126" md5="0bb09dbe3fbcdcdc30859c5c921aa425" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-platform-runtime" version="1.0.2" release="1centos.7.200310.1211" file="engine/plesk-platform-runtime-1.0.2-1centos.7.200310.1211.x86_64.rpm" size="21668" buildtime="1583817126" md5="4c4557185a0c87fe0d1a1295a223df94" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-rdbmspp" version="2.0.2" release="1centos.7.200310.1211" file="engine/plesk-rdbmspp-2.0.2-1centos.7.200310.1211.x86_64.rpm" size="215875" buildtime="1583817126" md5="d2b1f16906fb27a256af2d2bd958bf64" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-release" version="18.0.25.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-release-18.0.25.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="2619" buildtime="1585142263" md5="4d9747d7b69c9a4c12347d287005bcc6" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-repair-kit" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/repairkit/plesk-repair-kit-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="3683524" buildtime="1585142325" md5="7e9610d580a6f6cf2a74358b5e015f2d" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-service-node-utilities" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-service-node-utilities-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="3389693" buildtime="1585142301" md5="4ec11bfda8f25def4da4c7b72f6c3ce9" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-ui-library" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/plesk-ui-library-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="2314745" buildtime="1585142352" md5="9aa482c76d86727406fcabfccb2a022d" classes="aspect=panel" arch="noarch" />
+        <package name="plesk-web-hosting" version="18.0" release="2.centos.7+p18.0.25.0+t200312.1215" file="opt/hosting/whc/plesk-web-hosting-18.0-2.centos.7+p18.0.25.0+t200312.1215.x86_64.rpm" size="160437" buildtime="1583990215" md5="896d0409678d3d9c98f5ed771c691a5c" classes="aspect=panel" arch="x86_64" />
+        <package name="plesk-web-socket" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="base/plesk-web-socket-18.0-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="108518" buildtime="1581085520" md5="1bd523956472d1e2d911b0f927aa2bc7" classes="aspect=panel" arch="x86_64" />
+        <package name="psa" version="18.0.25" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/psa-18.0.25-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="138527" buildtime="1585142288" md5="b2ac4b6d49dff3b5717ae7f431662795" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-autoinstaller" version="3.24.0" release="1centos.7.200213.0959" file="opt/updater/psa-autoinstaller-3.24.0-1centos.7.200213.0959.x86_64.rpm" size="5785461" buildtime="1581562781" md5="4109603a5e3d3f115ce7be7ece3ffec9" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-libpam-plesk" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/psa-libpam-plesk-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="506209" buildtime="1585142251" md5="536928fc17d17d9564ce054ad1e35755" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-libxml-proxy" version="2.9.7" release="2.centos.7+p18.0.23.0+t191224.1303" file="base/psa-libxml-proxy-2.9.7-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="690786" buildtime="1577171200" md5="331a3c2e5eac80da076d1613b379db69" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-locale-base-en-US" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/psa-locale-base-en-US-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="370603" buildtime="1585142326" md5="55aa3c489ced77024ae72009a9c102f8" classes="aspect=panel" arch="noarch" />
+        <package name="psa-logrotate" version="3.8.2" release="2.centos.7+p18.0.22.0+t191202.1336" file="base/psa-logrotate-3.8.2-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="40810" buildtime="1575269243" md5="66e65a44fbca740f8ebe29a61ee1c870" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-mod_aclr2" version="14081815" release="2.centos.7+p18.0.23.0+t191224.1303" file="opt/hosting/nginxSupport/psa-mod_aclr2-14081815-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="9011" buildtime="1577171159" md5="00d894ecfdd31a59a212409590946c03" arch="x86_64" />
+        <package name="psa-mod_proxy" version="2.4.6" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/hosting/fpm/psa-mod_proxy-2.4.6-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="168038" buildtime="1581085536" md5="2ad6d5eae6207a603fd1420f24aeae84" arch="x86_64" />
+        <package name="psa-mod_sysenv" version="0.2" release="2.centos.7+p18.0.23.0+t191224.1303" file="opt/hosting/sysenv/psa-mod_sysenv-0.2-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="5087" buildtime="1577171158" md5="839d772584fb9a4c6c812f6743a80025" arch="x86_64" />
+        <package name="psa-phpmyadmin" version="4.9.0.1" release="2.centos.7+p18.0.25.2+t200325.1928" file="base/psa-phpmyadmin-4.9.0.1-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="6482931" buildtime="1585142403" md5="dd9415f5b7ef827b7f00870cc995ed3e" classes="aspect=panel" arch="noarch" />
+        <package name="psa-updates" version="18.0" release="2.centos.7+p18.0.22.0+t191202.1336" file="base/psa-updates-18.0-2.centos.7+p18.0.22.0+t191202.1336.noarch.rpm" size="1669" buildtime="1575269218" md5="e7893a102c0af4abc8b12cb3e3fa11b4" classes="aspect=panel" arch="noarch" />
+        <package name="psa-vhost" version="18.0" release="2.centos.7+p18.0.25.1+t200319.1446" file="opt/vhost/psa-vhost-18.0-2.centos.7+p18.0.25.1+t200319.1446.noarch.rpm" size="79581" buildtime="1584604049" md5="1a98985a448f447b8a5ffb638f20aeca" classes="aspect=panel" arch="noarch" />
+        <package name="sw-collectd" version="5.8.1" release="2.centos.7+p18.0.26.0+t200324.1159" file="base/sw-collectd-5.8.1-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="560941" buildtime="1585030051" md5="5574fd7f55df1c5677f56ff4b505614c" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-cp-server" version="2.7.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="engine/sw-cp-server-2.7.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="666314" buildtime="1585142263" md5="95c0e10e3d1d554b04c8e6ed09141379" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-engine" version="2.27.5" release="1centos.7.200310.1211" file="engine/sw-engine-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="11547611" buildtime="1583817126" md5="4820fa1c49350f5c6f68730cb07f0046" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-librrd" version="1.6.0.1" release="2.centos.7+p18.0.24.0+t200208.1856" file="base/sw-librrd-1.6.0.1-2.centos.7+p18.0.24.0+t200208.1856.x86_64.rpm" size="134483" buildtime="1581163088" md5="28f9789bb02dcb2b06b413d54a4e199b" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-rrdtool" version="1.6.0.1" release="2.centos.7+p18.0.24.0+t200208.1856" file="base/sw-rrdtool-1.6.0.1-2.centos.7+p18.0.24.0+t200208.1856.x86_64.rpm" size="294264" buildtime="1581163090" md5="8e3d159b34d02ed0c5615da7f107b6b9" classes="aspect=panel" arch="x86_64" />
+    </component>
+    <component name="bind" description="BIND DNS server" classes="vendor=mixed">
+        <keypackages>
+            <keypackage name="plesk-dns-bind-driver" />
+        </keypackages>
+        <package name="plesk-dns-bind-driver" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/dns/plesk-dns-bind-driver-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="452124" buildtime="1585142257" md5="fb2d4bf6be965bdf8b6dec74dd1483b1" classes="aspect=panel" arch="x86_64" />
+    </component>
+    <component name="qmail" description="Qmail" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install mail-qc-driver" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-mail-qc-driver" />
+            <keypackage name="psa-qmail" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-mail-qc-driver" />
+            <keypackage name="psa-qmail" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-qmail" />
+            <nokeypackage name="psa-mail-pc-driver" />
+            <nokeypackage name="plesk-mail-pc-driver" />
+        </keypackages>
+        <requires>imapservers</requires>
+        <package name="plesk-mail-qc-driver" version="18.0" release="2.centos.7+p18.0.25.0+t200313.1242" file="opt/maildrivers/plesk-mail-qc-driver-18.0-2.centos.7+p18.0.25.0+t200313.1242.x86_64.rpm" size="892791" buildtime="1584080001" md5="6636270943f58db1ef164fb14e0117de" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-mail-driver-common" version="18.0" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/maildrivers/psa-mail-driver-common-18.0-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="1228073" buildtime="1585030050" md5="c4304595d4395538775f20b6341a117e" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-qmail" version="3:1.03" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/maildrivers/psa-qmail-1.03-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="488896" buildtime="1581085536" md5="92d407c85637c75dd506ee023a42fff3" arch="x86_64" />
+        <package name="psa-qmail" version="3:1.03" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-qmail-1.03-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="488896" buildtime="1581085536" md5="92d407c85637c75dd506ee023a42fff3" arch="x86_64" />
+        <package name="psa-qmail-rblsmtpd" version="0.88" release="2.centos.7+p18.0.22.0+t191202.1336" file="opt/mail/psa-qmail-rblsmtpd-0.88-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="21565" buildtime="1575269244" md5="2b7d95b8317def3c79007658ca01fdd2" arch="x86_64" />
+        <package name="psa-qmail-rblsmtpd" version="0.88" release="2.centos.7+p18.0.22.0+t191202.1336" file="unknown_dir/psa-qmail-rblsmtpd-0.88-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="21565" buildtime="1575269244" md5="2b7d95b8317def3c79007658ca01fdd2" arch="x86_64" />
+    </component>
+    <component name="postfix" description="Postfix" classes="vendor=mixed">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install mail-pc-driver" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-mail-pc-driver" />
+            <keypackage name="postfix" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-mail-pc-driver" />
+            <keypackage name="postfix" />
+        </keypackages>
+        <requires>imapservers</requires>
+        <package name="plesk-mail-pc-driver" version="18.0" release="2.centos.7+p18.0.25.0+t200313.1242" file="opt/maildrivers/plesk-mail-pc-driver-18.0-2.centos.7+p18.0.25.0+t200313.1242.x86_64.rpm" size="1663617" buildtime="1584080007" md5="a8f50c68b7ad04e387289fd7a9ef253d" classes="aspect=panel" arch="x86_64" />
+        <package name="postfix" version="2:3.4.8" release="2.centos.7+p18.0.23.0+t200114.1847" file="opt/maildrivers/postfix-3.4.8-2.centos.7+p18.0.23.0+t200114.1847.x86_64.rpm" size="2249616" buildtime="1579005590" md5="52dcabb6ab9e92b287419ed4c2e2f476" arch="x86_64" />
+        <package name="postfix" version="2:3.4.8" release="2.centos.7+p18.0.23.0+t200114.1847" file="unknown_dir/postfix-3.4.8-2.centos.7+p18.0.23.0+t200114.1847.x86_64.rpm" size="2249616" buildtime="1579005590" md5="52dcabb6ab9e92b287419ed4c2e2f476" arch="x86_64" />
+        <package name="psa-mail-driver-common" version="18.0" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/maildrivers/psa-mail-driver-common-18.0-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="1228073" buildtime="1585030050" md5="c4304595d4395538775f20b6341a117e" classes="aspect=panel" arch="x86_64" />
+    </component>
+    <component name="msmtp" description="MSMTP (relay only)" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install mail-mc-driver" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-mail-mc-driver" />
+            <keypackage name="sw-msmtp" />
+        </keypackages>
+        <conflicts>mailman</conflicts>
+        <conflicts>spamassassin</conflicts>
+        <conflicts>drweb</conflicts>
+        <conflicts>kav</conflicts>
+        <conflicts>courier</conflicts>
+        <conflicts>dovecot</conflicts>
+        <package name="plesk-mail-mc-driver" version="18.0" release="2.centos.7+p18.0.25.0+t200313.1242" file="opt/maildrivers/plesk-mail-mc-driver-18.0-2.centos.7+p18.0.25.0+t200313.1242.x86_64.rpm" size="129418" buildtime="1584080000" md5="e236d3121c51ece475de6e911a66caaf" classes="aspect=panel" arch="x86_64" />
+        <package name="sw-msmtp" version="1.6.2" release="2.centos.7+p18.0.23.0+t191224.1303" file="opt/maildrivers/sw-msmtp-1.6.2-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="84537" buildtime="1577171158" md5="8a05d6d298196bb586178f815f0613cc" arch="x86_64" />
+        <package name="sw-msmtp" version="1.6.2" release="2.centos.7+p18.0.23.0+t191224.1303" file="unknown_dir/sw-msmtp-1.6.2-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="84537" buildtime="1577171158" md5="8a05d6d298196bb586178f815f0613cc" arch="x86_64" />
+    </component>
+    <component name="courier" description="Courier" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install courier-imap" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-courier-imap-driver" />
+            <keypackage name="psa-courier-imap" />
+            <keypackage name="psa-courier-authlib" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-courier-imap" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="courier-imap" />
+        </keypackages>
+        <requires>mailservers</requires>
+        <package name="plesk-courier-imap-driver" version="18.0" release="2.centos.7+p18.0.26.0+t200324.1634" file="opt/mail/plesk-courier-imap-driver-18.0-2.centos.7+p18.0.26.0+t200324.1634.x86_64.rpm" size="308033" buildtime="1585042523" md5="d40c8df40bfeb4833c3f2f37bd956fbf" classes="aspect=panel" arch="x86_64" />
+        <package name="psa-courier-authlib" version="0.69.1" release="2.centos.7+p18.0.26.0+t200323.0724" file="opt/mail/psa-courier-authlib-0.69.1-2.centos.7+p18.0.26.0+t200323.0724.x86_64.rpm" size="217443" buildtime="1584923164" md5="ef3e1aae0ab4a7090feaa10e60b480e9" arch="x86_64" />
+        <package name="psa-courier-authlib" version="0.69.1" release="2.centos.7+p18.0.26.0+t200323.0724" file="unknown_dir/psa-courier-authlib-0.69.1-2.centos.7+p18.0.26.0+t200323.0724.x86_64.rpm" size="217443" buildtime="1584923164" md5="ef3e1aae0ab4a7090feaa10e60b480e9" arch="x86_64" />
+        <package name="psa-courier-imap" version="5.0.8" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/mail/psa-courier-imap-5.0.8-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="576962" buildtime="1585142255" md5="83bb4ca246f77f737ee84a6cb0c6a90a" arch="x86_64" />
+        <package name="psa-courier-imap" version="5.0.8" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/psa-courier-imap-5.0.8-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="576962" buildtime="1585142255" md5="83bb4ca246f77f737ee84a6cb0c6a90a" arch="x86_64" />
+        <package name="psa-courier-unicode" version="2.1" release="2.centos.7+p18.0.24.0+t200123.1055" file="opt/mail/psa-courier-unicode-2.1-2.centos.7+p18.0.24.0+t200123.1055.x86_64.rpm" size="57306" buildtime="1579756943" md5="a03ee643d4e226f004f4aa95cde64ac2" arch="x86_64" />
+        <package name="psa-courier-unicode" version="2.1" release="2.centos.7+p18.0.24.0+t200123.1055" file="unknown_dir/psa-courier-unicode-2.1-2.centos.7+p18.0.24.0+t200123.1055.x86_64.rpm" size="57306" buildtime="1579756943" md5="a03ee643d4e226f004f4aa95cde64ac2" arch="x86_64" />
+    </component>
+    <component name="dovecot" description="Dovecot" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install dovecot" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-dovecot-imap-driver" />
+            <keypackage name="plesk-dovecot" />
+            <keypackage name="plesk-dovecot-pigeonhole" />
+        </keypackages>
+        <requires>mailservers</requires>
+        <package name="plesk-dovecot" version="2.3.9.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/mail/plesk-dovecot-2.3.9.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="1041666" buildtime="1585142474" md5="02e7bb46222557baec7666c04a46e416" arch="x86_64" />
+        <package name="plesk-dovecot" version="2.3.9.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/plesk-dovecot-2.3.9.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="1041666" buildtime="1585142474" md5="02e7bb46222557baec7666c04a46e416" arch="x86_64" />
+        <package name="plesk-dovecot-core" version="2.3.9.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/mail/plesk-dovecot-core-2.3.9.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="2817957" buildtime="1585142489" md5="8492e324208f578babdc103e0e9a46e3" arch="x86_64" />
+        <package name="plesk-dovecot-core" version="2.3.9.2" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/plesk-dovecot-core-2.3.9.2-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="2817957" buildtime="1585142489" md5="8492e324208f578babdc103e0e9a46e3" arch="x86_64" />
+        <package name="plesk-dovecot-imap-driver" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/mail/plesk-dovecot-imap-driver-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="444905" buildtime="1585142458" md5="496175043835490128f78623df5b46ee" arch="x86_64" />
+        <package name="plesk-dovecot-pigeonhole" version="0.5.9" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/mail/plesk-dovecot-pigeonhole-0.5.9-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="658281" buildtime="1585142502" md5="3113f2942e9e6ca4f22457f33658f024" arch="x86_64" />
+        <package name="plesk-dovecot-pigeonhole" version="0.5.9" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/plesk-dovecot-pigeonhole-0.5.9-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="658281" buildtime="1585142502" md5="3113f2942e9e6ca4f22457f33658f024" arch="x86_64" />
+    </component>
+    <component name="php5" description="PHP 5 from OS vendor" classes="vendor=mixed">
+        <keypackages>
+            <keypackage name="psa-php5-configurator" />
+            <keypackage name="php" />
+            <keypackage name="php-fpm" />
+            <keypackage name="php-common" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-php5-configurator" />
+            <keypackage name="php" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="psa-php5-configurator" version="1.8.0" release="2.centos.7+p18.0.25.0+t200312.1215" file="opt/php/psa-php5-configurator-1.8.0-2.centos.7+p18.0.25.0+t200312.1215.x86_64.rpm" size="97473" buildtime="1583990211" md5="105ee4c100add0bc2a9179ec1caef48a" classes="aspect=panel" arch="x86_64" />
+    </component>
+    <component name="mailman" description="Mailman" classes="vendor=mixed">
+        <keypackages>
+            <keypackage name="mailman" />
+            <keypackage name="psa-mailman-configurator" />
+        </keypackages>
+        <package name="psa-mailman-configurator" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/mailman/psa-mailman-configurator-18.0-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="62853" buildtime="1581085521" md5="37d890adfc730417b078453086d65185" classes="aspect=panel" arch="noarch" />
+    </component>
+    <component name="postgresql" description="PostgreSQL server" classes="vendor=os">
+        <keypackages>
+            <keypackage name="postgresql" />
+            <keypackage name="postgresql-server" />
+        </keypackages>
+    </component>
+    <component name="mysql-sys" description="MySQL server" classes="vendor=os">
+        <keypackages>
+            <keypackage name="mariadb" />
+        </keypackages>
+        <keypackages>
+            <keyprovide name="mariadb-server" />
+        </keypackages>
+        <keypackages>
+            <keyprovide name="mysql-server" />
+        </keypackages>
+    </component>
+    <component name="apache" description="Apache" classes="vendor=os">
+        <keypackages>
+            <keypackage name="httpd" />
+            <keypackage name="mod_ssl" />
+            <nokeypackage name="apache-sni-configurator" />
+        </keypackages>
+    </component>
+    <component name="spamassassin" description="SpamAssassin" classes="vendor=mixed,aspect=panel">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install spammng" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="psa-spamassassin" />
+        </keypackages>
+        <package name="psa-spamassassin" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/mail/psa-spamassassin-18.0-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="233725" buildtime="1581085538" md5="b05575d30b95b83550f0015ab5800d58" arch="x86_64" />
+    </component>
+    <component name="drweb" description="Plesk Premium Antivirus" classes="vendor=parallels,aspect=panel">
+        <requires>panel</requires>
+        <package name="drweb-bases" version="6.0.2.4" release="1302271534pleskel5" file="opt/drweb/drweb-bases_6.0.2.4-1302271534+plesk~el5_noarch.rpm" size="103861374" buildtime="1361964966" md5="7911e9a08170c4ab5814b33de6508bc2" arch="noarch" />
+        <package name="drweb-common" version="6.0.2.1" release="1302081526pleskel5" file="opt/drweb/drweb-common_6.0.2.1-1302081526+plesk~el5_noarch.rpm" size="55364" buildtime="1360322822" md5="0a40cee5b1e532d32b101f4e559cdbbb" arch="noarch" />
+        <package name="drweb-daemon" version="6.0.2.1" release="1211092005pleskel5" file="opt/drweb/drweb-daemon_6.0.2.1-1211092005+plesk~el5_noarch.rpm" size="1298636" buildtime="1352477735" md5="b47e8785ffc3541744481c0a1c63dff6" arch="noarch" />
+        <package name="drweb-libs" version="6.0.2.0" release="1111112022~el5" file="opt/drweb/drweb-libs_6.0.2.0-1111112022~el5_x86_64.rpm" size="345164" buildtime="1376305274" md5="6ebb7118bb9c966a66fdaf97616c9cc2" arch="x86_64" />
+        <package name="drweb-libs32" version="6.0.2.0" release="1111112022~el5" file="opt/drweb/drweb-libs32_6.0.2.0-1111112022~el5_x86_64.rpm" size="345503" buildtime="1376305069" md5="91d248df0d8f57d84efae7b2cb9f003a" arch="x86_64" />
+        <package name="drweb-updater" version="6.0.2.1" release="1302271615pleskel5" file="opt/drweb/drweb-updater_6.0.2.1-1302271615+plesk~el5_x86_64.rpm" size="181299" buildtime="1361967460" md5="c50e553d3e3eac275a33c41cf469ba3d" arch="x86_64" />
+        <package name="psa-drweb-configurator" version="18.0" release="2.centos.7+p18.0.25.0+t200226.1755" file="opt/drweb/psa-drweb-configurator-18.0-2.centos.7+p18.0.25.0+t200226.1755.x86_64.rpm" size="335557" buildtime="1582719331" md5="dbcffafbf9d8697de411859e6e66c6af" arch="x86_64" />
+    </component>
+    <component name="kav" description="Kaspersky Anti-Virus" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="plesk-kav-configurator" />
+            <keypackage name="psa-kav8" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-kav8" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="plesk-kav-configurator" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/kav/plesk-kav-configurator-18.0-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="202623" buildtime="1581085521" md5="3ba36ffca7aae6643c7e61ae5da9ea7b" arch="x86_64" />
+        <package name="psa-kav8" version="1:8.5.1" release="2.centos.7+p18.0.22.0+t191202.1336" file="opt/kav/psa-kav8-8.5.1-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="158142781" buildtime="1575269258" md5="dca6beb4222bfb07c3c6c1fe73dbf9cc" arch="x86_64" />
+    </component>
+    <component name="psa-firewall" description="Plesk Firewall" classes="vendor=parallels,aspect=panel">
+        <requires>panel</requires>
+        <package name="psa-firewall" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/modules/firewall/psa-firewall-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="1048048" buildtime="1585142270" md5="8f64f4281f644f03704de84363e39fdd" arch="x86_64" />
+    </component>
+    <component name="watchdog" description="Watchdog system monitoring" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="psa-watchdog" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="psa-watchdog" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/modules/watchdog/psa-watchdog-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="2264949" buildtime="1585142265" md5="b38b0a9a72bde9cad5a2053efe649f55" arch="x86_64" />
+    </component>
+    <component name="config-troubleshooter" description="Plesk Web Server Configuration Troubleshooter" classes="vendor=parallels,aspect=panel">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install config-troubleshooter" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-config-troubleshooter" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="plesk-config-troubleshooter" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/modules/configTroubleshooter/plesk-config-troubleshooter-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="1186924" buildtime="1585142260" md5="ebab76131bcbeffeaa10c539f5591a8c" arch="noarch" />
+    </component>
+    <component name="mod-bw" description="mod_bw" classes="vendor=mixed">
+        <keypackages>
+            <keypackage name="mod_bw" />
+        </keypackages>
+        <requires>webservers</requires>
+        <package name="mod_bw" version="0.92" release="18021218" file="opt/bw/mod_bw-0.92-18021218.x86_64.rpm" size="26316" buildtime="1518435254" md5="34cf1d73369288f9ff06ae4d250fd6f0" arch="x86_64" />
+        <package name="mod_bw" version="0.92" release="18021218" file="unknown_dir/mod_bw-0.92-18021218.x86_64.rpm" size="26316" buildtime="1518435254" md5="34cf1d73369288f9ff06ae4d250fd6f0" arch="x86_64" />
+    </component>
+    <component name="horde" description="Horde" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="prep" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh prep-install horde" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install horde" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="psa-horde" />
+            <keypackage name="psa-turba" />
+            <keypackage name="psa-imp" />
+            <keypackage name="psa-ingo" />
+            <keypackage name="psa-mnemo" />
+            <keypackage name="psa-kronolith" />
+            <keypackage name="psa-passwd" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="psa-horde" />
+        </keypackages>
+        <requires>php7.3</requires>
+        <package name="psa-horde" version="5.2.21" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/horde/psa-horde-5.2.21-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="13171274" buildtime="1585142322" md5="cdde985935fc0f6e313df7f3ff8ef375" arch="noarch" />
+        <package name="psa-horde" version="5.2.21" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/psa-horde-5.2.21-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="13171274" buildtime="1585142322" md5="cdde985935fc0f6e313df7f3ff8ef375" arch="noarch" />
+        <package name="psa-imp" version="6.2.24.1" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/horde/psa-imp-6.2.24.1-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="2604732" buildtime="1585142252" md5="73cedb73127c124a5b3c550cc5495668" arch="noarch" />
+        <package name="psa-imp" version="6.2.24.1" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/psa-imp-6.2.24.1-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="2604732" buildtime="1585142252" md5="73cedb73127c124a5b3c550cc5495668" arch="noarch" />
+        <package name="psa-ingo" version="3.2.16" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/horde/psa-ingo-3.2.16-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="902537" buildtime="1581085525" md5="9f766ce25a4696a4660ac2ddec16d1ad" arch="noarch" />
+        <package name="psa-ingo" version="3.2.16" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-ingo-3.2.16-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="902537" buildtime="1581085525" md5="9f766ce25a4696a4660ac2ddec16d1ad" arch="noarch" />
+        <package name="psa-kronolith" version="4.2.27" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/horde/psa-kronolith-4.2.27-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="1437149" buildtime="1581085529" md5="93c0832bc6ec669d8e1c0d7abb289fbc" arch="noarch" />
+        <package name="psa-kronolith" version="4.2.27" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-kronolith-4.2.27-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="1437149" buildtime="1581085529" md5="93c0832bc6ec669d8e1c0d7abb289fbc" arch="noarch" />
+        <package name="psa-mnemo" version="4.2.14" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/horde/psa-mnemo-4.2.14-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="732013" buildtime="1581085531" md5="484854276e9b24ee266ad832d76b9079" arch="noarch" />
+        <package name="psa-mnemo" version="4.2.14" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-mnemo-4.2.14-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="732013" buildtime="1581085531" md5="484854276e9b24ee266ad832d76b9079" arch="noarch" />
+        <package name="psa-passwd" version="5.0.7" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/horde/psa-passwd-5.0.7-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="689832" buildtime="1581085527" md5="7675e6fd49368afdde8776ea5e07e2f7" arch="noarch" />
+        <package name="psa-passwd" version="5.0.7" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-passwd-5.0.7-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="689832" buildtime="1581085527" md5="7675e6fd49368afdde8776ea5e07e2f7" arch="noarch" />
+        <package name="psa-turba" version="4.2.25" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/horde/psa-turba-4.2.25-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="1144267" buildtime="1581085531" md5="46f1c92e6143a87eebc6e95b3f1fc2fb" arch="noarch" />
+        <package name="psa-turba" version="4.2.25" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-turba-4.2.25-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="1144267" buildtime="1581085531" md5="46f1c92e6143a87eebc6e95b3f1fc2fb" arch="noarch" />
+    </component>
+    <component name="roundcube" description="Roundcube" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="prep" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh prep-install roundcube" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install roundcube" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-roundcube" />
+        </keypackages>
+        <requires>php7.3</requires>
+        <package name="plesk-roundcube" version="1.3.10" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/roundcube/plesk-roundcube-1.3.10-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="4315792" buildtime="1585142325" md5="08fd6acac8e5a16f1f9495cabbaacf15" arch="noarch" />
+        <package name="plesk-roundcube" version="1.3.10" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/plesk-roundcube-1.3.10-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="4315792" buildtime="1585142325" md5="08fd6acac8e5a16f1f9495cabbaacf15" arch="noarch" />
+    </component>
+    <component name="mod_fcgid" description="mod_fcgid" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="psa-mod_fcgid" />
+        </keypackages>
+        <keypackages>
+            <keypackage name="mod_fcgid" />
+        </keypackages>
+        <requires>webservers</requires>
+        <package name="psa-mod_fcgid" version="2.3.9.5" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/hosting/fcgid/psa-mod_fcgid-2.3.9.5-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="101677" buildtime="1581085521" md5="7dcc7d25d3b43703e711a2a06c6c2f9a" arch="x86_64" />
+        <package name="psa-mod_fcgid" version="2.3.9.5" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/psa-mod_fcgid-2.3.9.5-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="101677" buildtime="1581085521" md5="7dcc7d25d3b43703e711a2a06c6c2f9a" arch="x86_64" />
+    </component>
+    <component name="mod_perl" description="mod_perl" hidden="true" classes="vendor=os" show_installed_hidden="true">
+        <keypackages>
+            <keypackage name="mod_perl" />
+        </keypackages>
+        <requires>webservers</requires>
+    </component>
+    <component name="proftpd" description="ProFTPD" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="touch /var/lock/plesk_deferred_super_server_action_configure" />
+            <action sequence="post" exec-cmd="touch /var/lock/plesk_deferred_ftp_proftpd_configure" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="psa-proftpd" />
+        </keypackages>
+        <package name="psa-proftpd" version="1.3.6c" release="2.centos.7+p18.0.25.0+t200312.1215" file="opt/hosting/proftpd/psa-proftpd-1.3.6c-2.centos.7+p18.0.25.0+t200312.1215.x86_64.rpm" size="2175414" buildtime="1583990252" md5="8645c147ae2c80afc796ed0475dc604a" arch="x86_64" />
+        <package name="psa-proftpd" version="1.3.6c" release="2.centos.7+p18.0.25.0+t200312.1215" file="unknown_dir/psa-proftpd-1.3.6c-2.centos.7+p18.0.25.0+t200312.1215.x86_64.rpm" size="2175414" buildtime="1583990252" md5="8645c147ae2c80afc796ed0475dc604a" arch="x86_64" />
+    </component>
+    <component name="webalizer" description="Webalizer" classes="vendor=os">
+        <keypackages>
+            <keypackage name="webalizer" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="awstats" description="AWStats" classes="vendor=os">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="post" exec-cmd="touch /var/lock/plesk_deferred_awstats_configure" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="awstats" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="fail2ban" description="Fail2Ban" classes="vendor=parallels">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="prep" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh prep-install fail2ban-configurator" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install fail2ban-configurator" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-fail2ban-configurator" />
+            <keypackage name="fail2ban" />
+        </keypackages>
+        <package name="fail2ban" version="1:0.10.3.1" release="2.centos.7+p18.0.23.0+t191224.1303" file="opt/fail2ban/fail2ban-0.10.3.1-2.centos.7+p18.0.23.0+t191224.1303.noarch.rpm" size="595175" buildtime="1577171212" md5="65c2c6760df1cc16bfc77c3f8941958e" arch="noarch" />
+        <package name="fail2ban" version="1:0.10.3.1" release="2.centos.7+p18.0.23.0+t191224.1303" file="unknown_dir/fail2ban-0.10.3.1-2.centos.7+p18.0.23.0+t191224.1303.noarch.rpm" size="595175" buildtime="1577171212" md5="65c2c6760df1cc16bfc77c3f8941958e" arch="noarch" />
+        <package name="plesk-fail2ban-configurator" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/fail2ban/plesk-fail2ban-configurator-18.0-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="209517" buildtime="1581085538" md5="ba6c7d3c8e068485dd0a1ebf6d9e6b43" classes="aspect=panel" arch="noarch" />
+    </component>
+    <component name="modsecurity" description="ModSecurity" classes="vendor=mixed">
+        <keypackages>
+            <keypackage name="plesk-modsecurity-crs" />
+            <keypackage name="plesk-modsecurity-configurator" />
+            <keypackage name="mod_security" />
+        </keypackages>
+        <package name="mod_security" version="2.9.3" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/hosting/modsecurity/mod_security-2.9.3-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="276853" buildtime="1581085523" md5="e7c82f3068e039345ee4e5c2736b6c2c" arch="x86_64" />
+        <package name="mod_security" version="2.9.3" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/mod_security-2.9.3-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="276853" buildtime="1581085523" md5="e7c82f3068e039345ee4e5c2736b6c2c" arch="x86_64" />
+        <package name="plesk-modsecurity-configurator" version="18.0" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/hosting/modsecurity/plesk-modsecurity-configurator-18.0-2.centos.7+p18.0.26.0+t200324.1159.noarch.rpm" size="418241" buildtime="1585030045" md5="651f7dbe90ac1100aa738a28e8e5ad7c" classes="aspect=panel" arch="noarch" />
+        <package name="plesk-modsecurity-crs" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/hosting/modsecurity/plesk-modsecurity-crs-18.0-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="176892" buildtime="1581085522" md5="71039580b7c5d847d9862b18a6b343ca" arch="x86_64" />
+        <package name="plesk-modsecurity-crs" version="18.0" release="2.centos.7+p18.0.24.0+t200207.1734" file="unknown_dir/plesk-modsecurity-crs-18.0-2.centos.7+p18.0.24.0+t200207.1734.x86_64.rpm" size="176892" buildtime="1581085522" md5="71039580b7c5d847d9862b18a6b343ca" arch="x86_64" />
+    </component>
+    <component name="passenger" description="Phusion Passenger server" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="mod_passenger" />
+            <keypackage name="passenger" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="mod_passenger" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/passenger/mod_passenger-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="402097" buildtime="1585030051" md5="7f33ca081b86763a1b1183f52347fd21" arch="x86_64" />
+        <package name="mod_passenger" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="unknown_dir/mod_passenger-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="402097" buildtime="1585030051" md5="7f33ca081b86763a1b1183f52347fd21" arch="x86_64" />
+        <package name="passenger" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/passenger/passenger-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="5409772" buildtime="1585030063" md5="048d895a283a986fde8b9078e5c6a876" arch="x86_64" />
+        <package name="passenger" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="unknown_dir/passenger-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="5409772" buildtime="1585030063" md5="048d895a283a986fde8b9078e5c6a876" arch="x86_64" />
+        <package name="passenger-devel" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/passenger/passenger-devel-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="3761400" buildtime="1585030055" md5="5a316708fc7cd00aa99f003abaab26da" arch="x86_64" />
+        <package name="passenger-devel" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="unknown_dir/passenger-devel-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="3761400" buildtime="1585030055" md5="5a316708fc7cd00aa99f003abaab26da" arch="x86_64" />
+        <package name="passenger-native-libs" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="opt/passenger/passenger-native-libs-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="7307" buildtime="1585030045" md5="6219d4da82f5601355850a48baffa348" arch="x86_64" />
+        <package name="passenger-native-libs" version="6.0.2" release="2.centos.7+p18.0.26.0+t200324.1159" file="unknown_dir/passenger-native-libs-6.0.2-2.centos.7+p18.0.26.0+t200324.1159.x86_64.rpm" size="7307" buildtime="1585030045" md5="6219d4da82f5601355850a48baffa348" arch="x86_64" />
+    </component>
+    <component name="selinux" description="SELinux policy" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="psa-selinux" />
+        </keypackages>
+        <package name="psa-selinux" version="18.0.6" release="2.centos.7+p18.0.24.0+t200207.1734" file="opt/selinux/psa-selinux-18.0.6-2.centos.7+p18.0.24.0+t200207.1734.noarch.rpm" size="126961" buildtime="1581085537" md5="3a91ee2e9bd893807693d9516e6cf255" arch="noarch" />
+    </component>
+    <component name="l10n" description="All language localization for Plesk" classes="vendor=parallels,aspect=panel">
+        <bootstrapper>
+            <package name="pp18.0.25-bootstrapper" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="bootstrapper/pp18.0.25-bootstrapper-18.0-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="185902" buildtime="1585142291" md5="4f791b97026160f81c4e1d05b666daaa" classes="aspect=panel" arch="x86_64" />
+            <package name="sw-engine-cli-2.27" version="2.27.5" release="1centos.7.200310.1211" file="bootstrapper/sw-engine-cli-2.27-2.27.5-1centos.7.200310.1211.x86_64.rpm" size="5284184" buildtime="1583817126" md5="b007e7617df9f868ed76eb17a588e28e" classes="aspect=panel" arch="x86_64" />
+            <action sequence="prep" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh prep-install l10n" />
+            <action sequence="post" exec-cmd="/usr/local/psa/bootstrapper/pp18.0.25-bootstrapper/bootstrapper.sh post-install l10n" />
+        </bootstrapper>
+        <keypackages>
+            <keypackage name="plesk-l10n" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="plesk-l10n" version="18.0" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/l10n/plesk-l10n-18.0-2.centos.7+p18.0.25.2+t200325.1928.noarch.rpm" size="8575379" buildtime="1585142366" md5="5591d00b356f49d979ef05845ae18c82" arch="noarch" />
+    </component>
+    <component name="heavy-metal-skin" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-heavy-metal-skin" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="git" description="Git" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="ext-git" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="plesk-git-http" version="18.0" release="2.centos.7+p18.0.22.0+t191202.1336" file="opt/git/plesk-git-http-18.0-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="4909" buildtime="1575269287" md5="6d8e6eb01152998569f4f8434f9a9069" arch="x86_64" />
+        <package name="plesk-git-http" version="18.0" release="2.centos.7+p18.0.22.0+t191202.1336" file="unknown_dir/plesk-git-http-18.0-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="4909" buildtime="1575269287" md5="6d8e6eb01152998569f4f8434f9a9069" arch="x86_64" />
+    </component>
+    <component name="resctrl" description="Resource Controller (Cgroups)" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="plesk-resctrl" />
+        </keypackages>
+        <requires>panel</requires>
+        <package name="plesk-resctrl" version="18.0" release="2.centos.7+p18.0.25.1+t200319.1228" file="opt/resctrl/plesk-resctrl-18.0-2.centos.7+p18.0.25.1+t200319.1228.x86_64.rpm" size="74058" buildtime="1584595764" md5="fe8ce623cc224a8035b8da2ff5617016" arch="x86_64" />
+    </component>
+    <component name="nodejs" description="NodeJS support" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-nodejs" />
+        </keypackages>
+        <requires>panel</requires>
+        <requires>passenger</requires>
+    </component>
+    <component name="gems-pre" description="Tools required for building Ruby gems" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="plesk-gems-pre" />
+        </keypackages>
+        <requires>ruby</requires>
+        <package name="plesk-gems-pre" version="0.0.1" release="2.centos.7+p18.0.23.0+t200114.1847" file="opt/ruby/plesk-gems-pre-0.0.1-2.centos.7+p18.0.23.0+t200114.1847.noarch.rpm" size="2034" buildtime="1579005563" md5="50c2d996fd6ffa2d380e28d289773b17" arch="noarch" />
+    </component>
+    <component name="wp-toolkit" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-wp-toolkit" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="advisor" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-advisor" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="letsencrypt" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-letsencrypt" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="ruby" description="Ruby support" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-ruby" />
+        </keypackages>
+        <requires>panel</requires>
+        <requires>passenger</requires>
+    </component>
+    <component name="nginx" description="Nginx web server" classes="vendor=parallels">
+        <keypackages>
+            <keypackage name="sw-nginx" />
+        </keypackages>
+        <package name="sw-nginx" version="1.16.1.3" release="2.centos.7+p18.0.25.2+t200325.1928" file="opt/hosting/nginx/sw-nginx-1.16.1.3-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="5192994" buildtime="1585142291" md5="5d38b4c2d088d3d7b562b99df851055c" arch="x86_64" />
+        <package name="sw-nginx" version="1.16.1.3" release="2.centos.7+p18.0.25.2+t200325.1928" file="unknown_dir/sw-nginx-1.16.1.3-2.centos.7+p18.0.25.2+t200325.1928.x86_64.rpm" size="5192994" buildtime="1585142291" md5="5d38b4c2d088d3d7b562b99df851055c" arch="x86_64" />
+    </component>
+    <component name="pmm" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-panel-migrator" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="social-login" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-social-login" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="domain-connect" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-domain-connect" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="xovi" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-xovi" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="imunifyav" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-revisium-antivirus" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="sslit" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-sslit" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="repair-kit" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-repair-kit" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="composer" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-composer" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <component name="monitoring" description="" classes="vendor=parallels,aspect=panel">
+        <keypackages>
+            <keypackage name="ext-monitoring" />
+        </keypackages>
+        <requires>panel</requires>
+    </component>
+    <installation_types>
+        <type name="Recommended,Typical" description="Install typically used components. Recommended for general use.">
+            <component>panel</component>
+            <component>roundcube</component>
+            <component>postfix</component>
+            <component>dovecot</component>
+            <component>mod_fcgid</component>
+            <component>proftpd</component>
+            <component>webalizer</component>
+            <component>awstats</component>
+            <component>webservers</component>
+            <component>nginx</component>
+            <component>mysqlgroup</component>
+            <component>config-troubleshooter</component>
+            <component>php7.4</component>
+            <component>php7.3</component>
+            <component>l10n</component>
+            <component>heavy-metal-skin</component>
+            <component>bind</component>
+            <component>wp-toolkit</component>
+            <component>advisor</component>
+            <component>letsencrypt</component>
+            <component>git</component>
+            <component>social-login</component>
+            <component>domain-connect</component>
+            <component>xovi</component>
+            <component>imunifyav</component>
+            <component>fail2ban</component>
+            <component>modsecurity</component>
+            <component>sslit</component>
+            <component>repair-kit</component>
+            <component>composer</component>
+            <component>monitoring</component>
+            <component>selinux</component>
+            <component>resctrl</component>
+        </type>
+        <type name="Full" description="Install all available components.">
+            <component>panel</component>
+            <component>roundcube</component>
+            <component>postfix</component>
+            <component>dovecot</component>
+            <component>mod_fcgid</component>
+            <component>proftpd</component>
+            <component>webalizer</component>
+            <component>awstats</component>
+            <component>webservers</component>
+            <component>nginx</component>
+            <component>mysqlgroup</component>
+            <component>config-troubleshooter</component>
+            <component>php7.4</component>
+            <component>php7.3</component>
+            <component>l10n</component>
+            <component>heavy-metal-skin</component>
+            <component>bind</component>
+            <component>wp-toolkit</component>
+            <component>advisor</component>
+            <component>letsencrypt</component>
+            <component>git</component>
+            <component>social-login</component>
+            <component>domain-connect</component>
+            <component>xovi</component>
+            <component>imunifyav</component>
+            <component>fail2ban</component>
+            <component>modsecurity</component>
+            <component>sslit</component>
+            <component>repair-kit</component>
+            <component>composer</component>
+            <component>monitoring</component>
+            <component>drweb</component>
+            <component>mailman</component>
+            <component>sitebuilder</component>
+            <component>postgresql</component>
+            <component>spamassassin</component>
+            <component>ruby</component>
+            <component>gems-pre</component>
+            <component>nodejs</component>
+            <component>kav</component>
+            <component>pmm</component>
+            <component>psa-firewall</component>
+            <component>watchdog</component>
+            <component>passenger</component>
+            <component>php7.2</component>
+            <component>phpgroup</component>
+            <component>horde</component>
+            <component>selinux</component>
+            <component>resctrl</component>
+        </type>
+    </installation_types>
+    <component_groups>
+        <group name="hosting" description="Web hosting">
+            <component name="proftpd" />
+            <component name="webalizer" />
+            <component name="awstats" />
+            <component name="modsecurity" />
+            <component name="passenger" />
+            <component name="ruby" />
+            <component name="nodejs" />
+            <component name="gems-pre" />
+            <group name="apache_support" description="Apache">
+                <group type="radio" name="webservers" description="Apache versions">
+                    <component name="apache" />
+                    <component name="apache-sni" default="true" />
+                </group>
+                <component name="mod_fcgid" />
+                <component name="mod_perl" />
+                <component name="mod-bw" />
+                <component name="mod_python" />
+            </group>
+            <group name="php_comps" description="PHP interpreter versions">
+                <group type="radio" name="phpgroup" description="PHP interpreter versions">
+                    <component name="php5" />
+                </group>
+                <component name="php7.4" />
+                <component name="php7.3" />
+                <component name="php7.2" />
+                <component name="php7.1" />
+                <component name="php7.0" />
+                <component name="php5.6" />
+                <component name="php5.5" />
+                <component name="php5.4" />
+                <component name="php5.3" />
+                <component name="php5.2" />
+            </group>
+            <group name="nginx_comps" description="Nginx web server and reverse proxy server">
+                <component name="nginx" />
+                <component name="phpfpm" />
+            </group>
+        </group>
+        <group name="webmails" description="Webmail services">
+            <component name="horde" />
+            <component name="roundcube" default="true" />
+        </group>
+        <group name="mail" description="Mail hosting">
+            <group type="radio" name="mailservers" description="SMTP servers">
+                <component name="postfix" default="true" />
+                <component name="qmail" />
+                <component name="msmtp" />
+            </group>
+            <group type="radio" name="imapservers" description="IMAP/POP3 servers">
+                <component name="dovecot" default="true" />
+                <component name="courier" />
+            </group>
+            <component name="kav" />
+            <component name="drweb" />
+            <component name="spamassassin" />
+            <component name="mailman" />
+        </group>
+        <group type="radio" name="mysqlgroup" description="MySQL server versions">
+            <component name="mysql-sys" default="true" />
+            <component name="mysql" />
+        </group>
+        <group name="extensions" description="Plesk extensions">
+            <component name="config-troubleshooter" />
+            <component name="psa-firewall" />
+            <component name="watchdog" />
+            <component name="heavy-metal-skin" />
+            <component name="wp-toolkit" />
+            <component name="advisor" />
+            <component name="letsencrypt" />
+            <component name="social-login" />
+            <component name="domain-connect" />
+            <component name="xovi" />
+            <component name="imunifyav" />
+            <component name="sslit" />
+            <component name="repair-kit" />
+            <component name="composer" />
+            <component name="monitoring" />
+        </group>
+    </component_groups>
+    <updates updates_dir="update-rpm-CentOS-7-x86_64" headers_file="update-18.0.25-cos7-x86_64.hdr.gz" />
+    <thirdparty thirdparty_dir="thirdparty-rpm-CentOS-7-x86_64" headers_file="thirdparty-18.0.25-cos7-x86_64.hdr.gz">
+        <package name="aspell" version="12:0.60.6.1" release="9.el7" file="aspell-0.60.6.1-9.el7.i686.rpm" size="683720" buildtime="1402434545" md5="bad5f0b14f052a7708c102e2c18150d1" arch="i686" />
+        <package name="aspell" version="12:0.60.6.1" release="9.el7" file="aspell-0.60.6.1-9.el7.x86_64.rpm" size="701024" buildtime="1402355080" md5="c7b8d712c6a4874eabbf538fc5c89106" arch="x86_64" />
+        <package name="awstats" version="7.7" release="2.centos.7+p18.0.23.0+t191224.1303" file="../dist-rpm-CentOS-7-x86_64/contrib/awstats-7.7-2.centos.7+p18.0.23.0+t191224.1303.noarch.rpm" size="2261881" buildtime="1577171238" md5="8e7fa38088a46740010d2cb7c756b3fd" arch="noarch" />
+        <package name="bitstream-vera-fonts" version="1.10" release="7" file="bitstream-vera-fonts-1.10-7.noarch.rpm" size="357631" buildtime="1297828007" md5="d6c400f3fee72ec384039f8bb4870585" arch="noarch" />
+        <package name="compat-libstdc++-33" version="3.2.3" release="71.el7" file="compat-libstdc++-33-3.2.3-71.el7.x86_64.rpm" size="194180" buildtime="1402365311" md5="d91ea9dc9c487bdbc85cfc15382283e0" arch="x86_64" />
+        <package name="fcgi" version="2.4.0" release="22.el7" file="fcgi-2.4.0-22.el7.x86_64.rpm" size="45552" buildtime="1391437500" md5="dc7c0bc123379aed51b978b52d843ace" arch="x86_64" />
+        <package name="gamin-python" version="0.1.10" release="16.el7" file="gamin-python-0.1.10-16.el7.x86_64.rpm" size="34256" buildtime="1402348239" md5="1da3971918e74b45a305b3806dbc920b" arch="x86_64" />
+        <package name="glib2" version="2.56.1" release="2.el7" file="glib2-2.56.1-2.el7.x86_64.rpm" size="2570764" buildtime="1535378849" md5="ebaf68b167e65f0c83c00ec780bd4745" arch="x86_64" />
+        <package name="libbsd" version="0.6.0" release="3.el7" file="libbsd-0.6.0-3.el7.x86_64.rpm" size="66448" buildtime="1405992613" md5="4c9cc609bc2a3e0dd4be4d6936499521" arch="x86_64" />
+        <package name="libc-client" version="2007f" release="4.el7.1" file="libc-client-2007f-4.el7.1.x86_64.rpm" size="571960" buildtime="1389690407" md5="4de15f242ab2ad294e5fe061afdb392b" arch="x86_64" />
+        <package name="libdb4" version="4.8.30" release="13.el7" file="libdb4-4.8.30-13.el7.x86_64.rpm" size="620560" buildtime="1399295760" md5="133b818b7a71aa2a2895dad89e932b26" arch="x86_64" />
+        <package name="libdb4-utils" version="4.8.30" release="13.el7" file="libdb4-utils-4.8.30-13.el7.x86_64.rpm" size="136640" buildtime="1399295760" md5="5b0debe07d171c565bbcdd6a7e6ebf31" arch="x86_64" />
+        <package name="libidn2" version="2.0.4" release="3.el7" file="libidn2-2.0.4-3.el7.x86_64.rpm" size="146651" buildtime="1518963416" md5="e1055b65ab441636be3fe0a44f88cd1c" arch="x86_64" />
+        <package name="libmcrypt" version="2.5.8" release="13.el7" file="libmcrypt-2.5.8-13.el7.x86_64.rpm" size="100848" buildtime="1389706196" md5="708c4fddbf185870dc1bf5378ab3fd21" arch="x86_64" />
+        <package name="libopendkim" version="2.10.3" release="3.el7" file="libopendkim-2.10.3-3.el7.x86_64.rpm" size="72540" buildtime="1451092905" md5="845a4ea5e32e6fef99983d301c17327f" arch="x86_64" />
+        <package name="libopendkim" version="2.11.0" release="0.1.el6" file="libopendkim-2.11.0-0.1.el6.x86_64.rpm" size="71988" buildtime="1482291116" md5="dbbc4d4dbd21ef414c1d044fdfeee4a4" arch="x86_64" />
+        <package name="libtidy" version="0.99.0" release="31.20091203.el7" file="libtidy-0.99.0-31.20091203.el7.x86_64.rpm" size="134332" buildtime="1389624642" md5="c8d6a88593c335f6aefb93e9527136cd" arch="x86_64" />
+        <package name="mod_perl" version="2.0.8" release="5.20131031svn1537408.el7" file="mod_perl-2.0.8-5.20131031svn1537408.el7.x86_64.rpm" size="3115344" buildtime="1389859522" md5="08334a1cc877b4062105b3daf56622c9" arch="x86_64" />
+        <package name="perl-BSD-Resource" version="1.29.07" release="1.el7" file="perl-BSD-Resource-1.29.07-1.el7.x86_64.rpm" size="37652" buildtime="1390249747" md5="24420d1a92e551743deb8c458e78a838" arch="x86_64" />
+        <package name="perl-Class-Accessor" version="0.34" release="12.el7" file="perl-Class-Accessor-0.34-12.el7.noarch.rpm" size="28704" buildtime="1390939284" md5="f32db33861042cfb772216a8d159c4ba" arch="noarch" />
+        <package name="perl-Class-Data-Inheritable" version="0.08" release="14.el7" file="perl-Class-Data-Inheritable-0.08-14.el7.noarch.rpm" size="11092" buildtime="1402341314" md5="605163de09dfd6972eef8766358632ce" arch="noarch" />
+        <package name="perl-Devel-StackTrace" version="1:1.30" release="2.el7" file="perl-Devel-StackTrace-1.30-2.el7.noarch.rpm" size="26188" buildtime="1402393076" md5="1c393cff731a51e0464a0d24171922f8" arch="noarch" />
+        <package name="perl-Exception-Class" version="1.37" release="3.el7" file="perl-Exception-Class-1.37-3.el7.noarch.rpm" size="39720" buildtime="1402372295" md5="e3e351ed43de03fdcd485a05695d07c7" arch="noarch" />
+        <package name="perl-IO-String" version="1.08" release="19.el7" file="perl-IO-String-1.08-19.el7.noarch.rpm" size="15420" buildtime="1402386389" md5="44b7a164d11846b1adc9cfb68adb4fa0" arch="noarch" />
+        <package name="perl-JSON-XS" version="1:3.01" release="2.el7" file="perl-JSON-XS-3.01-2.el7.x86_64.rpm" size="104108" buildtime="1392571443" md5="46548582e12f7a8078d029b379857847" arch="x86_64" />
+        <package name="perl-Linux-Pid" version="0.04" release="18.el7" file="perl-Linux-Pid-0.04-18.el7.x86_64.rpm" size="13100" buildtime="1390323546" md5="20f9a2e4b9f28065259aad088ecb27af" arch="x86_64" />
+        <package name="perl-Parse-RecDescent" version="1.967009" release="5.el7" file="perl-Parse-RecDescent-1.967009-5.el7.noarch.rpm" size="206464" buildtime="1402353937" md5="199d2e1a4932bdd0b0834a31cffc8235" arch="noarch" />
+        <package name="perl-Text-Iconv" version="1.7" release="18.el7" file="perl-Text-Iconv-1.7-18.el7.x86_64.rpm" size="22592" buildtime="1402376810" md5="1c707a2e5287769ef32e7c26e6f830e9" arch="x86_64" />
+        <package name="perl-Types-Serialiser" version="1.0" release="1.el7" file="perl-Types-Serialiser-1.0-1.el7.noarch.rpm" size="16280" buildtime="1390406811" md5="992412af137e893fec85e53adde12819" arch="noarch" />
+        <package name="perl-common-sense" version="3.6" release="4.el7" file="perl-common-sense-3.6-4.el7.noarch.rpm" size="27396" buildtime="1390396406" md5="b58f330ac92e0874c98ef3f2950ab349" arch="noarch" />
+        <package name="perl-thrift" version="0.9.1" release="12.el7" file="perl-thrift-0.9.1-12.el7.noarch.rpm" size="21524" buildtime="1399283779" md5="c248968de9265d7b83d10e32f864a84f" arch="noarch" />
+        <package name="php-fpm" version="5.4.16" release="23.el7_0.3" file="php-fpm-5.4.16-23.el7_0.3.x86_64.rpm" size="1479488" buildtime="1414760847" md5="178d614dcb6057562382722595935f3c" arch="x86_64" />
+        <package name="php-imap" version="5.4.16" release="2.el7" file="php-imap-5.4.16-2.el7.x86_64.rpm" size="35952" buildtime="1390404284" md5="de69743567e114edd70ca75928684851" arch="x86_64" />
+        <package name="php-mbstring" version="5.4.16" release="23.el7_0.3" file="php-mbstring-5.4.16-23.el7_0.3.x86_64.rpm" size="512420" buildtime="1414760847" md5="693559cd544016faeb05ad9ceadb1f79" arch="x86_64" />
+        <package name="php5-ioncube-loader" version="10.2.1" release="2.centos.7+p18.0.23.0+t191224.1303" file="../dist-rpm-CentOS-7-x86_64/contrib/php5-ioncube-loader-10.2.1-2.centos.7+p18.0.23.0+t191224.1303.x86_64.rpm" size="1853849" buildtime="1577171160" md5="bc1c03944dfcc74eac4163f4762017bb" arch="x86_64" />
+        <package name="pigz" version="2.3.1" release="1.el7" file="pigz-2.3.1-1.el7.x86_64.rpm" size="64472" buildtime="1400512422" md5="868b916963067c2cad538edf40b07d30" arch="x86_64" />
+        <package name="plesk-libboost-1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="3636" buildtime="1547637596" md5="0c9aec6496656de853097fd84e054c2a" arch="x86_64" />
+        <package name="plesk-libboost-atomic1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-atomic1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="4625" buildtime="1547637597" md5="e4b68674517ef0930d8de9331af4116e" arch="x86_64" />
+        <package name="plesk-libboost-chrono1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-chrono1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="12515" buildtime="1547637593" md5="dcc033be01d229e58b83397ef399a8da" arch="x86_64" />
+        <package name="plesk-libboost-date-time1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-date-time1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="20682" buildtime="1547637601" md5="320d03b0912ab24edef696c7762b642d" arch="x86_64" />
+        <package name="plesk-libboost-filesystem1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-filesystem1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="46465" buildtime="1547637658" md5="59dfff8e31230eb78197ca9bfb284828" arch="x86_64" />
+        <package name="plesk-libboost-iostreams1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-iostreams1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="32925" buildtime="1547637604" md5="04ecb6f587d3bafb9eb166977ae3ba36" arch="x86_64" />
+        <package name="plesk-libboost-locale1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-locale1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="301835" buildtime="1547637599" md5="98d9b4fb7b8d6e0dfa03e206d607002b" arch="x86_64" />
+        <package name="plesk-libboost-log1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-log1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="279548" buildtime="1547637597" md5="d17d2e63cbf29357588f8b1ca77c2fac" arch="x86_64" />
+        <package name="plesk-libboost-program-options1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-program-options1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="168490" buildtime="1547637660" md5="0c8ac01e13ef0ffa180a5bef62aafab5" arch="x86_64" />
+        <package name="plesk-libboost-regex1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-regex1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="380315" buildtime="1547637595" md5="b09d23b95faa74abc088df398d3ea152" arch="x86_64" />
+        <package name="plesk-libboost-serialization1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-serialization1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="81436" buildtime="1547637633" md5="f52953a535672264b56f1c62912a958e" arch="x86_64" />
+        <package name="plesk-libboost-system1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-system1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="8941" buildtime="1547637602" md5="d1f599ccb319cc8c332b7a24205cb86d" arch="x86_64" />
+        <package name="plesk-libboost-thread1.65" version="1.65.1" release="1centos.7.190116.1809" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libboost-thread1.65-1.65.1-1centos.7.190116.1809.x86_64.rpm" size="55541" buildtime="1547637659" md5="b6525a530ce8830405be12716967f5ad" arch="x86_64" />
+        <package name="plesk-libmariadbclient-3.0" version="3.0.9" release="1centos.7.190417.1743" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libmariadbclient-3.0-3.0.9-1centos.7.190417.1743.x86_64.rpm" size="183469" buildtime="1555497823" md5="58a8dbd90bd008cca9c7a6fbbce77fdb" arch="x86_64" />
+        <package name="plesk-libpoco-1.9.0" version="1.9.0" release="1centos.7.191202.1336" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libpoco-1.9.0-1.9.0-1centos.7.191202.1336.x86_64.rpm" size="1866609" buildtime="1575269343" md5="3653f7fe4f1e70a5abe8f6fb0e1e2386" arch="x86_64" />
+        <package name="plesk-libstdc++6.3.0" version="6.3.0" release="1centos.7.190110.1553" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-libstdc++6.3.0-6.3.0-1centos.7.190110.1553.x86_64.rpm" size="536144" buildtime="1547112203" md5="b1c0df740c0d5a6c84ddc827d32eee28" arch="x86_64" />
+        <package name="plesk-milter" version="8.14.5" release="0centos.7.171117.1544" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-milter-8.14.5-0centos.7.171117.1544.x86_64.rpm" size="41059" buildtime="1510908279" md5="96357ef2b610c0226b9dd5aa1c50a94c" arch="x86_64" />
+        <package name="plesk-mysql-server" version="18.0" release="2.centos.7+p18.0.22.0+t191202.1336" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-mysql-server-18.0-2.centos.7+p18.0.22.0+t191202.1336.noarch.rpm" size="1641" buildtime="1575269218" md5="64810e41e6876f44aa308b7a255b3a2b" arch="noarch" />
+        <package name="plesk-mysql-server-community" version="18.0" release="2.centos.7+p18.0.22.0+t191202.1336" file="../dist-rpm-CentOS-7-x86_64/contrib/plesk-mysql-server-community-18.0-2.centos.7+p18.0.22.0+t191202.1336.noarch.rpm" size="1694" buildtime="1575269233" md5="275c7dc25dd591ed9a3e79f9d72491d7" arch="noarch" />
+        <package name="psa-pear" version="1.10.9" release="20191112.1centos.7.200114.1847" file="../dist-rpm-CentOS-7-x86_64/contrib/psa-pear-1.10.9-20191112.1centos.7.200114.1847.noarch.rpm" size="357983" buildtime="1579005563" md5="48ac2bd159c1d5fe7ef11449318050f8" arch="noarch" />
+        <package name="rubygem-rake" version="0.9.6" release="20.el7" file="rubygem-rake-0.9.6-20.el7.noarch.rpm" size="89452" buildtime="1401631232" md5="36ca4b297d26e17f546892ad645c2f3d" arch="noarch" />
+        <package name="sharutils" version="4.13.3" release="8.el7" file="sharutils-4.13.3-8.el7.x86_64.rpm" size="256908" buildtime="1402373759" md5="1c04cb6a3b6e602be54a72b5b56a81e2" arch="x86_64" />
+        <package name="sw-tar" version="1.32" release="2.centos.7+p18.0.22.0+t191202.1336" file="../dist-rpm-CentOS-7-x86_64/contrib/sw-tar-1.32-2.centos.7+p18.0.22.0+t191202.1336.x86_64.rpm" size="411724" buildtime="1575269259" md5="f5168a247490d035a626ab226c98a795" arch="x86_64" />
+        <package name="webalizer" version="2.23_05" release="7.el7" file="webalizer-2.23_05-7.el7.x86_64.rpm" size="134192" buildtime="1404890593" md5="a31f6fccd2dea352c4ca80223e087e76" arch="x86_64" />
+        <package name="xmlrpc-c-c++" version="1.32.5" release="1905.svn2451.el7" file="xmlrpc-c-c++-1.32.5-1905.svn2451.el7.x86_64.rpm" size="87740" buildtime="1402365823" md5="ab5053bf26a9803034dd300593c42858" arch="x86_64" />
+    </thirdparty>
+    <extras extras_dir="extras-rpm-CentOS-7-x86_64" persistent_repo="true" />
+    <removable_packages />
+    <preferred_packages />
+    <force_remove_packages />
+</build_1>

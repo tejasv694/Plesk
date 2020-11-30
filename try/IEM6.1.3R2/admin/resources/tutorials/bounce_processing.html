@@ -1,0 +1,64 @@
+<html>
+<head>
+<link rel="stylesheet" href="../../includes/styles/stylesheet.css" type="text/css">
+</head>
+<body class="popupBody">
+
+<div class="popupContainer">
+
+	<div class="Heading1">What is Bounce Processing and why should I do it?</div>
+
+	<br>
+
+	When ever you send emails to people there is always a chance that the email may not make it to its intended recipient. This can be for many different reasons such as the email address is invalid, their inbox is full, their mail server is down and many more. When this happens, the email is 'bounced' back to you (or the address you nominate as the bounce email address). This comes in the form of a simple message that lets you know what email address bounced and the reason why it happened.
+
+	<br><br>
+
+	The reason why you want to process bounced emails is that if you continually send emails to invalid email addresses you can run the risk of having your server black listed and not being able to send any more emails from there. Processing your bounced emails will keep a record of what emails have bounced so that you do not continue to send to these addresses.
+
+	<br><br>
+
+	When sending your email campaigns or autoresponders, you have the option of entering in a bounce email address. This email address is an email account that you need to create on your server. Any bounced emails will go to that email address. They will remain in this email account until you delete them manually or you process bounces.
+
+	<br><br>
+
+	When you process bounced emails (either manually through the Process Bounced Emails option or scheduled through cron or scheduled tasks) you specify the details for that email account.
+
+	<br><br>
+
+	The application will read each bounced email and, using a set of rules built into the application, will determine whether or not it's a soft bounce, a hard bounce or a non-recognized bounce.
+
+	<br><br>
+
+	A soft bounce is a temporary bounce such as "This user's mailbox is full."
+
+	<br><br>
+
+	A hard bounce is a permanent bounce such as: "This email account does not exist."
+
+	<br><br>
+
+	If it's a soft bounce, the application will record the bounce but will take no action on the email address until it soft bounces 5 times. Once an email address has soft bounced 5 times, it is treated as a bounced email which means it will not be emailed any more.
+
+	<br><br>
+
+	A hard bounce is processed as a bounced email right away.
+
+	<br><br>
+
+	When a hard bounce email is found, the contact is not removed from the contact list, otherwise you could accidentally re-add them again later. Instead they are still kept on your contact list but will not be emailed the next time you send your email campaign.
+
+	<br><br>
+
+	If a bounce email is not recognized then the application will ignore the bounced email. If you think that a bounced email should have been processed rather than ignored, you can add a new rule to the bounce rule file by editing:
+	admin/resources/bounce_rules.php (Please read the instructions inside the rules file on how to add a new bounce rule).
+
+	<br><br>
+	After all of the emails in the inbox have been checked, the ones that are bounced emails and have been successfully processed (that is, a hard bounce or a soft bounce has been found) are deleted from the inbox.
+
+	<br><br>
+	The application handles having multiple contact lists being processed by the same bounce email account. Special headers are used when email campaigns and autoresponders are sent out to identify where an email address comes from so it can be processed correctly.
+</div>
+
+</body>
+</html>

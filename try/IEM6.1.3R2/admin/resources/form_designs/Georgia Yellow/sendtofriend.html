@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<style type="text/css">
+
+	.myForm td, input, select, textarea, checkbox {
+		font-family: georgia, tahoma;
+		font-size: 14px;
+	}
+
+	.myForm {
+		background-color: #FBFAE7;
+		border: 1px solid #EFECBA;
+		padding: 10px;
+	}
+
+	.required {
+		color: red;
+	}
+</style>
+</head>
+<body>
+<form method="post" action="%%FormAction%%">
+<!--
+Do not modify the NAME value of any of the INPUT fields
+the FORM action, or any of the hidden fields (eg. input type=hidden).
+These are all required for this form to function correctly.
+-->
+<table border="0" cellpadding="2" class="myForm">
+	<tr>
+		<td>%%LNG_Form_SendFriend_YourName%%</td>
+		<td><input type="text" name="myname" value="" /></td>
+	</tr>
+	<tr>
+		<td>%%LNG_Form_SendFriend_YourEmailAddress%%</td>
+		<td><input type="text" name="myemail" value="%%Email%%" /></td>
+	</tr>
+	<tr>
+		<td>%%LNG_Form_SendFriend_FriendsName%%</td>
+		<td><input type="text" name="friendsname" value="" /></td>
+	</tr>
+	<tr>
+		<td>%%LNG_Form_SendFriend_FriendsEmailAddress%%</td>
+		<td><input type="text" name="friendsemail" value="" /></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><textarea name="introduction" rows="5" cols="30">%%LNG_Form_SendFriend_Introduction%%</textarea></td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td><br /><input type="submit" value="%%LNG_Form_SendFriend_Button%%" /><br/>%%LNG_Form_Branding%%</td>
+	</tr>
+</table>
+
+</form>
+</body>
+</html>

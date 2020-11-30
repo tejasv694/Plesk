@@ -1,0 +1,9 @@
+<addon_description>
+	<name>Software Version Check</name>
+	<description>Checks if you are running the latest version of the software from the tools menu.</description>
+	<author>Flipmode!</author>
+	<version>1.0</version>
+	<hasconfiguration>0</hasconfiguration>
+	<license>Commercial</license>
+	<licenseurl>#</licenseurl>
+</addon_description>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- vim: set sw=2 ts=2 sts=2 et: -->
+<addon id="php71" name="PHP v 7.1">
+  <release id="PHP71_17" name="PHP v 7.1 for Plesk 17" version="7.1.10">
+    <compatibility_info>
+      <compatible product_id="plesk" from_version="17.0.17" to_version="18.0.99" />
+    </compatibility_info>
+    <!--
+    <build os_name="Linux" os_vendor="CentOS" os_version="6" os_arch="x86_64" config="PHP71_17/php71-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CentOS" os_version="7" os_arch="x86_64" config="PHP71_17/php71-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el6" os_arch="x86_64" config="PHP71_17/php71-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="RedHat" os_version="el7" os_arch="x86_64" config="PHP71_17/php71-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="6" os_arch="x86_64" config="PHP71_17/php71-cos6-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="CloudLinux" os_version="7" os_arch="x86_64" config="PHP71_17/php71-cos7-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="8.0" os_arch="x86_64" config="PHP71_17/php71-deb8.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Debian" os_version="9.0" os_arch="x86_64" config="PHP71_17/php71-deb9.0-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="16.04" os_arch="x86_64" config="PHP71_17/php71-ubt16.04-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="18.04" os_arch="x86_64" config="PHP71_17/php71-ubt18.04-x86_64.inf3"/>
+    <build os_name="Linux" os_vendor="VZLinux" os_version="7" os_arch="x86_64" config="PHP71_17/php71-cos7-x86_64.inf3"/>
+    -->
+    <build os_name="Linux" os_vendor="Debian" os_version="7.0" os_arch="x86_64" config="PHP_7.1.26/php71-deb7.0-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="12.04" os_arch="x86_64" config="PHP_7.1.26/php71-ubt12.04-x86_64.plesk17.inf3"/>
+    <build os_name="Linux" os_vendor="Ubuntu" os_version="14.04" os_arch="x86_64" config="PHP_7.1.29/php71-ubt14.04-x86_64.plesk17.inf3"/>
+  </release>
+</addon>

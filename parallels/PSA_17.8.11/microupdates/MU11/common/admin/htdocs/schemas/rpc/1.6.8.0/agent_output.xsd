@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 1999-2017. Plesk International GmbH. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="plesk_common.xsd"/>
+	<xs:include schemaLocation="certificate_output.xsd"/>
+	<xs:include schemaLocation="client_output.xsd"/>
+	<xs:include schemaLocation="database_output.xsd"/>
+	<xs:include schemaLocation="dns_output.xsd"/>
+	<xs:include schemaLocation="webspace.xsd"/>
+	<xs:include schemaLocation="domainalias_output.xsd"/>
+	<xs:include schemaLocation="event_log_output.xsd"/>
+	<xs:include schemaLocation="ip_output.xsd"/>
+	<xs:include schemaLocation="mail_output.xsd"/>
+	<xs:include schemaLocation="secret_key_output.xsd"/>
+	<xs:include schemaLocation="server_output.xsd"/>
+	<xs:include schemaLocation="ui_output.xsd"/>
+	<xs:include schemaLocation="upload_output.xsd"/>
+	<xs:include schemaLocation="domain_template.xsd"/>
+	<xs:include schemaLocation="virtdir.xsd"/>
+	<xs:include schemaLocation="ftpuser.xsd"/>
+	<xs:include schemaLocation="session.xsd"/>
+	<xs:include schemaLocation="locale.xsd"/>
+	<xs:include schemaLocation="logrotation.xsd"/>
+	<xs:include schemaLocation="protected_dir.xsd"/>
+	<xs:include schemaLocation="subdomain.xsd"/>
+	<xs:include schemaLocation="reseller.xsd"/>
+	<xs:include schemaLocation="reseller_template.xsd"/>
+	<xs:include schemaLocation="aps.xsd"/>
+	<xs:include schemaLocation="domain_addon_template.xsd"/>
+	<xs:include schemaLocation="site.xsd"/>
+    <xs:include schemaLocation="php_handler.xsd"/>
+    <xs:include schemaLocation="extension.xsd"/>
+	<xs:element name="packet" type="ResponsePacketType"/>
+	<xs:complexType name="ResponsePacketType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="certificate" type="CertificateResponseType"/>
+					<xs:element name="customer" type="ClientResponseType"/>
+					<xs:element name="db_server" type="DatabaseServerResponseType"/>
+					<xs:element name="dns" type="DNSResponseType"/>
+					<xs:element name="webspace" type="DomainResponseType"/>
+					<xs:element name="subdomain" type="SubdomainOutputType"/>
+					<xs:element name="site-alias" type="DomainAliasResponseType"/>
+					<xs:element name="event_log" type="EventLogResponseType"/>
+					<xs:element name="ip" type="IpResponseType"/>
+					<xs:element name="mail" type="MailResponseType"/>
+					<xs:element name="migration"/>
+					<xs:element name="secret_key" type="SecretKeyResponseType"/>
+					<xs:element name="server" type="ServerOperatorType"/>
+					<xs:element name="spamfilter"/>
+					<xs:element name="ui" type="UIResponseType"/>
+					<xs:element name="upload" type="UploadOutputType"/>
+					<xs:element name="service-plan" type="DomainTemplateOutputType"/>
+					<xs:element name="webuser"/>
+					<xs:element name="maillist"/>
+					<xs:element name="virtdir" type="VDirOutputType"/>
+					<xs:element name="database" type="DatabaseOutputType"/>
+					<xs:element name="ftp-user" type="FtpUserOutputType"/>
+					<xs:element name="session" type="SessionOutputType"/>
+					<xs:element name="updater"/>
+					<xs:element name="locale" type="LocaleOutput"/>
+					<xs:element name="log-rotation" type="LogRotationOutput"/>
+					<xs:element name="backup-manager"/>
+					<xs:element name="sso"/>
+					<xs:element name="protected-dir" type="ProtectedDirOutput"/>
+					<xs:element name="reseller" type="ResellerOutput"/>
+					<xs:element name="reseller-plan" type="ResellerTemplateOutputType"/>
+					<xs:element name="aps" type="APSOutputType"/>
+					<xs:element name="service-plan-addon" type="DomainAddonTemplateOutputType"/>
+					<xs:element name="site" type="SiteResponseType"/>
+					<xs:element name="user"/>
+					<xs:element name="role"/>
+					<xs:element name="business-logic-upgrade"/>
+					<xs:element name="webmail"/>
+					<xs:element name="plan-item"/>
+					<xs:element name="sitebuilder"/>
+                    <xs:element name="service-node"/>
+					<xs:element name="ip-ban"/>
+                    <xs:element name="php-handler" type="PhpHandlerOutput"/>
+                    <xs:element name="extension" type="ExtensionOutputType"/>
+				</xs:choice>
+				<xs:element name="system" type="resultType"/>
+			</xs:choice>
+			<xs:element name="output" type="garbageOutput" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="version" type="string"/>
+	</xs:complexType>
+</xs:schema>

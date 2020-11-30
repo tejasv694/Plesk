@@ -1,0 +1,199 @@
+body {
+	font-size: 12px;
+	font-family:arial;
+}
+
+h1 {
+	font-size: 25px;
+	margin-bottom: 6px;
+}
+
+.Module_survey survey {
+	margin:0;
+	padding:0;
+	position:relative;
+}
+.Module_survey .Checkbox, .Module_survey .Radio {
+	border:0 none;
+}
+.Module_survey textarea {
+	height:65px;
+	overflow:auto;
+}
+.Module_survey ul {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+}
+.Module_survey ul li {
+	background:transparent none repeat scroll 0 0;
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+.Module_survey .Name {
+	font-size: 20px;
+	font-weight:bold;
+	margin: 10px 10px 26px 0px;
+	border-bottom: solid 2px #CACACA;	
+}
+.Module_survey .Description {
+	margin:10px 0;
+	padding:0;
+}
+.Module_survey fieldset {
+	background-color:transparent;
+	border:0 none;
+	margin:10px 0;
+	padding:0;
+}
+.Module_survey label {
+	display:block;
+	font-weight:bold;
+}
+.Module_survey li {
+	border:0 none;
+}
+.Module_survey p {
+	margin:0;
+	padding:0;
+}
+.Module_survey .Message {
+	margin:15px 0;
+	padding:5px 10px;
+}
+.Module_survey .Message.Error {
+	background:#FFD6D6 none repeat scroll 0 0;
+}
+.Module_survey .Message.Success {
+	background:#E1FF96 none repeat scroll 0 0;
+}
+.Module_survey .Widget {
+	margin-bottom:15px;
+}
+.Module_survey .Widget .Description {
+	color:#777777;
+	margin:0;
+	padding:0;
+}
+.Module_survey .Fields label {
+	cursor:pointer;
+	display:inline;
+	font-weight:normal;
+	margin:0;
+	padding:0;
+}
+.Module_survey .Buttons {
+}
+.Module_survey .Errors {
+	color:#FF0000;
+}
+.Module_survey .Error, .Module_survey .Required {
+	color:#FF0000;
+}
+
+input[type=text],textarea {
+	width: 300px;
+}
+
+button[type=submit] {
+	font-size: 16px;
+	font-weight: bold;	
+}
+
+input.other {
+	width: 150px;
+}
+
+
+input.Required {
+	color: #000 !important;
+}	
+
+
+.Module_survey .FileType {
+}
+.Module_survey .SectionBreak label {
+	font-size:14px;
+}
+.Left .Module_survey .Text, .Left .Module_survey textarea, .Left .Module_survey .File, .Right .Module_survey .Text, .Right .Module_survey textarea, .Right .Module_survey .File {
+	width:90%;
+}
+.Left .Module_survey .Other, .Right .Module_survey .Other {
+	width:50%;
+}
+.Content .Module_survey .Text, .Content .Module_survey textarea, .Content .Module_survey .File {
+	width:300px;
+}
+.Content .Module_survey .Other {
+	width:250px;
+}
+.Content .Module_survey .Name {
+	color:#910000;
+	font-size:1.5em;
+	font-style:italic;
+	font-weight:bold;
+}
+.Left .Module_survey survey, .Right .Module_survey survey {
+	margin-bottom:4px;
+}
+.Left .Module_survey .Name, .Right .Module_survey .Name {
+	background:#F6F6E4 none repeat scroll 0 0;
+	border:1px solid #EAEACF;
+	color:#910000;
+	font-size:1em;
+	font-weight:400;
+	margin:0 0 1px;
+	padding:8px 10px 6px;
+	text-transform:uppercase;
+}
+.Left .Module_survey .Description, .Right .Module_survey .Description, .Left .Module_survey fieldset, .Right .Module_survey fieldset {
+	background:#F6F6E4 none repeat scroll 0 0;
+	border:1px solid #EAEACF;
+	margin:0;
+	padding:8px 10px 6px;
+}
+.Left .Module_survey .Description, .Right .Module_survey .Description {
+	border-bottom:0 none;
+}
+.Left .Module_survey fieldset, .Right .Module_survey fieldset {
+	border-top:0 none;
+}
+.Left .Module_survey .Widget .Description, .Right .Module_survey .Widget .Description {
+	border:0 none;
+	margin:0;
+	padding:0;
+}
+.contactsurveySuccess {
+	background-color:#F2F2F2;
+	background-image:url(modules/contactsurvey/images/success.gif);
+	background-position:5px 5px;
+	background-repeat:no-repeat;
+	border:1px solid #C4C4C4;
+	font-size: 16px;
+	font-family: 'Arial';
+	color:#009900;
+	margin-bottom:5px;
+	padding:5px 5px 5px 30px;
+}
+
+p.Success {
+	font-family: 'Arial';
+	font-size: 16px;	
+}
+
+.contactsurveyError {
+	color:red;
+}
+
+textarea.required, select.required, option {
+	color: #000 !important;
+}
+
+ul.Errors {
+	padding: 0;
+	
+}

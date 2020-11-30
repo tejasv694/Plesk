@@ -1,0 +1,4 @@
+# This script is indirectly called by Bash on login shell startup.
+# It outputs Plesk shell banner with login instructions.
+# If you don't need it, you may comment out the following line.
+/usr/lib64/plesk-9.0/ssh-banner || :

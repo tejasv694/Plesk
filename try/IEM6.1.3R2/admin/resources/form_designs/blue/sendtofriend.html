@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title></title>
+<style type="text/css">
+	p {
+		color: blue;
+	}
+
+	.FormDesc {
+		width: 200;
+		float: left;
+	}
+
+	.FormOption {
+		margin-left: 200;
+	}
+
+	textarea, select {
+		width: 200px;
+	}
+</style>
+</head>
+<body>
+	<p>
+		test
+	</p>
+	<form method="post" action="%%FormAction%%">
+		<div id="main">
+			Your Name:&nbsp;<input type="text" name="myname" value="" /><br/>
+			Your Email:&nbsp;<input type="text" name="myemail" value="%%Email%%" /><br/>
+			Friends Name:&nbsp;<input type="text" name="friendsname" value="" /><br/>
+			Friends Email:&nbsp;<input type="text" name="friendsemail" value="" /><br/>
+			<textarea name="introduction" rows="5" cols="50">Hey,
+Found this really interesting newsletter, check it out!</textarea>
+			<div>
+				<div class="FormDesc">
+					<input type="submit" value="Send To Friend" />
+					<br/>%%LNG_Form_Branding%%
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
